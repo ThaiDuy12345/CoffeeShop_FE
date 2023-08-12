@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+$main-color: #43da89;
+$main-hover-color: #30b970;
+$main-text-color: rgb(55 65 81);
+$second-text-color: rgb(121, 125, 133);
+$error-text-color: #ee7070;
+body {
+  font-family: var(--font-family);
+  
+  .main-color {
+    background-color: $main-color;
+    transition: 0.5s;
+    &:hover {
+      background-color: $main-hover-color;
+    }
+  }
+
+  label {
+    color: $second-text-color
+  }
+
+  .second-text-color {
+    color: $second-text-color;
+    transition: 0.5s;
+    &:hover {
+      color: $main-color;
+    }
+  }
+
+  .main-text-color {
+    color: $main-text-color;
+  }
+
+  .error-text-color {
+    color: $error-text-color;
+  }
+
+  .error-input-color {
+    border-color: $error-text-color;
+  }
+
+}

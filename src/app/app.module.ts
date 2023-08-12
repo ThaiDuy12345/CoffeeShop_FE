@@ -1,18 +1,18 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { LayoutsModule } from './layouts/layouts.module';
+import { LayoutsComponent } from './layouts/layouts.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule
+    BrowserAnimationsModule,
+    LayoutsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

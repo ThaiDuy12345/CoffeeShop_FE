@@ -9,15 +9,14 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "main",
     pathMatch: "full",
   },
   {
-    path: "home",
-    canActivateChild: [AuthGuard],
-    children: [
-      
-    ]
+    path: "main",
+    loadChildren: () => import ('./main/main.module').then(
+      m => m.MainModule
+    )
   },
   {
     path: "sign-in",
@@ -42,6 +41,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class LayoutsRoutingModule { }

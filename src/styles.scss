@@ -3,8 +3,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import "primeng/resources/themes/lara-light-blue/theme.css";
-@import "primeng/resources/primeng.css";
+@import "node_modules/@nebular/theme/styles/prebuilt/default.css";
 
 $main-color: #43da89;
 $main-hover-color: #30b970;
@@ -14,12 +13,24 @@ $error-text-color: #ee7070;
 body {
   font-family: var(--font-family);
   
+  a {
+    text-decoration: none !important;
+  }
+
   .main-color {
     background-color: $main-color;
     transition: 0.5s;
     &:hover {
       background-color: $main-hover-color;
     }
+
+    &:disabled {
+      background-color: $second-text-color;
+    }
+  }
+
+  .main-bg-color {
+    background-color: $main-color;
   }
 
   label {

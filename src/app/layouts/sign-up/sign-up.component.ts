@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { faUser, faBook, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { NbIconLibraries, NbTabComponent } from '@nebular/theme';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -23,5 +23,12 @@ export class SignUpComponent {
     name: '',
     address: '',
     phone: ''
+  }
+
+  constructor(
+    private nbIconLibraries: NbIconLibraries
+  ){
+    this.nbIconLibraries.registerFontPack('font-awesome', { iconClassPrefix: 'fa' });
+    this.nbIconLibraries.setDefaultPack('font-awesome'); //
   }
 }

@@ -1,0 +1,14 @@
+$main-color: #f4fff9;
+$second-color: #dbede3;
+$main-text-color: #43da89;
+:host ::ng-deep {
+  .p-menubar{
+    background-color: $main-color
+  }
+  .p-menuitem-content{
+    background-color: transparent !important;
+    &:hover {
+      color: $main-text-color
+    }
+  }
+}

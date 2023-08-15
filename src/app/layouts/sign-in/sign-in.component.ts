@@ -14,8 +14,8 @@ export class SignInComponent {
     password: ''
   }
   
-  public isSubmitted: Boolean = false
-  public isLoading: Boolean = false
+  public isSubmitted: boolean = false
+  public isLoading: boolean = false
   constructor(
     private alertService: AlertService,
     private router: Router
@@ -23,7 +23,7 @@ export class SignInComponent {
 
   onClickSignIn(): void {
     if(!this.account.email || !this.account.password){
-      this.alertService.error('Error', 'Email and password are required.' )
+      this.alertService.warn('Cảnh báo', 'Email và mật khẩu không được để trống.' )
       return
     }
     this.isLoading = true
@@ -37,15 +37,15 @@ export class SignInComponent {
       )
     })
     if(!result){
-      this.alertService.error('Error', 'Incorrect email or password.' )
+      this.alertService.error('Lỗi', 'Email hoặc mật khẩu không chính xác.' )
       this.isLoading = false
       return
     }
-    this.alertService.success('Success', `Successfully signed in, welcome ${result.name}` )
+    this.alertService.success('Thành công', `Đăng nhập thành công, Chào bạn ${result.name}` )
     Cookies.set('id', result.id)
 
     setTimeout(() => {
       this.router.navigate(["/main/dashboard"])
-    }, 1000)
+    }, 2000)
   }
 }

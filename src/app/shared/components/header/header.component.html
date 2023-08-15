@@ -1,0 +1,20 @@
+<div class="grid grid-cols-5 w-full">
+  <div class="col-span-1">
+    <img src="assets/brand-icons/main.png" class="w-16"/>
+  </div>
+  <div class="col-span-3 grid grid-cols-4">
+    <ng-container *ngFor="let item of items">
+      <button *ngIf="item.items" [nbContextMenu]="item.items" class="w-full h-full center-an-item">
+        <fa-icon [icon]="item.icon"></fa-icon><span class="mx-3">{{item.label}}</span>
+      </button>
+      <button *ngIf="!item.items" class="w-full h-full center-an-item">
+        <fa-icon [icon]="item.icon"></fa-icon><span class="mx-3">{{item.label}}</span>
+      </button>
+    </ng-container>
+  </div>
+  <div class="col-span-1 justify-items-end">
+    <div *ngIf="user.name" class="w-full h-full center-an-item cursor-pointer">
+      <nb-user [nbContextMenu]="user.items" *ngIf="user.name" [name]="user.name" [title]="user.label"></nb-user>
+    </div>
+  </div>
+</div>

@@ -5,8 +5,7 @@ import { AppComponent } from './app.component';
 import { LayoutsModule } from './layouts/layouts.module';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { RouterModule } from '@angular/router';
-import { NbLayoutModule, NbSidebarModule, NbThemeModule } from '@nebular/theme';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NbLayoutModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons'
 @NgModule({
   declarations: [
@@ -19,10 +18,12 @@ import { NbEvaIconsModule } from '@nebular/eva-icons'
     LayoutsModule,
     RouterModule,
     NbLayoutModule,
+    NbMenuModule.forRoot(),
+    NbToastrModule.forRoot(),
+    NbMenuModule.forRoot(),
     NbEvaIconsModule,
     NbSidebarModule.forRoot(),
     NbThemeModule.forRoot({ name: 'default' }),
-    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

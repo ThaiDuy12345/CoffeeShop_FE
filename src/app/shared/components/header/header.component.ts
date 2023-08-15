@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Cookies from 'js-cookie';
 import { AccountData } from 'src/app/data/data';
+import { icons } from '../../utils/icon.utils';
+import { NbContextMenuComponent, NbContextMenuContext, NbContextMenuDirective, NbMenuItem } from '@nebular/theme';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,59 +12,59 @@ export class HeaderComponent implements OnInit {
   public items = [
     {
       label: 'Sản phẩm',
-      icon: 'fa-solid fa-mug-hot',
+      icon: icons['faMugHot'],
       items: [
         {
-          label: 'TRÀ',
-          icon: 'fa-solid fa-glass-water',
+          title: 'TRÀ',
+          icon: 'umbrella-outline'
         },
         {
-          label: 'COFFEE',
-          icon: 'fa-solid fa-mug-hot',
+          title: 'COFFEE',
+          icon: 'droplet-outline'
         },
         {
-          label: 'SẢN PHẨM GÓI',
-          icon: 'fa-solid fa-cubes',
+          title: 'SẢN PHẨM GÓI',
+          icon: 'archive-outline'
         },
       ],
     },
     {
       label: 'Đơn hàng',
-      icon: 'fa-solid fa-cart-shopping',
+      icon: icons['faCartShopping'],
       items: [
         {
-          label: 'GIỎ HÀNG',
-          icon: 'fa-solid fa-trailer',
+          title: 'GIỎ HÀNG',
+          icon: 'shopping-cart-outline'
         },
         {
-          label: 'ĐƠN HÀNG BẠN ĐÃ MUA',
-          icon: 'fa-solid fa-cart-flatbed',
+          title: 'ĐƠN HÀNG BẠN ĐÃ MUA',
+          icon: 'shopping-bag-outline'
         }
       ],
     },
     {
       label: 'Về chúng tôi',
-      icon: 'fa-solid fa-hand-holding-heart',
+      icon: icons['faHandHoldingHeart'],
     }
   ];
+  public user = {
+    label: `Chúc bạn 1 ngày tốt lành`,
+    name: "",
+    icon: icons['faUser'],
+    items: [
+      {
+        title: 'THÔNG TIN',
+        icon: 'person-outline',
+      },
+      {
+        title: 'ĐĂNG XUẤT',
+        icon: 'arrow-circle-right-outline',
+      }
+    ]
+  }
 
   ngOnInit(): void {
     const user = AccountData.find(item => item.id === Cookies.get('id'))
-    if(user) {
-      this.items.unshift({
-        label: `Chào bạn, ${user.name}!`,
-        icon: 'fa-solid fa-user',
-        items: [
-          {
-            label: 'THÔNG TIN',
-            icon: 'fa-solid fa-circle-info',
-          },
-          {
-            label: '<span class="error-text-color">ĐĂNG XUẤT</span>',
-            icon: 'fa-solid fa-arrow-right-from-bracket',
-          }
-        ]
-      })
-    }
+    if (user) this.user.name = user.name
   }
 }

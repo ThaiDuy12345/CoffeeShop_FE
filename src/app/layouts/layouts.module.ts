@@ -11,7 +11,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
 import { P404Component } from './p404/p404.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
-import { NbButtonModule, NbLayoutModule, NbTabsetModule } from '@nebular/theme';
+import { NbPopoverModule, NbMenuModule, NbButtonModule,NbUserModule , NbLayoutModule, NbTabsetModule, NbIconModule, NbContextMenuModule, NbToastrModule, NbSpinnerModule } from '@nebular/theme';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -28,8 +28,15 @@ import { NbButtonModule, NbLayoutModule, NbTabsetModule } from '@nebular/theme';
     MainModule,
     FormsModule,
     FontAwesomeModule,
+    NbIconModule,
+    NbSpinnerModule,
+    NbMenuModule,
     NbTabsetModule,
+    NbContextMenuModule,
+    NbPopoverModule,
+    NbToastrModule,
     NbButtonModule,
+    NbUserModule,
     NbLayoutModule
   ]
 })

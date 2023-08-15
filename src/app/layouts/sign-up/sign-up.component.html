@@ -15,7 +15,7 @@
           </div>
           <div class="m-7">
             <nb-tabset fullWidth>
-              <nb-tab [active]="activeIndex === 0" tabIcon="qrcode" tabTitle="Thông tin đăng nhập" [disabled]="activeIndex === 1">
+              <nb-tab [active]="activeIndex === 0" tabIcon="at-outline" tabTitle="Thông tin đăng nhập" [disabled]="activeIndex === 1">
                 <form autocomplete="off">
                   <div class="mb-6">
                     <label class="my-2">Email</label>
@@ -41,7 +41,7 @@
                   </div>
                 </form>
               </nb-tab>
-              <nb-tab [active]="activeIndex === 1" tabIcon="user" tabTitle="Thông tin tài khoản" [disabled]="activeIndex === 0">
+              <nb-tab [active]="activeIndex === 1" tabIcon="people-outline" tabTitle="Thông tin tài khoản" [disabled]="activeIndex === 0">
                 <form autocomplete="off">
                   <div class="mb-6">
                     <label class="my-2">Tên</label>
@@ -81,25 +81,30 @@
                   (click)="activeIndex = 0"
                   class="text-sm text-left second-text-color"
                 >
-                  <fa-icon [icon]="faArrowLeft"></fa-icon> Go back
+                  <fa-icon [icon]="icons['faArrowLeft']"></fa-icon> Quay lại
                 </button>
               </nb-tab>
             </nb-tabset>
             <div class="mb-6">
               <button
                 type="button"
+                nbButton
+                status="basic"
                 *ngIf="activeIndex === 0"
                 (click)="activeIndex = 1"
-                class="w-full px-3 py-4 text-white rounded-md main-color focus:outline-none"
+                class="w-full px-3 py-4 rounded-md focus:outline-none"
               >
-                Next
+                Tiếp theo
               </button>
               <button
                 type="button"
+                nbButton
+                status="success"
+                [nbSpinner]="isLoading"
                 *ngIf="activeIndex === 1"
-                class="w-full px-3 py-4 text-white rounded-md main-color focus:outline-none"
+                class="w-full px-3 py-4 rounded-md focus:outline-none"
               >
-                Sign up
+                Đăng ký
               </button>
             </div>
             <p class="text-sm text-center text-gray-400">

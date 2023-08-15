@@ -30,7 +30,7 @@ body {
   }
 
   .main-bg-color {
-    background-color: $main-color;
+    background-color: $main-color !important;
   }
 
   label {
@@ -38,23 +38,35 @@ body {
   }
 
   .second-text-color {
-    color: $second-text-color;
+    color: $second-text-color !important;
     transition: 0.5s;
     &:hover {
-      color: $main-color;
+      color: $main-color !important;
     }
   }
 
   .main-text-color {
-    color: $main-text-color;
+    color: $main-text-color !important;
   }
 
   .error-text-color {
-    color: $error-text-color;
+    color: $error-text-color !important;
   }
 
   .error-input-color {
-    border-color: $error-text-color;
+    border-color: $error-text-color !important;
   }
 
+}
+
+.center-an-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+span.tab-text{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

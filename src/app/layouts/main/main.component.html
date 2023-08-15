@@ -1,8 +1,5 @@
-<div class="w-full">
-  <div class="w-full">
-    <app-header></app-header>
-  </div>
-  <div class="">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<nb-layout>
+  <nb-layout-header><app-header class="w-full"></app-header></nb-layout-header>
+  <nb-layout-column><router-outlet></router-outlet></nb-layout-column>
+  <nb-layout-footer></nb-layout-footer>
+</nb-layout>

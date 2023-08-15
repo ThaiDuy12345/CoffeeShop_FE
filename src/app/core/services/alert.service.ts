@@ -1,41 +1,27 @@
-import { Injectable } from "@angular/core";
+import { Injectable, HostBinding } from "@angular/core";
+import { NbToastrService } from '@nebular/theme';
 @Injectable({
   providedIn: "root"
 })
 export class AlertService {
   constructor(
-    
-  ){}
+    private toastrService: NbToastrService
+  ){
+  }
 
   success(title: string, content: string){
-    // this.messageService.add({
-    //   severity:'success',
-    //   summary: title,
-    //   detail: content
-    // })
+    this.toastrService.success(title, content, { limit: 3 });
   }
 
   info(title: string, content: string){
-    // this.messageService.add({
-    //   severity: 'info',
-    //   summary: title,
-    //   detail: content
-    // })
+    this.toastrService.info(title, content, { limit: 3 });
   }
 
   warn(title: string, content: string){
-    // this.messageService.add({
-    //   severity: 'warn',
-    //   summary: title,
-    //   detail: content
-    // })
+    this.toastrService.warning(title, content, { limit: 3 });
   }
 
   error(title: string, content: string){
-    // this.messageService.add({
-    //   severity: 'error',
-    //   summary: title,
-    //   detail: content
-    // })
+    this.toastrService.danger(title, content, { limit: 3 });
   }
 }

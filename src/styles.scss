@@ -1,18 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+
+@use './assets/theme.scss' as *;
+
+// framework component styles
+@use '@nebular/theme/styles/globals' as *;
+
+// install the framework styles
+@include nb-install() {
+  @include nb-theme-global();
+}
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
-@import "node_modules/@nebular/theme/styles/prebuilt/default.css";
-
 $main-color: #43da89;
 $main-hover-color: #30b970;
 $main-text-color: rgb(55 65 81);
 $second-text-color: rgb(121, 125, 133);
 $error-text-color: #ee7070;
+
 body {
-  font-family: var(--font-family);
-  
   a {
     text-decoration: none !important;
   }

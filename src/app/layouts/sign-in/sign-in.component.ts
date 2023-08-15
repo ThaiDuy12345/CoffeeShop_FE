@@ -41,11 +41,11 @@ export class SignInComponent {
       this.isLoading = false
       return
     }
-    this.alertService.success('Thành công', `Đăng nhập thành công, Chào bạn ${result.name}` )
     Cookies.set('id', result.id)
-
+    
     setTimeout(() => {
-      this.router.navigate(["/main/dashboard"])
-    }, 2000)
+      this.alertService.success('Thành công', `Đăng nhập thành công, Chào bạn ${result.name}` )
+      setTimeout(() => this.router.navigate(["/main/dashboard"]), 2000)
+    }, 1000)
   }
 }

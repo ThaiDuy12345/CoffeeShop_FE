@@ -11,7 +11,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
 import { P404Component } from './p404/p404.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
-import { NbPopoverModule, NbMenuModule, NbButtonModule,NbUserModule , NbLayoutModule, NbTabsetModule, NbIconModule, NbContextMenuModule, NbToastrModule, NbSpinnerModule } from '@nebular/theme';
+import { NbPopoverModule, NbCardModule, NbMenuModule, NbButtonModule, NbUserModule , NbLayoutModule, NbTabsetModule, NbIconModule, NbContextMenuModule, NbToastrModule, NbSpinnerModule } from '@nebular/theme';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { FooterComponent } from '../shared/components/footer/footer.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -21,22 +25,27 @@ import { NbPopoverModule, NbMenuModule, NbButtonModule,NbUserModule , NbLayoutMo
     MainComponent,
     DashboardComponent,
     HeaderComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
     LayoutsRoutingModule,
     MainModule,
     FormsModule,
+    NzMessageModule,
     FontAwesomeModule,
     NbIconModule,
     NbSpinnerModule,
+    NzIconModule,
     NbMenuModule,
     NbTabsetModule,
     NbContextMenuModule,
+    NzMenuModule,
     NbPopoverModule,
     NbToastrModule,
     NbButtonModule,
     NbUserModule,
+    NbCardModule,
     NbLayoutModule
   ]
 })

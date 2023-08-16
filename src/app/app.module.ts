@@ -7,6 +7,8 @@ import { LayoutsComponent } from './layouts/layouts.component';
 import { RouterModule } from '@angular/router';
 import { NbLayoutModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbMenuModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons'
+import { HttpClientModule } from '@angular/common/http';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons'
     BrowserAnimationsModule,
     LayoutsModule,
     RouterModule,
+    HttpClientModule,
+    NzIconModule,
     NbLayoutModule,
     NbMenuModule.forRoot(),
     NbToastrModule.forRoot(),

@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
-import { AlertService } from './../../core/services/alert.service';
 import { Component } from '@angular/core';
 import { AccountData } from 'src/app/data/data';
 import Cookies from 'js-cookie'
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -17,13 +17,13 @@ export class SignInComponent {
   public isSubmitted: boolean = false
   public isLoading: boolean = false
   constructor(
-    private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private message: NzMessageService
   ){}
 
   onClickSignIn(): void {
     if(!this.account.email || !this.account.password){
-      this.alertService.warn('Cảnh báo', 'Email và mật khẩu không được để trống.' )
+      this.message.warning('Email và mật khẩu không được để trống.')
       return
     }
     this.isLoading = true
@@ -37,14 +37,14 @@ export class SignInComponent {
       )
     })
     if(!result){
-      this.alertService.error('Lỗi', 'Email hoặc mật khẩu không chính xác.' )
+      this.message.error('Email hoặc mật khẩu không chính xác.')
       this.isLoading = false
       return
     }
     Cookies.set('id', result.id)
     
     setTimeout(() => {
-      this.alertService.success('Thành công', `Đăng nhập thành công, Chào bạn ${result.name}` )
+      this.message.success(`Đăng nhập thành công, Chào bạn ${result.name}`)
       setTimeout(() => this.router.navigate(["/main/dashboard"]), 2000)
     }, 1000)
   }

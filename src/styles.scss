@@ -11,13 +11,44 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
+@import "node_modules/ng-zorro-antd/style/index.min.css"; /* Import base styles */
+@import "node_modules/ng-zorro-antd/button/style/index.min.css";  /* Import one component's styles */
 $main-color: #43da89;
 $main-hover-color: #30b970;
 $main-text-color: rgb(55 65 81);
 $second-text-color: rgb(121, 125, 133);
 $error-text-color: #ee7070;
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $main-text-color; 
+  transition: 0.5s;
+  &:hover{
+    background: $second-text-color; 
+  }
+}
 
 body {
+
+  .ant-message-custom-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ant-message .anticon{
+    position:static;
+  }
+
   a {
     text-decoration: none !important;
   }
@@ -40,6 +71,10 @@ body {
 
   label {
     color: $second-text-color
+  }
+
+  .second-main-text-color {
+    color: $second-text-color !important;
   }
 
   .second-text-color {
@@ -65,9 +100,9 @@ body {
 }
 
 .center-an-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 span.tab-text{

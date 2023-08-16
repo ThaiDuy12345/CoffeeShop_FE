@@ -11,4 +11,9 @@ $main-text-color: #43da89;
       color: $main-text-color
     }
   }
+  .ant-menu-submenu-title{
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 }

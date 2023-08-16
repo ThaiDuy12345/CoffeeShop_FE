@@ -1,1 +1,17 @@
-<p>dashboard works!</p>
+<div class="grid grid-cols-1">
+  <img class="w-full" src="assets/brand-icons/banner.png"/>
+</div>
+<div class="mx-auto container px-40 py-1">
+  <div class="w-full grid grid-cols-1 text-center my-10">
+    <h2 class="font-bold text-3xl">Sản phẩm bán chạy</h2>
+  </div>
+  <div class="w-full grid grid-cols-3 gap-5">
+    <nb-card *ngFor="let item of mostPopularProducts" class="cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl">
+      <img [src]="item.picture" class="rounded-t-xl"/>
+      <nb-card-footer>
+        <div class="font-bold text-xl">{{item.name}}</div>
+        <div class="second-main-text-color font-bold">{{item.price}} đ</div>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

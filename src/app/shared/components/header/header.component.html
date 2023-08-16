@@ -14,7 +14,7 @@
   </div>
   <div class="col-span-1 justify-items-end">
     <div *ngIf="user.name" class="w-full h-full center-an-item cursor-pointer">
-      <nb-user [nbContextMenu]="user.items" *ngIf="user.name" [name]="user.name" [title]="user.label" icon="person-outline"></nb-user>
+      <nb-user [nbContextMenu]="user.items" [nbContextMenuTag]="user.tag" *ngIf="user.name" [name]="user.name" [title]="user.label" picture="assets/brand-icons/main.png"></nb-user>
     </div>
 
     <div *ngIf="!user.name" class="w-full h-full center-an-item cursor-pointer">

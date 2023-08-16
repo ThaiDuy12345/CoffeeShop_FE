@@ -16,5 +16,9 @@
     <div *ngIf="user.name" class="w-full h-full center-an-item cursor-pointer">
       <nb-user [nbContextMenu]="user.items" *ngIf="user.name" [name]="user.name" [title]="user.label" icon="person-outline"></nb-user>
     </div>
+
+    <div *ngIf="!user.name" class="w-full h-full center-an-item cursor-pointer">
+      <span class="second-text-color" [routerLink]="'/sign-in'">Đăng nhập</span>&ensp;/&ensp;<span class="second-text-color" [routerLink]="'/sign-up'">Đăng ký</span>
+    </div>
   </div>
 </div>

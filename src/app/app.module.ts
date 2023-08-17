@@ -5,15 +5,18 @@ import { AppComponent } from './app.component';
 import { LayoutsModule } from './layouts/layouts.module';
 import { LayoutsComponent } from './layouts/layouts.component';
 import { RouterModule } from '@angular/router';
-import { NbLayoutModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbMenuModule } from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons'
+import {
+  NbLayoutModule,
+  NbSidebarModule,
+  NbThemeModule,
+  NbToastrModule,
+  NbMenuModule,
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 @NgModule({
-  declarations: [
-    AppComponent,
-    LayoutsComponent
-  ],
+  declarations: [AppComponent, LayoutsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,6 +33,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NbThemeModule.forRoot({ name: 'default' }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

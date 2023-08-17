@@ -11,11 +11,31 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
 import { P404Component } from './p404/p404.component';
 import { HeaderComponent } from '../shared/components/header/header.component';
-import { NbPopoverModule, NbCardModule, NbMenuModule, NbButtonModule, NbUserModule , NbLayoutModule, NbTabsetModule, NbIconModule, NbContextMenuModule, NbToastrModule, NbSpinnerModule } from '@nebular/theme';
+import {
+  NbPopoverModule,
+  NbInputModule,
+  NbSearchModule,
+  NbCardModule,
+  NbMenuModule,
+  NbButtonModule,
+  NbUserModule,
+  NbLayoutModule,
+  NbTabsetModule,
+  NbIconModule,
+  NbContextMenuModule,
+  NbToastrModule,
+  NbSpinnerModule,
+  NbFormFieldModule,
+  NbDialogModule,
+} from '@nebular/theme';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { ProductListComponent } from '../shared/components/product-list/product-list.component';
+import { UserComponent } from './main/user/user.component';
+import { EditUserComponent } from './main/user/edit-user/edit-user.component';
+import { ChangePasswordComponent } from './main/user/change-password/change-password.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -23,9 +43,13 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     SignOutComponent,
     P404Component,
     MainComponent,
+    EditUserComponent,
+    ChangePasswordComponent,
     DashboardComponent,
     HeaderComponent,
-    FooterComponent
+    ProductListComponent,
+    FooterComponent,
+    UserComponent,
   ],
   imports: [
     CommonModule,
@@ -33,12 +57,16 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     MainModule,
     FormsModule,
     NzMessageModule,
+    NbInputModule,
+    NbDialogModule.forChild(),
     FontAwesomeModule,
     NbIconModule,
     NbSpinnerModule,
     NzIconModule,
+    NbFormFieldModule,
     NbMenuModule,
     NbTabsetModule,
+    NbSearchModule,
     NbContextMenuModule,
     NzMenuModule,
     NbPopoverModule,
@@ -46,7 +74,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     NbButtonModule,
     NbUserModule,
     NbCardModule,
-    NbLayoutModule
-  ]
+    NbLayoutModule,
+  ],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}

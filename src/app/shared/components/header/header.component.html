@@ -1,9 +1,9 @@
 <div class="grid grid-cols-5 w-full">
-  <div class="col-span-1">
+  <div [routerLink]="'/main/dashboard'" class="cursor-pointer col-span-1">
     <img src="assets/brand-icons/main.png" class="w-16"/>
   </div>
   <div class="col-span-3">
-    <ul nz-menu nzMode="horizontal" class="border-b-0 h-full">
+    <ul nz-menu nzMode="horizontal" nzSelectable="false" class="border-b-0 h-full">
       <li class="h-full" nz-submenu [nzTitle]="item.label" [nzIcon]="item.icon" *ngFor="let item of items">
         <ul>
           <li nz-menu-item *ngFor="let i of item.subItems">
@@ -22,10 +22,10 @@
     </ng-container> -->
   </div>
   <div class="col-span-1 justify-items-end">
-    <ul *ngIf="user.name" nz-menu nzMode="horizontal" class="border-b-0 h-full">
+    <ul *ngIf="user.name" nzSelectable="false" nz-menu nzMode="horizontal" class="border-b-0 h-full">
       <li class="h-full" nz-submenu [nzTitle]="user.label + ', ' + user.name" [nzIcon]="user.icon">
         <ul>
-          <li (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null" nz-menu-item *ngFor="let i of user.subItems">
+          <li [routerLink]="i.title === 'THÔNG TIN' ? ['/main/user'] : []" (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null" nz-menu-item *ngFor="let i of user.subItems">
             <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
           </li>
         </ul>

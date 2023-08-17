@@ -20,14 +20,14 @@
                 <input
                   [(ngModel)]="account.email"
                   [ngClass]="{
-                      'error-input-color': account.email === '' && isSubmitted,
-                    }"
-                  pInputText
+                    'error-input-color': account.email === '' && isSubmitted,
+                  }"
+                  nbInput
                   name="email"
                   #name="ngModel"
                   autocomplete="off"
                   type="email"
-                  class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                  class="block w-full px-3 py-2 text-base"
                 />
                 <small
                   *ngIf="account.email === '' && isSubmitted"
@@ -37,19 +37,39 @@
               </div>
               <div class="mb-6">
                 <label class="my-2">Mật khẩu</label>
-                <input
-                  [(ngModel)]="account.password"
-                  [ngClass]="{
-                    'error-input-color': account.password === '' && isSubmitted
-                  }"
-                  pInputText
-                  name="password"
-                  required
-                  #password="ngModel"
-                  autocomplete="off"
-                  type="password"
-                  class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                />
+                <nb-form-field class="min-w-0">
+                  <input
+                    [(ngModel)]="account.password"
+                    [ngClass]="{
+                      'error-input-color':
+                        account.password === '' && isSubmitted
+                    }"
+                    nbInput
+                    name="password"
+                    required
+                    #password="ngModel"
+                    autocomplete="off"
+                    [type]="showPassword ? 'text' : 'password'" 
+                    class="block w-full px-3 py-2 text-base"
+                  />
+                  <button
+                    nbSuffix
+                    nbButton
+                    ghost
+                    (click)="showPassword = !showPassword"
+                  >
+                    <nb-icon
+                      [icon]="
+                        showPassword ? 'eye-outline' : 'eye-off-2-outline'
+                      "
+                      pack="eva"
+                      [attr.aria-label]="
+                        showPassword ? 'hide password' : 'show password'
+                      "
+                    >
+                    </nb-icon>
+                  </button>
+                </nb-form-field>
                 <small
                   *ngIf="account.password === '' && isSubmitted"
                   class="error-text-color"
@@ -83,7 +103,8 @@
                   [routerLink]="'/sign-up'"
                   class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500 dark:focus:border-indigo-800"
                   >Đăng ký</a
-                > ở đây.
+                >
+                ở đây.
               </p>
             </form>
           </div>

@@ -1,17 +1,39 @@
 <div class="grid grid-cols-1">
-  <img class="w-full" src="assets/brand-icons/banner.png"/>
+  <img class="w-full" src="assets/brand-icons/banner.png" />
 </div>
 <div class="mx-auto container px-40 py-1">
   <div class="w-full grid grid-cols-1 text-center my-10">
     <h2 class="font-bold text-3xl">Sản phẩm bán chạy</h2>
   </div>
-  <div class="w-full grid grid-cols-3 gap-5">
-    <nb-card *ngFor="let item of mostPopularProducts" class="cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl">
-      <img [src]="item.picture" class="rounded-t-xl"/>
-      <nb-card-footer>
-        <div class="font-bold text-xl">{{item.name}}</div>
-        <div class="second-main-text-color font-bold">{{item.price}} đ</div>
-      </nb-card-footer>
-    </nb-card>
+  <app-product-list
+    [mostPopularProducts]="mostPopularProducts"
+  ></app-product-list>
+  <div class="w-full grid grid-cols-2 my-10 gap-3">
+    <div class="col-span-2 xl:col-span-1">
+      <img class="w-full rounded-lg" src="assets/brand-icons/banner2.jpg" />
+    </div>
+    <div class="col-span-2 xl:col-span-1">
+      <img class="w-full rounded-lg mb-5" src="assets/brand-icons/banner3.jpg" />
+      <h1 class="font-sans font-bold text-2xl xl:text-2xl 2xl:text-3xl tex-center xl:text-right mb-5">
+        QUY TRÌNH CAFE ĐẾN TAY NGƯỜI DÙNG
+      </h1>
+      <p class="tex-center xl:text-right xl:text-md 2xl:text-lg">
+        Từ những hạt cà phê khiêm tốn trong vườn xanh, đến bàn tay tinh tế của
+        người thưởng thức. Mọi thứ bắt đầu bằng việc lựa chọn cẩn thận những hạt
+        cà phê tinh túy, được hái từ những khu vườn tươi tốt, nơi chúng phát
+        triển dưới ánh nắng mặt trời dịu dàng. Những hạt cà phê này bắt đầu hành
+        trình biến đổi từ những viên ngọc thô thành những điều kỳ diệu thơm
+        ngon. <br /><br />
+        Sau khi thu hoạch, những hạt cà phê được xử lý với sự chăm sóc tận tâm,
+        trải qua một loạt các quy trình phức tạp, thức tỉnh hương vị phong phú
+        và mùi thơm quyến rũ của chúng. <br /><br />
+        Hành trình cuối cùng trong câu chuyện này được chỉ đạo bởi đôi bàn tay
+        tài hoa của một người pha chế tài ba, người là một nhạc trưởng của nghệ
+        thuật cà phê. Với sự chính xác và sự sáng tạo, họ tạo ra mỗi ly cà phê
+        với sự tận tâm tối đa, biến tinh chất đã pha chế thành một kiệt tác.
+        Cánh tay của người pha chế là một bản tình ca tới sự nghệ thuật mà cà
+        phê tượng trưng
+      </p>
+    </div>
   </div>
 </div>

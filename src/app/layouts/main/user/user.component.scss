@@ -1,0 +1,8 @@
+:host ::ng-deep{
+  [nbInput]{
+    max-width: none !important;
+  }
+  .ant-menu-vertical{
+    border-right: none !important;
+  }
+}

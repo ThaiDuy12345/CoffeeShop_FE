@@ -1,0 +1,77 @@
+<div class="flex items-center justify-center">
+  <div class="mx-auto w-full">
+    <form>
+      <div class="-mx-3 flex flex-wrap">
+        <div class="w-full px-3 sm:w-1/2">
+          <div class="mb-5">
+            <label
+              class="mb-3 block text-base font-medium"
+            >
+              Tên: <b>{{ user.name }}</b>
+            </label>
+            <input
+              type="text"
+              nbInput
+              placeholder="Chúng tôi nên gọi bạn là gì?"
+              class="w-full rounded-md"
+            />
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-1/2">
+          <div class="mb-5">
+            <label
+              for="lName"
+              class="mb-3 block text-base font-medium"
+            >
+              Email: <b>{{ user.email }}</b>
+            </label>
+            <input
+              type="email"
+              disabled="true"
+              nbInput
+              placeholder="Không hỗ trợ thay đổi email"
+              class="w-full rounded-md"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="mb-5">
+        <label
+          for="guest"
+          class="mb-3 block text-base font-medium"
+        >
+          Số điện thoại: <b>{{ user.phone }}</b>
+        </label>
+        <input
+          type="text"
+          nbInput
+          placeholder="0123456789"
+          class="w-full rounded-md"
+        />
+      </div>
+      <div class="mb-5">
+        <label
+          for="guest"
+          class="mb-3 block text-base font-medium"
+        >
+          Địa chỉ: <b>{{ user.address }}</b>
+        </label>
+        <input
+          type="text"
+          nbInput
+          placeholder="789 Huỳnh Tấn Phát, Phường 9, Quận 7, TP HCM"
+          class="w-full rounded-md"
+        />
+      </div>
+
+      <div>
+        <button
+          nbButton
+          status="success"
+        >
+          Xác nhận chỉnh sửa
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

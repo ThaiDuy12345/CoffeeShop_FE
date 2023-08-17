@@ -13,6 +13,7 @@ export class SignInComponent {
     email: '',
     password: ''
   }
+  public showPassword: boolean = false
   
   public isSubmitted: boolean = false
   public isLoading: boolean = false

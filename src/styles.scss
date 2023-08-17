@@ -16,6 +16,7 @@
 @import "node_modules/ng-zorro-antd/button/style/index.min.css";  /* Import one component's styles */
 $main-color: #43da89;
 $main-hover-color: #30b970;
+$second-main-color: #eeffd8;
 $main-text-color: rgb(55 65 81);
 $second-text-color: rgb(121, 125, 133);
 $error-text-color: #ee7070;
@@ -100,7 +101,6 @@ body {
   .error-input-color {
     border-color: $error-text-color !important;
   }
-
 }
 
 .center-an-item {

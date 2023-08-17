@@ -1,8 +1,8 @@
 <div class="mx-auto container px-40 py-1 grid grid-cols-5 gap-3">
   <div class="col-span-1">
     <ul nz-menu>
-      <li nz-menu-item (click)="selectedTab = 'INFORMATION_TAB'">Thông tin</li>
-      <li nz-menu-item (click)="selectedTab = 'CHANGE_PASSWORD_TAB'">Thay đổi mật khẩu</li>
+      <li [nzSelected]="selectedTab === 'INFORMATION_TAB'" nz-menu-item (click)="selectedTab = 'INFORMATION_TAB'">Thông tin</li>
+      <li [nzSelected]="selectedTab === 'CHANGE_PASSWORD_TAB'" nz-menu-item (click)="selectedTab = 'CHANGE_PASSWORD_TAB'">Thay đổi mật khẩu</li>
     </ul>
   </div>
   <nb-card class="col-span-4">

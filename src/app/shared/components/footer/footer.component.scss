@@ -1,0 +1,9 @@
+:host ::ng-deep{
+  a{
+    color: rgb(121, 125, 133) !important;
+    transition: 0.5s !important;
+    &:hover {
+      color: #43da89 !important
+    }
+  }
+}

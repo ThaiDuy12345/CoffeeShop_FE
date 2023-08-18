@@ -14,7 +14,6 @@ import { HeaderComponent } from '../shared/components/header/header.component';
 import {
   NbPopoverModule,
   NbInputModule,
-  NbSearchModule,
   NbCardModule,
   NbMenuModule,
   NbButtonModule,
@@ -75,7 +74,6 @@ import { ProductComponent } from './main/product/product.component';
     NbFormFieldModule,
     NbMenuModule,
     NbTabsetModule,
-    NbSearchModule,
     NbContextMenuModule,
     NzSliderModule,
     NzMenuModule,

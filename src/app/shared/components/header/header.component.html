@@ -1,4 +1,4 @@
-<div class="grid grid-cols-5 w-full">
+<div class="grid grid-cols-8 w-full">
   <div [routerLink]="'/main/dashboard'" class="cursor-pointer col-span-1">
     <img src="assets/brand-icons/main.png" class="w-16"/>
   </div>
@@ -12,6 +12,12 @@
         </ul>
       </li>
     </ul>
+  </div>
+  <div class="col-span-3">
+    <nb-form-field class="h-full w-full">
+      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
+      <input type="text" nbInput>
+    </nb-form-field>
   </div>
   <div class="col-span-1 justify-items-end">
     <ul *ngIf="user.name" nzSelectable="false" nz-menu nzMode="horizontal" class="border-b-0 h-full">

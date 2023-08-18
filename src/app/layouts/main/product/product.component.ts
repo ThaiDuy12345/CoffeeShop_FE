@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from 'src/app/core/models/product.model';
 import { ProductData } from 'src/app/data/data';
-import { ActivatedRoute, Router } from '@angular/router';
 import { icons } from '../../../shared/utils/icon.utils'
 import { Icon } from 'src/app/core/models/icon.model';
 import { FilterStore } from 'src/app/core/stores/filter.store';
@@ -22,17 +21,16 @@ export class ProductComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
     private filterStore: FilterStore
-  ) {}
+  ) {
+    
+  }
 
   ngOnDestroy(): void {
     this.filterStore.update({ category: '', search: '' })
   }
 
   ngOnInit(): void {
-    this.setInitPriceSlider();
     this.getProductList()
   }
 
@@ -58,6 +56,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         }else{
           this.search = ''
         }
+        this.setInitPriceSlider();
         this.isLoading = false;
       }, 1000);
     })

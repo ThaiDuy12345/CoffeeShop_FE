@@ -28,7 +28,7 @@ export class ChangePasswordComponent {
   }
 
   open(dialog: TemplateRef<any>): void {
-    this.dialogRef = this.dialogService.open(dialog, { context: 'Bạn có muốn xác nhận đổi mật khẩu' });
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Bạn có muốn xác nhận đổi mật khẩu?' });
   }
 
   onClickSubmit() {

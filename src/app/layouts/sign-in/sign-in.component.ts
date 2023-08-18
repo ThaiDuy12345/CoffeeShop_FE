@@ -44,9 +44,8 @@ export class SignInComponent {
     }
     Cookies.set('id', result.id)
     
-    setTimeout(() => {
-      this.message.success(`Đăng nhập thành công, Chào bạn ${result.name}`)
-      setTimeout(() => this.router.navigate(["/main/dashboard"]), 2000)
-    }, 1000)
+    
+    this.message.success(`Đăng nhập thành công, Chào bạn ${result.name}`)
+    this.router.navigate(["/main/dashboard"])
   }
 }

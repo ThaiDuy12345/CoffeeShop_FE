@@ -26,6 +26,7 @@ import {
   NbToastrModule,
   NbSpinnerModule,
   NbFormFieldModule,
+  NbSelectModule,
   NbDialogModule,
 } from '@nebular/theme';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -36,6 +37,7 @@ import { ProductListComponent } from '../shared/components/product-list/product-
 import { UserComponent } from './main/user/user.component';
 import { EditUserComponent } from './main/user/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './main/user/change-password/change-password.component';
+import { AboutComponent } from './main/about/about.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -50,11 +52,13 @@ import { ChangePasswordComponent } from './main/user/change-password/change-pass
     ProductListComponent,
     FooterComponent,
     UserComponent,
+    AboutComponent,
   ],
   imports: [
     CommonModule,
     LayoutsRoutingModule,
     MainModule,
+    NbSelectModule,
     FormsModule,
     NzMessageModule,
     NbInputModule,

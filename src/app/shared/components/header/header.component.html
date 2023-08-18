@@ -4,7 +4,7 @@
   </div>
   <div class="col-span-3">
     <ul nz-menu nzMode="horizontal" nzSelectable="false" class="border-b-0 h-full">
-      <li class="h-full" nz-submenu [nzTitle]="item.label" [nzIcon]="item.icon" *ngFor="let item of items">
+      <li class="h-full" nz-submenu [routerLink]="item.link" [nzTitle]="item.label" [nzIcon]="item.icon" *ngFor="let item of items">
         <ul>
           <li nz-menu-item *ngFor="let i of item.subItems">
             <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
@@ -12,14 +12,6 @@
         </ul>
       </li>
     </ul>
-    <!-- <ng-container *ngFor="let item of items">
-      <button *ngIf="item.subItems" [nbContextMenu]="item.subItems" class="w-full h-full center-an-item">
-        <fa-icon [icon]="item.icon"></fa-icon><span class="mx-3">{{item.label}}</span>
-      </button>
-      <button *ngIf="!item.subItems" class="w-full h-full center-an-item">
-        <fa-icon [icon]="item.icon"></fa-icon><span class="mx-3">{{item.label}}</span>
-      </button>
-    </ng-container> -->
   </div>
   <div class="col-span-1 justify-items-end">
     <ul *ngIf="user.name" nzSelectable="false" nz-menu nzMode="horizontal" class="border-b-0 h-full">
@@ -31,10 +23,6 @@
         </ul>
       </li>
     </ul>
-    <!-- <div *ngIf="user.name" class="w-full h-full center-an-item cursor-pointer">
-      <nb-user [nbContextMenu]="user.subItems" [nbContextMenuTag]="user.tag" *ngIf="user.name" [name]="user.name" [title]="user.label" picture="assets/brand-icons/main.png"></nb-user>
-    </div> -->
-
     <div *ngIf="!user.name" class="w-full h-full center-an-item cursor-pointer">
       <span class="second-text-color" [routerLink]="'/sign-in'">Đăng nhập</span>&ensp;/&ensp;<span class="second-text-color" [routerLink]="'/sign-up'">Đăng ký</span>
     </div> 

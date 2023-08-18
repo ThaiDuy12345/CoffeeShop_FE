@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
 import { AuthGuard } from 'src/app/guard/authGuard.guard';
+import { AboutComponent } from './about/about.component';
 const routes: Route[] = [
   {
     path: "",
@@ -17,6 +18,10 @@ const routes: Route[] = [
       {
         path: "dashboard",
         component: DashboardComponent
+      },
+      {
+        path: "about",
+        component: AboutComponent
       },
       {
         path: "user",

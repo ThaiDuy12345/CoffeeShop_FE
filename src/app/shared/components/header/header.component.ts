@@ -46,6 +46,7 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Về chúng tôi',
       icon: 'book',
+      link: "/main/about"
     },
   ];
   public user = {
@@ -76,6 +77,6 @@ export class HeaderComponent implements OnInit {
   onClickSignOut(): void {
     Cookies.remove('id');
     this.message.success(`Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`)
-    setTimeout(() => this.router.navigate(['/sign-in']), 2000);
+    this.router.navigate(['/sign-in']);
   }
 }

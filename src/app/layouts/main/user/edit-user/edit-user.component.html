@@ -1,33 +1,36 @@
 <div class="flex items-center justify-center">
   <div class="mx-auto w-full">
-    <form>
+    <form autocomplete="off">
       <div class="-mx-3 flex flex-wrap">
         <div class="w-full px-3 sm:w-1/2">
           <div class="mb-5">
-            <label
-              class="mb-3 block text-base font-medium"
-            >
+            <label class="mb-3 block text-base font-medium">
               Tên: <b>{{ user.name }}</b>
             </label>
             <input
               type="text"
               nbInput
+              *ngIf="isEditing"
+              name="nameInput"
+              #nameInput="ngModel"
+              [(ngModel)]="editUser.name"
               placeholder="Chúng tôi nên gọi bạn là gì?"
               class="w-full rounded-md"
             />
+            <small *ngIf="isEditing && !editUser.name" class="error-text-color">
+              Tên vui lòng không được để trống
+            </small>
           </div>
         </div>
         <div class="w-full px-3 sm:w-1/2">
           <div class="mb-5">
-            <label
-              for="lName"
-              class="mb-3 block text-base font-medium"
-            >
+            <label for="lName" class="mb-3 block text-base font-medium">
               Email: <b>{{ user.email }}</b>
             </label>
             <input
               type="email"
               disabled="true"
+              *ngIf="isEditing"
               nbInput
               placeholder="Không hỗ trợ thay đổi email"
               class="w-full rounded-md"
@@ -36,42 +39,150 @@
         </div>
       </div>
       <div class="mb-5">
-        <label
-          for="guest"
-          class="mb-3 block text-base font-medium"
-        >
+        <label for="guest" class="mb-3 block text-base font-medium">
           Số điện thoại: <b>{{ user.phone }}</b>
         </label>
         <input
           type="text"
+          name="phoneInput"
           nbInput
+          #phoneInput="ngModel"
+          *ngIf="isEditing"
+          [(ngModel)]="editUser.phone"
           placeholder="0123456789"
           class="w-full rounded-md"
         />
+        <small
+          *ngIf="isEditing && editUser.phone.length !== 10"
+          class="error-text-color"
+        >
+          Số điện thoại vui lòng không được để trống và đúng định dạng
+        </small>
       </div>
       <div class="mb-5">
-        <label
-          for="guest"
-          class="mb-3 block text-base font-medium"
-        >
+        <label for="guest" class="mb-3 block text-base font-medium">
           Địa chỉ: <b>{{ user.address }}</b>
         </label>
-        <input
-          type="text"
-          nbInput
-          placeholder="789 Huỳnh Tấn Phát, Phường 9, Quận 7, TP HCM"
-          class="w-full rounded-md"
-        />
       </div>
-
-      <div>
+      <div class="-mx-3 flex flex-wrap" *ngIf="isEditing">
+        <div class="w-full px-3 sm:w-1/2">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium">
+              Thành Phố/Tỉnh
+            </label>
+            <nb-select
+              (selectedChange)="onChangeProvince()"
+              name="provinceInput"
+              #provineInput="ngModel"
+              [(ngModel)]="selectedProvince"
+              *ngIf="isEditing"
+              class="w-full"
+            >
+              <nb-option value="">Thành Phố/Tỉnh</nb-option>
+              <nb-option [value]="p.id" *ngFor="let p of provinces">{{
+                p.name
+              }}</nb-option>
+            </nb-select>
+            <small *ngIf="!selectedProvince" class="error-text-color">Vui lòng chọn Thành Phố/Tỉnh</small>
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-1/2">
+          <div class="mb-5">
+            <label for="lName" class="mb-3 block text-base font-medium">
+              Thành Phố/Quận/Huyện
+            </label>
+            <nb-select
+              (selectedChange)="onChangeDistrict()"
+              [disabled]="!selectedProvince"
+              name="districtInput"
+              #districtInput="ngModel"
+              [(ngModel)]="selectedDistrict"
+              *ngIf="isEditing"
+              class="w-full"
+            >
+              <nb-option value="">Thành Phố/Quận/Huyện</nb-option>
+              <nb-option [value]="p.id" *ngFor="let p of districts">{{
+                p.name
+              }}</nb-option>
+            </nb-select>
+            <small *ngIf="!selectedDistrict && districts.length > 0" class="error-text-color">Vui lòng chọn Thành Phố/Quận/Huyện</small>
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-1/2">
+          <div class="mb-5">
+            <label for="lName" class="mb-3 block text-base font-medium">
+              Phường/Xã
+            </label>
+            <nb-select
+              name="wardInput"
+              #wardInput="ngModel"
+              [disabled]="!selectedDistrict || wards.length === 0"
+              [(ngModel)]="selectedWard"
+              *ngIf="isEditing"
+              class="w-full"
+              placeholder="Phường"
+            >
+              <nb-option value="">Phường/Xã</nb-option>
+              <nb-option [value]="p.id" *ngFor="let p of wards">{{
+                p.name
+              }}</nb-option>
+            </nb-select>
+            <small *ngIf="!selectedWard && wards.length > 0" class="error-text-color">Vui lòng chọn Phường/Xã</small>
+          </div>
+        </div>
+        <div class="w-full px-3 sm:w-1/2">
+          <div class="mb-5">
+            <label for="lName" class="mb-3 block text-base font-medium">
+              Địa chỉ cụ thể
+            </label>
+            <input
+              type="text"
+              nbInput
+              name="addressInput"
+              #addressInput="ngModel"
+              *ngIf="isEditing"
+              [disabled]="!selectedProvince || !selectedDistrict"
+              [(ngModel)]="detailAddress"
+              placeholder="789 Huỳnh Tấn Phát, Phường 9, Quận 7, TP HCM"
+              class="w-full rounded-md"
+            />
+            <small *ngIf="(selectedWard && wards.length > 0 && !detailAddress) || (selectedDistrict && districts.length > 0 && wards.length <= 0 && !detailAddress)" class="error-text-color">
+              Địa chỉ vui lòng không để trống
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="space-x-3">
         <button
           nbButton
-          status="success"
+          status="danger"
+          *ngIf="isEditing"
+          (click)="onClickCancelEdit()"
         >
+          Huỷ
+        </button>
+        <button nbButton (click)="open(dialog)" status="success" *ngIf="isEditing">
           Xác nhận chỉnh sửa
+        </button>
+        <button
+          nbButton
+          *ngIf="!isEditing"
+          status="infor"
+          (click)="onClickEdit()"
+        >
+          Chỉnh sửa thông tin
         </button>
       </div>
     </form>
   </div>
 </div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer class="space-x-3">
+      <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+      <button nbButton status="success" (click)="onClickSubmit()">Xác nhận</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

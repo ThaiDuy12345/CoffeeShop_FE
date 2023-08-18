@@ -46,6 +46,6 @@ export class SignInComponent {
     
     
     this.message.success(`Đăng nhập thành công, Chào bạn ${result.name}`)
-    this.router.navigate(["/main/dashboard"])
+    setTimeout(() => this.router.navigate(["/main/dashboard"]), 2000)
   }
 }

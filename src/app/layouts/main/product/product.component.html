@@ -1,0 +1,70 @@
+<div class="mx-auto container px-10 py-1 grid grid-cols-5 gap-x-10 my-10">
+  <div class="col-span-5 mb-5 border-b pb-10">
+    <h1 class="text-3xl text-center w-full font-bold">Sản phẩm của COFFEE</h1>
+  </div>
+  <div class="col-span-1">
+    <div *ngIf="search" class="border-b py-5">
+      <div class="mb-3"><span class="break-words"><fa-icon [icon]="icons['faMagnifyingGlass']"></fa-icon>&ensp;Đang tìm kiếm: <b class="main-text-color">{{search}}</b></span></div>
+      <button nbButton (click)="onClickResetFilterSearch('search')" class="w-full">Xoá</button>
+    </div>
+    <ul nz-menu nzMode="inline" nzSelectable="false">
+      <li nz-submenu nzTitle="Lọc sản phẩm">
+        <ul>
+          <li
+            nz-menu-item
+            (click)="onClickResetFilterSearch('category')"
+          >
+            Tất cả
+          </li>
+          <li
+            nz-menu-item
+            (click)="updateFilter('tea')"
+          >
+            Trà
+          </li>
+          <li
+            nz-menu-item
+            (click)="updateFilter('coffee')"
+          >
+            Coffee
+          </li>
+          <li
+            nz-menu-item
+            (click)="updateFilter('food')"
+          >
+            Đồ ăn
+          </li>
+          <li
+            nz-menu-item
+            (click)="updateFilter('package')"
+          >
+            Sản phẩm gói
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Lọc mức giá">
+        <ul class="center-an-item">
+          <li class="w-[70%]">
+            <nz-slider
+              [nzMin]="minPrice"
+              [nzMax]="maxPrice"
+              [nzMarks]="marks"
+              nzRange
+            ></nz-slider>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="col-span-4 center-an-item" [nbSpinner]="isLoading">
+    <ng-template [ngIf]="allProduct.length > 0">
+      <app-product-list [products]="allProduct"></app-product-list>
+    </ng-template>
+    <nz-result
+      *ngIf="allProduct.length === 0 && !isLoading"
+      [nzIcon]="'smile-twotone'"
+      nzTitle="Ối, không có gì ở đây cả!!"
+    >
+    </nz-result>
+  </div>
+</div>

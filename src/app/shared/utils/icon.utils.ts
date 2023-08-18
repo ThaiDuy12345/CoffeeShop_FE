@@ -1,5 +1,20 @@
-import { faArrowLeft, faArrowRightFromBracket, faBook, faCartFlatbed, faCartShopping, faCircleInfo, faCubes, faGlassWater, faHandHoldingHeart, faMugHot, faTrailer, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Icon } from "src/app/core/models/icon.model";
+import {
+  faArrowLeft,
+  faArrowRightFromBracket,
+  faBook,
+  faCartFlatbed,
+  faCartShopping,
+  faCircleInfo,
+  faCubes,
+  faGlassWater,
+  faHandHoldingHeart,
+  faMugHot,
+  faTrailer,
+  faUser,
+  faUtensils,
+  faMagnifyingGlass
+} from '@fortawesome/free-solid-svg-icons';
+import { Icon } from 'src/app/core/models/icon.model';
 
 export const icons: Icon = {
   faUser: faUser,
@@ -13,5 +28,7 @@ export const icons: Icon = {
   faCartFlatbed: faCartFlatbed,
   faHandHoldingHeart: faHandHoldingHeart,
   faCircleInfor: faCircleInfo,
-  faArrowRightFromBracket: faArrowRightFromBracket
-}
+  faArrowRightFromBracket: faArrowRightFromBracket,
+  faUtensils: faUtensils,
+  faMagnifyingGlass: faMagnifyingGlass,
+};

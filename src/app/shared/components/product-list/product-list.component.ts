@@ -7,7 +7,7 @@ import { Product } from 'src/app/core/models/product.model';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent {
-  @Input() mostPopularProducts: Product[] = []
+  @Input() products: Product[] = []
 }
 
 

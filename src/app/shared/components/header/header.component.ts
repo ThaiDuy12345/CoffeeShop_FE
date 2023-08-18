@@ -4,6 +4,7 @@ import { AccountData } from 'src/app/data/data';
 import { icons } from '../../utils/icon.utils';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { FilterStore } from 'src/app/core/stores/filter.store';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,32 +15,44 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Sản phẩm',
       icon: 'appstore',
+      link: "/main/product",
       subItems: [
         {
           title: 'TRÀ',
           icon: icons['faGlassWater'],
+          link: 'tea'
         },
         {
           title: 'COFFEE',
           icon: icons['faMugHot'],
+          link: 'coffee'
+        },
+        {
+          title: 'ĐỒ ĂN',
+          icon: icons['faUtensils'],
+          link: 'food'
         },
         {
           title: 'SẢN PHẨM GÓI',
           icon: icons['faCubes'],
+          link: 'package'
         },
       ],
     },
     {
       label: 'Đơn hàng',
       icon: 'barcode',
+      link: "/main/cart",
       subItems: [
         {
           title: 'GIỎ HÀNG',
           icon: icons['faCartShopping'],
+          link: ''
         },
         {
           title: 'ĐƠN HÀNG BẠN ĐÃ MUA',
           icon: icons['faCartFlatbed'],
+          link: ''
         },
       ],
     },
@@ -67,7 +80,8 @@ export class HeaderComponent implements OnInit {
   };
   constructor(
     private router: Router,
-    private message: NzMessageService 
+    private message: NzMessageService,
+    private filterStore: FilterStore
   ) {}
   ngOnInit(): void {
     const user = AccountData.find((item) => item.id === Cookies.get('id'));
@@ -78,5 +92,12 @@ export class HeaderComponent implements OnInit {
     Cookies.remove('id');
     this.message.success(`Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`)
     this.router.navigate(['/sign-in']);
+  }
+
+  onClickNavigate(categoryName: any): void {
+    this.filterStore.update({
+      category: categoryName
+    })
+    this.router.navigate(['/main/product'])
   }
 }

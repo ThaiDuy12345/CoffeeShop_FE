@@ -31,6 +31,8 @@ import {
 } from '@nebular/theme';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ProductListComponent } from '../shared/components/product-list/product-list.component';
@@ -38,6 +40,7 @@ import { UserComponent } from './main/user/user.component';
 import { EditUserComponent } from './main/user/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './main/user/change-password/change-password.component';
 import { AboutComponent } from './main/about/about.component';
+import { ProductComponent } from './main/product/product.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -49,6 +52,7 @@ import { AboutComponent } from './main/about/about.component';
     ChangePasswordComponent,
     DashboardComponent,
     HeaderComponent,
+    ProductComponent,
     ProductListComponent,
     FooterComponent,
     UserComponent,
@@ -61,6 +65,7 @@ import { AboutComponent } from './main/about/about.component';
     NbSelectModule,
     FormsModule,
     NzMessageModule,
+    
     NbInputModule,
     NbDialogModule.forChild(),
     FontAwesomeModule,
@@ -72,8 +77,10 @@ import { AboutComponent } from './main/about/about.component';
     NbTabsetModule,
     NbSearchModule,
     NbContextMenuModule,
+    NzSliderModule,
     NzMenuModule,
     NbPopoverModule,
+    NzResultModule,
     NbToastrModule,
     NbButtonModule,
     NbUserModule,

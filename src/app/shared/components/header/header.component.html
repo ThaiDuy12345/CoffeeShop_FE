@@ -6,7 +6,7 @@
     <ul nz-menu nzMode="horizontal" nzSelectable="false" class="border-b-0 h-full">
       <li class="h-full" nz-submenu [routerLink]="item.link" [nzTitle]="item.label" [nzIcon]="item.icon" *ngFor="let item of items">
         <ul>
-          <li nz-menu-item *ngFor="let i of item.subItems">
+          <li (click)="item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null" nz-menu-item *ngFor="let i of item.subItems">
             <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
           </li>
         </ul>

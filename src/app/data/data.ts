@@ -29,19 +29,19 @@ export const AccountData: Account[] = [
 export const CategoryData: Category[] = [
   {
     id: "0",
-    name: "Cafe"
+    name: "coffee"
   },
   {
     id: "1",
-    name: "Trà"
+    name: "tea"
   },
   {
     id: "2",
-    name: "Đồ ăn"
+    name: "food"
   },
   {
     id: "3",
-    name: "Sản phẩm theo gói"
+    name: "package"
   }
 ]
 

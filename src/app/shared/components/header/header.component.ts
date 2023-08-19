@@ -107,6 +107,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onSubmitSearch(): void {
+    if(!this.search) return
     this.filterStore
       ._select((state) => state.category)
       .subscribe((category) => {
@@ -114,6 +115,7 @@ export class HeaderComponent implements OnInit {
           category: category,
           search: this.search,
         });
+        this.search = ''
         !(this.location.path.toString().includes('/main/product')) && this.router.navigate(['/main/product'])
       });
   }

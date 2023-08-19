@@ -79,7 +79,6 @@ export class HeaderComponent implements OnInit {
       },
     ],
   };
-  public search: string = '';
   constructor(
     private router: Router,
     private message: NzMessageService,
@@ -100,23 +99,12 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickNavigate(categoryName: any): void {
-    this.filterStore.update({
-      category: categoryName,
+    this.filterStore.update(state => {
+      return {
+        category: categoryName,
+        search: ''
+      }
     });
-    !(this.location.path.toString().includes('/main/product')) && this.router.navigate(['/main/product'])
-  }
-
-  onSubmitSearch(): void {
-    if(!this.search) return
-    this.filterStore
-      ._select((state) => state.category)
-      .subscribe((category) => {
-        this.filterStore.update({
-          category: category,
-          search: this.search,
-        });
-        this.search = ''
-        !(this.location.path.toString().includes('/main/product')) && this.router.navigate(['/main/product'])
-      });
+    !(this.location.path().includes('/main/product')) && this.router.navigate(['/main/product'])
   }
 }

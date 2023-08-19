@@ -2,7 +2,7 @@
   <div [routerLink]="'/main/dashboard'" class="cursor-pointer col-span-1">
     <img src="assets/brand-icons/main.png" class="w-16"/>
   </div>
-  <div class="col-span-3">
+  <div class="col-span-5">
     <ul nz-menu nzMode="horizontal" nzSelectable="false" class="border-b-0 h-full">
       <li class="h-full" nz-submenu [routerLink]="item.link" [nzTitle]="item.label" [nzIcon]="item.icon" *ngFor="let item of items">
         <ul>
@@ -13,13 +13,7 @@
       </li>
     </ul>
   </div>
-  <div class="col-span-3">
-    <nb-form-field class="h-full w-full">
-      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-      <input [(ngModel)]="search" name="searchInput" #searchInput="ngModel" type="text" (keyup.enter)="onSubmitSearch()" nbInput>
-    </nb-form-field>
-  </div>
-  <div class="col-span-1 justify-items-end">
+  <div class="col-span-2 justify-items-end">
     <ul *ngIf="user.name" nzSelectable="false" nz-menu nzMode="horizontal" class="border-b-0 h-full">
       <li class="h-full" nz-submenu [nzTitle]="user.label + ', ' + user.name" [nzIcon]="user.icon">
         <ul>

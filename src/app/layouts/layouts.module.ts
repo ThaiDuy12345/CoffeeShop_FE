@@ -17,6 +17,7 @@ import {
   NbCardModule,
   NbMenuModule,
   NbButtonModule,
+  NbSearchModule,
   NbUserModule,
   NbLayoutModule,
   NbTabsetModule,
@@ -64,7 +65,7 @@ import { ProductComponent } from './main/product/product.component';
     NbSelectModule,
     FormsModule,
     NzMessageModule,
-    
+    NbSearchModule,
     NbInputModule,
     NbDialogModule.forChild(),
     FontAwesomeModule,

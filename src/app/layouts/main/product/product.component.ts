@@ -63,7 +63,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     })
     this.filterStore
       ._select((state) => state)
-      .subscribe(this.subject);
+      .subscribe(this.initFilterState);
     
   }
 

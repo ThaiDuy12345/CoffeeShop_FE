@@ -16,7 +16,7 @@
   <div class="col-span-3">
     <nb-form-field class="h-full w-full">
       <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-      <input type="text" nbInput>
+      <input [(ngModel)]="search" name="searchInput" #searchInput="ngModel" type="text" (keyup.enter)="onSubmitSearch()" nbInput>
     </nb-form-field>
   </div>
   <div class="col-span-1 justify-items-end">

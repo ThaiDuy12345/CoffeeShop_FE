@@ -15,51 +15,51 @@ export class HeaderComponent implements OnInit {
     {
       label: 'Sản phẩm',
       icon: 'appstore',
-      link: "/main/product",
+      link: '/main/product',
       subItems: [
         {
           title: 'TRÀ',
           icon: icons['faGlassWater'],
-          link: 'tea'
+          link: 'tea',
         },
         {
           title: 'COFFEE',
           icon: icons['faMugHot'],
-          link: 'coffee'
+          link: 'coffee',
         },
         {
           title: 'ĐỒ ĂN',
           icon: icons['faUtensils'],
-          link: 'food'
+          link: 'food',
         },
         {
           title: 'SẢN PHẨM GÓI',
           icon: icons['faCubes'],
-          link: 'package'
+          link: 'package',
         },
       ],
     },
     {
       label: 'Đơn hàng',
       icon: 'barcode',
-      link: "/main/cart",
+      link: '/main/cart',
       subItems: [
         {
           title: 'GIỎ HÀNG',
           icon: icons['faCartShopping'],
-          link: ''
+          link: '',
         },
         {
           title: 'ĐƠN HÀNG BẠN ĐÃ MUA',
           icon: icons['faCartFlatbed'],
-          link: ''
+          link: '',
         },
       ],
     },
     {
       label: 'Về chúng tôi',
       icon: 'book',
-      link: "/main/about"
+      link: '/main/about',
     },
   ];
   public user = {
@@ -78,6 +78,7 @@ export class HeaderComponent implements OnInit {
       },
     ],
   };
+  public search: string = '';
   constructor(
     private router: Router,
     private message: NzMessageService,
@@ -90,14 +91,29 @@ export class HeaderComponent implements OnInit {
 
   onClickSignOut(): void {
     Cookies.remove('id');
-    this.message.success(`Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`)
+    this.message.success(
+      `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
+    );
     this.router.navigate(['/sign-in']);
   }
 
   onClickNavigate(categoryName: any): void {
     this.filterStore.update({
-      category: categoryName
-    })
-    this.router.navigate(['/main/product'])
+      category: categoryName,
+    });
+    this.router.navigate(['/main/product']);
+  }
+
+  onSubmitSearch(): void {
+    this.filterStore
+      ._select((state) => state.category)
+      .subscribe((category) => {
+        this.filterStore.update({
+          category: category,
+          search: this.search,
+        });
+        this.router.navigateByUrl('/main/product');
+      });
+    
   }
 }

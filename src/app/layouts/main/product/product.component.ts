@@ -22,7 +22,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   public search: string = '';
   public isLoading: boolean = false;
   public priceFilter: [number, number] = [0, 0];
-  public subject = new Subject<any>()
+  public initFilterState = new Subject<any>()
   constructor(private filterStore: FilterStore) {}
 
   ngOnInit(): void {
@@ -30,13 +30,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.subject.complete()
+    this.initFilterState.complete()
   }
 
   getProductList(): void {
-    this.subject.subscribe({
+    this.initFilterState.subscribe({
       next: (state) => {
-        console.log(state);
         this.isLoading = true;
         setTimeout(() => {
           this.allProduct = ProductData;

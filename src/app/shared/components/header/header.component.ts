@@ -5,6 +5,7 @@ import { icons } from '../../utils/icon.utils';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FilterStore } from 'src/app/core/stores/filter.store';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -82,7 +83,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private message: NzMessageService,
-    private filterStore: FilterStore
+    private filterStore: FilterStore,
+    private location: Location
   ) {}
   ngOnInit(): void {
     const user = AccountData.find((item) => item.id === Cookies.get('id'));
@@ -101,7 +103,7 @@ export class HeaderComponent implements OnInit {
     this.filterStore.update({
       category: categoryName,
     });
-    this.router.navigate(['/main/product']);
+    this.location.path.toString().includes('/main/product') && this.router.navigate(['/main/product'])
   }
 
   onSubmitSearch(): void {
@@ -112,7 +114,7 @@ export class HeaderComponent implements OnInit {
           category: category,
           search: this.search,
         });
-        this.router.navigateByUrl('/main/product');
+        this.location.path.toString().includes('/main/product') && this.router.navigate(['/main/product'])
       });
     
   }

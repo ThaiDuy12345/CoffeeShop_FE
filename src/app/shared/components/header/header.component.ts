@@ -103,7 +103,7 @@ export class HeaderComponent implements OnInit {
     this.filterStore.update({
       category: categoryName,
     });
-    this.location.path.toString().includes('/main/product') && this.router.navigate(['/main/product'])
+    !(this.location.path.toString().includes('/main/product')) && this.router.navigate(['/main/product'])
   }
 
   onSubmitSearch(): void {
@@ -114,8 +114,7 @@ export class HeaderComponent implements OnInit {
           category: category,
           search: this.search,
         });
-        this.location.path.toString().includes('/main/product') && this.router.navigate(['/main/product'])
+        !(this.location.path.toString().includes('/main/product')) && this.router.navigate(['/main/product'])
       });
-    
   }
 }

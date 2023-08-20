@@ -1,6 +1,6 @@
 <div class="w-full grid grid-cols-3 gap-5">
   <nb-card *ngFor="let item of products" class="cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl">
-    <img [src]="item.picture" class="rounded-t-xl"/>
+    <app-image [classes]="'rounded-t-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image>
     <nb-card-footer>
       <div class="font-bold text-xl">{{item.name}}</div>
       <div class="second-main-text-color font-bold">{{item.price}} đ</div>

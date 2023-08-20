@@ -27,7 +27,7 @@ export const icons: Icon = {
   faTrailer: faTrailer,
   faCartFlatbed: faCartFlatbed,
   faHandHoldingHeart: faHandHoldingHeart,
-  faCircleInfor: faCircleInfo,
+  faCircleInfo: faCircleInfo,
   faArrowRightFromBracket: faArrowRightFromBracket,
   faUtensils: faUtensils,
   faMagnifyingGlass: faMagnifyingGlass,

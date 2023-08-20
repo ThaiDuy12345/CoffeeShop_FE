@@ -25,4 +25,8 @@ export class SignUpComponent {
   }
 
   constructor(){}
+
+  changeTab(index: number): void {
+    
+  }
 }

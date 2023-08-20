@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
     subItems: [
       {
         title: 'THÔNG TIN',
-        icon: icons['faCircleInfor'],
+        icon: icons['faCircleInfo'],
       },
       {
         title: 'ĐĂNG XUẤT',

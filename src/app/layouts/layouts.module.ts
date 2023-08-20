@@ -29,8 +29,10 @@ import {
   NbSelectModule,
   NbDialogModule,
 } from '@nebular/theme';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
@@ -41,6 +43,7 @@ import { EditUserComponent } from './main/user/edit-user/edit-user.component';
 import { ChangePasswordComponent } from './main/user/change-password/change-password.component';
 import { AboutComponent } from './main/about/about.component';
 import { ProductComponent } from './main/product/product.component';
+import { ImageComponent } from '../shared/components/image/image.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -57,6 +60,7 @@ import { ProductComponent } from './main/product/product.component';
     FooterComponent,
     UserComponent,
     AboutComponent,
+    ImageComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +68,9 @@ import { ProductComponent } from './main/product/product.component';
     MainModule,
     NbSelectModule,
     FormsModule,
+    NzTabsModule,
     NzMessageModule,
+    NzSkeletonModule,
     NbSearchModule,
     NbInputModule,
     NbDialogModule.forChild(),

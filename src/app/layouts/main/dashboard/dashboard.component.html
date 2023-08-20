@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1">
-  <img class="w-full" src="assets/brand-icons/banner.png" />
+  <app-image [classes]="'w-full'" [lazyClasses]="'min-h-[300px]'" [src]="'assets/brand-icons/banner.png'"></app-image>
 </div>
 <div class="mx-auto container px-40 py-1">
   <div class="w-full grid grid-cols-1 text-center my-10">
@@ -10,10 +10,10 @@
   ></app-product-list>
   <div class="w-full grid grid-cols-2 my-10 gap-3">
     <div class="col-span-2 xl:col-span-1">
-      <img class="w-full rounded-lg" src="assets/brand-icons/banner2.jpg" />
+      <app-image [classes]="'w-full rounded-lg'" [src]="'assets/brand-icons/banner2.jpg'"></app-image>
     </div>
     <div class="col-span-2 xl:col-span-1">
-      <img class="w-full rounded-lg mb-5" src="assets/brand-icons/banner3.jpg" />
+      <app-image [classes]="'w-full rounded-lg mb-5'" [src]="'assets/brand-icons/banner3.jpg'"></app-image>
       <h1 class="font-sans font-bold text-2xl xl:text-2xl 2xl:text-3xl tex-center xl:text-right mb-5">
         QUY TRÌNH CAFE ĐẾN TAY NGƯỜI DÙNG
       </h1>

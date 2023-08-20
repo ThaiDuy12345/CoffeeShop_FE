@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent {
-
+  public banner5Loaded: boolean = false
+  public banner4Loaded: boolean = false
 }

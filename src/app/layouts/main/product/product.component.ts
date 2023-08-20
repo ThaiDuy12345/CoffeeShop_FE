@@ -58,7 +58,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           }
           this.setInitPriceSlider(this.allProduct);
           this.isLoading = false;
-        }, 1000);
+        }, 600);
       }
     })
     this.filterStore

@@ -24,7 +24,6 @@ export class EditUserComponent implements OnInit {
 
   constructor(
     private messageService: NzMessageService,
-    private router: Router,
     private dialogService: NbDialogService,
     @Optional() private dialogRef: NbDialogRef<any>
   ) {}

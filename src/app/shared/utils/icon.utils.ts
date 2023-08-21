@@ -14,7 +14,10 @@ import {
   faUtensils,
   faMagnifyingGlass,
   faStar,
-  faBars
+  faBars,
+  faPencil,
+  faCreditCard,
+  faBasketShopping
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -34,5 +37,8 @@ export const icons: Icon = {
   faUtensils: faUtensils,
   faMagnifyingGlass: faMagnifyingGlass,
   faStar: faStar,
-  faBars: faBars
+  faBars: faBars,
+  faPencil: faPencil,
+  faCreditCard: faCreditCard,
+  faBasketShopping: faBasketShopping,
 };

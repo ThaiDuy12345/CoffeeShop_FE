@@ -20,42 +20,70 @@
     <nb-card-body class="grid grid-cols-5 space-x-5">
       <app-image class="col-span-2" [src]="product.picture"></app-image>
       <div class="col-span-3">
-        <div class="font-bold w-full text-2xl mb-2"> {{ product.name }} </div>
-        <div class="w-full mb-10"> 
+        <div class="font-bold w-full text-4xl mb-2">{{ product.name }}</div>
+        <div class="w-full mb-10">
           <span class="me-5">
-            {{ avarageStar }} <fa-icon [icon]="icons['faStar']" [style]="'color: ' + renderStarColor(avarageStar)"></fa-icon>
+            {{ avarageStar ? avarageStar : '0' }}
+            <fa-icon
+              [icon]="icons['faStar']"
+              [style]="'color: ' + renderStarColor(avarageStar)"
+            ></fa-icon>
           </span>
-          <span class="me-5">
-            {{ feedBackProducts.length }} Phản hồi
-          </span>
-          <span class="">
-            10 Lượt bán
-          </span>
+          <span class="me-5"> {{ feedBackProducts.length > 0 ?  feedBackProducts.length + ' Phản hồi' : 'Chưa có phản hồi'}}  </span>
+          <span class=""> 10 Lượt bán </span>
         </div>
         <nz-divider [nzText]="text"></nz-divider>
         <ng-template #text>
           <fa-icon [icon]="icons['faCartFlatbed']" class="text-lg"></fa-icon>
         </ng-template>
         <div class="w-full mt-10 mb-10">
-          <span class="me-5">
-            Số lượng:
-          </span>
+          <span class="me-5"> Số lượng: </span>
           <span class="font-bold me-5">
             <nb-button-group>
-              <button nbButton (click)="selected.quantity = selected.quantity + 1">+</button>
-              <input [(ngModel)]="selected.quantity" name="quantityInput" #quantityInput="ngModel" nbInput class="w-[50px]"/>
-              <button nbButton (click)="selected.quantity > 0 ? (selected.quantity = selected.quantity - 1) : null">-</button>
+              <button
+                nbButton
+                (click)="selected.quantity = selected.quantity + 1"
+              >
+                +
+              </button>
+              <input
+                [(ngModel)]="selected.quantity"
+                name="quantityInput"
+                #quantityInput="ngModel"
+                nbInput
+                class="w-[50px]"
+              />
+              <button
+                nbButton
+                (click)="
+                  selected.quantity > 0
+                    ? (selected.quantity = selected.quantity - 1)
+                    : null
+                "
+              >
+                -
+              </button>
             </nb-button-group>
           </span>
           <span class="me-5">
-            {{ product.quantity === -1 ? 'Luôn sẵn có' : product.quantity + 'sản phẩm sẵn có' }} 
+            {{
+              product.quantity === -1
+                ? "Luôn sẵn có"
+                : product.quantity + "sản phẩm sẵn có"
+            }}
           </span>
         </div>
         <div class="w-full mb-5">
-          <button nbButton class="w-full" status="infor">Thêm vào giỏ hàng</button>
+          <button nbButton class="w-full" status="infor">
+            <fa-icon class="me-3" [icon]="icons['faBasketShopping']"></fa-icon
+            >Thêm vào giỏ hàng
+          </button>
         </div>
         <div class="w-full mb-5">
-          <button nbButton class="w-full" status="success">Mua và thanh toán ngay</button>
+          <button nbButton class="w-full" status="success">
+            <fa-icon class="me-3" [icon]="icons['faCreditCard']"></fa-icon>Mua
+            và thanh toán ngay
+          </button>
         </div>
       </div>
     </nb-card-body>
@@ -67,24 +95,96 @@
     </nb-card-body>
   </nb-card>
   <nb-card>
-    <nb-card-header> Các lượt đánh giá </nb-card-header>
-    <nb-card-body class="grid grid-cols-1"> 
-      <nz-comment [nzAuthor]="fb.account.name" [nzDatetime]="timeSince(fb.creationDate)" *ngFor="let fb of feedBackProducts">
-        <nz-avatar nz-comment-avatar [nzText]="fb.account.name[0].toUpperCase()" style="color:rgb(55 65 81); background-color:#30b970;"></nz-avatar>
-        <nz-comment-content>
-          <fa-icon [icon]="icons['faStar']" [style]="'color: ' + renderStarColor(fb.star)" *ngFor="let i of [].constructor(fb.star)"></fa-icon> <br/>
-          {{ fb.comment }}
-        </nz-comment-content>
-      </nz-comment>
+    <nb-card-header class="grid grid-cols-2">
+      <div class="text-start">Các lượt phản hồi</div>
+      <div class="text-end second-text-color">
+        <span (click)="open(dialog)" class="cursor-pointer">
+          Review sản phẩm <fa-icon [icon]="icons['faPencil']"></fa-icon>
+        </span>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="grid grid-cols-1">
+      <ng-container *ngIf="feedBackProducts.length > 0">
+        <nz-comment
+          [nzAuthor]="fb.account.name"
+          [nzDatetime]="timeSince(fb.creationDate)"
+          *ngFor="let fb of feedBackProductsPg"
+        >
+          <nz-avatar
+            nz-comment-avatar
+            [nzText]="fb.account.name[0].toUpperCase()"
+            style="color: rgb(55 65 81); background-color: #30b970"
+          ></nz-avatar>
+          <nz-comment-content>
+            <fa-icon
+              [icon]="icons['faStar']"
+              [style]="'color: ' + renderStarColor(fb.star)"
+              *ngFor="let i of [].constructor(fb.star)"
+            ></fa-icon>
+            <br />
+            {{ fb.comment }}
+          </nz-comment-content>
+        </nz-comment>
+      </ng-container>
+      <nz-result
+        *ngIf="feedBackProducts.length === 0"
+        [nzIcon]="'smile-twotone'"
+        nzTitle="Ối, chưa có đánh giá nào cả!!"
+      >
+      </nz-result>
     </nb-card-body>
+    <nb-card-footer class="center-an-item">
+      <nz-pagination
+        (nzPageIndexChange)="onFeedBackPageChange($event)"
+        [nzPageIndex]="feedBackPageIndex"
+        nzPageSize="3"
+        [nzTotal]="feedBackProducts.length"
+      ></nz-pagination>
+    </nb-card-footer>
   </nb-card>
   <nb-card>
     <nb-card-header> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
-      <app-product-list [products]="relatedProducts" [isRelatedProductList]="true"></app-product-list>
+      <app-product-list
+        [products]="relatedProducts"
+        [isRelatedProductList]="true"
+      ></app-product-list>
     </nb-card-body>
     <nb-card-footer>
-      <a class="w-full text-center block" (click)="navigateRelatedProduct()"><fa-icon [icon]="icons['faBars']"></fa-icon> &ensp;Xem thêm</a>
+      <a class="w-full text-center block" (click)="navigateRelatedProduct()"
+        ><fa-icon [icon]="icons['faBars']"></fa-icon> &ensp;Xem thêm</a
+      >
     </nb-card-footer>
   </nb-card>
 </div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Tạo review cho sản phẩm "{{ product.name }}"</nb-card-header>
+    <nb-card-body class="grid grid-cols-1 p-10">
+      <div class="w-full grid-cols-1 grid">
+        <div class="font-bold text-2xl text-center mb-5">Bản cảm thấy sản phẩm này như nào?</div>
+        <div class="center-an-item mb-10">
+          <ng-container *ngFor="let icon of [].constructor(5); let i = index">
+            <fa-icon
+              [icon]="icons['faStar']"
+              [style]="'color: ' + renderStarColor(i <= starRating - 1 ? starRating : 0)"
+              (click)="starRating = i + 1"
+              class="me-3 cursor-pointer"
+            ></fa-icon>
+          </ng-container>
+        </div>
+        <div>
+          <label>Viết cảm nhận</label>
+          <textarea nbInput fullWidth placeholder="Cảm nhận của bạn về sản phẩm này"></textarea>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="space-x-3">
+      <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+      <button nbButton status="success" (click)="onClickSubmit()">
+        Xác nhận
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

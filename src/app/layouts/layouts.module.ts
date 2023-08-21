@@ -33,6 +33,7 @@ import {
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -77,6 +78,7 @@ import { DetailProductComponent } from './main/product/detail-product/detail-pro
     NzBreadCrumbModule,
     FormsModule,
     NzTabsModule,
+    NzPaginationModule,
     NzAvatarModule,
     NzMessageModule,
     NzSkeletonModule,

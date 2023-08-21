@@ -146,8 +146,8 @@ export const FeedBackData: FeedBack[] = [
   },
   {
     id: '5',
-    star: 5,
-    comment: 'Rất ngon, tôi thích!',
+    star: 1,
+    comment: 'Gớm quá!',
     product: ProductData[0],
     creationDate: new Date('03-04-2023'),
     account: AccountData[1],
@@ -211,7 +211,7 @@ export const FeedBackData: FeedBack[] = [
   },
   {
     id: '13',
-    star: 3,
+    star: 2,
     comment: 'Không hài lòng lắm',
     product: ProductData[0],
     creationDate: new Date('05-04-2023'),

@@ -13,7 +13,8 @@ import {
   faUser,
   faUtensils,
   faMagnifyingGlass,
-  faStar
+  faStar,
+  faBars
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -32,5 +33,6 @@ export const icons: Icon = {
   faArrowRightFromBracket: faArrowRightFromBracket,
   faUtensils: faUtensils,
   faMagnifyingGlass: faMagnifyingGlass,
-  faStar: faStar
+  faStar: faStar,
+  faBars: faBars
 };

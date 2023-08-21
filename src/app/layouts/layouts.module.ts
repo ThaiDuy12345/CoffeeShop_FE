@@ -20,6 +20,7 @@ import {
   NbSearchModule,
   NbUserModule,
   NbLayoutModule,
+  NbButtonGroupModule,
   NbTabsetModule,
   NbIconModule,
   NbContextMenuModule,
@@ -32,6 +33,7 @@ import {
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
@@ -83,11 +85,13 @@ import { DetailProductComponent } from './main/product/detail-product/detail-pro
     NbIconModule,
     NbSpinnerModule,
     NzIconModule,
+    NbButtonGroupModule,
     NzCommentModule,
     NbFormFieldModule,
     NbMenuModule,
     NbTabsetModule,
     NbContextMenuModule,
+    NzDividerModule,
     NzSliderModule,
     NzMenuModule,
     NbPopoverModule,

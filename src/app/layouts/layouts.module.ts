@@ -31,7 +31,9 @@ import {
 } from '@nebular/theme';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
@@ -44,6 +46,7 @@ import { ChangePasswordComponent } from './main/user/change-password/change-pass
 import { AboutComponent } from './main/about/about.component';
 import { ProductComponent } from './main/product/product.component';
 import { ImageComponent } from '../shared/components/image/image.component';
+import { DetailProductComponent } from './main/product/detail-product/detail-product.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -57,6 +60,7 @@ import { ImageComponent } from '../shared/components/image/image.component';
     HeaderComponent,
     ProductComponent,
     ProductListComponent,
+    DetailProductComponent,
     FooterComponent,
     UserComponent,
     AboutComponent,
@@ -69,6 +73,7 @@ import { ImageComponent } from '../shared/components/image/image.component';
     NbSelectModule,
     FormsModule,
     NzTabsModule,
+    NzAvatarModule,
     NzMessageModule,
     NzSkeletonModule,
     NbSearchModule,
@@ -78,6 +83,7 @@ import { ImageComponent } from '../shared/components/image/image.component';
     NbIconModule,
     NbSpinnerModule,
     NzIconModule,
+    NzCommentModule,
     NbFormFieldModule,
     NbMenuModule,
     NbTabsetModule,

@@ -12,7 +12,8 @@ import {
   faTrailer,
   faUser,
   faUtensils,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -31,4 +32,5 @@ export const icons: Icon = {
   faArrowRightFromBracket: faArrowRightFromBracket,
   faUtensils: faUtensils,
   faMagnifyingGlass: faMagnifyingGlass,
+  faStar: faStar
 };

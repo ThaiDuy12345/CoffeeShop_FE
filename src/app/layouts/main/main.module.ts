@@ -6,6 +6,7 @@ import { UserComponent } from './user/user.component';
 import { AuthGuard } from 'src/app/guard/authGuard.guard';
 import { AboutComponent } from './about/about.component';
 import { ProductComponent } from './product/product.component';
+import { DetailProductComponent } from './product/detail-product/detail-product.component';
 const routes: Route[] = [
   {
     path: "",
@@ -31,7 +32,16 @@ const routes: Route[] = [
       },
       {
         path: "product",
-        component: ProductComponent
+        children: [
+          {
+            path: '',
+            component: ProductComponent
+          },
+          {
+            path: ':id',
+            component: DetailProductComponent
+          }
+        ]
       }
     ]
   }
@@ -39,5 +49,8 @@ const routes: Route[] = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  declarations: [
+    
+  ],
 })
 export class MainModule { }

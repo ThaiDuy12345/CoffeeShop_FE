@@ -1,9 +1,9 @@
-<div class="w-full grid grid-cols-3 gap-5">
-  <nb-card *ngFor="let item of products" class="cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl">
-    <app-image [classes]="'rounded-t-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image>
-    <nb-card-footer>
-      <div class="font-bold text-xl">{{item.name}}</div>
-      <div class="second-main-text-color font-bold">{{item.price}} đ</div>
+<div [class]="classes">
+  <nb-card [routerLink]="['/main/product', item.id]" *ngFor="let item of products" class="border-none">
+    <nb-card-body class="border-none"> <app-image [classes]="'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image></nb-card-body>
+    <nb-card-footer class="border-none py-0">
+      <div class="font-bold text-lg truncate">{{item.name}}</div>
+      <div class="second-main-text-color text-md">{{ formatPrice(item.price) }} </div>
     </nb-card-footer>
   </nb-card>
 </div>

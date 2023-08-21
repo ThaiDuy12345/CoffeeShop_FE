@@ -22,32 +22,32 @@ export class ProductComponent implements OnInit, OnDestroy {
   public search: string = '';
   public isLoading: boolean = false;
   public priceFilter: [number, number] = [0, 0];
-  public initFilterState = new Subject<any>()
+  public initFilterState = new Subject<any>();
   constructor(private filterStore: FilterStore) {}
 
   ngOnInit(): void {
     this.getProductList();
   }
-  
+
   ngOnDestroy(): void {
-    this.initFilterState.complete()
+    this.initFilterState.complete();
   }
 
   getProductList(): void {
     this.initFilterState.subscribe({
       next: (state) => {
+        if (!state) {
+          this.allProduct = ProductData;
+          return;
+        }
         this.isLoading = true;
         setTimeout(() => {
-          this.allProduct = ProductData;
-          if (!state) {
-            this.isLoading = false;
-            return;
-          }
-          if (state.category.length > 0) {
-            this.allProduct = this.allProduct.filter(
-              (item) => item.category.name === state.category
-            );
-          }
+          this.allProduct =
+            state.category.length > 0
+              ? ProductData.filter(
+                  (item) => item.category.name === state.category
+                )
+              : ProductData;
           if (state.search.length > 0) {
             this.search = state.search;
             this.allProduct = this.allProduct.filter((item) =>
@@ -59,12 +59,9 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.setInitPriceSlider(this.allProduct);
           this.isLoading = false;
         }, 600);
-      }
-    })
-    this.filterStore
-      ._select((state) => state)
-      .subscribe(this.initFilterState);
-    
+      },
+    });
+    this.filterStore._select((state) => state).subscribe(this.initFilterState);
   }
 
   setInitPriceSlider(allProduct: Product[]): void {
@@ -77,29 +74,27 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   onClickResetFilterSearch(resetField: 'category' | 'search'): void {
-    if (resetField === 'category') {
-      this.filterStore.update(state => {
-        return {
-          category: '',
-          search: this.search,
-        }
-      });
-    } else {
-      this.filterStore.update(state => {
-        return {
-          category: state.category,
-          search: '',
-        }
-      });
-    }
+    this.filterStore.update((state) => {
+      const newState =
+        resetField === 'category'
+          ? {
+              category: '',
+              search: this.search,
+            }
+          : {
+              category: state.category,
+              search: '',
+            };
+      return newState;
+    });
   }
 
   updateFilter(category: string): void {
-    this.filterStore.update(state => {
+    this.filterStore.update(() => {
       return {
         category: category,
         search: this.search,
-      }
+      };
     });
   }
 }

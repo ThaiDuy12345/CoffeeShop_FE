@@ -14,13 +14,11 @@ export class SignUpComponent {
     email: string,
     password: string,
     name: string,
-    address: string,
     phone: string
   } = {
     email: '',
     password: '',
     name: '',
-    address: '',
     phone: ''
   }
 
@@ -28,5 +26,13 @@ export class SignUpComponent {
 
   changeTab(index: number): void {
     
+  }
+
+  isEmailValidate(): Boolean {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.account.email)
+  }
+
+  isPasswordValidate(): Boolean {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(this.account.password)
   }
 }

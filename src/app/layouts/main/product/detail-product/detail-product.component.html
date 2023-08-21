@@ -1,4 +1,13 @@
 <div class="mx-auto container px-32 py-1 grid grid-cols-1 gap-x-10 my-10">
+  <nz-breadcrumb class="w-full mb-5">
+    <nz-breadcrumb-item>
+      <a [routerLink]="'/main/product'">Menu</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item (click)="navigateRelatedProduct()">
+      <a>{{ product.category.name }}</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>{{ product.name }}</nz-breadcrumb-item>
+  </nz-breadcrumb>
   <div class="w-full">
     <button
       [routerLink]="'/main/product'"

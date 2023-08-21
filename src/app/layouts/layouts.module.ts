@@ -30,6 +30,7 @@ import {
   NbSelectModule,
   NbDialogModule,
 } from '@nebular/theme';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -73,6 +74,7 @@ import { DetailProductComponent } from './main/product/detail-product/detail-pro
     LayoutsRoutingModule,
     MainModule,
     NbSelectModule,
+    NzBreadCrumbModule,
     FormsModule,
     NzTabsModule,
     NzAvatarModule,

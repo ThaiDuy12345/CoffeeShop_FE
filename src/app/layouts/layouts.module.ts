@@ -52,6 +52,7 @@ import { AboutComponent } from './main/about/about.component';
 import { ProductComponent } from './main/product/product.component';
 import { ImageComponent } from '../shared/components/image/image.component';
 import { DetailProductComponent } from './main/product/detail-product/detail-product.component';
+import { CartComponent } from './main/cart/cart.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -69,7 +70,8 @@ import { DetailProductComponent } from './main/product/detail-product/detail-pro
     FooterComponent,
     UserComponent,
     AboutComponent,
-    ImageComponent
+    ImageComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,

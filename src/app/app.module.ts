@@ -16,7 +16,6 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
-import { ImageComponent } from './shared/components/image/image.component';
 @NgModule({
   declarations: [AppComponent, LayoutsComponent],
   imports: [

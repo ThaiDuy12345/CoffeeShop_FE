@@ -56,9 +56,6 @@ const routes: Route[] = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  declarations: [
-    ShoppingCartComponent,
-    HistoryOrderComponent
-  ],
+  declarations: [],
 })
 export class MainModule { }

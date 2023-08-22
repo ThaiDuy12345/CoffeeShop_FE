@@ -39,6 +39,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
@@ -53,6 +54,8 @@ import { ProductComponent } from './main/product/product.component';
 import { ImageComponent } from '../shared/components/image/image.component';
 import { DetailProductComponent } from './main/product/detail-product/detail-product.component';
 import { CartComponent } from './main/cart/cart.component';
+import { ShoppingCartComponent } from './main/cart/shopping-cart/shopping-cart.component';
+import { HistoryOrderComponent } from './main/cart/history-order/history-order.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -67,6 +70,8 @@ import { CartComponent } from './main/cart/cart.component';
     ProductComponent,
     ProductListComponent,
     DetailProductComponent,
+    ShoppingCartComponent,
+    HistoryOrderComponent,
     FooterComponent,
     UserComponent,
     AboutComponent,
@@ -80,6 +85,7 @@ import { CartComponent } from './main/cart/cart.component';
     NbSelectModule,
     NzBreadCrumbModule,
     FormsModule,
+    NzTableModule,
     NzTabsModule,
     NzPaginationModule,
     NzAvatarModule,

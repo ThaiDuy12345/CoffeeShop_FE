@@ -50,6 +50,7 @@
               [nzMax]="maxPrice"
               [nzMarks]="marks"
               [(ngModel)]="priceFilter"
+              (nzOnAfterChange)="onChangePriceFilter()"
               nzRange
             ></nz-slider>
           </li>

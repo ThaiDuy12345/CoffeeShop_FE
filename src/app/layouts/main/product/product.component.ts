@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   constructor(private filterStore: FilterStore) {}
 
   ngOnInit(): void {
+    this.setInitPriceSlider(ProductData);
     this.getProductList();
   }
 
@@ -56,7 +57,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           } else {
             this.search = '';
           }
-          this.setInitPriceSlider(this.allProduct);
+          this.allProduct = this.allProduct.filter((item) => item.price >= this.priceFilter[0] && item.price <= this.priceFilter[1])
           this.isLoading = false;
         }, 600);
       },
@@ -96,5 +97,9 @@ export class ProductComponent implements OnInit, OnDestroy {
         search: this.search,
       };
     });
+  }
+
+  onChangePriceFilter(): void {
+    this.getProductList()
   }
 }

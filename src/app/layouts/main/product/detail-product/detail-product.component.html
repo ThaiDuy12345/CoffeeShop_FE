@@ -42,9 +42,13 @@
             <nb-button-group>
               <button
                 nbButton
-                (click)="selected.quantity = selected.quantity + 1"
+                (click)="
+                  selected.quantity > 0
+                    ? (selected.quantity = selected.quantity - 1)
+                    : null
+                "
               >
-                +
+                -
               </button>
               <input
                 [(ngModel)]="selected.quantity"
@@ -55,13 +59,9 @@
               />
               <button
                 nbButton
-                (click)="
-                  selected.quantity > 0
-                    ? (selected.quantity = selected.quantity - 1)
-                    : null
-                "
+                (click)="selected.quantity = selected.quantity + 1"
               >
-                -
+                +
               </button>
             </nb-button-group>
           </span>

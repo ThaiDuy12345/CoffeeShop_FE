@@ -8,16 +8,16 @@
   <app-product-list
     [products]="mostPopularProducts"
   ></app-product-list>
-  <div class="w-full grid grid-cols-2 my-10 gap-3">
+  <div class="w-full grid grid-cols-2 my-10 gap-3 mb-32">
     <div class="col-span-2 xl:col-span-1">
       <app-image [classes]="'w-full rounded-lg'" [src]="'assets/brand-icons/banner2.jpg'"></app-image>
     </div>
     <div class="col-span-2 xl:col-span-1">
       <app-image [classes]="'w-full rounded-lg mb-5'" [src]="'assets/brand-icons/banner3.jpg'"></app-image>
-      <h1 class="font-sans font-bold text-2xl xl:text-2xl 2xl:text-3xl tex-center xl:text-right mb-5">
+      <h1 class="font-sans font-bold text-2xl xl:text-2xl 2xl:text-3xl text-center xl:text-right mb-5">
         QUY TRÌNH CAFE ĐẾN TAY NGƯỜI DÙNG
       </h1>
-      <p class="tex-center xl:text-right xl:text-md 2xl:text-lg">
+      <p class="text-center xl:text-right xl:text-md 2xl:text-lg">
         Từ những hạt cà phê khiêm tốn trong vườn xanh, đến bàn tay tinh tế của
         người thưởng thức. Mọi thứ bắt đầu bằng việc lựa chọn cẩn thận những hạt
         cà phê tinh túy, được hái từ những khu vườn tươi tốt, nơi chúng phát
@@ -35,5 +35,36 @@
         phê tượng trưng
       </p>
     </div>
+  </div>
+  <div class="w-full grid grid-cols-2 my-10 gap-5">
+    <nz-timeline nzMode="alternate">
+      <nz-timeline-item [nzLabel]="label1">
+        <p class="xl:text-md 2xl:text-lg">Thành lập, khởi động dự án COFFEE</p>
+        <p class="xl:text-md 2xl:text-lg">Lên kế hoạch cho dự án, thút đẩy mô hình bán cafe vào thị trường cạnh tranh</p>
+      </nz-timeline-item>
+      <nz-timeline-item nzColor="green" [nzLabel]="label2">
+        <p class="xl:text-md 2xl:text-lg">Triển khai mô hình bán sản phẩm cửa hàng COFFEE</p>
+        <p class="xl:text-md 2xl:text-lg">Cho ra chương trình ưu đãi về các sản phẩm ra lò đầu tiên của COFFEE</p>
+      </nz-timeline-item>
+      <nz-timeline-item nzColor="green" [nzLabel]="label3">
+        <p class="xl:text-md 2xl:text-lg">Đẩy mạnh kế hoạch marketing</p>
+      </nz-timeline-item>
+      <nz-timeline-item [nzDot]="dotTemplate"><p class="xl:text-md 2xl:text-lg">Hiện tại</p></nz-timeline-item>
+    </nz-timeline>
+    <div>
+      <app-image [classes]="'w-full rounded-lg'" [src]="'assets/brand-icons/banner6.jpg'"></app-image>
+    </div>
+    <ng-template #dotTemplate>
+      <span nz-icon nzType="clock-circle-o" style="font-size: 16px;"></span>
+    </ng-template>
+    <ng-template #label1>
+      <p class="xl:text-md 2xl:text-lg font-semibold">15/07/2023</p>
+    </ng-template>
+    <ng-template #label2>
+      <p class="xl:text-md 2xl:text-lg font-semibold">01/08/2023</p>
+    </ng-template>
+    <ng-template #label3>
+      <p class="xl:text-md 2xl:text-lg font-semibold">05/08/2023</p>
+    </ng-template>
   </div>
 </div>

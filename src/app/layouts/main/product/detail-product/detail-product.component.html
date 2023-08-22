@@ -74,13 +74,13 @@
           </span>
         </div>
         <div class="w-full mb-5">
-          <button nbButton class="w-full" status="infor">
+          <button nbButton class="w-full" status="infor" [nbSpinner]="isLoadingAddToCartBuntton" (click)="onClickAddToCart()" nbSpinnerStatus="success">
             <fa-icon class="me-3" [icon]="icons['faBasketShopping']"></fa-icon
             >Thêm vào giỏ hàng
           </button>
         </div>
         <div class="w-full mb-5">
-          <button nbButton class="w-full" status="success">
+          <button nbButton class="w-full" status="success" [nbSpinner]="isLoadingBuyNowButton" (click)="onClickBuyNow()" nbSpinnerStatus="warning">
             <fa-icon class="me-3" [icon]="icons['faCreditCard']"></fa-icon>Mua
             và thanh toán ngay
           </button>
@@ -89,13 +89,13 @@
     </nb-card-body>
   </nb-card>
   <nb-card>
-    <nb-card-header> Mô tả sản phẩm </nb-card-header>
+    <nb-card-header class="border-none"> Mô tả sản phẩm </nb-card-header>
     <nb-card-body>
       {{ product.description }}
     </nb-card-body>
   </nb-card>
   <nb-card>
-    <nb-card-header class="grid grid-cols-2">
+    <nb-card-header class="border-none grid grid-cols-2">
       <div class="text-start">Các lượt phản hồi</div>
       <div class="text-end second-text-color">
         <span (click)="open(dialog)" class="cursor-pointer">
@@ -133,7 +133,7 @@
       >
       </nz-result>
     </nb-card-body>
-    <nb-card-footer class="center-an-item">
+    <nb-card-footer class="border-none center-an-item">
       <nz-pagination
         (nzPageIndexChange)="onFeedBackPageChange($event)"
         [nzPageIndex]="feedBackPageIndex"
@@ -143,14 +143,14 @@
     </nb-card-footer>
   </nb-card>
   <nb-card>
-    <nb-card-header> Sản phẩm liên quan </nb-card-header>
+    <nb-card-header class="border-none"> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
       <app-product-list
         [products]="relatedProducts"
         [isRelatedProductList]="true"
       ></app-product-list>
     </nb-card-body>
-    <nb-card-footer>
+    <nb-card-footer class="border-none">
       <a class="w-full text-center block" (click)="navigateRelatedProduct()"
         ><fa-icon [icon]="icons['faBars']"></fa-icon> &ensp;Xem thêm</a
       >

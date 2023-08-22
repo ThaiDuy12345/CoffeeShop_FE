@@ -39,6 +39,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
@@ -81,6 +82,7 @@ import { DetailProductComponent } from './main/product/detail-product/detail-pro
     NzPaginationModule,
     NzAvatarModule,
     NzMessageModule,
+    NzTimelineModule,
     NzSkeletonModule,
     NbSearchModule,
     NbInputModule,

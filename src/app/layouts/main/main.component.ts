@@ -17,7 +17,7 @@ export class MainComponent {
     private router: Router
   ) {
     this.searchService.onSearchSubmit().subscribe((data: any) => {
-      if (this.location.path().includes('/main/product')) {
+      if (this.location.path() === '/main/product') {
         this.filterStore.update((state) => {
           return {
             category: state.category,

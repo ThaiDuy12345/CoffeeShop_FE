@@ -32,6 +32,8 @@ export class DetailProductComponent implements OnInit {
   public avarageStar: number = 0;
   public feedBackPageIndex: number = 1;
   public starRating: number = 0;
+  public isLoadingAddToCartBuntton: boolean = false;
+  public isLoadingBuyNowButton: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private messageService: NzMessageService,
@@ -113,7 +115,7 @@ export class DetailProductComponent implements OnInit {
   open(dialog: TemplateRef<any>): void {
     if (!Cookies.get('id')) {
       this.messageService.error('Bạn cần phải đăng nhập trước khi thao tác!!');
-      this.router.navigate(['/sign-in'])
+      this.router.navigate(['/sign-in']);
       return;
     }
     this.dialogRef = this.dialogService.open(dialog);
@@ -124,5 +126,23 @@ export class DetailProductComponent implements OnInit {
       'Thành công!! Cảm ơn vì đã dành thời gian đánh giá sản phẩm'
     );
     this.dialogRef.close();
+  }
+
+  onClickAddToCart(): void {
+    this.isLoadingAddToCartBuntton = true;
+    setTimeout(() => {
+      this.messageService.success('Thêm sản phẩm vào giỏ hàng thành công');
+      this.isLoadingAddToCartBuntton = false;
+    }, 2000);
+  }
+
+  onClickBuyNow(): void {
+    this.isLoadingBuyNowButton = true;
+    setTimeout(() => {
+      this.messageService.warning(
+        'Xin lỗi!! Chúng tôi vẫn chưa hỗ trợ tính năng này'
+      );
+      this.isLoadingBuyNowButton = false;
+    }, 2000);
   }
 }

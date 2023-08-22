@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbIconLibraries } from '@nebular/theme';
+import Cookies from 'js-cookie';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
   public activeIndex: number = 0;
   public icons = icons
   public isLoading: boolean = false
@@ -22,7 +24,13 @@ export class SignUpComponent {
     phone: ''
   }
 
-  constructor(){}
+  ngOnInit(): void {
+    Cookies.get('id') && this.router.navigate(['/main/dashboard'])
+  }
+
+  constructor(
+    private router: Router
+  ){}
 
   changeTab(index: number): void {
     

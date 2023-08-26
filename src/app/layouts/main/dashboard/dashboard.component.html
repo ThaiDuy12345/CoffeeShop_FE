@@ -1,7 +1,20 @@
 <div class="grid grid-cols-1">
   <app-image [classes]="'w-full'" [lazyClasses]="'min-h-[300px]'" [src]="'assets/brand-icons/banner.png'"></app-image>
 </div>
+<div class="w-full bg-[#f5f5f5] space-x-7 text-center second-main-text-color py-4">
+  <span class="inline">Ai cũng tìm kiếm:</span>  
+  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Hi Tea Vải')"> Hi Tea Vải </span> 
+  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Mochi kem chocolate')"> Mochi kem chocolate </span>  
+  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Bạc xỉu')"> Bạc xỉu </span>
+  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Bánh mì thịt nguội')"> Bánh mì thịt nguội </span>
+  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('CloudFee hạnh nhân nướng')"> CloudFee hạnh nhân nướng </span>
+</div>
 <div class="mx-auto container px-40 py-1">
+  <div class="w-full grid grid-cols-1 text-center my-10">
+    <div class="text-center font-bold text-2xl">Mang đến cho bạn những ly cà phê ngon nhất</div>
+    <small class="text-center second-main-text-color text-lg">Khám phá ngay sản phẩm của chúng tôi</small>
+    <app-image [classes]="'w-full my-3'" [lazyClasses]="'min-h-[300px]'" [src]="'assets/brand-icons/banner7.jpg'"></app-image>
+  </div>
   <div class="w-full grid grid-cols-1 text-center my-10">
     <h2 class="font-bold text-3xl">Sản phẩm bán chạy</h2>
   </div>

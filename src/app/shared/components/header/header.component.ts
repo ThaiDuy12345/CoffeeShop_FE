@@ -44,24 +44,17 @@ export class HeaderComponent implements OnInit {
       label: 'Đơn hàng',
       icon: 'barcode',
       link: '/main/cart',
-      subItems: [
-        {
-          title: 'GIỎ HÀNG',
-          icon: icons['faCartShopping'],
-          link: '',
-        },
-        {
-          title: 'ĐƠN HÀNG BẠN ĐÃ MUA',
-          icon: icons['faCartFlatbed'],
-          link: '',
-        },
-      ],
     },
     {
       label: 'Về chúng tôi',
       icon: 'book',
       link: '/main/about',
     },
+    {
+      label: 'Hỗ trợ',
+      icon: 'mail',
+      link: '/main/support',
+    }
   ];
   public user = {
     label: `Xin chào`,

@@ -1,7 +1,9 @@
+import { DetailOrder } from './../core/models/detail-order.model';
 import { Account } from "../core/models/account.model"
 import { Category } from "../core/models/category.model"
 import { Product } from "../core/models/product.model"
 import { FeedBack } from "../core/models/feedback.model"
+import { Order } from "../core/models/order.model"
 
 
 const imagePath = "assets/product-pictures/"
@@ -307,3 +309,35 @@ export const FeedBackData: FeedBack[] = [
     account: AccountData[0],
   },
 ]
+
+export const OrderData: Order[] = [
+  {
+    id: "0",
+    status: 0,
+    orderDate: "2023-08-26",
+    totalPrice: 0
+  }
+]
+
+export const DetailOrderData: DetailOrder[] = [
+  {...new DetailOrder({
+    id: "0",
+    quantity: 1,
+    product: ProductData[0],
+    order: OrderData[0]
+  })},
+  {...new DetailOrder({
+    id: "1",
+    quantity: 2,
+    product: ProductData[5],
+    order: OrderData[0]
+  })},
+  {...new DetailOrder({
+    id: "2",
+    quantity: 4,
+    product: ProductData[3],
+    order: OrderData[0]
+  })},
+
+]
+

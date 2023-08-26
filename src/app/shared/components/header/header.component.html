@@ -4,13 +4,20 @@
   </div>
   <div class="col-span-5">
     <ul nz-menu nzMode="horizontal" nzSelectable="false" class="border-b-0 h-full">
-      <li class="h-full" nz-submenu [routerLink]="item.link" [nzTitle]="item.label" [nzIcon]="item.icon" *ngFor="let item of items">
-        <ul>
-          <li (click)="item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null" nz-menu-item *ngFor="let i of item.subItems">
-            <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
-          </li>
-        </ul>
-      </li>
+      <ng-container *ngFor="let item of items">
+        <li *ngIf="item.subItems" class="h-full" nz-submenu [routerLink]="item.link" [nzTitle]="item.label" [nzIcon]="item.icon" >
+          <ul>
+            <li (click)="item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null" nz-menu-item *ngFor="let i of item.subItems">
+              <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+            </li>
+          </ul>
+        </li>
+        <li *ngIf="!item.subItems" class="h-full" nz-menu-item [routerLink]="item.link">
+          <div class="h-full center-an-item">
+            <span nz-icon [nzType]="item.icon"></span><span class="ml-3">{{ item.label }}</span>
+          </div>
+        </li>
+      </ng-container>
     </ul>
   </div>
   <div class="col-span-2 justify-items-end">

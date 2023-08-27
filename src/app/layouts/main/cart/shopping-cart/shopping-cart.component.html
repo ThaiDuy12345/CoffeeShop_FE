@@ -8,17 +8,17 @@
       <nb-card class="my-3 py-2">
         <nb-card-body class="grid grid-cols-5 gap-5">
           <div class="col-span-1"></div>
-          <div class="col-span-4 grid grid-cols-5 gap-5 text-lg font-semibold">
+          <div class="col-span-4 grid grid-cols-6 gap-5 font-semibold">
             <div class="col-span-2 center-an-item">Sản phẩm</div>
             <div>Đơn giá</div>
-            <div>Số lượng</div>
+            <div class="col-span-2 center-an-item">Số lượng</div>
             <div>Tổng giá</div>
           </div>
         </nb-card-body>
       </nb-card>
-      <nb-card>
-        <nb-card-body>
-          <ng-container *ngFor="let item of DetailOrder">
+      <ng-container *ngFor="let item of detailOrder">
+        <nb-card>
+          <nb-card-body>
             <div class="grid grid-cols-5 my-6 gap-5">
               <div class="col-span-1">
                 <app-image
@@ -27,19 +27,19 @@
                 ></app-image>
               </div>
               <div class="col-span-4 grid grid-rows-3 mt-0">
-                <div class="row-span-2 grid grid-cols-5 gap-5">
+                <div class="row-span-2 grid grid-cols-6 gap-5">
                   <div class="col-span-2">
-                    <div class="h-auto w-full text-lg">
+                    <div class="h-auto w-full">
                       <b class="break-words">{{ item.product.name }}</b>
                     </div>
                   </div>
                   <div>
-                    <div class="h-auto w-full text-lg">
+                    <div class="h-auto w-full">
                       <span>{{ formatPrice(item.product.price) }}</span>
                     </div>
                   </div>
-                  <div>
-                    <div class="h-auto w-full">
+                  <div class="col-span-2">
+                    <div class="h-auto w-full flex justify-center">
                       <nb-button-group>
                         <button
                           nbButton
@@ -48,6 +48,7 @@
                               ? (item.quantity = item.quantity - 1)
                               : null
                           "
+                          class="w-[20px] h-[25px]"
                         >
                           -
                         </button>
@@ -56,11 +57,12 @@
                           name="quantityInput"
                           #quantityInput="ngModel"
                           nbInput
-                          class="w-[50px]"
+                          class="w-[50px] h-[25px]"
                         />
                         <button
                           nbButton
                           (click)="item.quantity = item.quantity + 1"
+                          class="w-[20px] h-[25px]"
                         >
                           +
                         </button>
@@ -68,22 +70,22 @@
                     </div>
                   </div>
                   <div>
-                    <div class="h-auto w-full text-lg">
-                      <span>{{ item.subTotal }}</span>
+                    <div class="h-auto w-full">
+                      <span>{{ formatPrice(item.subTotal) }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="row-span-1 flex justify-end">
-                  <button nbButton>
+                  <button nbButton class="text-base">
                     <fa-icon [icon]="icons['faTrash']" class="mr-2"></fa-icon
                     >Xoá
                   </button>
                 </div>
               </div>
             </div>
-          </ng-container>
-        </nb-card-body>
-      </nb-card>
+          </nb-card-body>
+        </nb-card>
+      </ng-container>
     </div>
   </div>
   <div class="col-span-10 lg:col-span-3">

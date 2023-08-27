@@ -16,9 +16,9 @@
       <fa-icon [icon]="icons['faArrowLeft']"></fa-icon> Danh sách sản phẩm
     </button>
   </div>
-  <nb-card>
+  <nb-card class="rounded-lg p-5">
     <nb-card-body class="grid grid-cols-5 space-x-5">
-      <app-image class="col-span-2" [src]="product.picture"></app-image>
+      <app-image class="col-span-2" [classes]="'rounded-lg'" [src]="product.picture"></app-image>
       <div class="col-span-3">
         <div class="font-bold w-full text-4xl mb-2">{{ product.name }}</div>
         <div class="w-full mb-10">
@@ -88,13 +88,13 @@
       </div>
     </nb-card-body>
   </nb-card>
-  <nb-card>
+  <nb-card class="rounded-lg p-5">
     <nb-card-header class="border-none"> Mô tả sản phẩm </nb-card-header>
     <nb-card-body>
       {{ product.description }}
     </nb-card-body>
   </nb-card>
-  <nb-card>
+  <nb-card class="rounded-lg p-5">
     <nb-card-header class="border-none grid grid-cols-2">
       <div class="text-start">Các lượt phản hồi</div>
       <div class="text-end second-text-color">
@@ -142,7 +142,7 @@
       ></nz-pagination>
     </nb-card-footer>
   </nb-card>
-  <nb-card>
+  <nb-card class="rounded-lg p-5">
     <nb-card-header class="border-none"> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
       <app-product-list
@@ -159,7 +159,7 @@
 </div>
 
 <ng-template #dialog let-data let-ref="dialogRef">
-  <nb-card>
+  <nb-card class="rounded-lg">
     <nb-card-header>Tạo review cho sản phẩm "{{ product.name }}"</nb-card-header>
     <nb-card-body class="grid grid-cols-1 p-10">
       <div class="w-full grid-cols-1 grid">

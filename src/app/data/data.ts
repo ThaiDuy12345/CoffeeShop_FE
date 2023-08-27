@@ -314,6 +314,7 @@ export const OrderData: Order[] = [
   {
     id: "0",
     status: 0,
+    account: AccountData[0],
     orderDate: "2023-08-26",
     totalPrice: 0
   }

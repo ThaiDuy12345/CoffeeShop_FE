@@ -94,6 +94,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     NzTimelineModule,
     NzDrawerModule,
     NzSkeletonModule,
+    NbSelectModule,
     NbSearchModule,
     NbInputModule,
     NbDialogModule.forChild(),

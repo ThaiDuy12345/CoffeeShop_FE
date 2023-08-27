@@ -12,4 +12,15 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 export class ShoppingCartComponent {
   public DetailOrder: DetailOrder[] = DetailOrderData
   public icons: Icon = icons
+
+  formatPrice(price: number): string {
+    const formatter = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  
+    return formatter.format(price);
+  }
 }

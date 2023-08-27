@@ -6,12 +6,15 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { Location } from '@angular/common';
+import { Icon } from 'src/app/core/models/icon.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  public visible: boolean = false
+  public icons: Icon = icons
   public items = [
     {
       label: 'Sản phẩm',
@@ -99,5 +102,9 @@ export class HeaderComponent implements OnInit {
       }
     });
     !(this.location.path().includes('/main/product')) && this.router.navigate(['/main/product'])
+  }
+
+  isMobileScreen(): Boolean {
+    return window.innerWidth < 895
   }
 }

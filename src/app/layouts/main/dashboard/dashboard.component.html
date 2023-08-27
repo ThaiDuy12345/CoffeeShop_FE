@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="w-full grid grid-cols-2 my-10 gap-5">
-    <nz-timeline nzMode="alternate">
+    <nz-timeline class="col-span-2 xl:col-span-1" nzMode="alternate">
       <nz-timeline-item [nzLabel]="label1">
         <p class="xl:text-md 2xl:text-lg">Thành lập, khởi động dự án COFFEE</p>
         <p class="xl:text-md 2xl:text-lg">Lên kế hoạch cho dự án, thút đẩy mô hình bán cafe vào thị trường cạnh tranh</p>
@@ -64,7 +64,7 @@
       </nz-timeline-item>
       <nz-timeline-item [nzDot]="dotTemplate"><p class="xl:text-md 2xl:text-lg">Hiện tại</p></nz-timeline-item>
     </nz-timeline>
-    <div>
+    <div class="col-span-2 xl:col-span-1">
       <app-image [classes]="'w-full rounded-lg'" [src]="'assets/brand-icons/banner6.jpg'"></app-image>
     </div>
     <ng-template #dotTemplate>

@@ -1,37 +1,140 @@
 <div class="grid grid-cols-8 w-full">
   <div [routerLink]="'/main/dashboard'" class="cursor-pointer col-span-1">
-    <img src="assets/brand-icons/main.png" class="w-16"/>
+    <img src="assets/brand-icons/main.png" class="w-16" />
   </div>
-  <div class="col-span-5">
-    <ul nz-menu nzMode="horizontal" nzSelectable="false" class="border-b-0 h-full">
+  <div *ngIf="!isMobileScreen()" class="col-span-5">
+    <ul
+      nz-menu
+      nzMode="horizontal"
+      nzSelectable="false"
+      class="border-b-0 h-full"
+    >
       <ng-container *ngFor="let item of items">
-        <li *ngIf="item.subItems" class="h-full" nz-submenu [routerLink]="item.link" [nzTitle]="item.label" [nzIcon]="item.icon" >
+        <li
+          *ngIf="item.subItems"
+          class="h-full"
+          nz-submenu
+          [routerLink]="item.link"
+          [nzTitle]="item.label"
+          [nzIcon]="item.icon"
+        >
           <ul>
-            <li (click)="item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null" nz-menu-item *ngFor="let i of item.subItems">
+            <li
+              (click)="
+                item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null
+              "
+              nz-menu-item
+              *ngFor="let i of item.subItems"
+            >
               <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
             </li>
           </ul>
         </li>
-        <li *ngIf="!item.subItems" class="h-full" nz-menu-item [routerLink]="item.link">
+        <li
+          *ngIf="!item.subItems"
+          class="h-full"
+          nz-menu-item
+          [routerLink]="item.link"
+        >
           <div class="h-full center-an-item">
-            <span nz-icon [nzType]="item.icon"></span><span class="ml-3">{{ item.label }}</span>
+            <span nz-icon [nzType]="item.icon"></span
+            ><span class="ml-3">{{ item.label }}</span>
           </div>
         </li>
       </ng-container>
     </ul>
   </div>
-  <div class="col-span-2 justify-items-end">
-    <ul *ngIf="user.name" nzSelectable="false" nz-menu nzMode="horizontal" class="border-b-0 h-full">
-      <li class="h-full" nz-submenu [nzTitle]="user.label + ', ' + user.name" [nzIcon]="user.icon">
+  <div [ngClass]="{
+    'col-span-2': !isMobileScreen(),
+    'col-span-5': isMobileScreen()
+  }" class="col-span-2 justify-items-end">
+    <ul
+      *ngIf="user.name"
+      nzSelectable="false"
+      nz-menu
+      nzMode="horizontal"
+      class="border-b-0 h-full"
+    >
+      <li
+        class="h-full"
+        nz-submenu
+        [nzTitle]="user.label + ', ' + user.name"
+        [nzIcon]="user.icon"
+      >
         <ul>
-          <li [routerLink]="i.title === 'THÔNG TIN' ? ['/main/user'] : []" (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null" nz-menu-item *ngFor="let i of user.subItems">
+          <li
+            [routerLink]="i.title === 'THÔNG TIN' ? ['/main/user'] : []"
+            (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null"
+            nz-menu-item
+            *ngFor="let i of user.subItems"
+          >
             <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
           </li>
         </ul>
       </li>
     </ul>
     <div *ngIf="!user.name" class="w-full h-full center-an-item cursor-pointer">
-      <span class="second-text-color" [routerLink]="'/sign-in'">Đăng nhập</span>&ensp;/&ensp;<span class="second-text-color" [routerLink]="'/sign-up'">Đăng ký</span>
-    </div> 
+      <span class="second-text-color" [routerLink]="'/sign-in'">Đăng nhập</span
+      >&ensp;/&ensp;<span class="second-text-color" [routerLink]="'/sign-up'"
+        >Đăng ký</span
+      >
+    </div>
+  </div>
+  <div *ngIf="isMobileScreen()" class="col-span-2 center-an-item">
+    <fa-icon [icon]="icons['faBars']" (click)="visible = true"></fa-icon>
   </div>
 </div>
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="visible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div>
+      <ul
+        nz-menu
+        nzMode="inline"
+        nzSelectable="false"
+        class="border-b-0 border-r-0"
+      >
+        <ng-container *ngFor="let item of items">
+          <li
+            *ngIf="item.subItems"
+            nz-submenu
+            [routerLink]="item.link"
+            [nzTitle]="item.label"
+            [nzIcon]="item.icon"
+          >
+            <ul>
+              <li
+                (click)="
+                  item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null
+                "
+                nz-menu-item
+                *ngFor="let i of item.subItems"
+              >
+                <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+              </li>
+            </ul>
+          </li>
+          <li
+            *ngIf="!item.subItems"
+            nz-menu-item
+            [routerLink]="item.link"
+          >
+            <div class="center-an-item">
+              <span nz-icon [nzType]="item.icon"></span
+              ><span class="ml-3">{{ item.label }}</span>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title1>
+  <fa-icon [icon]="icons['faXmark']" (click)="visible = false"></fa-icon>
+</ng-template>

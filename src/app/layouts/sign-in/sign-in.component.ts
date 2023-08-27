@@ -45,7 +45,10 @@ export class SignInComponent implements OnInit {
       this.isLoading = false
       return
     }
-    Cookies.set('id', result.id, { expires: 0.02083 })
+    //Hết hạn trong vòng 30 phút
+    Cookies.set('id', result.id, { 
+      expires: new Date(new Date().getTime() + 30 * 60 * 1000 ) 
+    })
     
     
     this.message.success(`Đăng nhập thành công, Chào bạn ${result.name}`)

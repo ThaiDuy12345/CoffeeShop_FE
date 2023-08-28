@@ -46,7 +46,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.allProduct =
             state.category.length > 0
               ? ProductData.filter(
-                  (item) => item.category.name === state.category
+                  (item) => state.category.includes(item.category.name)
                 )
               : ProductData;
           if (state.search.length > 0) {
@@ -79,7 +79,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       const newState =
         resetField === 'category'
           ? {
-              category: '',
+              category: [],
               search: this.search,
             }
           : {
@@ -90,7 +90,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateFilter(category: string): void {
+  updateFilter(category: string[]): void {
     this.filterStore.update(() => {
       return {
         category: category,

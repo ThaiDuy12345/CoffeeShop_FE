@@ -28,6 +28,7 @@ import {
   NbSpinnerModule,
   NbFormFieldModule,
   NbSelectModule,
+  NbAccordionModule,
   NbDialogModule,
 } from '@nebular/theme';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -90,6 +91,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     NzTabsModule,
     NzPaginationModule,
     NzAvatarModule,
+    NbAccordionModule,
     NzMessageModule,
     NzTimelineModule,
     NzDrawerModule,

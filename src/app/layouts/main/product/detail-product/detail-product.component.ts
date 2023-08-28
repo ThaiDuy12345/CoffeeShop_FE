@@ -100,7 +100,7 @@ export class DetailProductComponent implements OnInit {
   navigateRelatedProduct(): void {
     this.filterStore.update((state) => {
       return {
-        category: this.product.category.name,
+        category: [this.product.category.name],
         search: '',
       };
     });

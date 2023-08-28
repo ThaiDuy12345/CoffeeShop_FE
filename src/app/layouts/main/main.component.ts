@@ -27,7 +27,7 @@ export class MainComponent {
       } else {
         this.filterStore.update(state => {
           return {
-            category: '',
+            category: [],
             search: data.term,
           }
         });

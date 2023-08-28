@@ -1,1 +1,19 @@
-<p>history-order works!</p>
+<div class="w-full grid grid-cols-3 mb-5 gap-5">
+  <div class="col-span-2">
+    <input nbInput class="w-full" placeholder="Nhập tên sản phẩm"/>
+  </div>
+  <div class="col-span-1">
+    <nb-select class="w-full" multiple placeholder="Tất cả" selectable="false">
+      <nb-option value="coffee"><b class="text-[#3366ff]">Chờ xét duyệt</b></nb-option>
+      <nb-option value="tea"><b class="text-[#ffaa00]">Đang vận chuyển</b></nb-option>
+      <nb-option value="food"><b class="text-[#00d68f]">Đã hoàn thành</b></nb-option>
+      <nb-option value="package"><b class="text-[#ff3d71]">Đã huỷ</b></nb-option>
+    </nb-select>
+  </div>
+</div>
+<nb-accordion>
+  <nb-accordion-item>
+    <nb-accordion-item-header>Product Details</nb-accordion-item-header>
+    <nb-accordion-item-body> Item Content </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>

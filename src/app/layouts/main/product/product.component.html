@@ -1,62 +1,51 @@
-<div class="mx-auto container grid grid-cols-5 gap-x-10 p-10 my-10 rounded-lg bg-white">
+<div
+  class="mx-auto container grid grid-cols-5 gap-x-10 p-10 my-10 rounded-lg bg-white"
+>
   <div class="col-span-5 mb-5 border-b pb-10">
     <h1 class="text-3xl text-center w-full font-bold">Sản phẩm của COFFEE</h1>
   </div>
   <div class="col-span-1">
-    <div *ngIf="search" class="border-b py-5">
-      <div class="mb-3"><span class="break-words"><fa-icon [icon]="icons['faMagnifyingGlass']"></fa-icon>&ensp;Đang tìm kiếm: <b class="main-text-color">{{search}}</b></span></div>
-      <button nbButton (click)="onClickResetFilterSearch('search')" class="w-full">Xoá</button>
+    <div *ngIf="search" class="border-b py-5 mb-3">
+      <div class="mb-3">
+        <span class="break-words"
+          ><fa-icon [icon]="icons['faMagnifyingGlass']"></fa-icon>&ensp;Đang tìm
+          kiếm: <b class="main-text-color">{{ search }}</b></span
+        >
+      </div>
+      <button
+        nbButton
+        (click)="onClickResetFilterSearch('search')"
+        class="w-full"
+      >
+        Xoá
+      </button>
     </div>
-    <ul nz-menu nzMode="inline" nzSelectable="false">
-      <li nz-submenu nzTitle="Lọc sản phẩm">
-        <ul>
-          <li
-            nz-menu-item
-            (click)="onClickResetFilterSearch('category')"
-          >
-            Tất cả
-          </li>
-          <li
-            nz-menu-item
-            (click)="updateFilter('tea')"
-          >
-            Trà
-          </li>
-          <li
-            nz-menu-item
-            (click)="updateFilter('coffee')"
-          >
-            Coffee
-          </li>
-          <li
-            nz-menu-item
-            (click)="updateFilter('food')"
-          >
-            Đồ ăn
-          </li>
-          <li
-            nz-menu-item
-            (click)="updateFilter('package')"
-          >
-            Sản phẩm gói
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzTitle="Lọc mức giá">
-        <ul class="center-an-item">
-          <li class="w-[70%]">
-            <nz-slider
-              [nzMin]="minPrice"
-              [nzMax]="maxPrice"
-              [nzMarks]="marks"
-              [(ngModel)]="priceFilter"
-              (nzOnAfterChange)="onChangePriceFilter()"
-              nzRange
-            ></nz-slider>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <div class="w-full mb-5">
+      <label>Lọc theo danh mục</label>
+      <nb-select
+        class="w-full mt-3"
+        multiple
+        placeholder="Tất cả"
+        (selectedChange)="updateFilter($event)"
+      >
+        <nb-option value="coffee">Coffee</nb-option>
+        <nb-option value="tea">Trà</nb-option>
+        <nb-option value="food">Đồ ăn</nb-option>
+        <nb-option value="package">Sản phẩm gói</nb-option>
+      </nb-select>
+    </div>
+    <div class="w-full">
+      <label>Lọc theo mức giá</label>
+      <nz-slider
+        [nzMin]="minPrice"
+        [nzMax]="maxPrice"
+        [nzMarks]="marks"
+        [(ngModel)]="priceFilter"
+        (nzOnAfterChange)="onChangePriceFilter()"
+        nzRange
+        class="mt-5"
+      ></nz-slider>
+    </div>
   </div>
   <div class="col-span-4 center-an-item" [nbSpinner]="isLoading">
     <ng-template [ngIf]="allProduct.length > 0">

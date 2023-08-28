@@ -21,7 +21,7 @@ export class DashboardComponent {
     this.filterStore.update(() => {
       return {
         search: productName,
-        category: ''
+        category: []
       }
     })
     this.router.navigate(['/main/product'])

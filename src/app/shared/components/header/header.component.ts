@@ -94,10 +94,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/sign-in']);
   }
 
-  onClickNavigate(categoryName: any): void {
-    this.filterStore.update(state => {
+  onClickNavigate(categoryName: string): void {
+    this.filterStore.update((state) => {
       return {
-        category: categoryName,
+        category: [categoryName],
         search: ''
       }
     });

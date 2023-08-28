@@ -7,7 +7,6 @@ import { AccountData } from "../../data/data"
 export class AuthService {
   isSignedIn(): Boolean {
     const id = Cookies.get('id')
-    console.log(id)
     if(!id) return false 
     const result = AccountData.find(item => item.id === id)
     return result ? true : false

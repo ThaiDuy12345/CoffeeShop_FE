@@ -20,8 +20,8 @@
 $main-color: #43da89;
 $main-hover-color: #30b970;
 $second-main-color: #eeffd8;
-$main-text-color: rgb(55 65 81);
-$second-text-color: rgb(121, 125, 133);
+$main-text-color: rgb(51, 66, 90);
+$second-text-color: rgb(89, 105, 139);
 $error-text-color: #ee7070;
 ::-webkit-scrollbar {
   width: 5px;
@@ -42,10 +42,18 @@ $error-text-color: #ee7070;
 }
 
 body {
-  
+  color: $main-text-color;
+  .font-bold, .font-semibold, b, nb-card-header {
+    color: $main-text-color
+  }
 
   [nbInput], nb-form-field, nb-select{
     max-width: none !important;
+  }
+  nb-select{
+    .select-button{
+      min-width:auto !important;
+    }
   }
 
   .ant-message-custom-content{

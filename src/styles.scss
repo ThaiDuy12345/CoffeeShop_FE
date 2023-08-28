@@ -47,6 +47,10 @@ body {
     color: $main-text-color
   }
 
+  [nbSpinner] {
+    z-index: auto !important;
+  }
+
   [nbInput], nb-form-field, nb-select{
     max-width: none !important;
   }

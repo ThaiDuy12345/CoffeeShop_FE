@@ -105,6 +105,6 @@ export class HeaderComponent implements OnInit {
   }
 
   isMobileScreen(): Boolean {
-    return window.innerWidth < 895
+    return window.innerWidth < 950
   }
 }

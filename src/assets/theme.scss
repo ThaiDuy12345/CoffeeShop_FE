@@ -10,6 +10,6 @@
 $nb-enable-css-custom-properties: true; // <-- enable css custom properties
 
 $nb-themes: nb-register-theme((
-  font-family-primary: unquote('CustomFont'),
+  font-family-primary: unquote('ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'),
   font-family-secondary: font-family-primary,
 ),default, default);

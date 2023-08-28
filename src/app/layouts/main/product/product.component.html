@@ -49,7 +49,7 @@
   </div>
   <div class="col-span-4 center-an-item" [nbSpinner]="isLoading">
     <ng-template [ngIf]="allProduct.length > 0">
-      <app-product-list [products]="allProduct"></app-product-list>
+      <app-product-list [products]="allProduct" [cols]="getColsByWindowWidth()"></app-product-list>
     </ng-template>
     <nz-result
       *ngIf="allProduct.length === 0 && !isLoading"

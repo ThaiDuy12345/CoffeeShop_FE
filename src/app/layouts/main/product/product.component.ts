@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Product } from 'src/app/core/models/product.model';
 import { ProductData } from 'src/app/data/data';
 import { icons } from '../../../shared/utils/icon.utils';
@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false;
   public priceFilter: [number, number] = [0, 0];
   public initFilterState = new Subject<any>();
+  public calculatedCols: 3 | 2 = 3
   constructor(private filterStore: FilterStore) {}
 
   ngOnInit(): void {
@@ -90,7 +91,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateFilter(category: string[]): void {
+  updateFilter = (category: string[]): void => {
     this.filterStore.update(() => {
       return {
         category: category,
@@ -99,7 +100,17 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  onChangePriceFilter(): void {
+  onChangePriceFilter = (): void => {
     this.getProductList()
   }
+
+  getColsByWindowWidth = (): number => {
+    return window.innerWidth > 950 ? 3 : 2
+  }
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: Event) {
+  //   this.calculatedCols = this.getWindowWidth() > 1000 ? 3 : 2;
+  // }
+
 }

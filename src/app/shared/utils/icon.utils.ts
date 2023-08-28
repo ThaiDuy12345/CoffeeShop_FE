@@ -21,7 +21,9 @@ import {
   faHeadset,
   faTrash,
   faXmark,
-  faBagShopping
+  faBagShopping,
+  faShare,
+  faHeart
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -48,5 +50,7 @@ export const icons: Icon = {
   faHeadset: faHeadset,
   faTrash: faTrash,
   faXmark: faXmark,
-  faBagShopping: faBagShopping
+  faBagShopping: faBagShopping,
+  faShare: faShare,
+  faHeart: faHeart
 };

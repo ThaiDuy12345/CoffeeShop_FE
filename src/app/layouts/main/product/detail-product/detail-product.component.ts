@@ -41,7 +41,7 @@ export class DetailProductComponent implements OnInit {
     private dateService: DateService,
     private filterStore: FilterStore,
     @Optional() private dialogRef: NbDialogRef<any>,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +63,18 @@ export class DetailProductComponent implements OnInit {
       (item) => item.category.id === this.product.category.id
     );
     this.relatedProducts = result.slice(0, 5);
+  }
+
+  onClickShare(): void {
+    const path = window.location.href
+    navigator.clipboard.writeText(path)
+      .then(() => {
+        this.messageService.success('Đã sao chép đường dẫn');
+      })
+      .catch((error) => {
+        this.messageService.success('Lỗi lấy đường dẫn');
+        console.log(error)
+      });
   }
 
   loadFeedBackProduct(): void {
@@ -119,6 +131,17 @@ export class DetailProductComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialogService.open(dialog);
+  }
+
+  formatPrice(price: number): string {
+    const formatter = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  
+    return formatter.format(price);
   }
 
   onClickSubmit(): void {

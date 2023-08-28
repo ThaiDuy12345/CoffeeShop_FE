@@ -19,25 +19,38 @@
   <nb-card class="rounded-lg p-5">
     <nb-card-body class="grid grid-cols-5 space-x-5">
       <app-image class="col-span-2" [classes]="'rounded-lg'" [src]="product.picture"></app-image>
-      <div class="col-span-3 grid grid-row-3">
+      <div class="col-span-3 grid grid-rows-3">
         <div class="row-span-2">
-          <div class="font-bold w-full text-4xl mb-2">{{ product.name }}</div>
-          <div class="w-full mb-10">
+          <div class="font-bold w-full text-4xl mb-5">{{ product.name }}</div>
+          <div class="w-full mb-5">
             <span class="me-5">
-              {{ avarageStar ? avarageStar : '0' }}
-              <fa-icon
-                [icon]="icons['faStar']"
-                [style]="'color: ' + renderStarColor(avarageStar)"
-              ></fa-icon>
+              <ng-container *ngFor="let icon of [].constructor(avarageStar); let i = index">
+                <fa-icon
+                  [icon]="icons['faStar']"
+                  [style]="'color: ' + renderStarColor(avarageStar)"
+                ></fa-icon>
+              </ng-container>
             </span>
             <span class="me-5"> {{ feedBackProducts.length > 0 ?  feedBackProducts.length + ' Phản hồi' : 'Chưa có phản hồi'}}  </span>
             <span class=""> 10 Lượt bán </span>
+          </div>
+          <div class="w-full text-3xl text-[#EE7070] font-bold">
+            {{ formatPrice(product.price) }}
           </div>
           <nz-divider [nzText]="text"></nz-divider>
           <ng-template #text>
             <fa-icon [icon]="icons['faCartFlatbed']" class="text-lg"></fa-icon>
           </ng-template>
-          <div class="w-full mt-10 mb-10">
+          <div class="w-full mt-5 mb-5">
+            <span class="me-5">
+              Số lượng tồn kho: <b>{{
+                product.quantity === -1
+                  ? "Luôn sẵn có"
+                  : product.quantity + "sản phẩm sẵn có"
+              }}</b>
+            </span>
+          </div>
+          <div class="w-full mt-5">
             <span class="me-5"> Số lượng: </span>
             <span class="font-bold me-5">
               <nb-button-group>
@@ -66,16 +79,14 @@
                 </button>
               </nb-button-group>
             </span>
-          </div>
-          <div class="w-full mt-10 mb-10">
-            <span class="me-5">
-              Số lượng tồn kho: <b>{{
-                product.quantity === -1
-                  ? "Luôn sẵn có"
-                  : product.quantity + "sản phẩm sẵn có"
-              }}</b>
+            <span class="font-bold me-5">
+              <fa-icon [icon]="icons['faShare']" class="cursor-pointer" (click)="onClickShare()"></fa-icon>
+            </span>
+            <span class=font-bold>
+              <fa-icon [icon]="icons['faHeart']" class="cursor-pointer" ></fa-icon>
             </span>
           </div>
+          
         </div>
         <div class="row-span-1 flex items-end">
           <div class="w-full h-auto">
@@ -95,12 +106,12 @@
         </div>
       </div>
     </nb-card-body>
-  </nb-card>
-  <nb-card class="rounded-lg p-5">
-    <nb-card-header class="border-none"> Mô tả sản phẩm </nb-card-header>
-    <nb-card-body>
-      {{ product.description }}
-    </nb-card-body>
+    <nb-card-footer>
+      <br/>
+      <b>Mô tả sản phẩm</b>
+      <br/><br/>
+      <span>{{ product.description }}</span>
+    </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
     <nb-card-header class="border-none grid grid-cols-2">

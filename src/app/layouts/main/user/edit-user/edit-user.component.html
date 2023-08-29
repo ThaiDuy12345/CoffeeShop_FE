@@ -152,25 +152,27 @@
           </div>
         </div>
       </div>
-      <div class="space-x-3">
+      <div>
         <button
           nbButton
           status="danger"
+          class="mr-3 mb-3"
           *ngIf="isEditing"
           (click)="onClickCancelEdit()"
         >
           Huỷ
         </button>
-        <button nbButton (click)="open(dialog)" status="success" *ngIf="isEditing">
-          Xác nhận chỉnh sửa
+        <button nbButton (click)="open(dialog)" status="success" *ngIf="isEditing" class="mb-3">
+          Xác nhận
         </button>
         <button
           nbButton
           *ngIf="!isEditing"
           status="infor"
+          class="mb-3"
           (click)="onClickEdit()"
         >
-          Chỉnh sửa thông tin
+          Chỉnh sửa
         </button>
       </div>
     </form>

@@ -11,13 +11,13 @@
 <div *ngIf="view === 'LIST'" [class]="classes">
   <nb-card [routerLink]="['/main/product', item.id]" *ngFor="let item of products" class="border-none">
     <nb-card-body class="border-none grid grid-cols-4 gap-5">
-      <div class="col-span-1">
+      <div class="lg:col-span-1 col-span-2">
         <app-image [classes]="'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image>
       </div>
-      <div class="col-span-3">
+      <div class="lg:col-span-3 col-span-2">
         <div class="font-bold text-xl truncate">{{item.name}}</div>
         <div class="second-main-text-color text-lg mb-5">{{ formatPrice(item.price) }} </div>
-        <div class="second-main-text-color text-md">{{ item.description }} </div>
+        <div class="second-main-text-color text-md italic">{{ item.description }} </div>
       </div>
     </nb-card-body>
   </nb-card>

@@ -1,36 +1,82 @@
 <div class="grid grid-cols-1">
-  <app-image [classes]="'w-full'" [lazyClasses]="'min-h-[300px]'" [src]="'assets/brand-icons/banner.jpg'"></app-image>
+  <app-image
+    [classes]="'w-full'"
+    [lazyClasses]="'min-h-[300px]'"
+    [src]="'assets/brand-icons/banner.jpg'"
+  ></app-image>
 </div>
 <div class="w-full space-x-7 text-center second-main-text-color py-4">
-  <span class="inline">Ai cũng tìm kiếm:</span>  
-  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Hi Tea Vải')"> Hi Tea Vải </span> 
-  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Mochi kem chocolate')"> Mochi kem chocolate </span>  
-  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Bạc xỉu')"> Bạc xỉu </span>
-  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('Bánh mì thịt nguội')"> Bánh mì thịt nguội </span>
-  <span class="font-semibold inline second-text-color cursor-pointer" (click)="onSearch('CloudFee hạnh nhân nướng')"> CloudFee hạnh nhân nướng </span>
+  <span class="inline">Ai cũng tìm kiếm:</span>
+  <span
+    class="font-semibold inline second-text-color cursor-pointer"
+    (click)="onSearch('Hi Tea Vải')"
+  >
+    Hi Tea Vải
+  </span>
+  <span
+    class="font-semibold inline second-text-color cursor-pointer"
+    (click)="onSearch('Mochi kem chocolate')"
+  >
+    Mochi kem chocolate
+  </span>
+  <span
+    class="font-semibold inline second-text-color cursor-pointer"
+    (click)="onSearch('Bạc xỉu')"
+  >
+    Bạc xỉu
+  </span>
+  <span
+    class="font-semibold inline second-text-color cursor-pointer"
+    (click)="onSearch('Bánh mì thịt nguội')"
+  >
+    Bánh mì thịt nguội
+  </span>
+  <span
+    class="font-semibold inline second-text-color cursor-pointer"
+    (click)="onSearch('CloudFee hạnh nhân nướng')"
+  >
+    CloudFee hạnh nhân nướng
+  </span>
 </div>
 <div class="mx-auto mb-10 container px-40 py-1 bg-white rounded-lg">
   <div class="w-full grid grid-cols-1 text-center my-10">
     <div class="w-full center-an-item mb-8">
-      <app-image [classes]="'w-[150px]'" [src]="'assets/brand-icons/main.png'"></app-image>
+      <app-image
+        [classes]="'w-[150px]'"
+        [src]="'assets/brand-icons/main.png'"
+      ></app-image>
     </div>
-    <div class="text-center font-bold text-2xl">Mang đến cho bạn những ly cà phê ngon nhất</div>
-    <small class="text-center second-main-text-color text-lg">Khám phá ngay sản phẩm của chúng tôi</small>
-    <app-image [classes]="'w-full my-3'" [lazyClasses]="'min-h-[300px]'" [src]="'assets/brand-icons/banner7.jpg'"></app-image>
+    <div class="text-center font-bold text-2xl">
+      Mang đến cho bạn những ly cà phê ngon nhất
+    </div>
+    <small class="text-center second-main-text-color text-lg"
+      >Khám phá ngay sản phẩm của chúng tôi</small
+    >
+    <app-image
+      [classes]="'w-full my-3'"
+      [lazyClasses]="'min-h-[300px]'"
+      [src]="'assets/brand-icons/banner7.jpg'"
+    ></app-image>
   </div>
   <div class="w-full grid grid-cols-1 text-center my-10">
     <h2 class="font-bold text-3xl">Sản phẩm bán chạy</h2>
   </div>
-  <app-product-list
-    [products]="mostPopularProducts"
-  ></app-product-list>
-  <div class="w-full grid grid-cols-2 my-10 gap-3 mb-32">
+  <app-product-list [products]="mostPopularProducts"></app-product-list>
+  <div class="w-full grid grid-cols-2 my-10 gap-3 mb-20">
     <div class="col-span-2 xl:col-span-1">
-      <app-image [classes]="'w-full rounded-lg'" [src]="'assets/brand-icons/banner2.jpg'"></app-image>
+      <app-image
+        [classes]="'w-full rounded-lg'"
+        [src]="'assets/brand-icons/banner2.jpg'"
+      ></app-image>
     </div>
     <div class="col-span-2 xl:col-span-1">
-      <app-image [classes]="'w-full rounded-lg mb-5'" [src]="'assets/brand-icons/banner3.jpg'"></app-image>
-      <h1 class="font-sans font-bold text-2xl xl:text-2xl 2xl:text-3xl text-center xl:text-right mb-5">
+      <app-image
+        [classes]="'w-full rounded-lg mb-5'"
+        [src]="'assets/brand-icons/banner3.jpg'"
+      ></app-image>
+      <h1
+        class="font-sans font-bold text-2xl xl:text-2xl 2xl:text-3xl text-center xl:text-right mb-5"
+      >
         QUY TRÌNH CAFE ĐẾN TAY NGƯỜI DÙNG
       </h1>
       <p class="text-center xl:text-right xl:text-md 2xl:text-lg">
@@ -52,26 +98,67 @@
       </p>
     </div>
   </div>
-  <div class="w-full grid grid-cols-2 my-10 gap-5">
+  <div class="w-full grid grid-cols-4 my-10 px-5 py-16 gap-10 mb-20 rounded-lg">
+    <div class="grid grid-cols-1">
+      <div class="center-an-item mb-5">
+        <fa-icon [icon]="icons['faCreditCard']" size="3x" [style.color]="'#ee7070'"></fa-icon>
+      </div>
+      <span class="font-semibold text-center"> Đặt hàng online - nhanh chóng chỉ trong vài bước. </span>
+    </div>
+    <div class="grid grid-cols-1">
+      <div class="center-an-item mb-5">
+        <fa-icon [icon]="icons['faShop']" size="3x" [style.color]="'#ee7070'"></fa-icon>
+      </div>
+      <span class="font-semibold text-center"> Cửa hàng nhiều chi nhánh, tiện lợi không cần đợi chờ. </span>
+    </div>
+    <div class="grid grid-cols-1">
+      <div class="center-an-item mb-5">
+        <fa-icon [icon]="icons['faMugHot']" size="3x" [style.color]="'#ee7070'"></fa-icon>
+      </div>
+      <span class="font-semibold text-center">
+        Cafe đảm bảo hương vị nguyên bản dù ngồi tại quán hay order online.
+      </span>
+    </div>
+    <div class="grid grid-cols-1">
+      <div class="center-an-item mb-5">
+        <fa-icon [icon]="icons['faTruckFast']" size="3x" [style.color]="'#ee7070'"></fa-icon>
+      </div>
+      <span class="font-semibold text-center"> Giao hàng nhanh chỉ trong 30 phút. </span>
+    </div>
+  </div>
+  
+  <div class="w-full grid grid-cols-2 my-10 gap-5 mb-20">
     <nz-timeline class="col-span-2 xl:col-span-1" nzMode="alternate">
       <nz-timeline-item [nzLabel]="label1">
         <p class="xl:text-md 2xl:text-lg">Thành lập, khởi động dự án COFFEE</p>
-        <p class="xl:text-md 2xl:text-lg">Lên kế hoạch cho dự án, thút đẩy mô hình bán cafe vào thị trường cạnh tranh</p>
+        <p class="xl:text-md 2xl:text-lg">
+          Lên kế hoạch cho dự án, thút đẩy mô hình bán cafe vào thị trường cạnh
+          tranh
+        </p>
       </nz-timeline-item>
       <nz-timeline-item nzColor="green" [nzLabel]="label2">
-        <p class="xl:text-md 2xl:text-lg">Triển khai mô hình bán sản phẩm cửa hàng COFFEE</p>
-        <p class="xl:text-md 2xl:text-lg">Cho ra chương trình ưu đãi về các sản phẩm ra lò đầu tiên của COFFEE</p>
+        <p class="xl:text-md 2xl:text-lg">
+          Triển khai mô hình bán sản phẩm cửa hàng COFFEE
+        </p>
+        <p class="xl:text-md 2xl:text-lg">
+          Cho ra chương trình ưu đãi về các sản phẩm ra lò đầu tiên của COFFEE
+        </p>
       </nz-timeline-item>
       <nz-timeline-item nzColor="green" [nzLabel]="label3">
         <p class="xl:text-md 2xl:text-lg">Đẩy mạnh kế hoạch marketing</p>
       </nz-timeline-item>
-      <nz-timeline-item [nzDot]="dotTemplate"><p class="xl:text-md 2xl:text-lg">Hiện tại</p></nz-timeline-item>
+      <nz-timeline-item [nzDot]="dotTemplate"
+        ><p class="xl:text-md 2xl:text-lg">Hiện tại</p></nz-timeline-item
+      >
     </nz-timeline>
     <div class="col-span-2 xl:col-span-1">
-      <app-image [classes]="'w-full rounded-lg'" [src]="'assets/brand-icons/banner6.jpg'"></app-image>
+      <app-image
+        [classes]="'w-full rounded-lg'"
+        [src]="'assets/brand-icons/banner6.jpg'"
+      ></app-image>
     </div>
     <ng-template #dotTemplate>
-      <span nz-icon nzType="clock-circle-o" style="font-size: 16px;"></span>
+      <span nz-icon nzType="clock-circle-o" style="font-size: 16px"></span>
     </ng-template>
     <ng-template #label1>
       <p class="xl:text-md 2xl:text-lg font-semibold">15/07/2023</p>
@@ -82,5 +169,50 @@
     <ng-template #label3>
       <p class="xl:text-md 2xl:text-lg font-semibold">05/08/2023</p>
     </ng-template>
+  </div>
+  <div class="w-full grid grid-cols-1 mb-20">
+    <div class="w-full center-an-item mb-8">
+      <app-image
+        [classes]="'w-[150px]'"
+        [src]="'assets/brand-icons/main.png'"
+      ></app-image>
+    </div>
+    <div class="w-full center-an-item mb-5">
+      <span class="italic text-slate-400 text-center text-lg">
+        Thức dậy và cầm ly cà phê!! <br/> COFFEE là thứ mà bạn cần để giúp bạn có 1 buổi sáng tốt lành và tràng đầy năng lượng tích cực!!
+      </span>
+    </div>
+    <div class="w-full grid grid-cols-3 gap-5">
+      <app-image [src]="'assets/brand-icons/banner9.jpg'" [classes]="'rounded-lg'"></app-image>
+      <app-image [src]="'assets/brand-icons/banner10.jpg'" [classes]="'rounded-lg'"></app-image>
+      <app-image [src]="'assets/brand-icons/banner11.jpg'" [classes]="'rounded-lg'"></app-image>
+    </div>
+  </div>
+  <div class="w-full grid grid-cols-4 my-5px-5 py-16 gap-10 mb-20">
+    <div class="col-span-1 flex justify-center items-start">
+      <app-image [src]="'assets/brand-icons/banner8.jpg'" [classes]="'w-full rounded-lg'"></app-image>
+    </div>
+    <div class="col-span-3 grid grid-cols-4 gap-5 px-5 font-semibold py-10 bg-[#33425a] rounded-lg">
+      <div class="col-span-3 text-2xl center-an-item textWhite">
+        <div>
+          <span>Khám phám deal hời và khuyến mãi ngay!!</span>
+          <br/>
+          <small class=" text-lg">Truy cập thường xuyên để không bở lỡ!!</small>
+        </div>
+      </div>
+      <div class="col-span-1 center-an-item">
+        <a [routerLink]="'/main/product'" nbButton name="textWhite" class="font-semibold">Sản phẩm</a>
+      </div>
+    </div>
+  </div>
+  <div class="w-full grid grid-cols-1 mb-20">
+    <div class="w-full center-an-item mb-5">
+      <div class="text-center font-bold text-2xl">
+        Chi nhánh chính của chúng tôi
+      </div>
+    </div>
+    <div class="w-full">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d291.24104916459044!2d106.62932950091572!3d10.852813923844055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752945d2a9971b%3A0x93c222131170b3f5!2sInnovation%20Building!5e0!3m2!1svi!2s!4v1693332855501!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
   </div>
 </div>

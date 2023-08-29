@@ -1,4 +1,4 @@
-<div class="mx-auto container py-1 grid grid-cols-1 gap-x-10 my-10">
+<div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
   <nz-breadcrumb class="w-full mb-5">
     <nz-breadcrumb-item>
       <a class="second-text-color" [routerLink]="'/main/product'">Menu</a>
@@ -19,13 +19,13 @@
     </button>
   </div>
   <nb-card class="rounded-lg p-5">
-    <nb-card-body class="grid grid-cols-5 space-x-5">
+    <nb-card-body class="grid grid-cols-5 gap-5">
       <app-image
-        class="col-span-2"
+        class="lg:col-span-2 col-span-5"
         [classes]="'rounded-lg'"
         [src]="product.picture"
       ></app-image>
-      <div class="col-span-3 grid grid-rows-3">
+      <div class="lg:col-span-3 col-span-5 grid grid-rows-3">
         <div class="row-span-2">
           <div class="font-bold w-full text-4xl mb-5">{{ product.name }}</div>
           <div class="w-full mb-5">
@@ -37,6 +37,7 @@
                   <fa-icon
                   [icon]="icons['faStar']"
                   [style]="'color: ' + renderStarColor(avarageStar)"
+                  size="lg"
                   ></fa-icon>
                 </ng-container>
               </ng-container>
@@ -55,7 +56,7 @@
           </div>
           <nz-divider [nzText]="text"></nz-divider>
           <ng-template #text>
-            <fa-icon [icon]="icons['faCartFlatbed']" class="text-lg"></fa-icon>
+            <fa-icon [icon]="icons['faCartFlatbed']" size="2x" class="text-lg"></fa-icon>
           </ng-template>
           <div class="w-full mt-5 mb-5">
             <span class="me-5">
@@ -100,6 +101,7 @@
               <fa-icon
                 [icon]="icons['faShare']"
                 class="cursor-pointer"
+                size="lg"
                 (click)="onClickShare()"
               ></fa-icon>
             </span>
@@ -107,6 +109,7 @@
               <fa-icon
                 [icon]="icons['faHeart']"
                 class="cursor-pointer"
+                size="lg"
               ></fa-icon>
             </span>
           </div>
@@ -152,12 +155,12 @@
       <br />
       <b>Mô tả sản phẩm</b>
       <br /><br />
-      <span>{{ product.description }}</span>
+      <span class="italic second-main-text-color">{{ product.description }}</span>
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
     <nb-card-header class="border-none grid grid-cols-2">
-      <div class="text-start">Các lượt phản hồi</div>
+      <div class="text-start font-bold">Các lượt phản hồi</div>
       <div class="text-end second-text-color">
         <span (click)="open(dialog)" class="cursor-pointer">
           Review sản phẩm <fa-icon [icon]="icons['faPencil']"></fa-icon>
@@ -166,21 +169,22 @@
     </nb-card-header>
     <nb-card-body class="grid grid-cols-1">
       <div class="grid grid-cols-6 gap-5 my-10">
-        <div class="col-span-3 xl:col-span-1">
+        <div class="col-span-6 lg:col-span-3 xl:col-span-1">
           <div class="">
-            <span class="text-6xl"><b>{{ avarageStar ? avarageStar : 0 }}.0</b>/5</span><br/>
+            <span class="text-6xl"><b>{{ avarageStar ? avarageStar : 0 }}.0</b>/5</span><br/><br/>
             <span>
               <fa-icon
                 [icon]="icons['faStar']"
                 [style]="'color: ' + renderStarColor(5)"
                 *ngFor="let i of [].constructor(5)"
+                size="2x"
                 class=""
               ></fa-icon>
             </span><br/><br/>
             <span>{{ feedBackProducts.length }} lượt đánh giá</span>
           </div>
         </div>
-        <div class="col-span-3 xl:col-span-5">
+        <div class="col-span-6 lg:col-span-3 xl:col-span-5">
           <div class="h-full w-fit grid grid-cols-3 gap-2">
             <ng-container *ngFor="let ic of [].constructor(5); let id = index">
               <div class="col-span-1">
@@ -209,7 +213,7 @@
           class="grid grid-cols-6 gap-5 my-10"
           *ngFor="let fb of feedBackProductsPg"
         >
-          <div class="col-span-1 grid">
+          <div class="col-span-6 md:col-span-1 grid">
             <div class="h-full center-an-item">
               <nz-avatar
                 nz-comment-avatar
@@ -227,7 +231,7 @@
               {{ fb.account.name }}
             </div>
           </div>
-          <div class="col-span-5 grid grid-cols-1">
+          <div class="col-span-6 md:col-span-5 grid grid-cols-1">
             <span>
               <fa-icon
                 [icon]="icons['faStar']"
@@ -282,16 +286,16 @@
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="border-none"> Sản phẩm liên quan </nb-card-header>
+    <nb-card-header class="border-none font-bold"> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
       <app-product-list
         [products]="relatedProducts"
         [isRelatedProductList]="true"
       ></app-product-list>
     </nb-card-body>
-    <nb-card-footer class="border-none">
-      <a class="w-full text-center block" (click)="navigateRelatedProduct()"
-        ><fa-icon [icon]="icons['faBars']"></fa-icon> &ensp;Xem thêm</a
+    <nb-card-footer class="border-none center-an-item">
+      <a nbButton status="info" class="text-center block" (click)="navigateRelatedProduct()"
+        ><fa-icon [icon]="icons['faBars']" class="mr-2"></fa-icon>Xem thêm</a
       >
     </nb-card-footer>
   </nb-card>
@@ -316,6 +320,7 @@
                 renderStarColor(i <= starRating - 1 ? starRating : 0)
               "
               (click)="starRating = i + 1"
+              size="2x"
               class="me-3 cursor-pointer"
             ></fa-icon>
           </ng-container>

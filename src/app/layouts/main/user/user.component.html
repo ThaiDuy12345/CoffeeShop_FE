@@ -1,14 +1,18 @@
-<div class="mx-auto container bg-white rounded-lg my-10 p-10 grid grid-cols-5 gap-3">
-  <div class="col-span-1">
-    <ul nz-menu>
-      <li [nzSelected]="selectedTab === 'INFORMATION_TAB'" nz-menu-item (click)="selectedTab = 'INFORMATION_TAB'">Thông tin</li>
-      <li [nzSelected]="selectedTab === 'CHANGE_PASSWORD_TAB'" nz-menu-item (click)="selectedTab = 'CHANGE_PASSWORD_TAB'">Thay đổi mật khẩu</li>
-    </ul>
-  </div>
-  <nb-card class="col-span-4">
-    <nb-card-body class="grid grid-cols-1">
-      <app-edit-user *ngIf="selectedTab === 'INFORMATION_TAB'" [user]="user"></app-edit-user>
-      <app-change-password *ngIf="selectedTab === 'CHANGE_PASSWORD_TAB'" [user]="user"></app-change-password>
+<div class="mx-auto container py-10 lg:px-20 px-3">
+  <nb-card class="rounded-lg">
+    <nb-card-body class="border-none grid grid-cols-5 gap-3 p-10">
+      <div class="col-span-1">
+        <ul nz-menu>
+          <li [nzSelected]="selectedTab === 'INFORMATION_TAB'" nz-menu-item (click)="selectedTab = 'INFORMATION_TAB'">Thông tin</li>
+          <li [nzSelected]="selectedTab === 'CHANGE_PASSWORD_TAB'" nz-menu-item (click)="selectedTab = 'CHANGE_PASSWORD_TAB'">Thay đổi mật khẩu</li>
+        </ul>
+      </div>
+      <nb-card class="col-span-4">
+        <nb-card-body class="grid grid-cols-1">
+          <app-edit-user *ngIf="selectedTab === 'INFORMATION_TAB'" [user]="user"></app-edit-user>
+          <app-change-password *ngIf="selectedTab === 'CHANGE_PASSWORD_TAB'" [user]="user"></app-change-password>
+        </nb-card-body>
+      </nb-card>
     </nb-card-body>
   </nb-card>
 </div>

@@ -25,7 +25,10 @@ import {
   faShare,
   faHeart,
   faList,
-  faTableCellsLarge
+  faTableCellsLarge,
+  faShop,
+  faTruckFast,
+  faGift
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -57,4 +60,7 @@ export const icons: Icon = {
   faHeart: faHeart,
   faList: faList,
   faTableCellsLarge: faTableCellsLarge,
+  faShop: faShop,
+  faTruckFast: faTruckFast,
+  faGift: faGift
 };

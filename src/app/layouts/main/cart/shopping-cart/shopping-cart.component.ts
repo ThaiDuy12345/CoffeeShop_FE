@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { FilterStore } from 'src/app/core/stores/filter.store';
 import { AccountData, DetailOrderData, OrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
@@ -15,7 +17,10 @@ export class ShoppingCartComponent implements OnInit{
   public detailOrder: DetailOrder[] = []
   public icons: Icon = icons
   public user: Account = new Account()
-
+  constructor(
+    private filterStore: FilterStore,
+    private router: Router
+  ){}
   ngOnInit(): void {
     const id = Cookies.get('id')
     if(!id) return
@@ -35,5 +40,13 @@ export class ShoppingCartComponent implements OnInit{
     });
   
     return formatter.format(price);
+  }
+
+  navigate(): void {
+    this.filterStore.update({
+      category: [],
+      search: ''
+    })
+    this.router.navigateByUrl('/main/product')
   }
 }

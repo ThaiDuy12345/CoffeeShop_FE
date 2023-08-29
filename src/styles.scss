@@ -20,8 +20,8 @@
 $main-color: #43da89;
 $main-hover-color: #30b970;
 $second-main-color: #eeffd8;
-$main-text-color: rgb(51, 66, 90);
-$second-text-color: rgb(89, 105, 139);
+$main-text-color: #33425a;
+$second-text-color: #59698b;
 $error-text-color: #ee7070;
 ::-webkit-scrollbar {
   width: 5px;
@@ -102,7 +102,7 @@ body {
     color: $second-text-color !important;
     transition: 0.5s;
     &:hover {
-      color: $main-color !important;
+      color: $error-text-color !important;
     }
   }
 

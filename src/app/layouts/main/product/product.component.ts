@@ -46,6 +46,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         }
         this.isLoading = true;
         setTimeout(() => {
+          console.log("loading very well")
           if(state.category.length > 0){
             this.allProduct = ProductData.filter(
               (item) => state.category.includes(item.category.name)
@@ -115,7 +116,11 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   getColsByWindowWidth(): number { 
-    return window.innerWidth > 950 ? 3 : 2
+    switch (true){
+      case window.innerWidth <= 650: return 1
+      case window.innerWidth <= 950: return 2
+      default: return 3
+    }
   }
 
   // @HostListener('window:resize', ['$event'])

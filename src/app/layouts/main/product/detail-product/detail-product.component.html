@@ -3,10 +3,12 @@
     <nz-breadcrumb-item>
       <a class="second-text-color" [routerLink]="'/main/product'">Menu</a>
     </nz-breadcrumb-item>
-    <nz-breadcrumb-item  (click)="navigateRelatedProduct()">
+    <nz-breadcrumb-item (click)="navigateRelatedProduct()">
       <a class="second-text-color">{{ product.category.name }}</a>
     </nz-breadcrumb-item>
-    <nz-breadcrumb-item class="second-main-text-color">{{ product.name }}</nz-breadcrumb-item>
+    <nz-breadcrumb-item class="second-main-text-color">{{
+      product.name
+    }}</nz-breadcrumb-item>
   </nz-breadcrumb>
   <div class="w-full">
     <button
@@ -18,20 +20,34 @@
   </div>
   <nb-card class="rounded-lg p-5">
     <nb-card-body class="grid grid-cols-5 space-x-5">
-      <app-image class="col-span-2" [classes]="'rounded-lg'" [src]="product.picture"></app-image>
+      <app-image
+        class="col-span-2"
+        [classes]="'rounded-lg'"
+        [src]="product.picture"
+      ></app-image>
       <div class="col-span-3 grid grid-rows-3">
         <div class="row-span-2">
           <div class="font-bold w-full text-4xl mb-5">{{ product.name }}</div>
           <div class="w-full mb-5">
             <span class="me-5">
-              <ng-container *ngFor="let icon of [].constructor(avarageStar); let i = index">
-                <fa-icon
+              <ng-container *ngIf="avarageStar > 0">
+                <ng-container
+                  *ngFor="let icon of [].constructor(avarageStar); let i = index"
+                >
+                  <fa-icon
                   [icon]="icons['faStar']"
                   [style]="'color: ' + renderStarColor(avarageStar)"
-                ></fa-icon>
+                  ></fa-icon>
+                </ng-container>
               </ng-container>
             </span>
-            <span class="me-5"> {{ feedBackProducts.length > 0 ?  feedBackProducts.length + ' Phản hồi' : 'Chưa có phản hồi'}}  </span>
+            <span class="me-5">
+              {{
+                feedBackProducts.length > 0
+                  ? feedBackProducts.length + " Phản hồi"
+                  : "Chưa có phản hồi"
+              }}
+            </span>
             <span class=""> 10 Lượt bán </span>
           </div>
           <div class="w-full text-3xl text-[#EE7070] font-bold">
@@ -43,7 +59,8 @@
           </ng-template>
           <div class="w-full mt-5 mb-5">
             <span class="me-5">
-              Số lượng tồn kho: <b>{{
+              Số lượng tồn kho:
+              <b>{{
                 product.quantity === -1
                   ? "Luôn sẵn có"
                   : product.quantity + "sản phẩm sẵn có"
@@ -80,26 +97,51 @@
               </nb-button-group>
             </span>
             <span class="font-bold me-5">
-              <fa-icon [icon]="icons['faShare']" class="cursor-pointer" (click)="onClickShare()"></fa-icon>
+              <fa-icon
+                [icon]="icons['faShare']"
+                class="cursor-pointer"
+                (click)="onClickShare()"
+              ></fa-icon>
             </span>
-            <span class=font-bold>
-              <fa-icon [icon]="icons['faHeart']" class="cursor-pointer" ></fa-icon>
+            <span class="font-bold">
+              <fa-icon
+                [icon]="icons['faHeart']"
+                class="cursor-pointer"
+              ></fa-icon>
             </span>
           </div>
-          
         </div>
         <div class="row-span-1 flex items-end">
           <div class="w-full h-auto">
             <div class="w-full mb-5">
-              <button name="buy" nbButton class="w-full" status="infor" [nbSpinner]="isLoadingAddToCartBuntton" (click)="onClickAddToCart()" nbSpinnerStatus="success">
-                <fa-icon class="me-3" [icon]="icons['faBasketShopping']"></fa-icon
+              <button
+                name="buy"
+                nbButton
+                class="w-full"
+                status="infor"
+                [nbSpinner]="isLoadingAddToCartBuntton"
+                (click)="onClickAddToCart()"
+                nbSpinnerStatus="success"
+              >
+                <fa-icon
+                  class="me-3"
+                  [icon]="icons['faBasketShopping']"
+                ></fa-icon
                 >Thêm vào giỏ hàng
               </button>
             </div>
             <div class="w-full">
-              <button name="buy" nbButton class="w-full" status="success" [nbSpinner]="isLoadingBuyNowButton" (click)="onClickBuyNow()" nbSpinnerStatus="warning">
-                <fa-icon class="me-3" [icon]="icons['faCreditCard']"></fa-icon>Mua
-                và thanh toán ngay
+              <button
+                name="buy"
+                nbButton
+                class="w-full"
+                status="success"
+                [nbSpinner]="isLoadingBuyNowButton"
+                (click)="onClickBuyNow()"
+                nbSpinnerStatus="warning"
+              >
+                <fa-icon class="me-3" [icon]="icons['faCreditCard']"></fa-icon
+                >Mua và thanh toán ngay
               </button>
             </div>
           </div>
@@ -107,9 +149,9 @@
       </div>
     </nb-card-body>
     <nb-card-footer>
-      <br/>
+      <br />
       <b>Mô tả sản phẩm</b>
-      <br/><br/>
+      <br /><br />
       <span>{{ product.description }}</span>
     </nb-card-footer>
   </nb-card>
@@ -123,8 +165,85 @@
       </div>
     </nb-card-header>
     <nb-card-body class="grid grid-cols-1">
+      <div class="grid grid-cols-6 gap-5 my-10">
+        <div class="col-span-3 xl:col-span-1">
+          <div class="">
+            <span class="text-6xl"><b>{{ avarageStar ? avarageStar : 0 }}.0</b>/5</span><br/>
+            <span>
+              <fa-icon
+                [icon]="icons['faStar']"
+                [style]="'color: ' + renderStarColor(5)"
+                *ngFor="let i of [].constructor(5)"
+                class=""
+              ></fa-icon>
+            </span><br/><br/>
+            <span>{{ feedBackProducts.length }} lượt đánh giá</span>
+          </div>
+        </div>
+        <div class="col-span-3 xl:col-span-5">
+          <div class="h-full w-fit grid grid-cols-3 gap-2">
+            <ng-container *ngFor="let ic of [].constructor(5); let id = index">
+              <div class="col-span-1">
+                <div class="mb-1">
+                  <fa-icon
+                    [icon]="icons['faStar']"
+                    [style]="'color: ' + renderStarColor(5 - id)"
+                    *ngFor="let i of [].constructor(5 - id)"
+                  ></fa-icon>
+                </div>
+              </div>
+              <div class="col-span-2">
+                <nz-progress
+                  [nzPercent]="getStarRatePercent(5 - id)"
+                  nzSize="default"
+                  class="mb-2"
+                ></nz-progress>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <nz-divider></nz-divider>
       <ng-container *ngIf="feedBackProducts.length > 0">
-        <nz-comment
+        <div
+          class="grid grid-cols-6 gap-5 my-10"
+          *ngFor="let fb of feedBackProductsPg"
+        >
+          <div class="col-span-1 grid">
+            <div class="h-full center-an-item">
+              <nz-avatar
+                nz-comment-avatar
+                [nzText]="fb.account.name[0].toUpperCase()"
+                class="center-an-item"
+                style="
+                  color: rgb(55 65 81);
+                  background-color: #a2a2a2;
+                  width: 50px;
+                  height: 50px;
+                "
+              ></nz-avatar>
+            </div>
+            <div class="font-weight h-full center-an-item">
+              {{ fb.account.name }}
+            </div>
+          </div>
+          <div class="col-span-5 grid grid-cols-1">
+            <span>
+              <fa-icon
+                [icon]="icons['faStar']"
+                [style]="'color: ' + renderStarColor(fb.star)"
+                *ngFor="let i of [].constructor(fb.star)"
+              ></fa-icon>
+            </span>
+            <div>
+              {{ fb.comment }}
+            </div>
+            <small class="second-main-text-color"
+              >Đánh giá {{ timeSince(fb.creationDate) }}</small
+            >
+          </div>
+        </div>
+        <!-- <nz-comment
           [nzAuthor]="fb.account.name"
           [nzDatetime]="timeSince(fb.creationDate)"
           *ngFor="let fb of feedBackProductsPg"
@@ -132,7 +251,8 @@
           <nz-avatar
             nz-comment-avatar
             [nzText]="fb.account.name[0].toUpperCase()"
-            style="color: rgb(55 65 81); background-color: #30b970"
+            class="center-an-item"
+            style="color: rgb(55 65 81); background-color: #30b970; width: 50px; height: 50px"
           ></nz-avatar>
           <nz-comment-content>
             <fa-icon
@@ -143,7 +263,7 @@
             <br />
             {{ fb.comment }}
           </nz-comment-content>
-        </nz-comment>
+        </nz-comment> -->
       </ng-container>
       <nz-result
         *ngIf="feedBackProducts.length === 0"
@@ -179,15 +299,22 @@
 
 <ng-template #dialog let-data let-ref="dialogRef">
   <nb-card class="rounded-lg">
-    <nb-card-header>Tạo review cho sản phẩm "{{ product.name }}"</nb-card-header>
+    <nb-card-header
+      >Tạo review cho sản phẩm "{{ product.name }}"</nb-card-header
+    >
     <nb-card-body class="grid grid-cols-1 p-10">
       <div class="w-full grid-cols-1 grid">
-        <div class="font-bold text-2xl text-center mb-5">Bản cảm thấy sản phẩm này như nào?</div>
+        <div class="font-bold text-2xl text-center mb-5">
+          Bản cảm thấy sản phẩm này như nào?
+        </div>
         <div class="center-an-item mb-10">
           <ng-container *ngFor="let icon of [].constructor(5); let i = index">
             <fa-icon
               [icon]="icons['faStar']"
-              [style]="'color: ' + renderStarColor(i <= starRating - 1 ? starRating : 0)"
+              [style]="
+                'color: ' +
+                renderStarColor(i <= starRating - 1 ? starRating : 0)
+              "
               (click)="starRating = i + 1"
               class="me-3 cursor-pointer"
             ></fa-icon>
@@ -195,7 +322,11 @@
         </div>
         <div>
           <label>Viết cảm nhận</label>
-          <textarea nbInput fullWidth placeholder="Cảm nhận của bạn về sản phẩm này"></textarea>
+          <textarea
+            nbInput
+            fullWidth
+            placeholder="Cảm nhận của bạn về sản phẩm này"
+          ></textarea>
         </div>
       </div>
     </nb-card-body>

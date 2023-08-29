@@ -109,6 +109,17 @@ export class DetailProductComponent implements OnInit {
     }
   }
 
+  getStarRatePercent(starRates: number): number {
+    let sum = 0
+    this.feedBackProducts.forEach(fb => {
+      if (fb.star === starRates){
+        sum++
+      }
+    })
+
+    return sum * 100 / this.feedBackProducts.length
+  }
+
   navigateRelatedProduct(): void {
     this.filterStore.update((state) => {
       return {

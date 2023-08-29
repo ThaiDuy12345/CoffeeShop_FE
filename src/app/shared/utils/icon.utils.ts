@@ -23,7 +23,9 @@ import {
   faXmark,
   faBagShopping,
   faShare,
-  faHeart
+  faHeart,
+  faList,
+  faTableCellsLarge
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -52,5 +54,7 @@ export const icons: Icon = {
   faXmark: faXmark,
   faBagShopping: faBagShopping,
   faShare: faShare,
-  faHeart: faHeart
+  faHeart: faHeart,
+  faList: faList,
+  faTableCellsLarge: faTableCellsLarge,
 };

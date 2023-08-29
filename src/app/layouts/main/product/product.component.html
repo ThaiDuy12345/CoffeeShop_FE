@@ -2,7 +2,13 @@
   class="mx-auto container grid grid-cols-5 gap-x-10 p-10 my-10 rounded-lg bg-white"
 >
   <div class="col-span-5 mb-5 border-b pb-10">
-    <h1 class="text-3xl text-center w-full font-bold">Sản phẩm của COFFEE</h1>
+    <h1 class="text-3xl text-center w-full font-bold">
+      <span class="text-center">Sản phẩm của COFFEE</span>
+    </h1>
+    <h1 class="text-lg text-right w-full font-bold space-x-3">
+      <fa-icon [icon]="icons['faTableCellsLarge']" class="cursor-pointer" (click)="updateView('ICON')"></fa-icon>
+      <fa-icon [icon]="icons['faList']" class="cursor-pointer" (click)="updateView('LIST')"></fa-icon>
+    </h1>
   </div>
   <div class="col-span-1">
     <div *ngIf="search" class="border-b py-5 mb-3">
@@ -14,7 +20,7 @@
       </div>
       <button
         nbButton
-        (click)="onClickResetFilterSearch('search')"
+        (click)="onClickResetFilterSearch()"
         class="w-full"
       >
         Xoá
@@ -27,6 +33,7 @@
         multiple
         placeholder="Tất cả"
         (selectedChange)="updateFilter($event)"
+        [selected]="filterSelect"
       >
         <nb-option value="coffee">Coffee</nb-option>
         <nb-option value="tea">Trà</nb-option>
@@ -49,7 +56,7 @@
   </div>
   <div class="col-span-4 center-an-item" [nbSpinner]="isLoading">
     <ng-template [ngIf]="allProduct.length > 0">
-      <app-product-list [products]="allProduct" [cols]="getColsByWindowWidth()"></app-product-list>
+      <app-product-list [products]="allProduct" [cols]="(viewMode === 'ICON' || !viewMode) ? getColsByWindowWidth() : 1" [view]="viewMode"></app-product-list>
     </ng-template>
     <nz-result
       *ngIf="allProduct.length === 0 && !isLoading"

@@ -41,6 +41,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzResultModule } from 'ng-zorro-antd/result';
@@ -90,6 +91,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     NzTableModule,
     NzTabsModule,
     NzPaginationModule,
+    NzProgressModule,
     NzAvatarModule,
     NbAccordionModule,
     NzMessageModule,

@@ -10,6 +10,7 @@ export class ProductListComponent implements OnInit, OnChanges {
   @Input() products: Product[] = []
   @Input() isRelatedProductList: boolean = false
   @Input() cols: number = 3
+  @Input() view: 'ICON' | 'LIST' = 'ICON'
   public classes: string = ''
 
   ngOnChanges(changes: SimpleChanges): void {

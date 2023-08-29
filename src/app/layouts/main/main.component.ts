@@ -20,7 +20,6 @@ export class MainComponent {
       if (this.location.path() === '/main/product') {
         this.filterStore.update((state) => {
           return {
-            category: state.category,
             search: data.term,
           };
         });

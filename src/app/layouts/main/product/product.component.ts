@@ -20,10 +20,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   public minPrice: number = 0;
   public maxPrice: number = 0;
   public search: string = '';
+  public filterSelect: string[] = []
   public isLoading: boolean = false;
   public priceFilter: [number, number] = [0, 0];
   public initFilterState = new Subject<any>();
   public calculatedCols: 3 | 2 = 3
+  public viewMode: 'ICON' | 'LIST' = 'ICON'
   constructor(private filterStore: FilterStore) {}
 
   ngOnInit(): void {
@@ -44,12 +46,16 @@ export class ProductComponent implements OnInit, OnDestroy {
         }
         this.isLoading = true;
         setTimeout(() => {
-          this.allProduct =
-            state.category.length > 0
-              ? ProductData.filter(
-                  (item) => state.category.includes(item.category.name)
-                )
-              : ProductData;
+          if(state.category.length > 0){
+            this.allProduct = ProductData.filter(
+              (item) => state.category.includes(item.category.name)
+            )
+            this.filterSelect = state.category
+          } else {
+            this.allProduct = ProductData
+            this.filterSelect = []
+          }
+
           if (state.search.length > 0) {
             this.search = state.search;
             this.allProduct = this.allProduct.filter((item) =>
@@ -57,6 +63,10 @@ export class ProductComponent implements OnInit, OnDestroy {
             );
           } else {
             this.search = '';
+          }
+
+          if (state.view) {
+            this.viewMode = state.view
           }
           this.allProduct = this.allProduct.filter((item) => item.price >= this.priceFilter[0] && item.price <= this.priceFilter[1])
           this.isLoading = false;
@@ -75,36 +85,36 @@ export class ProductComponent implements OnInit, OnDestroy {
     };
   }
 
-  onClickResetFilterSearch(resetField: 'category' | 'search'): void {
+  onClickResetFilterSearch(): void {
     this.filterStore.update((state) => {
-      const newState =
-        resetField === 'category'
-          ? {
-              category: [],
-              search: this.search,
-            }
-          : {
-              category: state.category,
-              search: '',
-            };
-      return newState;
+      return {
+        search: '',
+      };;
     });
   }
 
-  updateFilter = (category: string[]): void => {
+  updateFilter(category: string[]): void {
+    this.filterSelect = category
     this.filterStore.update(() => {
       return {
         category: category,
-        search: this.search,
       };
     });
   }
 
-  onChangePriceFilter = (): void => {
+  updateView(viewMode: 'ICON' | 'LIST'): void {
+    this.filterStore.update((state) => {
+      return {
+        view: viewMode
+      };
+    });
+  }
+
+  onChangePriceFilter(): void {
     this.getProductList()
   }
 
-  getColsByWindowWidth = (): number => {
+  getColsByWindowWidth(): number { 
     return window.innerWidth > 950 ? 3 : 2
   }
 

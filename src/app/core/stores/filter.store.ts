@@ -4,6 +4,7 @@ import { Store, StoreConfig } from '@datorama/akita';
 export interface FilterState {
   category: string[]
   search: string
+  view: string
 }
 
 
@@ -12,6 +13,6 @@ export interface FilterState {
 @StoreConfig({ name: 'filter' })
 export class FilterStore extends Store<FilterState> {
   constructor() {
-    super({ category: [], search: '' });
+    super({ category: [], search: '', view: '' });
   }
 }

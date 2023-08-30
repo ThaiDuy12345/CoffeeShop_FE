@@ -1,0 +1,22 @@
+:host ::ng-deep {
+  nb-accordion-item-header[name="orderList"]{
+    display: grid !important;
+  }
+
+  .ant-collapse-content-box, .ant-collapse-content, nz-collapse-panel, nz-collapse{
+    border-radius: 0.5rem !important;
+  }
+  
+  .connector-past{
+    background-color: #33425a !important;
+  }
+  .selected>.label-index{
+    border-color: #33425a !important;
+    color: #33425a !important;
+  }
+  .completed>.label-index{
+    border-color: #33425a !important;
+    background-color: #33425a !important;
+    color: #eeffd8 !important;
+  }
+}

@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { FormatService } from 'src/app/core/services/format.service';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { AccountData, DetailOrderData, OrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -19,7 +20,8 @@ export class ShoppingCartComponent implements OnInit{
   public user: Account = new Account()
   constructor(
     private filterStore: FilterStore,
-    private router: Router
+    private router: Router,
+    private formatService: FormatService
   ){}
   ngOnInit(): void {
     const id = Cookies.get('id')
@@ -32,14 +34,7 @@ export class ShoppingCartComponent implements OnInit{
   }
 
   formatPrice(price: number = 0): string {
-    const formatter = new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  
-    return formatter.format(price);
+    return this.formatService.formatPrice(price)
   }
 
   navigate(): void {

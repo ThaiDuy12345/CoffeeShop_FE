@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Product } from 'src/app/core/models/product.model';
+import { FormatService } from 'src/app/core/services/format.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,6 +13,10 @@ export class ProductListComponent implements OnInit, OnChanges {
   @Input() cols: number = 3
   @Input() view: 'ICON' | 'LIST' = 'ICON'
   public classes: string = ''
+
+  constructor(
+    private formatService: FormatService
+  ){}
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['cols']){
@@ -29,14 +34,7 @@ export class ProductListComponent implements OnInit, OnChanges {
   }
 
   formatPrice(price: number): string {
-    const formatter = new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  
-    return formatter.format(price);
+    return this.formatService.formatPrice(price)
   }
 }
 

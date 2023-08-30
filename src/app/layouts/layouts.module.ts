@@ -25,6 +25,7 @@ import {
   NbIconModule,
   NbContextMenuModule,
   NbToastrModule,
+  NbStepperModule,
   NbSpinnerModule,
   NbFormFieldModule,
   NbSelectModule,
@@ -34,6 +35,7 @@ import {
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -88,6 +90,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     NbSelectModule,
     NzBreadCrumbModule,
     FormsModule,
+    NzCollapseModule,
     NzTableModule,
     NzTabsModule,
     NzPaginationModule,
@@ -95,6 +98,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     NzAvatarModule,
     NbAccordionModule,
     NzMessageModule,
+    NbStepperModule,
     NzTimelineModule,
     NzDrawerModule,
     NzSkeletonModule,

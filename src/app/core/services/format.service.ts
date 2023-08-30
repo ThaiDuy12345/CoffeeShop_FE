@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class DateService {
-  public timeAgoSince(date: Date): string {
+export class FormatService {
+  timeAgoSince(date: Date): string {
     const now = new Date();
     const diff = Math.floor((now.getTime() - date.getTime()) / 1000);
 
@@ -20,5 +20,16 @@ export class DateService {
     } else {
       return `${Math.floor(diff / 31536000)} năm trước`;
     }
+  }
+
+  formatPrice(price: number): string {
+    const formatter = new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  
+    return formatter.format(price);
   }
 }

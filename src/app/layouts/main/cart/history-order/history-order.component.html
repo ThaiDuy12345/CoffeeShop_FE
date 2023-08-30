@@ -1,7 +1,7 @@
-<div class="w-full grid grid-cols-3 mb-5 gap-5">
-  <div class="col-span-2">
-    <input nbInput class="w-full" placeholder="Nhập tên sản phẩm"/>
-  </div>
+<div class="w-full grid grid-cols-4 mb-5 gap-5">
+  <div></div>
+  <div></div>
+  <div></div>
   <div class="col-span-1">
     <nb-select class="w-full" multiple placeholder="Tất cả" selectable="false">
       <nb-option value="coffee"><span class="text-[#3366ff]">Chờ xét duyệt</span></nb-option>
@@ -11,9 +11,116 @@
     </nb-select>
   </div>
 </div>
-<nb-accordion>
-  <nb-accordion-item>
-    <nb-accordion-item-header>Product Details</nb-accordion-item-header>
-    <nb-accordion-item-body> Item Content </nb-accordion-item-body>
-  </nb-accordion-item>
-</nb-accordion>
+<nz-collapse 
+  [nzBordered]="false"
+  [nzExpandIconPosition]="'right'"
+  *ngFor="let or of order" 
+  class="mb-6 bg-white"
+>
+  <nz-collapse-panel 
+    [nzHeader]="header"
+  >
+    <ng-template #header>
+      <div class="w-full grid grid-cols-2">
+        <div class="grid grid-cols-1">
+          <div>
+            Mã hoá đơn: <span class="error-text-color font-semibold">{{ or.id }}</span>
+          </div>
+          <div>
+            <span *ngIf="or.status === 1" class="text-[#3366ff]">
+              Đơn hàng đã được đặt và đợi xác nhận thông tin
+            </span>
+            <span *ngIf="or.status === 2" class="text-[#3366ff]">
+              Đơn hàng đã được xác nhận và đợi bàn giao cho đơn vị vận chuyển
+            </span>
+            <span *ngIf="or.status === 3" class="text-[#ffaa00]">
+              Đơn hàng đã được bàn giao và đang trên đường tới chỗ bạn
+            </span>
+            <span *ngIf="or.status === 4" class="text-[#00d68f]">
+              Đơn hàng đã được giao thành công
+            </span>
+            <span *ngIf="or.status === -1" class="text-[#ff3d71]">
+              Đơn hàng đã bị huỷ
+            </span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2">
+          <div class="center-an-item">
+            {{ timeSince(or.orderDate) }}
+          </div>
+          <div class="center-an-item font-bold">
+            {{ formatPrice(or.totalPrice) }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <div class="my-16 px-10">
+      <nb-stepper 
+        orientation="horizontal" 
+        [selectedIndex]="getSelectedIndex(or.status)"
+        disableStepNavigation="true"
+      >
+        <nb-step [completed]="getSelectedIndex(or.status) >= 0" label="Đợi xác nhận thông tin">
+        </nb-step>
+        <nb-step [completed]="getSelectedIndex(or.status) >= 1" label="Đợi bàn giao cho đơn vị vận chuyển">
+        </nb-step>
+        <nb-step [completed]="getSelectedIndex(or.status) >= 2" label="Đang vận chuyển">
+        </nb-step>
+        <nb-step [completed]="getSelectedIndex(or.status) >= 4" *ngIf="getSelectedIndex(or.status) !== 5" label="Giao hàng thành công">
+        </nb-step>
+        <nb-step [completed]="getSelectedIndex(or.status) >= 5" *ngIf="getSelectedIndex(or.status) === 5" label="Giao hàng thất bại">
+        </nb-step>
+      </nb-stepper>
+    </div>
+    <div class="grid grid-cols-3 gap-5">
+      <div>
+        <div class="font-bold text-2xl">
+          Địa chỉ nhận hàng
+        </div>
+        <nz-divider></nz-divider>
+        <div class="mb-1">
+          <span class="font-bold">{{ or.account.name }}</span>
+        </div>
+        <div class="mb-1">
+          <span class="second-main-text-color">{{ or.account.phone }}</span>
+        </div>
+        <div>
+          <span class="second-main-text-color">{{ or.account.address }}</span>
+        </div>
+      </div>
+      <div class="col-span-2">
+        <ng-container *ngFor="let item of getDetailOrder(or)">
+          <nb-card class="mb-2">
+            <nb-card-body>
+              <div class="grid grid-cols-7 gap-5">
+                <div class="col-span-1">
+                  <app-image
+                    [src]="item.product.picture"
+                    [classes]="'rounded-lg cursor-pointer'"
+                    (click)="navigate(item.product.id)"
+                  ></app-image>
+                </div>
+                <div class="col-span-6 grid grid-cols-2 gap-5">
+                  <div>
+                    <div class="w-full h-auto mb-5">
+                      <b class="break-words">{{ item.product.name }}</b>
+                    </div>
+                    <div class="w-full h-auto second-main-text-color">
+                      <span>{{ formatPrice(item.product.price) }}</span>
+                    </div>
+                    <div class="w-full h-auto second-main-text-color">
+                      <span>x{{ item.quantity }}</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-end items-center">
+                    <span class="font-bold">{{ formatPrice(item.subTotal) }}</span>
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </ng-container>
+      </div>
+    </div>
+  </nz-collapse-panel>
+</nz-collapse>

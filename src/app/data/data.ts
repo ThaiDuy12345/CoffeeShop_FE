@@ -95,7 +95,7 @@ export const ProductData: Product[] = [
     category: CategoryData[2]
   },
   {
-    id: "6",
+    id: "5",
     name: "The Coffee House Sữa Đá",
     price: 19000,
     quantity: -1,
@@ -311,11 +311,18 @@ export const FeedBackData: FeedBack[] = [
 
 export const OrderData: Order[] = [
   {
-    id: "0",
-    status: 0,
+    id: "VN2308685190140",
+    status: 4,
     account: AccountData[0],
     orderDate: "2023-08-26",
-    totalPrice: 0
+    totalPrice: 227000
+  },
+  {
+    id: "VN22323623190140",
+    status: 2,
+    account: AccountData[0],
+    orderDate: "2023-08-30",
+    totalPrice: 231000
   }
 ]
 
@@ -337,6 +344,19 @@ export const DetailOrderData: DetailOrder[] = [
     quantity: 4,
     product: ProductData[3],
     order: OrderData[0]
+  })},
+
+  {...new DetailOrder({
+    id: "3",
+    quantity: 3,
+    product: ProductData[5],
+    order: OrderData[1]
+  })},
+  {...new DetailOrder({
+    id: "4",
+    quantity: 6,
+    product: ProductData[1],
+    order: OrderData[1]
   })},
 
 ]

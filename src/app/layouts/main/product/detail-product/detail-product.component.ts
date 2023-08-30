@@ -7,9 +7,9 @@ import { Product } from 'src/app/core/models/product.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
 import { FeedBackData, ProductData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
-import { DateService } from 'src/app/core/services/date.service';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { FormatService } from 'src/app/core/services/format.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -38,7 +38,7 @@ export class DetailProductComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private messageService: NzMessageService,
     private router: Router,
-    private dateService: DateService,
+    private formatService: FormatService,
     private filterStore: FilterStore,
     @Optional() private dialogRef: NbDialogRef<any>,
     private dialogService: NbDialogService,
@@ -93,7 +93,7 @@ export class DetailProductComponent implements OnInit {
   }
 
   timeSince(date: Date): string {
-    return this.dateService.timeAgoSince(date);
+    return this.formatService.timeAgoSince(date);
   }
 
   renderStarColor(star: number): string {
@@ -145,14 +145,7 @@ export class DetailProductComponent implements OnInit {
   }
 
   formatPrice(price: number): string {
-    const formatter = new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    });
-  
-    return formatter.format(price);
+    return this.formatService.formatPrice(price)
   }
 
   onClickSubmit(): void {

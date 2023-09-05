@@ -28,7 +28,11 @@ import {
   faTableCellsLarge,
   faShop,
   faTruckFast,
-  faGift
+  faGift,
+  faLocationDot,
+  faPhone,
+  faLocationArrow,
+  faMoneyCheck
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -62,5 +66,9 @@ export const icons: Icon = {
   faTableCellsLarge: faTableCellsLarge,
   faShop: faShop,
   faTruckFast: faTruckFast,
-  faGift: faGift
+  faGift: faGift,
+  faLocationDot: faLocationDot,
+  faPhone: faPhone,
+  faLocationArrow: faLocationArrow,
+  faMoneyCheck: faMoneyCheck
 };

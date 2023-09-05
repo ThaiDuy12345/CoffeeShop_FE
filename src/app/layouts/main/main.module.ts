@@ -9,6 +9,9 @@ import { ProductComponent } from './product/product.component';
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
+import { StepOneOrderComponent } from './order/step-one-order/step-one-order.component';
+import { StepTwoOrderComponent } from './order/step-two-order/step-two-order.component';
+import { StepThreeOrderComponent } from './order/step-three-order/step-three-order.component';
 const routes: Route[] = [
   {
     path: "",

@@ -1,0 +1,98 @@
+<div class="grid grid-cols-4 gap-5">
+  <div class="col-span-3">
+    <h1 class="text-red-400 italic">Xin vui lòng kiểm tra mọi thông tin trước khi đến bước kế tiếp</h1>
+  </div>
+  <div class="col-span-2 grid grid-col-1">
+    <nb-card>
+      <nb-card-header class="border-none grid grid-cols-1">
+        <span class="text-red-400 text-lg">
+          <fa-icon [icon]="icons['faMoneyCheck']"></fa-icon>&ensp;Phương thức thanh toán
+        </span>
+      </nb-card-header>
+      <nb-card-body class="grid grid-cols-1">
+        <nb-radio-group [(ngModel)]="selectedMethod">
+          <nb-radio value="COD"><img class="w-[25px] inline" src="assets/brand-icons/paymentMethods/cod.jpg"/>&ensp;Thanh toán COD</nb-radio>
+          <nb-radio value="Momo"><img class="w-[25px] inline" src="assets/brand-icons/paymentMethods/momo.png"/>&ensp;Thanh toán Momo</nb-radio>
+          <nb-radio value="ZaloPay"><img class="w-[25px] inline" src="assets/brand-icons/paymentMethods/zalopay.png"/>&ensp;Thanh toán ZaloPay</nb-radio>
+        </nb-radio-group>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header class="border-none grid grid-cols-1">
+        <span class="text-red-400 text-lg">
+          <fa-icon [icon]="icons['faCreditCard']"></fa-icon>&ensp;Thanh Toán
+        </span>
+      </nb-card-header>
+      <nb-card-body class="grid grid-cols-1">
+        <div class="grid grid-cols-1 mb-7">
+          <label>Nhập mã giảm giá</label>
+          <nb-button-group class="w-full mt-2" status="danger">
+            <input nbInput placeholder="Mã giảm giá" class="w-full"/>
+            <button nbButton>Nhập mã</button>
+          </nb-button-group>
+        </div>
+        <div class="grid grid-cols-2 mb-3">
+          <span class="text-left">Giá trị hoá đơn</span>
+          <span class="text-right">50.000 đ</span>
+        </div>
+        <div class="grid grid-cols-2 mb-3">
+          <span class="text-left">Giảm giá</span>
+          <span class="text-right"> - 10.000 đ</span>
+        </div>
+        <div class="grid grid-cols-2 mb-3">
+          <span class="text-left">Thuế VAC</span>
+          <span class="text-right"> - 0 đ</span>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="grid grid-cols-2 border-none font-medium bg-[#33425a] text-lg text-white">
+        <span class="text-left">Tổng giá tạm tính</span>
+        <span class="text-right">{{ formatPrice(order.totalPrice) }}</span>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+  <div class="col-span-2">
+    <nb-card>
+      <nb-card-header class="text-lg font-bold">
+        Hoá đơn
+      </nb-card-header>
+      <nb-card-body class="border-none grid grid-cols-1">
+        <div class="mb-10 grid grid-cols-1">
+          <span class="mb-3 font-bold">
+            {{ user.name }} / {{ user.phone }}
+          </span>
+          <span>
+            {{ user.address }}
+          </span>
+        </div>
+        <div class="mb-3">
+          <nz-divider [nzText]="text"></nz-divider>
+          <ng-template #text>
+            <fa-icon size="xl" [icon]="icons['faCartShopping']"></fa-icon>
+          </ng-template>
+        </div>
+        <ng-container *ngFor="let item of detailOrders">
+          <nb-card class="mb-2 border-none">
+            <nb-card-body class="px-0 border-none">
+              <div class="grid grid-cols-2 gap-5">
+                <div>
+                  <div class="w-full h-auto mb-5">
+                    <b class="break-words">{{ item.product.name }}</b>
+                  </div>
+                  <div class="w-full h-auto second-main-text-color">
+                    <span>{{ formatPrice(item.product.price) }}</span>
+                  </div>
+                  <div class="w-full h-auto second-main-text-color">
+                    <span>x{{ item.quantity }}</span>
+                  </div>
+                </div>
+                <div class="flex justify-end items-center">
+                  <span class="font-bold">{{ formatPrice(item.subTotal) }}</span>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </ng-container>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

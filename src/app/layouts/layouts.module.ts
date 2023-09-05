@@ -25,6 +25,7 @@ import {
   NbIconModule,
   NbContextMenuModule,
   NbToastrModule,
+  NbRadioModule,
   NbStepperModule,
   NbSpinnerModule,
   NbFormFieldModule,
@@ -63,6 +64,9 @@ import { CartComponent } from './main/cart/cart.component';
 import { ShoppingCartComponent } from './main/cart/shopping-cart/shopping-cart.component';
 import { HistoryOrderComponent } from './main/cart/history-order/history-order.component';
 import { OrderComponent } from './main/order/order.component';
+import { StepOneOrderComponent } from './main/order/step-one-order/step-one-order.component';
+import { StepTwoOrderComponent } from './main/order/step-two-order/step-two-order.component';
+import { StepThreeOrderComponent } from './main/order/step-three-order/step-three-order.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -84,7 +88,10 @@ import { OrderComponent } from './main/order/order.component';
     AboutComponent,
     OrderComponent,
     ImageComponent,
-    CartComponent
+    CartComponent,
+    StepOneOrderComponent,
+    StepTwoOrderComponent,
+    StepThreeOrderComponent
   ],
   imports: [
     CommonModule,
@@ -94,6 +101,7 @@ import { OrderComponent } from './main/order/order.component';
     NzBreadCrumbModule,
     FormsModule,
     NzCollapseModule,
+    NbRadioModule,
     NzTableModule,
     NzTabsModule,
     NzPaginationModule,

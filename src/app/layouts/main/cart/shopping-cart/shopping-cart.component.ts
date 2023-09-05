@@ -44,4 +44,12 @@ export class ShoppingCartComponent implements OnInit{
     })
     this.router.navigateByUrl('/main/product')
   }
+
+  getTotalQuantity(): number {
+    let quantity = 0
+    this.detailOrder.forEach((item) => {
+      quantity = quantity + item.quantity
+    })
+    return quantity
+  }
 }

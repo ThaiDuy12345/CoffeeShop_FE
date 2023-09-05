@@ -1,21 +1,55 @@
-<div class="mx-auto container grid grid-cols-2 gap-x-10 py-10 lg:px-20 px-3">
-  <nb-card class="col-span-2 mb-0">
+<div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
+  <nb-card class="col-span-2 mb-0 rounded-lg" [nbSpinner]="isLoading">
     <nb-card-body class="grid grid-cols-1 py-10">
-      <div class="px-16">
+      <h1 class="text-3xl text-center w-full font-bold mb-20">
+        <span class="text-center">Thanh toán</span>
+      </h1>
+      <div class="px-5 mb-20">
         <nz-steps [nzCurrent]="current">
-          <nz-step nzTitle="Finished"></nz-step>
-          <nz-step nzTitle="In Progress"></nz-step>
-          <nz-step nzTitle="Waiting"></nz-step>
+          <nz-step nzTitle="Xác nhận thông tin"></nz-step>
+          <nz-step nzTitle="Xác nhận thanh toán"></nz-step>
+          <nz-step nzTitle="Đặt hàng thành công"></nz-step>
         </nz-steps>
       </div>
-      <div>
-        Current: {{ current }}
-        <br/>
-        <button nbButton (click)="current = current + 1">
-          Next step
-        </button>
+      <div class="px-5 grid grid-cols-1">
+        <ng-container *ngIf="current === 0">
+          <app-step-one-order
+            [order]="order"
+            [detailOrders]="detailOrders"
+            [user]="user"
+          ></app-step-one-order>
+        </ng-container>
+        <ng-container *ngIf="current === 1">
+          <app-step-two-order
+            [order]="order"
+            [detailOrders]="detailOrders"
+            [user]="user"
+          > </app-step-two-order>
+        </ng-container>
+        <ng-container *ngIf="current === 2">
+          <app-step-three-order> </app-step-three-order>
+        </ng-container>
       </div>
     </nb-card-body>
+    <nb-card-footer class="border-none">
+      <h1 class="second-main-text-color" *ngIf="current === 1">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đã chấp thuận điều khoản dịch vụ của chúng tôi.</h1>
+      <div class="space-x-5">
+        <button nbButton status="primary" *ngIf="current === 0" (click)="onClickNextStep(current + 1)">
+          Tiếp tục
+        </button>
+        <button nbButton status="danger" *ngIf="current === 1" (click)="onClickNextStep(current + 1)">
+          Đặt hàng
+        </button>
+        <button
+          nbButton
+          status="basic"
+          *ngIf="current === 1"
+          (click)="onClickNextStep(current - 1)"
+        >
+          Quay lại
+        </button>
+      </div>
+      
+    </nb-card-footer>
   </nb-card>
-  
 </div>

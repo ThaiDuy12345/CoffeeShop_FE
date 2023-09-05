@@ -153,14 +153,14 @@
     </nb-card-body>
     <nb-card-footer>
       <br />
-      <b>Mô tả sản phẩm</b>
+      <b class="text-lg">Mô tả sản phẩm</b>
       <br /><br />
       <span class="italic second-main-text-color">{{ product.description }}</span>
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
     <nb-card-header class="border-none grid grid-cols-2">
-      <div class="text-start font-bold">Các lượt phản hồi</div>
+      <div class="text-start text-lg font-bold">Các lượt phản hồi</div>
       <div class="text-end second-text-color">
         <span (click)="open(dialog)" class="cursor-pointer">
           Review sản phẩm <fa-icon [icon]="icons['faPencil']"></fa-icon>
@@ -169,7 +169,7 @@
     </nb-card-header>
     <nb-card-body class="grid grid-cols-1">
       <div class="grid grid-cols-6 gap-5 my-10">
-        <div class="col-span-6 lg:col-span-3 xl:col-span-1">
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 2xl:col-span-1">
           <div class="">
             <span class="text-6xl"><b>{{ avarageStar ? avarageStar : 0 }}.0</b>/5</span><br/><br/>
             <span>
@@ -184,7 +184,7 @@
             <span>{{ feedBackProducts.length }} lượt đánh giá</span>
           </div>
         </div>
-        <div class="col-span-6 lg:col-span-3 xl:col-span-5">
+        <div class="col-span-6 lg:col-span-3 xl:col-span-4 2xl:col-span-5">
           <div class="h-full w-fit grid grid-cols-3 gap-2">
             <ng-container *ngFor="let ic of [].constructor(5); let id = index">
               <div class="col-span-1">
@@ -286,7 +286,7 @@
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="border-none font-bold"> Sản phẩm liên quan </nb-card-header>
+    <nb-card-header class="border-none font-bold text-lg"> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
       <app-product-list
         [products]="relatedProducts"

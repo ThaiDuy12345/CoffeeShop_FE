@@ -1,0 +1,63 @@
+<div class="grid grid-cols-3 gap-5">
+  <div class="col-span-3">
+    <h1 class="text-red-400 italic">Xin vui lòng kiểm tra mọi thông tin trước khi đến bước kế tiếp</h1>
+  </div>
+  <div>
+    <nb-card>
+      <nb-card-header class="border-none grid grid-cols-1">
+        <span class="text-red-400 text-lg">
+          <fa-icon [icon]="icons['faLocationDot']"></fa-icon>&ensp;Thông tin người nhận
+        </span>
+      </nb-card-header>
+      <nb-card-body class="border-none grid grid-cols-1">
+        <span class="mb-5 font-medium">
+          <fa-icon [icon]="icons['faUser']"></fa-icon>&ensp;{{ user.name }}
+        </span>
+        <span class="mb-5 font-medium">
+          <fa-icon [icon]="icons['faPhone']"></fa-icon>&ensp;{{ user.phone }}
+        </span>
+        <span class="mb-5 font-medium">
+          <fa-icon [icon]="icons['faLocationArrow']"></fa-icon>&ensp;{{ user.address }}
+        </span>
+      </nb-card-body>
+      <nb-card-footer class="border-none">
+        <a [routerLink]="'/main/user'">
+          Thay đổi &ensp;  <fa-icon [icon]="icons['faPencil']"></fa-icon> 
+        </a>
+      </nb-card-footer>
+    </nb-card>
+  </div>
+  <div class="col-span-2">
+    <ng-container *ngFor="let item of detailOrders">
+      <nb-card class="mb-2">
+        <nb-card-body>
+          <div class="grid grid-cols-7 gap-5">
+            <div class="col-span-1">
+              <app-image
+                [src]="item.product.picture"
+                [classes]="'rounded-lg cursor-pointer'"
+                (click)="navigate(item.product.id)"
+              ></app-image>
+            </div>
+            <div class="col-span-6 grid grid-cols-2 gap-5">
+              <div>
+                <div class="w-full h-auto mb-5">
+                  <b class="break-words">{{ item.product.name }}</b>
+                </div>
+                <div class="w-full h-auto second-main-text-color">
+                  <span>{{ formatPrice(item.product.price) }}</span>
+                </div>
+                <div class="w-full h-auto second-main-text-color">
+                  <span>x{{ item.quantity }}</span>
+                </div>
+              </div>
+              <div class="flex justify-end items-center">
+                <span class="font-bold">{{ formatPrice(item.subTotal) }}</span>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </ng-container>
+  </div>
+</div>

@@ -1,8 +1,20 @@
+$main-text-color: #33425a;
 :host ::ng-deep{
-  nb-stepper{
-    .step-content{
-      padding-right: 0px !important;
-      padding-left: 0px !important;
+  nz-step.ant-steps-item-finish{
+    .ant-steps-item-icon{
+      border-color: $main-text-color !important;
+      svg{
+        color: $main-text-color !important;
+      }
+    }
+    .ant-steps-item-title::after{
+      background: $main-text-color !important;
+    }
+  }
+  nz-step.ant-steps-item-process{
+    .ant-steps-item-icon{
+      border-color: $main-text-color !important;
+      background: $main-text-color !important;
     }
   }
 }

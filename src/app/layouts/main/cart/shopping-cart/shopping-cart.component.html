@@ -1,5 +1,7 @@
 <div class="w-full grid grid-cols-10 gap-5">
-  <div class="col-span-10 order-last lg:col-span-7 lg:order-none grid grid-cols-1">
+  <div
+    class="col-span-10 order-last lg:col-span-7 lg:order-none grid grid-cols-1"
+  >
     <nb-form-field class="mb-1">
       <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
       <input type="text" nbInput placeholder="Tìm kiếm sản phẩm trong giỏ" />
@@ -71,12 +73,16 @@
                   </div>
                   <div>
                     <div class="h-auto w-full">
-                      <span class="font-semibold">{{ formatPrice(item.subTotal) }}</span>
+                      <span class="font-semibold">{{
+                        formatPrice(item.subTotal)
+                      }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="row-span-1">
-                  <span class="italic second-main-text-color">{{ item.product.description }}</span>
+                  <span class="italic second-main-text-color">{{
+                    item.product.description
+                  }}</span>
                 </div>
                 <div class="row-span-1 flex justify-end">
                   <div class="flex items-end">
@@ -96,12 +102,15 @@
   <div class="col-span-10 lg:col-span-3">
     <nb-card class="w-full">
       <nb-card-body class="grid grid-cols-1">
-        <div class="mb-20">
-          <label class="w-full">Nhập mã khuyến mãi</label>
-          <nb-button-group class="w-full mt-2" status="danger">
-            <input class="w-full" nbInput placeholder="Mã khuyến mãi" />
-            <button nbButton>Sử dụng</button>
-          </nb-button-group>
+        <div class="mb-2">
+          <nz-divider [nzText]="text"></nz-divider>
+          <ng-template #text>
+            <fa-icon size="2x" [icon]="icons['faBagShopping']"></fa-icon>
+          </ng-template>
+        </div>
+        <div class="grid grid-cols-2 mb-3">
+          <span class="text-left">Số lượng sản phẩm</span>
+          <span class="text-right">{{ getTotalQuantity() }}</span>
         </div>
         <div class="grid grid-cols-2 mb-3">
           <span class="text-left">Giá trị hoá đơn</span>
@@ -116,18 +125,29 @@
           <span class="text-right"> - 0 đ</span>
         </div>
         <div class="grid grid-cols-2 text-lg mb-3">
-          <span class="font-bold text-left">Tổng giá</span>
+          <span class="font-bold text-left">Tổng giá tạm tính</span>
           <span class="font-bold text-right">40.000 đ</span>
         </div>
       </nb-card-body>
     </nb-card>
     <div class="grid grid-cols-1 gap-5">
       <button nbButton class="w-full" status="warning" (click)="navigate()">
-        <fa-icon [icon]="icons['faArrowRightFromBracket']" class="me-2"></fa-icon>Tiếp tục mua
+        <fa-icon
+          [icon]="icons['faArrowRightFromBracket']"
+          class="me-2"
+        ></fa-icon
+        >Tiếp tục mua
       </button>
-      <button nbButton class="w-full" status="primary" [routerLink]="'/main/order/1'">
-        <fa-icon [icon]="icons['faBagShopping']" class="me-2"></fa-icon>Thanh toán
+      <button
+        nbButton
+        class="w-full"
+        status="primary"
+        [routerLink]="'/main/order/VN2308685190140'"
+      >
+        <fa-icon [icon]="icons['faBagShopping']" class="me-2"></fa-icon>Thanh
+        toán
       </button>
     </div>
   </div>
 </div>
+ 

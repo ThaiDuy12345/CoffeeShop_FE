@@ -1,0 +1,21 @@
+<div class="mx-auto container grid grid-cols-2 gap-x-10 py-10 lg:px-20 px-3">
+  <nb-card class="col-span-2 mb-0">
+    <nb-card-body class="grid grid-cols-1 py-10">
+      <div class="px-16">
+        <nz-steps [nzCurrent]="current">
+          <nz-step nzTitle="Finished"></nz-step>
+          <nz-step nzTitle="In Progress"></nz-step>
+          <nz-step nzTitle="Waiting"></nz-step>
+        </nz-steps>
+      </div>
+      <div>
+        Current: {{ current }}
+        <br/>
+        <button nbButton (click)="current = current + 1">
+          Next step
+        </button>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  
+</div>

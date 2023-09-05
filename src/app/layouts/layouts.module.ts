@@ -46,6 +46,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
@@ -61,6 +62,7 @@ import { DetailProductComponent } from './main/product/detail-product/detail-pro
 import { CartComponent } from './main/cart/cart.component';
 import { ShoppingCartComponent } from './main/cart/shopping-cart/shopping-cart.component';
 import { HistoryOrderComponent } from './main/cart/history-order/history-order.component';
+import { OrderComponent } from './main/order/order.component';
 @NgModule({
   declarations: [
     SignInComponent,
@@ -80,6 +82,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     FooterComponent,
     UserComponent,
     AboutComponent,
+    OrderComponent,
     ImageComponent,
     CartComponent
   ],
@@ -95,6 +98,7 @@ import { HistoryOrderComponent } from './main/cart/history-order/history-order.c
     NzTabsModule,
     NzPaginationModule,
     NzProgressModule,
+    NzStepsModule,
     NzAvatarModule,
     NbAccordionModule,
     NzMessageModule,

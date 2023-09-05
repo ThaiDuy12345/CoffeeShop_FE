@@ -8,8 +8,7 @@ import { AboutComponent } from './about/about.component';
 import { ProductComponent } from './product/product.component';
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
 import { CartComponent } from './cart/cart.component';
-import { ShoppingCartComponent } from './cart/shopping-cart/shopping-cart.component';
-import { HistoryOrderComponent } from './cart/history-order/history-order.component';
+import { OrderComponent } from './order/order.component';
 const routes: Route[] = [
   {
     path: "",
@@ -50,6 +49,11 @@ const routes: Route[] = [
         path: "cart",
         canActivate: [AuthGuard],
         component: CartComponent
+      },
+      {
+        path: "order/:id",
+        canActivate: [AuthGuard],
+        component: OrderComponent
       }
     ]
   }
@@ -57,6 +61,5 @@ const routes: Route[] = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  declarations: [],
 })
 export class MainModule { }

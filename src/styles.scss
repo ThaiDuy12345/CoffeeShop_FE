@@ -9,8 +9,6 @@
   @include nb-theme-global();
 }
 
-
-
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -41,7 +39,14 @@ $error-text-color: #ee7070;
   }
 }
 
+@layer base{
+  svg {
+    vertical-align: baseline !important;
+  }
+}
+
 body {
+  
   color: $main-text-color;
   .font-bold, .font-semibold, b, nb-card-header {
     color: $main-text-color

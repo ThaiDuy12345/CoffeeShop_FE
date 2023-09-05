@@ -125,7 +125,7 @@
       <button nbButton class="w-full" status="warning" (click)="navigate()">
         <fa-icon [icon]="icons['faArrowRightFromBracket']" class="me-2"></fa-icon>Tiếp tục mua
       </button>
-      <button nbButton class="w-full" status="primary">
+      <button nbButton class="w-full" status="primary" [routerLink]="'/main/order/1'">
         <fa-icon [icon]="icons['faBagShopping']" class="me-2"></fa-icon>Thanh toán
       </button>
     </div>

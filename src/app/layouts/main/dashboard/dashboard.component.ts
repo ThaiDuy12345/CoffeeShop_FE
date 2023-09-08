@@ -27,6 +27,10 @@ export class DashboardComponent {
     })
     this.router.navigate(['/main/product'])
   }
+
+  getWidth(): number {
+    return window.innerWidth
+  }
 }
 
 

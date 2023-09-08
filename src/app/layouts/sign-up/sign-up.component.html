@@ -14,18 +14,18 @@
             </p>
           </div>
           <div class="m-7">
-            <nz-tabset nzCentered [nzSelectedIndex]="activeIndex" class="px-5" (nzSelectedIndexChange)="changeTab($event)">
+            <nz-tabset nzCentered [nzSelectedIndex]="activeIndex" (nzSelectedIndexChange)="changeTab($event)">
               <nz-tab [nzTitle]="tab1" [nzDisabled]="activeIndex === 1">
                 <form autocomplete="off">
                   <div class="mb-5">
                     <label class="my-2">Email</label>
                     <input
-                      pInputText
+                      nbInput
                       autocomplete="off"
                       name="email"
                       [(ngModel)]="account.email"
                       type="email"
-                      class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
+                      class="w-full px-3 py-2"
                     />
                     <small class="error-text-color" *ngIf="!isEmailValidate()">
                       Email bắt buộc không được để trống và đúng định dạng
@@ -34,12 +34,12 @@
                   <div class="mb-5">
                     <label class="my-2">Mật khẩu</label>
                     <input
-                      pInputText
+                      nbInput
                       name="password"
                       autocomplete="off"
                       [(ngModel)]="account.password"
                       type="password"
-                      class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
+                      class="w-full px-3 py-2"
                     />
                     <small class="error-text-color" *ngIf="!isPasswordValidate()">
                       Mật khẩu bắt buộc không được để trống, tối thiểu 8 ký tự và có chứa ít nhất 1 số, 1 ký tự thường và 1 ký tự in hoa
@@ -56,12 +56,12 @@
                   <div class="mb-5">
                     <label class="my-2">Tên</label>
                     <input
-                      pInputText
+                      nbInput
                       name="name"
                       autocomplete="off"
                       [(ngModel)]="account.name"
                       type="text"
-                      class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
+                      class="w-full px-3 py-2"
                     />
                     <small class="error-text-color" *ngIf="account.name.length === 0">
                       Tên bắt buộc không được để trống
@@ -70,12 +70,12 @@
                   <div class="mb-5">
                     <label class="my-2">Số điện thoại</label>
                     <input
-                      pInputText
+                      nbInput
                       name="phone"
                       autocomplete="off"
                       [(ngModel)]="account.phone"
                       type="text"
-                      class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
+                      class="w-full px-3 py-2"
                     />
                     <small class="error-text-color" *ngIf="account.phone.length !== 10">
                       Số điện thoại bắt buộc không được để trống và đúng định dạng
@@ -122,7 +122,7 @@
               Đã có tài khoản?
               <a
                 [routerLink]="'/sign-in'"
-                class="no-underline text-indigo-400 focus:outline-none focus:text-indigo-500"
+                class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500"
                 >Đăng nhập</a
               >
               ở đây.

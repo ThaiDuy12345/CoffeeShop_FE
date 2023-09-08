@@ -46,6 +46,9 @@ $error-text-color: #ee7070;
 }
 
 body {
+  .ant-drawer-content-wrapper{
+    width: 300px !important;
+  }
   
   color: $main-text-color;
   .font-bold, .font-semibold, b, nb-card-header {

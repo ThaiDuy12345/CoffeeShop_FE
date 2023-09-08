@@ -5,7 +5,7 @@
         <h1 class="text-3xl text-center w-full font-bold">
           <span class="text-center">Sản phẩm của COFFEE</span>
         </h1>
-        <h1 class="text-lg text-right w-full font-bold space-x-3">
+        <h1 class="text-lg text-right w-full font-bold space-x-3 mt-5">
           <fa-icon
             [icon]="icons['faTableCellsLarge']"
             size="lg"
@@ -26,7 +26,7 @@
           ></fa-icon>
         </h1>
       </div>
-      <div class="col-span-2 lg:col-span-1">
+      <div class="col-span-5 md:col-span-1">
         <div *ngIf="search" class="border-b py-5 mb-3">
           <div class="mb-3">
             <span class="break-words"
@@ -66,7 +66,7 @@
           ></nz-slider>
         </div>
       </div>
-      <div class="col-span-3 lg:col-span-4 center-an-item" [nbSpinner]="isLoading">
+      <div class="col-span-5 md:col-span-4 center-an-item" [nbSpinner]="isLoading">
         <ng-template [ngIf]="allProduct.length > 0">
           <app-product-list
             [products]="allProduct"

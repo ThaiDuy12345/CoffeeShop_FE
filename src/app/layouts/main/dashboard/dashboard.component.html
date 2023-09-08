@@ -38,7 +38,7 @@
     CloudFee hạnh nhân nướng
   </span>
 </div>
-<div class="mx-auto mb-10 container px-40 py-1 bg-white rounded-lg">
+<div class="mx-auto mb-10 container px-5 lg:px-40 py-1 bg-white rounded-lg">
   <div class="w-full grid grid-cols-1 text-center my-10">
     <div class="w-full center-an-item mb-8">
       <app-image
@@ -61,7 +61,7 @@
   <div class="w-full grid grid-cols-1 text-center my-10">
     <h2 class="font-bold text-3xl">Sản phẩm bán chạy</h2>
   </div>
-  <app-product-list [products]="mostPopularProducts"></app-product-list>
+  <app-product-list [products]="mostPopularProducts" [cols]="getWidth() < 500 ? 2 : 3"></app-product-list>
   <div class="w-full grid grid-cols-2 my-10 gap-3 mb-20">
     <div class="col-span-2 xl:col-span-1">
       <app-image
@@ -98,7 +98,13 @@
       </p>
     </div>
   </div>
-  <div class="w-full grid grid-cols-4 my-10 px-5 py-16 gap-10 mb-20 rounded-lg">
+  <div 
+    class="w-full grid my-10 px-5 py-16 gap-10 mb-20 rounded-lg"
+    [ngClass]="{
+      'grid-cols-4': getWidth() > 700,
+      'grid-cols-2': getWidth() < 700
+    }"
+  >
     <div class="grid grid-cols-1">
       <div class="center-an-item mb-5">
         <fa-icon [icon]="icons['faCreditCard']" size="3x" [style.color]="'#ee7070'"></fa-icon>
@@ -182,17 +188,36 @@
         Thức dậy và cầm ly cà phê!! <br/> COFFEE là thứ mà bạn cần để giúp bạn có 1 buổi sáng tốt lành và tràng đầy năng lượng tích cực!!
       </span>
     </div>
-    <div class="w-full grid grid-cols-3 gap-5">
+    <div 
+      class="w-full grid gap-5"
+      [ngClass]="{
+        'grid-cols-3': getWidth() > 600,
+        'grid-cols-1': getWidth() < 600
+      }"
+    >
       <app-image [src]="'assets/brand-icons/banner9.jpg'" [classes]="'rounded-lg'"></app-image>
       <app-image [src]="'assets/brand-icons/banner10.jpg'" [classes]="'rounded-lg'"></app-image>
       <app-image [src]="'assets/brand-icons/banner11.jpg'" [classes]="'rounded-lg'"></app-image>
     </div>
   </div>
   <div class="w-full grid grid-cols-4 my-5px-5 py-16 gap-10 mb-20">
-    <div class="col-span-1 flex justify-center items-start">
+    <div 
+      class="col-span-1 flex justify-center items-start"
+      [ngClass]="{
+        'col-span-1': getWidth() >= 1280,
+        'col-span-4': getWidth() < 1280,
+        'order-last': getWidth() < 1280,
+      }"
+    >
       <app-image [src]="'assets/brand-icons/banner8.jpg'" [classes]="'w-full rounded-lg'"></app-image>
     </div>
-    <div class="col-span-3 grid grid-cols-4 gap-5 px-5 font-semibold py-10 bg-[#33425a] rounded-lg">
+    <div 
+      class="grid gap-5 grid-cols-4 px-5 font-semibold py-10 bg-[#33425a] rounded-lg"
+      [ngClass]="{
+        'col-span-3': getWidth() >= 1280,
+        'col-span-4': getWidth() < 1280,
+      }"
+    >
       <div class="col-span-3 text-2xl center-an-item textWhite">
         <div>
           <span>Khám phám deal hời và khuyến mãi ngay!!</span>
@@ -200,7 +225,9 @@
           <small class=" text-lg">Truy cập thường xuyên để không bở lỡ!!</small>
         </div>
       </div>
-      <div class="col-span-1 center-an-item">
+      <div 
+        class="col-span-1 center-an-item"
+      >
         <a [routerLink]="'/main/product'" nbButton name="textWhite" class="font-semibold">Sản phẩm</a>
       </div>
     </div>

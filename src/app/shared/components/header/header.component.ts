@@ -70,6 +70,10 @@ export class HeaderComponent implements OnInit {
         icon: icons['faCircleInfo'],
       },
       {
+        title: 'SẢN PHẨM YÊU THÍCH',
+        icon: icons['faHeart'],
+      },
+      {
         title: 'ĐĂNG XUẤT',
         icon: icons['faArrowRightFromBracket'],
       },

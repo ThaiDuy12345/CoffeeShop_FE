@@ -1,3 +1,4 @@
+import { faGoogle, faSquareFacebook } from '@fortawesome/free-brands-svg-icons';
 import {
   faArrowLeft,
   faArrowRightFromBracket,
@@ -70,5 +71,7 @@ export const icons: Icon = {
   faLocationDot: faLocationDot,
   faPhone: faPhone,
   faLocationArrow: faLocationArrow,
-  faMoneyCheck: faMoneyCheck
+  faMoneyCheck: faMoneyCheck,
+  faGooglel: faGoogle,
+  faSquareFacebook: faSquareFacebook,
 };

@@ -1,3 +1,4 @@
+import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -91,7 +92,7 @@ import { StepThreeOrderComponent } from './main/order/step-three-order/step-thre
     CartComponent,
     StepOneOrderComponent,
     StepTwoOrderComponent,
-    StepThreeOrderComponent
+    StepThreeOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -113,6 +114,7 @@ import { StepThreeOrderComponent } from './main/order/step-three-order/step-thre
     NbStepperModule,
     NzTimelineModule,
     NzDrawerModule,
+    GoogleSigninButtonModule,
     NzSkeletonModule,
     NbSelectModule,
     NbSearchModule,

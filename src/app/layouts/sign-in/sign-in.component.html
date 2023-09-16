@@ -4,14 +4,8 @@
       <div class="container mx-auto">
         <div class="max-w-xl mx-auto my-10">
           <div class="text-center">
-            <h1
-              class="my-3 text-3xl font-semibold text-gray-700"
-            >
-              Đăng nhập
-            </h1>
-            <p class="text-gray-500">
-              Đăng nhập để bắt đầu mua hàng!
-            </p>
+            <h1 class="my-3 text-3xl font-semibold text-gray-700">Đăng nhập</h1>
+            <p class="text-gray-500">Đăng nhập để bắt đầu mua hàng!</p>
           </div>
           <div class="m-7">
             <form>
@@ -27,7 +21,7 @@
                   #name="ngModel"
                   autocomplete="off"
                   type="email"
-                  class="block w-full px-3 py-2 text-base"
+                  class="block w-full px-3 py-2 text-base mt-2"
                 />
                 <small
                   *ngIf="account.email === '' && isSubmitted"
@@ -37,7 +31,7 @@
               </div>
               <div class="mb-6">
                 <label class="my-2">Mật khẩu</label>
-                <nb-form-field class="min-w-0">
+                <nb-form-field class="min-w-0 mt-2">
                   <input
                     [(ngModel)]="account.password"
                     [ngClass]="{
@@ -49,7 +43,7 @@
                     required
                     #password="ngModel"
                     autocomplete="off"
-                    [type]="showPassword ? 'text' : 'password'" 
+                    [type]="showPassword ? 'text' : 'password'"
                     class="block w-full px-3 py-2 text-base"
                   />
                   <button
@@ -77,20 +71,33 @@
                 >
               </div>
               <div class="mb-6">
-                <button
-                  type="button"
-                  nbButton
-                  status="success"
-                  [nbSpinner]="isLoading"
-                  [disabled]="isLoading"
-                  class="w-full px-3 py-4 text-white"
-                  (click)="onClickSignIn()"
-                >
-                  Đăng nhập
-                </button>
+                <div class="grid grid-cols-1 mb-2 gap-5">
+                  <button
+                    type="button"
+                    nbButton
+                    status="success"
+                    [nbSpinner]="isLoading"
+                    [disabled]="isLoading"
+                    class="px-3 py-4 text-white"
+                    (click)="onClickSignIn()"
+                  >
+                    Đăng nhập
+                  </button>
+                  <span class="center-an-item"
+                    >Hoặc</span
+                  >
+                  <div class="center-an-item gap-5">
+                    <asl-google-signin-button
+                      type="icon"
+                      text="signin_with"
+                      size="large"
+                    ></asl-google-signin-button>
+                    <fa-icon (click)="signinWithFacebook()" [icon]="icons['faSquareFacebook']" size="3x" class="text-[#1b74e4] hover:text-[#80b9ff] transition-colors cursor-pointer"></fa-icon>
+                  </div>
+                </div>
                 <small>
                   <a
-                    href="#!"
+                    (click)="openForgotPassword(dialog)"
                     class="text-sm second-text-color focus:outline-none"
                   >
                     Bạn quên mật khẩu?
@@ -113,3 +120,163 @@
     </div>
   </nb-layout-column>
 </nb-layout>
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card class="rounded-lg">
+    <ng-container *ngIf="forgotPasswordStep === 1">
+      <nb-card-header>Lấy lại mật khẩu</nb-card-header>
+      <nb-card-body class="grid grid-cols-1 p-10">
+        <div class="w-full grid-cols-1 grid">
+          <div class="font-bold text-2xl text-center mb-5">
+            Hãy nhập địa chỉ Email mà bạn đã sử dụng trước đây.
+          </div>
+          <div>
+            <input
+              nbInput
+              fullWidth
+              [(ngModel)]="forgotPasswordEmailInput"
+              type="email"
+              placeholder="example@example.com"
+              [disabled]="isLoadingForgotPassword"
+            />
+          </div>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="space-x-3">
+        <button
+          [disabled]="isLoadingForgotPassword"
+          nbButton
+          status="infor"
+          (click)="closeForgotPassword()"
+        >
+          Huỷ
+        </button>
+        <button
+          [nbSpinner]="isLoadingForgotPassword"
+          nbButton
+          status="primary"
+          (click)="onClickSubmitForgotPassword()"
+          [disabled]="forgotPasswordEmailInput"
+        >
+          Xác nhận
+        </button>
+      </nb-card-footer>
+    </ng-container>
+    <ng-container *ngIf="forgotPasswordStep === 2">
+      <nb-card-header>Lấy lại mật khẩu</nb-card-header>
+      <nb-card-body class="grid grid-cols-1 p-10">
+        <div class="w-full grid-cols-1 grid">
+          <div class="font-bold text-2xl mb-2 text-center">
+            Chúng tôi đã gửi cho bạn mã xác thực thông qua GMAIL của bạn. <br />
+            Xin vui lòng kiểm tra hòm thư.
+          </div>
+          <div class="text-sm text-center mb-5 text-red-400">
+            (Nếu bạn không thấy, hãy kiểm tra cả thư mục rác)
+          </div>
+          <div>
+            <input
+              nbInput
+              fullWidth
+              type="text"
+              [(ngModel)]="forgotPasswordCode"
+              placeholder="Mã xác thực - XXXXXX"
+              [disabled]="isLoadingForgotPassword"
+            />
+          </div>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="space-x-3">
+        <button
+          [disabled]="isLoadingForgotPassword"
+          nbButton
+          status="infor"
+          (click)="closeForgotPassword()"
+        >
+          Huỷ
+        </button>
+        <button
+          [nbSpinner]="isLoadingForgotPassword"
+          nbButton
+          status="primary"
+          (click)="onClickSubmitForgotPasswordValidate()"
+          [disabled]="forgotPasswordCode.length !== 6"
+        >
+          Tiếp theo
+        </button>
+      </nb-card-footer>
+    </ng-container>
+    <ng-container *ngIf="forgotPasswordStep === 3">
+      <nb-card-header>Lấy lại mật khẩu</nb-card-header>
+      <nb-card-body class="grid grid-cols-1 p-10">
+        <div class="w-full grid-cols-1 grid">
+          <div class="font-bold text-2xl mb-5 text-center">
+            Xin hãy nhập lại mật khẩu mới để hoàn tất các bước khôi phục.
+          </div>
+          <div class="mb-5">
+            <label>
+              Mật khẩu mới - (ít nhất tối thiểu 8 ký tự, chứa ít nhất 1 số, 1
+              chữ cái thường và 1 chữ cái in hoa.)
+            </label>
+            <input
+              nbInput
+              fullWidth
+              type="password"
+              [(ngModel)]="newPassword"
+              placeholder="******"
+              [disabled]="isLoadingForgotPassword"
+              class="mt-2"
+            />
+            <small
+              class="break-words text-red-400"
+              *ngIf="newPassword.length > 0 && !isPasswordValidate(newPassword)"
+            >
+              Mật khẩu không đúng định dạng
+            </small>
+          </div>
+          <div>
+            <label> Xác nhận mật khẩu mới </label>
+            <input
+              nbInput
+              fullWidth
+              type="password"
+              [(ngModel)]="newConfirmPassword"
+              placeholder="******"
+              [disabled]="isLoadingForgotPassword"
+              class="mt-2"
+            />
+            <small
+              class="break-words text-red-400"
+              *ngIf="
+                newConfirmPassword.length > 0 &&
+                !(newConfirmPassword === newPassword)
+              "
+            >
+              Mật khẩu xác nhận không giống nhau
+            </small>
+          </div>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="space-x-3">
+        <button
+          [disabled]="isLoadingForgotPassword"
+          nbButton
+          status="infor"
+          (click)="closeForgotPassword()"
+        >
+          Huỷ
+        </button>
+        <button
+          [nbSpinner]="isLoadingForgotPassword"
+          nbButton
+          status="success"
+          (click)="onClickSubmitNewForgotPassword()"
+          [disabled]="
+            !isPasswordValidate(newPassword) ||
+            !(newPassword.length > 0 && newConfirmPassword === newPassword)
+          "
+        >
+          Hoàn tất
+        </button>
+      </nb-card-footer>
+    </ng-container>
+  </nb-card>
+</ng-template>

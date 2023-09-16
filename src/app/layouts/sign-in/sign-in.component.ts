@@ -44,7 +44,7 @@ export class SignInComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
-      console.log(this.user)
+      if(user) console.log(user)
     });
 
     Cookies.get('id') && this.router.navigate(['/main/dashboard'])

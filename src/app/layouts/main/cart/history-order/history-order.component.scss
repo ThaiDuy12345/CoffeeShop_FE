@@ -2,6 +2,9 @@
   nb-accordion-item-header[name="orderList"]{
     display: grid !important;
   }
+  .ant-collapse-content-box {
+    padding-bottom: 25px;
+  }
 
   .ant-collapse-content-box, .ant-collapse-content, nz-collapse-panel, nz-collapse{
     border-radius: 0.5rem !important;

@@ -24,7 +24,6 @@ export class OrderComponent implements OnInit{
     this.user = user ? user : new Account()
     this.activatedRoute.params.subscribe((params: any) => {
       if(params['id']) {
-        console.log(params['id'])
         const order = OrderData.find(item => item.id === params['id'])
         if(order){
           this.order = order

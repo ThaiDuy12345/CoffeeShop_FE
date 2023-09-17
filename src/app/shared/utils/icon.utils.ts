@@ -73,5 +73,5 @@ export const icons: Icon = {
   faLocationArrow: faLocationArrow,
   faMoneyCheck: faMoneyCheck,
   faGooglel: faGoogle,
-  faSquareFacebook: faSquareFacebook,
+  faSquareFacebook: faSquareFacebook
 };

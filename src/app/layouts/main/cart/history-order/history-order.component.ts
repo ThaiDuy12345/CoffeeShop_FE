@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { ProductData } from 'src/app/data/data';
 import { Order } from 'src/app/core/models/order.model';
+import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
 import { DetailOrderData, OrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -17,6 +19,8 @@ export class HistoryOrderComponent implements OnInit{
   public order: Order[] = []
   public icons: Icon = icons
   public selectedStepIndex: number = 1
+  public mostPopularProducts: Product[] = ProductData
+  public priceFilter: [number, number] = [0, 100]
   constructor(
     private formatService: FormatService,
     private router: Router,
@@ -65,6 +69,10 @@ export class HistoryOrderComponent implements OnInit{
       case 4: return 4
       default: return 5
     }
+  }
+
+  getWidth(): number {
+    return window.innerHeight
   }
 
   navigate(id: string){

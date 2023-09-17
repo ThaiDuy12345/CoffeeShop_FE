@@ -1,5 +1,5 @@
 <div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
-  <nz-tabset nzCentered>
+  <nz-tabset nzCentered [nzSelectedIndex]="selectedTab">
     <nz-tab [nzTitle]="template1">
       <ng-template #template1>
         <fa-icon [icon]="icons['faCartShopping']"></fa-icon>

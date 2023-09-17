@@ -4,7 +4,7 @@
       <h1 class="text-3xl text-center w-full font-bold mb-20">
         <span class="text-center">Thanh toán</span>
       </h1>
-      <div class="px-5 mb-20">
+      <div class="px-5 mb-20" *ngIf="current !== 2">
         <nz-steps [nzCurrent]="current">
           <nz-step nzTitle="Xác nhận thông tin"></nz-step>
           <nz-step nzTitle="Xác nhận thanh toán"></nz-step>

@@ -4,27 +4,34 @@
   <div></div>
   <div class="col-span-1">
     <nb-select class="w-full" multiple placeholder="Tất cả" selectable="false">
-      <nb-option value="coffee"><span class="text-[#3366ff]">Chờ xét duyệt</span></nb-option>
-      <nb-option value="tea"><span class="text-[#ffaa00]">Đang vận chuyển</span></nb-option>
-      <nb-option value="food"><span class="text-[#00d68f]">Đã hoàn thành</span></nb-option>
-      <nb-option value="package"><span class="text-[#ff3d71]">Đã huỷ</span></nb-option>
+      <nb-option value="coffee"
+        ><span class="text-[#3366ff]">Chờ xét duyệt</span></nb-option
+      >
+      <nb-option value="tea"
+        ><span class="text-[#ffaa00]">Đang vận chuyển</span></nb-option
+      >
+      <nb-option value="food"
+        ><span class="text-[#00d68f]">Đã hoàn thành</span></nb-option
+      >
+      <nb-option value="package"
+        ><span class="text-[#ff3d71]">Đã huỷ</span></nb-option
+      >
     </nb-select>
   </div>
 </div>
-<nz-collapse 
+<nz-collapse
   [nzBordered]="false"
   [nzExpandIconPosition]="'right'"
-  *ngFor="let or of order" 
+  *ngFor="let or of order"
   class="mb-6 bg-white"
 >
-  <nz-collapse-panel 
-    [nzHeader]="header"
-  >
+  <nz-collapse-panel [nzHeader]="header">
     <ng-template #header>
       <div class="w-full grid grid-cols-2">
         <div class="grid grid-cols-1">
           <div>
-            Mã hoá đơn: <span class="error-text-color font-semibold">{{ or.id }}</span>
+            Mã hoá đơn:
+            <span class="error-text-color font-semibold">{{ or.id }}</span>
           </div>
           <div>
             <span *ngIf="or.status === 1" class="text-[#3366ff]">
@@ -55,28 +62,43 @@
       </div>
     </ng-template>
     <div class="my-16 px-10">
-      <nb-stepper 
-        orientation="horizontal" 
+      <nb-stepper
+        orientation="horizontal"
         [selectedIndex]="getSelectedIndex(or.status)"
         disableStepNavigation="true"
       >
-        <nb-step [completed]="getSelectedIndex(or.status) >= 0" label="Đợi xác nhận thông tin">
+        <nb-step
+          [completed]="getSelectedIndex(or.status) >= 0"
+          label="Đợi xác nhận thông tin"
+        >
         </nb-step>
-        <nb-step [completed]="getSelectedIndex(or.status) >= 1" label="Đợi bàn giao cho đơn vị vận chuyển">
+        <nb-step
+          [completed]="getSelectedIndex(or.status) >= 1"
+          label="Đợi bàn giao cho đơn vị vận chuyển"
+        >
         </nb-step>
-        <nb-step [completed]="getSelectedIndex(or.status) >= 2" label="Đang vận chuyển">
+        <nb-step
+          [completed]="getSelectedIndex(or.status) >= 2"
+          label="Đang vận chuyển"
+        >
         </nb-step>
-        <nb-step [completed]="getSelectedIndex(or.status) >= 4" *ngIf="getSelectedIndex(or.status) !== 5" label="Giao hàng thành công">
+        <nb-step
+          [completed]="getSelectedIndex(or.status) >= 4"
+          *ngIf="getSelectedIndex(or.status) !== 5"
+          label="Giao hàng thành công"
+        >
         </nb-step>
-        <nb-step [completed]="getSelectedIndex(or.status) >= 5" *ngIf="getSelectedIndex(or.status) === 5" label="Giao hàng thất bại">
+        <nb-step
+          [completed]="getSelectedIndex(or.status) >= 5"
+          *ngIf="getSelectedIndex(or.status) === 5"
+          label="Giao hàng thất bại"
+        >
         </nb-step>
       </nb-stepper>
     </div>
     <div class="grid grid-cols-3 gap-5">
       <div>
-        <div class="font-bold text-2xl">
-          Địa chỉ nhận hàng
-        </div>
+        <div class="font-bold text-2xl">Thông tin chi tiết</div>
         <nz-divider></nz-divider>
         <div class="mb-1">
           <span class="font-bold">{{ or.account.name }}</span>
@@ -84,8 +106,31 @@
         <div class="mb-1">
           <span class="second-main-text-color">{{ or.account.phone }}</span>
         </div>
-        <div>
+        <div class="mb-1">
           <span class="second-main-text-color">{{ or.account.address }}</span>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="grid grid-cols-1">
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color"
+              >Giá trị hoá đơn</span
+            >
+            <span class="text-right">{{ formatPrice(or.totalPrice) }}</span>
+          </div>
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color">Giảm giá</span>
+            <span class="text-right"> - 0 đ</span>
+          </div>
+          <div class="grid grid-cols-2 mb-3">
+            <span class="text-left second-main-text-color">Thuế VAC</span>
+            <span class="text-right"> 0 đ</span>
+          </div>
+          <div class="grid grid-cols-2 text-lg mb-1">
+            <span class="font-bold text-left">Tổng giá</span>
+            <span class="font-bold text-right">{{
+              formatPrice(or.totalPrice)
+            }}</span>
+          </div>
         </div>
       </div>
       <div class="col-span-2">
@@ -113,7 +158,9 @@
                     </div>
                   </div>
                   <div class="flex justify-end items-center">
-                    <span class="font-bold">{{ formatPrice(item.subTotal) }}</span>
+                    <span class="font-bold">{{
+                      formatPrice(item.subTotal)
+                    }}</span>
                   </div>
                 </div>
               </div>

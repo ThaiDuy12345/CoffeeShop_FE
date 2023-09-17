@@ -1,1 +1,12 @@
-<p>step-three-order works!</p>
+<nz-result
+  nzStatus="success"
+  nzTitle="Thành công, đơn hàng của bạn đã được hệ thống tiếp nhận"
+  class="p-0"
+  nzSubTitle="Xin vui lòng đợi hệ thống xác nhận tầm 1 - 3 phút. Cảm ơn bạn đã dành thời gian sử dụng sản phẩm của chúng tôi, hãy đi tới phần hóa đơn chi tiết để biết thêm tình trạng đơn hàng!!"
+>
+  <div nz-result-extra>
+    <button nbButton status="infor" [routerLink]="'/main/cart'" [queryParams]="{ tab: 'HISTORY_ORDER' }">Đi tới phần hóa đơn</button>
+    <button nbButton status="primary" [routerLink]="'/main/product'">Mua lại</button>
+  </div>
+</nz-result>
+

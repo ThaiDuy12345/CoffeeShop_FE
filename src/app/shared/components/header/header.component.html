@@ -63,7 +63,7 @@
       >
         <ul>
           <li
-            [routerLink]="i.title === 'THÔNG TIN' ? ['/main/user'] : []"
+            [routerLink]="i.link ? i.link : []"
             (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null"
             nz-menu-item
             *ngFor="let i of user.subItems"

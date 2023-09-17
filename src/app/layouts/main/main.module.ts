@@ -9,9 +9,8 @@ import { ProductComponent } from './product/product.component';
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
-import { StepOneOrderComponent } from './order/step-one-order/step-one-order.component';
-import { StepTwoOrderComponent } from './order/step-two-order/step-two-order.component';
-import { StepThreeOrderComponent } from './order/step-three-order/step-three-order.component';
+import { FavoriteProductComponent } from './favorite-product/favorite-product.component';
+import { SupportComponent } from './support/support.component';
 const routes: Route[] = [
   {
     path: "",
@@ -45,8 +44,17 @@ const routes: Route[] = [
           {
             path: ':id',
             component: DetailProductComponent
-          }
+          },
         ]
+      },
+      {
+        path: 'favorite-product',
+        component: FavoriteProductComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'support',
+        component: SupportComponent,
       },
       {
         path: "cart",
@@ -64,5 +72,6 @@ const routes: Route[] = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  declarations: [],
 })
 export class MainModule { }

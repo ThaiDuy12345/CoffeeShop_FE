@@ -1,0 +1,25 @@
+<div class="mx-auto container py-10 lg:px-20 px-3">
+  <nb-card class="rounded-lg">
+    <nb-card-body class="border-none grid grid-cols-5 gap-x-10 p-10">
+      <h1 class="col-span-5 text-3xl text-center w-full font-bold mb-16">
+        <span class="text-center">Sản phẩm bạn đã yêu thích</span>
+      </h1>
+      <div class="col-span-5 center-an-item min-h-[200px]" [nbSpinner]="isLoading">
+        <ng-template [ngIf]="allProduct.length > 0">
+          <app-product-list
+            [products]="allProduct"
+            [cols]="4"
+            [view]="'ICON'"
+          ></app-product-list>
+        </ng-template>
+        <nz-result
+          *ngIf="allProduct.length === 0 && !isLoading"
+          [nzIcon]="'smile-twotone'"
+          nzTitle="Ối, không có gì ở đây cả!!"
+        >
+        </nz-result>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+  

@@ -4,6 +4,7 @@ import { Category } from "../core/models/category.model"
 import { Product } from "../core/models/product.model"
 import { FeedBack } from "../core/models/feedback.model"
 import { Order } from "../core/models/order.model"
+import { FavoriteProduct } from '../core/models/favorite-product.model';
 
 
 const imagePath = "assets/product-pictures/"
@@ -56,7 +57,8 @@ export const ProductData: Product[] = [
     quantity: -1,
     description: "Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác 'thức giấc', thơm ngon hết nấc.",
     picture: `${imagePath}cloudFeeHanhNhanNuong.webp`,
-    category: CategoryData[0]
+    category: CategoryData[0],
+    creation_date: new Date('2023-09-01')
   },
   {
     id: "1",
@@ -65,7 +67,8 @@ export const ProductData: Product[] = [
     quantity: -1,
     description: "Cà phê Đắk Lắk nguyên chất được pha phin truyền thống kết hợp với sữa đặc tạo nên hương vị đậm đà, hài hòa giữa vị ngọt đầu lưỡi và vị đắng thanh thoát nơi hậu vị.",
     picture: `${imagePath}cafeSuaDa.webp`,
-    category: CategoryData[0]
+    category: CategoryData[0],
+    creation_date: new Date('2023-09-02')
   },
   {
     id: "2",
@@ -74,7 +77,8 @@ export const ProductData: Product[] = [
     quantity: -1,
     description: "Chút ngọt ngào của Vải, mix cùng vị chua thanh tao từ trà hoa Hibiscus, mang đến cho bạn thức uống đúng chuẩn vừa ngon, vừa healthy.",
     picture: `${imagePath}hiTeaVai.webp`,
-    category: CategoryData[1]
+    category: CategoryData[1],
+    creation_date: new Date('2023-09-03')
   },
   {
     id: "3",
@@ -83,7 +87,8 @@ export const ProductData: Product[] = [
     quantity: -1,
     description: "Gói gọn trong ổ bánh mì Việt Nam là từng lớp chả, từng lớp jambon hòa quyện cùng bơ và pate thơm lừng, thêm dưa rau cho bữa sáng đầy năng lượng. *Phần bánh sẽ ngon và đậm đà nhất khi kèm pate. Để đảm bảo hương vị được trọn vẹn, Nhà mong bạn thông cảm vì không thể thay đổi định lượng pate.",
     picture: `${imagePath}banhMiThitNguoi.webp`,
-    category: CategoryData[2]
+    category: CategoryData[2],
+    creation_date: new Date('2023-08-26')
   },
   {
     id: "4",
@@ -92,7 +97,8 @@ export const ProductData: Product[] = [
     quantity: -1,
     description: "Bao bọc bởi lớp vỏ Mochi dẻo thơm, bên trong là lớp kem lạnh cùng nhân chocolate độc đáo. Gọi 1 chiếc Mochi cho ngày thật tươi mát. Sản phẩm phải bảo quán mát và dùng ngon nhất trong 2h sau khi nhận hàng.",
     picture: `${imagePath}mochiKemChocolate.webp`,
-    category: CategoryData[2]
+    category: CategoryData[2],
+    creation_date: new Date('2023-09-11')
   },
   {
     id: "5",
@@ -101,7 +107,31 @@ export const ProductData: Product[] = [
     quantity: -1,
     description: "Thức uống giúp tỉnh táo tức thì để bắt đầu ngày mới thật hứng khởi. Không đắng khét như cà phê truyền thống, The Coffee House Sữa Đá mang hương vị hài hoà đầy lôi cuốn. Là sự đậm đà của 100% cà phê Arabica Cầu Đất rang vừa tới, biến tấu tinh tế với sữa đặc và kem sữa ngọt ngào cực quyến rũ. Càng hấp dẫn hơn với topping thạch 100% cà phê nguyên chất giúp giữ trọn vị ngon đến ngụm cuối cùng.",
     picture: `${imagePath}theCoffeeHouseSuaDa.webp`,
-    category: CategoryData[0]
+    category: CategoryData[0],
+    creation_date: new Date('2023-08-10')
+  }
+]
+
+export const FavoriteProductData: FavoriteProduct[] = [
+  {
+    id: '0',
+    account: AccountData[0],
+    product: ProductData[0]
+  },
+  {
+    id: '0',
+    account: AccountData[0],
+    product: ProductData[1]
+  },
+  {
+    id: '0',
+    account: AccountData[0],
+    product: ProductData[3]
+  },
+  {
+    id: '0',
+    account: AccountData[0],
+    product: ProductData[5]
   }
 ]
 

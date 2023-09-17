@@ -68,10 +68,12 @@ export class HeaderComponent implements OnInit {
       {
         title: 'THÔNG TIN',
         icon: icons['faCircleInfo'],
+        link: '/main/user'
       },
       {
         title: 'SẢN PHẨM YÊU THÍCH',
         icon: icons['faHeart'],
+        link: '/main/favorite-product'
       },
       {
         title: 'ĐĂNG XUẤT',

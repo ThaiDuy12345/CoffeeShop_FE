@@ -46,6 +46,18 @@ $error-text-color: #ee7070;
 }
 
 body {
+  .ant-segmented{
+    background-color: #f7f9fc !important;
+    .ant-segmented-group {
+      height:40px !important;
+    }
+    .ant-segmented-item{
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+  }
+
   .ant-drawer-content-wrapper{
     width: 300px !important;
   }

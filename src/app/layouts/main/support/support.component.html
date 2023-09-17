@@ -1,0 +1,154 @@
+<div class="mx-auto container py-10 lg:px-20 px-3">
+  <nb-card class="rounded-lg">
+    <nb-card-body class="border-none grid grid-cols-3 gap-x-10 p-10">
+      <nz-result
+        *ngIf="isSent"
+        nzStatus="success"
+        nzTitle="Thành công"
+        class="px-0 py-16 col-span-3"
+        nzSubTitle="Đã gửi phản hồi cho hệ thống của COFFEE, cảm ơn vì sự quan tâm của bạn!!"
+      >
+        <div nz-result-extra>
+          <button
+            nbButton
+            status="infor"
+            (click)="reset()"
+          >
+            Gửi phản hồi khác 
+          </button>
+          <button nbButton status="primary" [routerLink]="'/main/product'">
+            Đi về trang sản phẩm
+          </button>
+        </div>
+      </nz-result>
+      <ng-container *ngIf="!isSent">
+        <div>
+          <span class="font-bold text-2xl">
+            Gặp vấn đề, cần góp ý giúp chúng tôi phát triển ứng dụng, dịch vụ.
+            <br /><br />
+            Hãy gửi phản hồi cho chúng tôi
+          </span>
+          <div>
+            <app-image
+              [src]="'assets/brand-icons/support-cf.png'"
+              class="center-an-item"
+              [classes]="'w-[80%]'"
+            ></app-image>
+          </div>
+        </div>
+        <div
+          class="grid grid-col-1 col-span-2 gap-5 p-10 rounded-lg border border-[#b6bfce]"
+        >
+          <div>
+            <div>
+              <span class="mr-2"> - Người gửi:</span>
+              <input
+                [disabled]="isLoading"
+                nbInput
+                placeholder="Tên của bạn"
+                [(ngModel)]="name"
+              />
+            </div>
+            <div><span> - Người nhận: COFFEE</span></div>
+          </div>
+          <div>
+            <nz-divider [nzText]="text"></nz-divider>
+            <ng-template #text>
+              <fa-icon size="2x" [icon]="icons['faEnvelope']"></fa-icon>
+            </ng-template>
+          </div>
+          <nb-card>
+            <nb-card-header>
+              Tiêu đề:
+              <input
+                [disabled]="isLoading"
+                [(ngModel)]="title"
+                nbInput
+                placeholder="Tiêu đề email"
+              />
+            </nb-card-header>
+            <nb-card-body class="grid grid-cols-1">
+              <span>
+                <h1>
+                  <span class="mr-2">Chào COFFEE, tôi tên là</span>
+                  <input
+                    [disabled]="isLoading"
+                    nbInput
+                    placeholder="Tên của bạn"
+                    [(ngModel)]="name"
+                  />,
+                </h1>
+              </span>
+              <span class="mb-2">
+                <span
+                  >Hôm nay là ngày {{ formatDate() }}, đây là một email phản hồi
+                  đến COFFEE.</span
+                >
+              </span>
+              <span class="mb-2">
+                <span class="mr-2">Lý do tôi gửi email là để</span>
+                <nb-select
+                  [disabled]="isLoading"
+                  placeholder="Lý do gửi email"
+                  [(selected)]="selectedItem"
+                >
+                  <nb-option value="0"
+                    >đề xuất để giúp COFFEE cải thiện dịch vụ</nb-option
+                  >
+                  <nb-option value="1"
+                    >báo lỗi trong quá trình sử dụng dịch vụ</nb-option
+                  >
+                  <nb-option value="2">khiến nại về 1 vấn đề</nb-option>
+                </nb-select>
+              </span>
+              <span>
+                <textarea
+                  [disabled]="isLoading"
+                  nbInput
+                  placeholder="nội dung chi tiết"
+                  class="w-full"
+                ></textarea>
+              </span>
+              <span>
+                <span>Mong nhận được sự phản hồi sớm đến từ COFFEE</span>
+              </span>
+              <span class="mb-2">
+                <span>Thân gửi,</span>
+              </span>
+              <span>
+                <span
+                  ><input
+                    [disabled]="isLoading"
+                    [(ngModel)]="content"
+                    nbInput
+                    placeholder="Tên của bạn"
+                    [(ngModel)]="name"
+                  />.</span
+                >
+              </span>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div>
+          <button
+            [nbSpinner]="isLoading"
+            class="mr-5"
+            nbButton
+            status="success"
+            (click)="send()"
+          >
+            Xác nhận gửi email
+          </button>
+          <button
+            [disabled]="isLoading"
+            nbButton
+            status="infor"
+            (click)="reset()"
+          >
+            Làm lại
+          </button>
+        </div>
+      </ng-container>
+    </nb-card-body>
+  </nb-card>
+</div>

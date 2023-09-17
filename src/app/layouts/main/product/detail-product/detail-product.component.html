@@ -109,6 +109,9 @@
               <fa-icon
                 [icon]="icons['faHeart']"
                 class="cursor-pointer"
+                [ngClass]="{
+                  'text-[#ee7070]': isUserLoveThisProduct()
+                }"
                 size="lg"
               ></fa-icon>
             </span>

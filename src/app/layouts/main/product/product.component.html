@@ -2,29 +2,40 @@
   <nb-card class="rounded-lg">
     <nb-card-body class="border-none grid grid-cols-5 gap-x-10 p-10">
       <div class="col-span-5 mb-5 border-b pb-10">
-        <h1 class="text-3xl text-center w-full font-bold">
+        <h1 class="text-3xl text-center w-full font-bold mb-16">
           <span class="text-center">Sản phẩm của COFFEE</span>
         </h1>
-        <h1 class="text-lg text-right w-full font-bold space-x-3 mt-5">
-          <fa-icon
-            [icon]="icons['faTableCellsLarge']"
-            size="lg"
-            [ngClass]="{
-              'text-[#ee7070]': viewMode === 'ICON'
-            }"
-            class="cursor-pointer"
-            (click)="updateView('ICON')"
-          ></fa-icon>
-          <fa-icon
-            [icon]="icons['faList']"
-            size="lg"
-            [ngClass]="{
-              'text-[#ee7070]': viewMode === 'LIST'
-            }"
-            class="cursor-pointer"
-            (click)="updateView('LIST')"
-          ></fa-icon>
-        </h1>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="col-span-1">
+            Sắp xếp theo
+          </label>
+          <div class=col-span-1></div>
+          <div class="col-span-1">
+            <nz-segmented [nzOptions]="options" (nzValueChange)="handleIndexChange($event)" [(ngModel)]="optionIndex"></nz-segmented>
+          </div>
+          <div class="col-span-1">
+            <h1 class="text-lg text-right w-full font-bold space-x-3">
+              <fa-icon
+                [icon]="icons['faTableCellsLarge']"
+                size="lg"
+                [ngClass]="{
+                  'text-[#ee7070]': viewMode === 'ICON'
+                }"
+                class="cursor-pointer"
+                (click)="updateView('ICON')"
+              ></fa-icon>
+              <fa-icon
+                [icon]="icons['faList']"
+                size="lg"
+                [ngClass]="{
+                  'text-[#ee7070]': viewMode === 'LIST'
+                }"
+                class="cursor-pointer"
+                (click)="updateView('LIST')"
+              ></fa-icon>
+            </h1>
+          </div>
+        </div>
       </div>
       <div class="col-span-5 md:col-span-1">
         <div *ngIf="search" class="border-b py-5 mb-3">

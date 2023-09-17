@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
-import { FeedBackData, ProductData } from 'src/app/data/data';
+import { FeedBackData, ProductData, FavoriteProductData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -115,6 +115,13 @@ export class DetailProductComponent implements OnInit {
     })
 
     return sum * 100 / this.feedBackProducts.length
+  }
+
+  isUserLoveThisProduct(): boolean {
+    const user = Cookies.get('id')
+    if(!user) return false
+    const result = FavoriteProductData.find(p => p.account.id === user && p.product.id === this.product.id)
+    return result ? true : false
   }
 
   navigateRelatedProduct(): void {

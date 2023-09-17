@@ -37,7 +37,8 @@ import {
   faMapLocationDot,
   faIdCard,
   faCheck,
-  faCircleCheck
+  faCircleCheck,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -80,5 +81,6 @@ export const icons: Icon = {
   faSquareFacebook: faSquareFacebook,
   faMapLocationDot: faMapLocationDot,
   faIdCard: faIdCard,
-  faCircleCheck: faCircleCheck
+  faCircleCheck: faCircleCheck,
+  faEnvelope: faEnvelope
 };

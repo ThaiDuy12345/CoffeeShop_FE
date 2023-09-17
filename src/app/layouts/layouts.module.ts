@@ -50,6 +50,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
@@ -68,11 +69,16 @@ import { OrderComponent } from './main/order/order.component';
 import { StepOneOrderComponent } from './main/order/step-one-order/step-one-order.component';
 import { StepTwoOrderComponent } from './main/order/step-two-order/step-two-order.component';
 import { StepThreeOrderComponent } from './main/order/step-three-order/step-three-order.component';
+import { FavoriteProductComponent } from './main/favorite-product/favorite-product.component';
+import { SupportComponent } from './main/support/support.component';
+import { AdminComponent } from './admin/admin.component';
 @NgModule({
   declarations: [
+    SupportComponent,
     SignInComponent,
     SignUpComponent,
     SignOutComponent,
+    FavoriteProductComponent,
     P404Component,
     MainComponent,
     EditUserComponent,
@@ -93,6 +99,7 @@ import { StepThreeOrderComponent } from './main/order/step-three-order/step-thre
     StepOneOrderComponent,
     StepTwoOrderComponent,
     StepThreeOrderComponent,
+    AdminComponent,
   ],
   imports: [
     CommonModule,
@@ -104,6 +111,7 @@ import { StepThreeOrderComponent } from './main/order/step-three-order/step-thre
     NzCollapseModule,
     NbRadioModule,
     NzTableModule,
+    NzSegmentedModule,
     NzTabsModule,
     NzPaginationModule,
     NzProgressModule,

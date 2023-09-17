@@ -5,10 +5,25 @@
         <span class="text-center">Thanh toán</span>
       </h1>
       <div class="px-5 mb-20" *ngIf="current !== 2">
+        <ng-template #des1>
+          <i class="text-[13px] second-main-text-color">Vui lòng kiểm tra đầy đủ thông tin giao hàng</i>
+        </ng-template>
+        <ng-template #des2>
+          <i class="text-[13px] second-main-text-color">Chọn phương thức thanh toán và đặt hàng</i>
+        </ng-template>
+        <ng-template #icon1>
+          <fa-icon size='xl' [icon]="icons['faMapLocationDot']"></fa-icon>
+        </ng-template>
+        <ng-template #icon2>
+          <fa-icon size='xl' [icon]="icons['faIdCard']"></fa-icon>
+        </ng-template>
+        <ng-template #icon3>
+          <fa-icon size='xl' [icon]="icons['faCircleCheck']"></fa-icon>
+        </ng-template>
         <nz-steps [nzCurrent]="current">
-          <nz-step nzTitle="Xác nhận thông tin"></nz-step>
-          <nz-step nzTitle="Xác nhận thanh toán"></nz-step>
-          <nz-step nzTitle="Đặt hàng thành công"></nz-step>
+          <nz-step [nzIcon]="icon1" nzTitle="Xác nhận thông tin" [nzDescription]="current === 0 ? des1 : undefined"></nz-step>
+          <nz-step [nzIcon]="icon2" nzTitle="Xác nhận thanh toán" [nzDescription]="current === 1 ? des2 : undefined"></nz-step>
+          <nz-step [nzIcon]="icon3" nzTitle="Đặt hàng thành công"></nz-step>
         </nz-steps>
       </div>
       <div class="px-5 grid grid-cols-1">

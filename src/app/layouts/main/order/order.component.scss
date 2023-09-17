@@ -1,5 +1,19 @@
 $main-text-color: #33425a;
 :host ::ng-deep{
+  nz-step{
+    svg{
+      vertical-align: middle !important;
+    }
+    .ant-steps-item-icon{
+      height: 40px !important;
+    }
+    .ant-steps-item-title{
+      display:flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 40px !important;
+    }
+  }
   nz-step.ant-steps-item-finish{
     .ant-steps-item-icon{
       border-color: $main-text-color !important;
@@ -12,9 +26,6 @@ $main-text-color: #33425a;
     }
   }
   nz-step.ant-steps-item-process{
-    .ant-steps-item-icon{
-      border-color: $main-text-color !important;
-      background: $main-text-color !important;
-    }
+    
   }
 }

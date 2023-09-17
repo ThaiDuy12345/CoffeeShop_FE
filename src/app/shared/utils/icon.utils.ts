@@ -33,7 +33,11 @@ import {
   faLocationDot,
   faPhone,
   faLocationArrow,
-  faMoneyCheck
+  faMoneyCheck,
+  faMapLocationDot,
+  faIdCard,
+  faCheck,
+  faCircleCheck
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -73,5 +77,8 @@ export const icons: Icon = {
   faLocationArrow: faLocationArrow,
   faMoneyCheck: faMoneyCheck,
   faGooglel: faGoogle,
-  faSquareFacebook: faSquareFacebook
+  faSquareFacebook: faSquareFacebook,
+  faMapLocationDot: faMapLocationDot,
+  faIdCard: faIdCard,
+  faCircleCheck: faCircleCheck
 };

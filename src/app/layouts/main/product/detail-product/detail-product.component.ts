@@ -98,14 +98,11 @@ export class DetailProductComponent implements OnInit {
 
   renderStarColor(star: number): string {
     switch (true) {
-      case star === 4 || star === 5:
-        return '#43da89';
-      case star === 2 || star === 3:
-        return '#ee7070';
-      case star === 1:
-        return 'rgb(55 65 81)';
-      default:
+      case star === 0:
         return 'rgb(121, 125, 133)';
+        break
+      default:
+        return '#FADB14'
     }
   }
 

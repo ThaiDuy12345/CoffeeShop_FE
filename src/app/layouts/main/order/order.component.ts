@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
+import { Icon } from 'src/app/core/models/icon.model';
 import { Order } from 'src/app/core/models/order.model';
 import { AccountData, DetailOrderData, OrderData } from 'src/app/data/data';
+import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
   selector: 'app-order',
@@ -12,6 +14,7 @@ import { AccountData, DetailOrderData, OrderData } from 'src/app/data/data';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit{
+  public icons: Icon = icons
   public current: number = 0 
   public order: Order = new Order()
   public detailOrders: DetailOrder[] = []

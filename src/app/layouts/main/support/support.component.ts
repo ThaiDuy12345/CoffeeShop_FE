@@ -16,9 +16,9 @@ export class SupportComponent {
   public isLoading: boolean = false
   public content: string = ""
   public isSent: boolean = false
+  
   constructor(
     private formatService: FormatService,
-    private messageService: NzMessageService 
   ){}
 
   formatDate(date: Date = new Date()): string {

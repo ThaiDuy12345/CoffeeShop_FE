@@ -2,12 +2,8 @@
   <div
     class="col-span-10 order-last lg:col-span-7 lg:order-none grid grid-cols-1"
   >
-    <nb-form-field class="mb-1">
-      <nb-icon nbPrefix icon="search-outline" pack="eva"></nb-icon>
-      <input type="text" nbInput placeholder="Tìm kiếm sản phẩm trong giỏ" />
-    </nb-form-field>
     <div class="grid grid-cols-1">
-      <nb-card class="my-3 py-2">
+      <nb-card class="mb-3 py-2">
         <nb-card-body class="grid grid-cols-5 gap-5">
           <div class="col-span-1"></div>
           <div class="col-span-4 grid grid-cols-6 gap-5 font-semibold">
@@ -22,20 +18,20 @@
         <nb-card>
           <nb-card-body>
             <div class="grid grid-cols-5 my-6 gap-5">
-              <div class="col-span-1">
+              <div class="col-span-5 sm:col-span-1">
                 <app-image
                   [src]="item.product.picture"
                   [classes]="'rounded-lg'"
                 ></app-image>
               </div>
-              <div class="col-span-4 grid grid-rows-3 mt-0">
-                <div class="row-span-1 grid grid-cols-6 gap-5">
-                  <div class="col-span-2">
+              <div class="col-span-5 sm:col-span-4 grid grid-rows-3 mt-0">
+                <div class="row-span-1 grid grid-cols-6 gap-5 mb-5 sm:mb-0">
+                  <div class="col-span-6 sm:col-span-2">
                     <div class="h-auto w-full">
                       <b class="break-words">{{ item.product.name }}</b>
                     </div>
                   </div>
-                  <div>
+                  <div class="sm:col-span-1 col-span-2">
                     <div class="h-auto w-full">
                       <span>{{ formatPrice(item.product.price) }}</span>
                     </div>
@@ -71,8 +67,8 @@
                       </nb-button-group>
                     </div>
                   </div>
-                  <div>
-                    <div class="h-auto w-full">
+                  <div class="sm:col-span-1 col-span-2">
+                    <div class="h-auto w-full text-center sm:text-left">
                       <span class="font-semibold">{{
                         formatPrice(item.subTotal)
                       }}</span>

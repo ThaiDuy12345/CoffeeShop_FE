@@ -1,8 +1,6 @@
 <div class="w-full grid grid-cols-4 mb-5 gap-5">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div class="col-span-1">
+  <div class="col-span-2 sm:col-span-3"></div>
+  <div class="col-span-2 sm:col-span-1">
     <nb-select class="w-full" multiple placeholder="Tất cả" selectable="false">
       <nb-option value="coffee"
         ><span class="text-[#3366ff]">Chờ xét duyệt</span></nb-option
@@ -27,28 +25,28 @@
 >
   <nz-collapse-panel [nzHeader]="header">
     <ng-template #header>
-      <div class="w-full grid grid-cols-2">
+      <div class="w-full grid grid-cols-2 gap-3">
         <div class="grid grid-cols-1">
           <div>
             Mã hoá đơn:
             <span class="error-text-color font-semibold">{{ or.id }}</span>
           </div>
           <div>
-            <span *ngIf="or.status === 1" class="text-[#3366ff]">
+            <div *ngIf="or.status === 1" class="text-[#3366ff] truncate">
               Đơn hàng đã được đặt và đợi xác nhận thông tin
-            </span>
-            <span *ngIf="or.status === 2" class="text-[#3366ff]">
+            </div>
+            <div *ngIf="or.status === 2" class="text-[#3366ff] truncate">
               Đơn hàng đã được xác nhận và đợi bàn giao cho đơn vị vận chuyển
-            </span>
-            <span *ngIf="or.status === 3" class="text-[#ffaa00]">
+            </div>
+            <div *ngIf="or.status === 3" class="text-[#ffaa00] truncate">
               Đơn hàng đã được bàn giao và đang trên đường tới chỗ bạn
-            </span>
-            <span *ngIf="or.status === 4" class="text-[#00d68f]">
+            </div>
+            <div *ngIf="or.status === 4" class="text-[#00d68f] truncate">
               Đơn hàng đã được giao thành công
-            </span>
-            <span *ngIf="or.status === -1" class="text-[#ff3d71]">
+            </div>
+            <div *ngIf="or.status === -1" class="text-[#ff3d71] truncate">
               Đơn hàng đã bị huỷ
-            </span>
+            </div>
           </div>
         </div>
         <div class="grid grid-cols-2">
@@ -63,7 +61,7 @@
     </ng-template>
     <div class="my-16 px-10">
       <nb-stepper
-        orientation="horizontal"
+        [orientation]="getWidth() <= 767 ? 'vertical':'horizontal'"
         [selectedIndex]="getSelectedIndex(or.status)"
         disableStepNavigation="true"
       >
@@ -97,7 +95,7 @@
       </nb-stepper>
     </div>
     <div class="grid grid-cols-3 gap-5">
-      <div>
+      <div class="order-last md:order-none col-span-3 md:col-span-1">
         <div class="font-bold text-2xl">Thông tin chi tiết</div>
         <nz-divider></nz-divider>
         <div class="mb-1">
@@ -133,20 +131,20 @@
           </div>
         </div>
       </div>
-      <div class="col-span-2">
+      <div class="col-span-3 md:col-span-2">
         <ng-container *ngFor="let item of getDetailOrder(or)">
           <nb-card class="mb-2">
             <nb-card-body>
               <div class="grid grid-cols-7 gap-5">
-                <div class="col-span-1">
+                <div class="col-span-3 sm:col-span-1">
                   <app-image
                     [src]="item.product.picture"
                     [classes]="'rounded-lg cursor-pointer'"
                     (click)="navigate(item.product.id)"
                   ></app-image>
                 </div>
-                <div class="col-span-6 grid grid-cols-2 gap-5">
-                  <div>
+                <div class="col-span-4 sm:col-span-6 grid grid-cols-4 gap-5">
+                  <div class="col-span-4 sm:col-span-2">
                     <div class="w-full h-auto mb-5">
                       <b class="break-words">{{ item.product.name }}</b>
                     </div>
@@ -157,7 +155,7 @@
                       <span>x{{ item.quantity }}</span>
                     </div>
                   </div>
-                  <div class="flex justify-end items-center">
+                  <div class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center">
                     <span class="font-bold">{{
                       formatPrice(item.subTotal)
                     }}</span>

@@ -72,7 +72,7 @@ export class HistoryOrderComponent implements OnInit{
   }
 
   getWidth(): number {
-    return window.innerHeight
+    return window.innerWidth
   }
 
   navigate(id: string){

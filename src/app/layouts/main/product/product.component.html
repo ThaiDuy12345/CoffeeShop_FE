@@ -9,11 +9,11 @@
           <label class="col-span-1">
             Sắp xếp theo
           </label>
-          <div class=col-span-1></div>
-          <div class="col-span-1">
+          <div class="col-span-1"></div>
+          <div class="col-span-2 md:col-span-1">
             <nz-segmented [nzOptions]="options" (nzValueChange)="handleIndexChange($event)" [(ngModel)]="optionIndex"></nz-segmented>
           </div>
-          <div class="col-span-1">
+          <div class="col-span-2 md:col-span-1">
             <h1 class="text-lg text-right w-full font-bold space-x-3">
               <fa-icon
                 [icon]="icons['faTableCellsLarge']"

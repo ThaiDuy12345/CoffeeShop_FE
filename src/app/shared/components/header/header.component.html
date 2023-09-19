@@ -1,5 +1,8 @@
 <div class="grid grid-cols-8 w-full">
-  <div [routerLink]="'/main/dashboard'" class="cursor-pointer col-span-1 center-an-item">
+  <div
+    [routerLink]="'/main/dashboard'"
+    class="cursor-pointer col-span-1 center-an-item"
+  >
     <img src="assets/brand-icons/main.png" class="w-16" />
   </div>
   <div *ngIf="!isMobileScreen()" class="col-span-5">
@@ -44,10 +47,10 @@
       </ng-container>
     </ul>
   </div>
-  <div [ngClass]="{
-    'col-span-2': !isMobileScreen(),
-    'col-span-5': isMobileScreen()
-  }" class="col-span-2 justify-items-end">
+  <div
+    *ngIf="!isMobileScreen()"
+    class="col-span-2 justify-items-end"
+  >
     <ul
       *ngIf="user.name"
       nzSelectable="false"
@@ -93,12 +96,43 @@
 >
   <ng-container *nzDrawerContent>
     <div>
+      <div
+          *ngIf="!user.name"
+          class="w-full h-full center-an-item cursor-pointer"
+        >
+          <span class="second-text-color" [routerLink]="'/sign-in'"
+            >Đăng nhập</span
+          >&ensp;/&ensp;<span
+            class="second-text-color"
+            [routerLink]="'/sign-up'"
+            >Đăng ký</span
+          >
+      </div>
+      <nz-divider *ngIf="!user.name"></nz-divider>
       <ul
         nz-menu
         nzMode="inline"
         nzSelectable="false"
         class="border-b-0 border-r-0"
       >
+        <li
+          *ngIf="user.name"
+          class="h-full"
+          nz-submenu
+          [nzTitle]="user.label + ', ' + user.name"
+          [nzIcon]="user.icon"
+        >
+          <ul>
+            <li
+              [routerLink]="i.link ? i.link : []"
+              (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null"
+              nz-menu-item
+              *ngFor="let i of user.subItems"
+            >
+              <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+            </li>
+          </ul>
+        </li>
         <ng-container *ngFor="let item of items">
           <li
             *ngIf="item.subItems"
@@ -119,11 +153,7 @@
               </li>
             </ul>
           </li>
-          <li
-            *ngIf="!item.subItems"
-            nz-menu-item
-            [routerLink]="item.link"
-          >
+          <li *ngIf="!item.subItems" nz-menu-item [routerLink]="item.link">
             <div class="center-an-item">
               <span nz-icon [nzType]="item.icon"></span
               ><span class="ml-3">{{ item.label }}</span>

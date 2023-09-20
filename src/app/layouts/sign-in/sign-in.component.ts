@@ -4,7 +4,7 @@ import { AccountData } from 'src/app/data/data';
 import Cookies from 'js-cookie'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
-import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from "@abacritt/angularx-social-login";
+import { FacebookLoginProvider, SocialAuthService } from "@abacritt/angularx-social-login";
 import { SocialUser } from "@abacritt/angularx-social-login";
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { Icon } from 'src/app/core/models/icon.model';
@@ -37,7 +37,7 @@ export class SignInComponent implements OnInit {
     private message: NzMessageService,
     @Optional() private dialogRef: NbDialogRef<any>,
     private dialogService: NbDialogService,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
   ){}
 
   ngOnInit(): void {

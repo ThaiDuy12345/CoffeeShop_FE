@@ -12,15 +12,29 @@ import {
   NbToastrModule,
   NbMenuModule,
 } from '@nebular/theme';
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+const firebaseConfig = {
+  apiKey: "AIzaSyCAZ-8faDUSDw9Krd9hCaK5rhPgDI2EcSk",
+  authDomain: "coffee-shop-project-f6ca3.firebaseapp.com",
+  databaseURL: "https://coffee-shop-project-f6ca3-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "coffee-shop-project-f6ca3",
+  storageBucket: "coffee-shop-project-f6ca3.appspot.com",
+  messagingSenderId: "124592920764",
+  appId: "1:124592920764:web:aebb399b66ba3a8fe398b9",
+  measurementId: "G-JYTD2FPXLG"
+};
 @NgModule({
   declarations: [AppComponent, LayoutsComponent],
   imports: [
+    provideFirebaseApp(() => initializeApp( firebaseConfig )),
+    provideFirestore(() => getFirestore()),
     BrowserModule,
     BrowserAnimationsModule,
     LayoutsModule,

@@ -47,6 +47,10 @@ export class OrderComponent implements OnInit{
     }, 1500)
   }
 
+  getWidth(): number {
+    return window.innerWidth
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router

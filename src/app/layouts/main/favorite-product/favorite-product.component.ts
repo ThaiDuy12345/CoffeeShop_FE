@@ -23,6 +23,17 @@ export class FavoriteProductComponent implements OnInit{
   }
 
   getWidth(): number {
-    return window.innerHeight
+    return window.innerWidth
+  }
+
+  getColsByWindowWidth(): number {
+    switch (true) {
+      case this.getWidth() <= 650:
+        return 1;
+      case this.getWidth() <= 950:
+        return 2;
+      default:
+        return 4;
+    }
   }
 }

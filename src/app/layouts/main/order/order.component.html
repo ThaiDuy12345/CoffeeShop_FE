@@ -20,7 +20,7 @@
         <ng-template #icon3>
           <fa-icon size='xl' [icon]="icons['faCircleCheck']"></fa-icon>
         </ng-template>
-        <nz-steps [nzCurrent]="current">
+        <nz-steps [nzDirection]="getWidth() <= 767 ? 'vertical' : 'horizontal'" [nzCurrent]="current">
           <nz-step [nzIcon]="icon1" nzTitle="Xác nhận thông tin" [nzDescription]="current === 0 ? des1 : undefined"></nz-step>
           <nz-step [nzIcon]="icon2" nzTitle="Xác nhận thanh toán" [nzDescription]="current === 1 ? des2 : undefined"></nz-step>
           <nz-step [nzIcon]="icon3" nzTitle="Đặt hàng thành công"></nz-step>

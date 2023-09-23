@@ -5,6 +5,7 @@ import { Product } from "../core/models/product.model"
 import { FeedBack } from "../core/models/feedback.model"
 import { Order } from "../core/models/order.model"
 import { FavoriteProduct } from '../core/models/favorite-product.model';
+import { Notification } from '../core/models/notification.model';
 
 
 const imagePath = "assets/product-pictures/"
@@ -337,6 +338,27 @@ export const FeedBackData: FeedBack[] = [
     creationDate: new Date('07-04-2023'),
     account: AccountData[0],
   },
+]
+
+export const NotificationData: Notification[] = [
+  {
+    id: '0',
+    type: "VIEW",
+    link: "",
+    content: "Ngày ngày nắng nóng, nhớ chống nóng bằng ly COFFEE",
+    userId: "0",
+    createdDate: new Date("23-09-2023").toString(),
+    isRead: false
+  },
+  {
+    id: "1",
+    type: "LINK",
+    link: "/main/cart",
+    content: "Đơn hàng của bạn đã được bàn giao cho đơn vị vận chuyển",
+    userId: "0",
+    createdDate: new Date("23-09-2023").toString(),
+    isRead: false
+  }
 ]
 
 export const OrderData: Order[] = [

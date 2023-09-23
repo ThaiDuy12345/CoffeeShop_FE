@@ -46,6 +46,24 @@ $error-text-color: #ee7070;
 }
 
 body {
+  #cdk-overlay-1.cdk-overlay-pane{
+    max-width: 400px !important;
+    width: 400px !important;
+  }
+  nz-badge-sub p {
+    color:white !important;
+  }
+  .ant-popover-arrow {
+    display: none !important;
+  }
+  .ant-popover-inner{
+    border-radius: 8px;
+  }
+  .ant-popover-title{
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
   .ant-segmented{
     background-color: #f7f9fc !important;
     .ant-segmented-group {

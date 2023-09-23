@@ -1,4 +1,4 @@
-<div class="grid grid-cols-8 w-full">
+<div class="grid grid-cols-9 w-full">
   <div
     [routerLink]="'/main/dashboard'"
     class="cursor-pointer col-span-1 center-an-item"
@@ -47,10 +47,7 @@
       </ng-container>
     </ul>
   </div>
-  <div
-    *ngIf="!isMobileScreen()"
-    class="col-span-2 justify-items-end"
-  >
+  <div *ngIf="!isMobileScreen()" class="col-span-2 justify-items-end">
     <ul
       *ngIf="user.name"
       nzSelectable="false"
@@ -83,6 +80,26 @@
       >
     </div>
   </div>
+  <div *ngIf="!isMobileScreen()" class="col-span-1 flex items-center justify-start">
+    <nz-badge [nzDot]="true" class="cursor-pointer" nz-popover [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click">
+      <fa-icon size="lg" [icon]="icons['faBell']"></fa-icon>
+    </nz-badge>
+  </div>
+  <ng-template #titleTemplate>
+    <b>Thông báo</b>
+  </ng-template>
+  <ng-template #contentTemplate>
+    <div class="grid grid-cols-1">
+      <ng-container *ngFor="let i of notifications; let id = index">
+        <div [ngClass]="{ 
+          'cursor-pointer': i.type === 'LINK' 
+        }" class="py-[15px] justify-start items-center grid grid-cols-10 gap-2" [routerLink]="i.type === 'LINK' ? i.link : null">
+          <fa-icon class="col-span-1" size="xl" [icon]="icons['faBell']"></fa-icon>
+          <span class="col-span-9">{{ i.content }}</span>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
   <div *ngIf="isMobileScreen()" class="col-span-2 center-an-item">
     <fa-icon [icon]="icons['faBars']" (click)="visible = true"></fa-icon>
   </div>

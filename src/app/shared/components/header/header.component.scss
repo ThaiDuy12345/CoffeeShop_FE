@@ -2,6 +2,10 @@ $main-color: #f4fff9;
 $second-color: #dbede3;
 $main-text-color: #43da89;
 :host ::ng-deep {
+ 
+  .ant-popover{
+    width: 100% !important;
+  }
   .p-menubar{
     background-color: $main-color
   }

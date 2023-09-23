@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import Cookies from 'js-cookie';
-import { AccountData } from 'src/app/data/data';
+import { AccountData, NotificationData } from 'src/app/data/data';
 import { icons } from '../../utils/icon.utils';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { Location } from '@angular/common';
 import { Icon } from 'src/app/core/models/icon.model';
+import { Notification } from 'src/app/core/models/notification.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,6 +16,7 @@ import { Icon } from 'src/app/core/models/icon.model';
 export class HeaderComponent implements OnInit {
   public visible: boolean = false
   public icons: Icon = icons
+  public notifications: Notification[] = NotificationData
   public items = [
     {
       label: 'Sản phẩm',

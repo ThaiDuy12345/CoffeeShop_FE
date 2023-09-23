@@ -37,11 +37,13 @@ import {
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
@@ -112,12 +114,14 @@ import { AdminComponent } from './admin/admin.component';
     NbRadioModule,
     NzTableModule,
     NzSegmentedModule,
+    NzBadgeModule,
     NzTabsModule,
     NzPaginationModule,
     NzProgressModule,
     NzStepsModule,
     NzAvatarModule,
     NbAccordionModule,
+    NzPopoverModule,
     NzMessageModule,
     NbStepperModule,
     NzTimelineModule,

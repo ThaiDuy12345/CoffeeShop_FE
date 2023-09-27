@@ -11,4 +11,14 @@ export class AuthService {
     const result = AccountData.find(item => item.id === id)
     return result ? true : false
   }
+
+  isAdmin(): Boolean {
+    const id = Cookies.get('id')
+    if(!id) return false 
+    const result = AccountData.find(item => item.id === id)
+    if(result){
+      return result.role === '0'
+    }
+    return false
+  }
 }

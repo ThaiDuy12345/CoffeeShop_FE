@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MainComponent } from './main/main.component';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { MainModule } from './main/main.module';
+import { AdminModule } from './admin/admin.module';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignOutComponent } from './sign-out/sign-out.component';
@@ -33,6 +34,7 @@ import {
   NbSelectModule,
   NbAccordionModule,
   NbDialogModule,
+  NbSidebarModule,
 } from '@nebular/theme';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -74,6 +76,18 @@ import { StepThreeOrderComponent } from './main/order/step-three-order/step-thre
 import { FavoriteProductComponent } from './main/favorite-product/favorite-product.component';
 import { SupportComponent } from './main/support/support.component';
 import { AdminComponent } from './admin/admin.component';
+import { SupportManagementComponent } from './admin/support-management/support-management.component';
+import { AccountManagementComponent } from './admin/account-management/account-management.component';
+import { ProductManagementComponent } from './admin/product-management/product-management.component';
+import { CategoryManagementComponent } from './admin/category-management/category-management.component';
+import { FeedbackManagementComponent } from './admin/feedback-management/feedback-management.component';
+import { OrderManagementComponent } from './admin/order-management/order-management.component';
+import { SalesManagementComponent } from './admin/sales-management/sales-management.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminHeaderComponent } from '../shared/components/admin-header/admin-header.component';
+import { AdminSidebarComponent } from '../shared/components/admin-sidebar/admin-sidebar.component';
+import { BannerComponent } from './admin/layout-management/banner/banner.component';
+import { PopularProductComponent } from './admin/layout-management/popular-product/popular-product.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -102,11 +116,24 @@ import { AdminComponent } from './admin/admin.component';
     StepTwoOrderComponent,
     StepThreeOrderComponent,
     AdminComponent,
+    BannerComponent,
+    PopularProductComponent,
+    SupportManagementComponent,
+    AccountManagementComponent,
+    ProductManagementComponent,
+    CategoryManagementComponent,
+    FeedbackManagementComponent,
+    OrderManagementComponent,
+    SalesManagementComponent,
+    AdminDashboardComponent,
+    AdminHeaderComponent,
+    AdminSidebarComponent
   ],
   imports: [
     CommonModule,
     LayoutsRoutingModule,
     MainModule,
+    AdminModule,
     NbSelectModule,
     NzBreadCrumbModule,
     FormsModule,
@@ -150,6 +177,7 @@ import { AdminComponent } from './admin/admin.component';
     NbToastrModule,
     NbButtonModule,
     NbUserModule,
+    NbSidebarModule,
     NbCardModule,
     NbLayoutModule,
   ],

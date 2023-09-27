@@ -27,7 +27,7 @@ export const AccountData: Account[] = [
     email: "siri2@gmail.com",
     password: "123123",
     address: "443/18 Lê Văn Sỹ, Phường 12, Quận 3, TP Hồ Chí Minh",
-    role: "1"
+    role: "0"
   }
 ]
 

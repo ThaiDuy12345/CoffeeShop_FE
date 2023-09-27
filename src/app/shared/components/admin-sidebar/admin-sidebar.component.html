@@ -1,0 +1,36 @@
+<div [ngClass]="{
+  'justify-end': !isCollapsed,
+  'justify-center': isCollapsed
+}" class="flex items-center">
+  <button class=" border-none bg-none p-4 hover:text-blue-500 transition-colors" (click)="changeState()">
+    <fa-icon class="center-an-item" [icon]="icons['faArrowLeft']" *ngIf="!isCollapsed"></fa-icon>
+    <fa-icon class="center-an-item" [icon]="icons['faArrowRight']" *ngIf="isCollapsed"></fa-icon>
+  </button>
+</div>
+<div>
+<ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+  <ng-container *ngFor="let item of items">
+    <li
+      *ngIf="item.subItems"
+      nz-submenu
+      [nzTitle]="item.label"
+      [nzIcon]="item.icon"
+    >
+      <ul>
+        <li
+          nz-menu-item
+          nzMatchRouter
+          [routerLink]="i.link"
+          *ngFor="let i of item.subItems"
+        >
+          <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="!item.subItems" nz-menu-item nzMatchRouter [routerLink]="item.link">
+      <span nz-icon [nzType]="item.icon"></span>
+      <span class="ml-3">{{ item.label }}</span>
+    </li>
+  </ng-container>
+</ul>
+</div>

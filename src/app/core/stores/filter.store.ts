@@ -8,8 +8,6 @@ export interface FilterState {
   order: 0 | 1 | 2
 }
 
-
-
 @Injectable({ providedIn: 'root' })
 @StoreConfig({ name: 'filter' })
 export class FilterStore extends Store<FilterState> {

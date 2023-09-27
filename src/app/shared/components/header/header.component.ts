@@ -91,7 +91,15 @@ export class HeaderComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     const user = AccountData.find((item) => item.id === Cookies.get('id'));
-    if (user) this.user.name = user.name;
+    if (user) {
+      this.user.name = user.name;
+      user.role === "0" && this.user.subItems.push({
+        title: 'TRANG ADMIN',
+        icon: icons['faUserTie'],
+        link: '/admin/admin-dashboard'
+      },)
+      
+    }
   }
 
   onClickSignOut(): void {

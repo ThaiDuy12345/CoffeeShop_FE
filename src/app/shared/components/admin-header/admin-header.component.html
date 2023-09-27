@@ -1,0 +1,91 @@
+<div class="grid grid-cols-2 w-full">
+  <div
+    class="cursor-pointer col-span-1 flex justify-start items-center"
+  >
+    <img [routerLink]="'/main/dashboard'" src="assets/brand-icons/main.png" class="w-16" />
+  </div>
+  <div *ngIf="!isMobileScreen()" class="flex justify-end items-center">
+    <ul
+      *ngIf="user.name"
+      nzSelectable="false"
+      nz-menu
+      nzMode="horizontal"
+      class="border-b-0 h-full"
+    >
+      <li
+        class="h-full"
+        nz-submenu
+        [nzTitle]="user.label + ', ' + user.name"
+        [nzIcon]="user.icon"
+      >
+        <ul>
+          <li
+            [routerLink]="i.link ? i.link : []"
+            (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null"
+            nz-menu-item
+            *ngFor="let i of user.subItems"
+          >
+            <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="isMobileScreen()" class="flex justify-end items-center">
+    <fa-icon [icon]="icons['faBars']" (click)="visible = true"></fa-icon>
+  </div>
+</div>
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="visible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div>
+      <div
+          *ngIf="!user.name"
+          class="w-full h-full center-an-item cursor-pointer"
+        >
+          <span class="second-text-color" [routerLink]="'/sign-in'"
+            >Đăng nhập</span
+          >&ensp;/&ensp;<span
+            class="second-text-color"
+            [routerLink]="'/sign-up'"
+            >Đăng ký</span
+          >
+      </div>
+      <nz-divider *ngIf="!user.name"></nz-divider>
+      <ul
+        nz-menu
+        nzMode="inline"
+        nzSelectable="false"
+        class="border-b-0 border-r-0"
+      >
+        <li
+          *ngIf="user.name"
+          class="h-full"
+          nz-submenu
+          [nzTitle]="user.label + ', ' + user.name"
+          [nzIcon]="user.icon"
+        >
+          <ul>
+            <li
+              [routerLink]="i.link ? i.link : []"
+              (click)="i.title === 'ĐĂNG XUẤT' ? onClickSignOut() : null"
+              nz-menu-item
+              *ngFor="let i of user.subItems"
+            >
+              <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title1>
+  <fa-icon [icon]="icons['faXmark']" (click)="visible = false"></fa-icon>
+</ng-template>

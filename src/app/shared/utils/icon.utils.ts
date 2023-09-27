@@ -39,7 +39,12 @@ import {
   faCheck,
   faCircleCheck,
   faEnvelope,
-  faBell
+  faBell,
+  faUserTie,
+  faArrowRight,
+  faImage,
+  faImages,
+  faDiceSix
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -47,6 +52,7 @@ export const icons: Icon = {
   faUser: faUser,
   faBook: faBook,
   faArrowLeft: faArrowLeft,
+  faArrowRight: faArrowRight,
   faMugHot: faMugHot,
   faGlassWater: faGlassWater,
   faCubes: faCubes,
@@ -84,5 +90,10 @@ export const icons: Icon = {
   faIdCard: faIdCard,
   faCircleCheck: faCircleCheck,
   faEnvelope: faEnvelope,
-  faBell: faBell
+  faBell: faBell,
+  faUserTie: faUserTie,
+  faCheck: faCheck,
+  faImage: faImage,
+  faImages: faImages,
+  faDiceSix: faDiceSix,
 };

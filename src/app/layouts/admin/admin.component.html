@@ -1,1 +1,10 @@
-<p>admin works!</p>
+<nb-layout>
+  <nb-layout-header subheader>
+    <app-admin-header class="w-full"></app-admin-header>
+  </nb-layout-header>
+  <nb-sidebar [state]="state">
+    <app-admin-sidebar></app-admin-sidebar>
+  </nb-sidebar>
+  <nb-layout-column class="noPadding bg-[#f0f3f9]"><router-outlet></router-outlet></nb-layout-column>
+</nb-layout>
+<!-- bg-[#f8f8f8] -->

@@ -88,6 +88,8 @@ import { AdminHeaderComponent } from '../shared/components/admin-header/admin-he
 import { AdminSidebarComponent } from '../shared/components/admin-sidebar/admin-sidebar.component';
 import { BannerComponent } from './admin/layout-management/banner/banner.component';
 import { PopularProductComponent } from './admin/layout-management/popular-product/popular-product.component';
+import { AdminChartComponent } from '../shared/components/admin-chart/admin-chart.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -118,6 +120,7 @@ import { PopularProductComponent } from './admin/layout-management/popular-produ
     AdminComponent,
     BannerComponent,
     PopularProductComponent,
+    AdminChartComponent,
     SupportManagementComponent,
     AccountManagementComponent,
     ProductManagementComponent,
@@ -170,6 +173,7 @@ import { PopularProductComponent } from './admin/layout-management/popular-produ
     NbTabsetModule,
     NbContextMenuModule,
     NzDividerModule,
+    NgApexchartsModule,
     NzSliderModule,
     NzMenuModule,
     NbPopoverModule,

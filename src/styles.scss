@@ -136,6 +136,9 @@ body {
   .main-bg-color {
     background-color: $main-color !important;
   }
+  .main-bg-text-color {
+    background-color: $main-text-color !important;
+  }
 
   label {
     color: $second-text-color

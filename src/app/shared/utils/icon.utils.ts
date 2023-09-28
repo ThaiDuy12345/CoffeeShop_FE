@@ -84,7 +84,7 @@ export const icons: Icon = {
   faPhone: faPhone,
   faLocationArrow: faLocationArrow,
   faMoneyCheck: faMoneyCheck,
-  faGooglel: faGoogle,
+  faGoogle: faGoogle,
   faSquareFacebook: faSquareFacebook,
   faMapLocationDot: faMapLocationDot,
   faIdCard: faIdCard,

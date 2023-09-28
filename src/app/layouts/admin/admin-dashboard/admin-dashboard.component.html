@@ -1,1 +1,95 @@
-<p>admin-dashboard works!</p>
+<div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
+  <div class="grid md:grid-cols-2 grid-cols-1 gap-3 mb-3">
+    <nb-card class="m-0">
+      <nb-card-body class="grid grid-cols-3">
+        <div class="col-span-2">
+          <div class="w-full truncate second-main-text-color">Hoá đơn chưa duyệt</div>
+          <div class="w-full truncate font-bold">4 Hoá đơn</div>
+        </div>
+        <div class="flex justify-end items-center">
+          <fa-icon size="xl" [icon]="icons['faTruckFast']"></fa-icon>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card class="m-0">
+      <nb-card-body class="grid grid-cols-3">
+        <div class="col-span-2">
+          <div class="w-full truncate second-main-text-color">Sản phẩm</div>
+          <div class="w-full truncate font-bold">14 Sản phẩm</div>
+        </div>
+        <div class="flex justify-end items-center">
+          <fa-icon size="xl" [icon]="icons['faMugHot']"></fa-icon>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card class="m-0">
+      <nb-card-body class="grid grid-cols-3">
+        <div class="col-span-2">
+          <div class="w-full truncate second-main-text-color">Tài khoản hoạt động</div>
+          <div class="w-full truncate font-bold">20 Tài khoản</div>
+        </div>
+        <div class="flex justify-end items-center">
+          <fa-icon size="xl" [icon]="icons['faUser']"></fa-icon>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card class="m-0">
+      <nb-card-body class="grid grid-cols-3">
+        <div class="col-span-2">
+          <div class="w-full truncate second-main-text-color">Thư hỗ trợ</div>
+          <div class="w-full truncate font-bold">13 Thư</div>
+        </div>
+        <div class="flex justify-end items-center">
+          <fa-icon size="xl" [icon]="icons['faEnvelope']"></fa-icon>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div>
+    <nz-divider></nz-divider>
+  </div>
+  <div class="mb-3">
+    <nz-segmented [nzOptions]="timeOptions" (nzValueChange)="timeChange($event)"></nz-segmented>
+  </div>
+  <div class="mb-3">
+    <nz-segmented [nzOptions]="typeOptions" (nzValueChange)="typeChange($event)"></nz-segmented>
+  </div>
+  <nb-card class="m-0">
+    <nb-card-body>
+      <app-admin-chart></app-admin-chart>
+    </nb-card-body>
+    <nb-card-footer class="center-an-item">
+      {{ type }} trong {{ time.toLowerCase() }}
+    </nb-card-footer>
+  </nb-card>
+  <div>
+    <nz-divider></nz-divider>
+  </div>
+  <div class="grid grid-cols-1 gap-3">
+    <nb-card class="col-span-1 mb-3">
+      <nb-card-header class="border-none">
+        Top sản phẩm được mua nhiều nhất
+      </nb-card-header>
+      <nb-card-body class="border-none grid grid-cols-1">
+        <div class="grid grid-cols-4">
+          <div>#</div>
+          <div>Tên sản phẩm</div>
+          <div>Đơn giá</div>
+          <div>Lượt mua</div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card class="col-span-1 mb-3">
+      <nb-card-header class="border-none">
+        Top sản phẩm được đánh giá nhiều nhất
+      </nb-card-header>
+      <nb-card-body class="border-none grid grid-cols-1">
+        <div class="grid grid-cols-3">
+          <div>#</div>
+          <div>Tên sản phẩm</div>
+          <div>Lượt đánh giá</div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

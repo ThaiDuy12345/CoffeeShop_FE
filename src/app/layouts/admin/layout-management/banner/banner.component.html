@@ -1,1 +1,42 @@
-<p>banner works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <div class="grid grid-cols-4 gap-5">
+    <div class="col-span-4 font-bold text-lg">Banner Pop Up</div>
+    <div class="col-span-2">
+      <app-image
+        [src]="'assets/brand-icons/sale.png'"
+        [classes]="'w-[80vw] rounded-xl'"
+      ></app-image>
+    </div>
+    <div class="col-span-2 space-y-4">
+      <div class="font-semibold">
+        Banner Pop Up sẽ xuất hiện như 1 modal mỗi khi người dùng truy cập trang dashboard <br/>
+        Nội dung thích hợp: Event, khuyến mãi, giảm giá trong ngày...
+      </div>
+      <input type="file" accept="image/*" #file1 class="hidden" (change)="onPopUpBannerInputChange(file1.files)">
+      <button nbButton status="primary" (click)="file1.click()">Thay đổi</button>
+    </div>
+  </div>
+  <div class="grid grid-cols-4 gap-5">
+    <div class="col-span-4 font-bold text-lg">Banner chính</div>
+    <div class="col-span-2">
+      <app-image
+        [classes]="'w-full'"
+        [lazyClasses]="'min-h-[300px]'"
+        [src]="'assets/brand-icons/banner.jpg'"
+      ></app-image>
+    </div>
+    <div class="col-span-2 space-y-4">
+      <div class="font-semibold">
+        Banner chính sẽ xuất hiện ở đầu trang dashboard <br/>
+        Nội dung thích hợp: Event, khuyến mãi, giảm giá lâu dài hoặc sắp tới.
+      </div>
+      <div class="second-main-text-color">
+        Lưu ý: Banner chính sẽ chỉ chấp nhận hình ảnh có chiều rộng lớn hơn chiều dài
+      </div>
+      <input type="file" accept="image/*" #file2 class="hidden" (change)="onMainBannerInputChange(file2.files)">
+      <button nbButton status="primary" (click)="file2.click()">Thay đổi</button>
+    </div>
+  </div>
+</div>

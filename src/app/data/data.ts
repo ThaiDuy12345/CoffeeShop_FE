@@ -18,7 +18,9 @@ export const AccountData: Account[] = [
     email: "siri@gmail.com",
     password: "123123",
     address: "443/18 Lê Văn Sỹ, Phường 12, Quận 3, TP Hồ Chí Minh",
-    role: "1"
+    role: "1",
+    status: true,
+    created_date: new Date("2023-09-01")
   },
   {
     id: "1",
@@ -27,7 +29,9 @@ export const AccountData: Account[] = [
     email: "siri2@gmail.com",
     password: "123123",
     address: "443/18 Lê Văn Sỹ, Phường 12, Quận 3, TP Hồ Chí Minh",
-    role: "0"
+    role: "0",
+    status: true,
+    created_date: new Date("2023-09-02")
   }
 ]
 
@@ -59,6 +63,7 @@ export const ProductData: Product[] = [
     description: "Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác 'thức giấc', thơm ngon hết nấc.",
     picture: `${imagePath}cloudFeeHanhNhanNuong.webp`,
     category: CategoryData[0],
+    isPopular: false,
     creation_date: new Date('2023-09-01')
   },
   {
@@ -69,6 +74,7 @@ export const ProductData: Product[] = [
     description: "Cà phê Đắk Lắk nguyên chất được pha phin truyền thống kết hợp với sữa đặc tạo nên hương vị đậm đà, hài hòa giữa vị ngọt đầu lưỡi và vị đắng thanh thoát nơi hậu vị.",
     picture: `${imagePath}cafeSuaDa.webp`,
     category: CategoryData[0],
+    isPopular: true,
     creation_date: new Date('2023-09-02')
   },
   {
@@ -79,6 +85,7 @@ export const ProductData: Product[] = [
     description: "Chút ngọt ngào của Vải, mix cùng vị chua thanh tao từ trà hoa Hibiscus, mang đến cho bạn thức uống đúng chuẩn vừa ngon, vừa healthy.",
     picture: `${imagePath}hiTeaVai.webp`,
     category: CategoryData[1],
+    isPopular: false,
     creation_date: new Date('2023-09-03')
   },
   {
@@ -89,6 +96,7 @@ export const ProductData: Product[] = [
     description: "Gói gọn trong ổ bánh mì Việt Nam là từng lớp chả, từng lớp jambon hòa quyện cùng bơ và pate thơm lừng, thêm dưa rau cho bữa sáng đầy năng lượng. *Phần bánh sẽ ngon và đậm đà nhất khi kèm pate. Để đảm bảo hương vị được trọn vẹn, Nhà mong bạn thông cảm vì không thể thay đổi định lượng pate.",
     picture: `${imagePath}banhMiThitNguoi.webp`,
     category: CategoryData[2],
+    isPopular: true,
     creation_date: new Date('2023-08-26')
   },
   {
@@ -99,6 +107,7 @@ export const ProductData: Product[] = [
     description: "Bao bọc bởi lớp vỏ Mochi dẻo thơm, bên trong là lớp kem lạnh cùng nhân chocolate độc đáo. Gọi 1 chiếc Mochi cho ngày thật tươi mát. Sản phẩm phải bảo quán mát và dùng ngon nhất trong 2h sau khi nhận hàng.",
     picture: `${imagePath}mochiKemChocolate.webp`,
     category: CategoryData[2],
+    isPopular: false,
     creation_date: new Date('2023-09-11')
   },
   {
@@ -109,6 +118,51 @@ export const ProductData: Product[] = [
     description: "Thức uống giúp tỉnh táo tức thì để bắt đầu ngày mới thật hứng khởi. Không đắng khét như cà phê truyền thống, The Coffee House Sữa Đá mang hương vị hài hoà đầy lôi cuốn. Là sự đậm đà của 100% cà phê Arabica Cầu Đất rang vừa tới, biến tấu tinh tế với sữa đặc và kem sữa ngọt ngào cực quyến rũ. Càng hấp dẫn hơn với topping thạch 100% cà phê nguyên chất giúp giữ trọn vị ngon đến ngụm cuối cùng.",
     picture: `${imagePath}theCoffeeHouseSuaDa.webp`,
     category: CategoryData[0],
+    isPopular: true,
+    creation_date: new Date('2023-08-10')
+  },
+  {
+    id: "6",
+    name: "Thùng Cà Phê Sữa Espresso",
+    price: 336000,
+    quantity: 5,
+    description: "Được sản xuất theo công nghệ Nhật, Cà Phê Sữa Espresso The Coffee House giữ trọn hương vị đậm đà của 100% cà phê Robusta nguyên chất quyện hoà cùng sữa béo thơm lừng. Bật nắp trải nghiệm ngay chất cà phê mạnh mẽ giúp sảng khoái tức thì, tuôn trào hứng khởi",
+    picture: `${imagePath}thungCafeSuaEspresso.webp`,
+    category: CategoryData[3],
+    isPopular: false,
+    creation_date: new Date('2023-08-10')
+  },
+  {
+    id: "7",
+    name: "Cà Phê Đen Đá Hộp (14 gói x 16g)",
+    price: 58000,
+    quantity: 3,
+    description: "Cà Phê Đen Đá hoà tan The Coffee House với 100% hạt cà phê Robusta mang đến hương vị mạnh cực bốc, đậm đắng đầy lôi cuốn, đúng gu người Việt.",
+    picture: `${imagePath}caPheDenDaHop.webp`,
+    category: CategoryData[3],
+    isPopular: false,
+    creation_date: new Date('2023-08-10')
+  },
+  {
+    id: "8",
+    name: "Cà Phê Sữa Đá Hòa Tan Túi 25x22G",
+    price: 99000,
+    quantity: 18,
+    description: "Thật dễ dàng để bắt đầu ngày mới với tách cà phê sữa đá sóng sánh, thơm ngon như cà phê pha phin. Vị đắng thanh của cà phê hoà quyện với vị ngọt béo của sữa, giúp bạn luôn tỉnh táo và hứng khởi cho ngày làm việc thật hiệu quả.",
+    picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
+    category: CategoryData[3],
+    isPopular: false,
+    creation_date: new Date('2023-08-10')
+  },
+  {
+    id: "9",
+    name: "Cà Phê Sữa Đá Hòa Tan (10 gói x 22g)",
+    price: 44000,
+    quantity: 10,
+    description: "Thật dễ dàng để bắt đầu ngày mới với tách cà phê sữa đá sóng sánh, thơm ngon như cà phê pha phin. Vị đắng thanh của cà phê hoà quyện với vị ngọt béo của sữa, giúp bạn luôn tỉnh táo và hứng khởi cho ngày làm việc thật hiệu quả.",
+    picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
+    category: CategoryData[3],
+    isPopular: true,
     creation_date: new Date('2023-08-10')
   }
 ]

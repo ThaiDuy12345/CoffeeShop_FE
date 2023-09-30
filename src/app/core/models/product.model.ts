@@ -8,5 +8,6 @@ export class Product{
   description: string = ""
   picture: string = ""
   creation_date: Date = new Date()
+  isPopular: boolean = false
   category: Category = new Category()
 }

@@ -1,1 +1,76 @@
-<p>popular-product works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>
+    <nb-card-header class="border-none">
+      Các sản phẩm phổ biến
+    </nb-card-header>
+    <nb-card-body class="border-none">
+      <div class="second-main-text-color mb-5">
+        Lưu ý: sản phẩm phổ biến được chọn chỉ có tối đa 6 sản phẩm
+      </div>
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        <div class="flex justify-start items-center"><input nbInput placeholder="Tìm kiếm sản phẩm"></div>
+      </div>
+      <nz-table #table [nzData]="products" nzShowPagination="false">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tên sản phẩm</th>
+            <th
+              [nzSortFn]="priceSortOrder"  
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Giá</th>
+            <th
+              [nzFilterMultiple]="false"
+              [nzFilters]="[
+                { text: 'Hiển thị', value: true },
+                { text: 'Ẩn', value: false }
+              ]"
+              [nzFilterFn]="isPopularFilter"
+            >Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data">
+            <td>{{data.id}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.price}}</td>
+            <td>
+              <nz-tag 
+                nzPopconfirmPlacement="bottom"
+                (nzOnCancel)="null"
+                nzPopconfirmTitle="Xác nhận ẩn sản phẩm này?"
+                nz-popconfirm
+                nzOkText="Xác nhận"
+                nzCancelText="Huỷ"
+                (nzOnConfirm)="confirmChange(data.id, false)"
+                *ngIf="data.isPopular" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[80px]"
+              >
+                <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
+                <span class="center-an-item">Hiện</span>
+              </nz-tag>
+              <nz-tag 
+                nzPopconfirmPlacement="bottom"
+                (nzOnCancel)="null"
+                nzPopconfirmTitle="Xác nhận hiển thị sản phẩm này?"
+                nz-popconfirm
+                nzOkText="Xác nhận"
+                nzCancelText="Huỷ"    
+                (nzOnConfirm)="confirmChange(data.id, true)"
+                *ngIf="!data.isPopular && getPopularProductLength() !== 6" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[80px]"
+              >
+                <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
+                <span class="center-an-item text-left">Ẩn</span>
+              </nz-tag>
+              <nz-tag *ngIf="!data.isPopular && getPopularProductLength() === 6" class="center-an-item cursor-pointer mr-0 py-1 w-[100px] rounded text-slate-400">
+                <span class="center-an-item text-left">Đạt giới hạn</span>
+              </nz-tag>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nb-card-body>
+  </nb-card>
+</div>

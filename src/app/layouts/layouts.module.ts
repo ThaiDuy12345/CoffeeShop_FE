@@ -50,6 +50,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
@@ -151,6 +153,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     NzStepsModule,
     NzAvatarModule,
     NbAccordionModule,
+    NzTagModule,
+    NzPopconfirmModule,
     NzPopoverModule,
     NzMessageModule,
     NbStepperModule,

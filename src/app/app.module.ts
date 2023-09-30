@@ -18,6 +18,12 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { registerLocaleData } from '@angular/common';
+import vi from '@angular/common/locales/vi';
+registerLocaleData(vi);
+/** config ng-zorro-antd i18n **/
+import { NZ_I18N, vi_VN } from 'ng-zorro-antd/i18n';
+
 @NgModule({
   declarations: [AppComponent, LayoutsComponent],
   imports: [
@@ -39,6 +45,7 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
   ],
   
   providers: [
+    { provide: NZ_I18N, useValue: vi_VN },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

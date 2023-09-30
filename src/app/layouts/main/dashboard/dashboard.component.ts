@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   ){}
   
   ngOnInit(): void {
+    this.mostPopularProducts = ProductData.filter(product => product.isPopular === true)
     this.triggerSales(this.myTemplate)
   }
 

@@ -100,7 +100,6 @@ export class DetailProductComponent implements OnInit {
     switch (true) {
       case star === 0:
         return 'rgb(121, 125, 133)';
-        break
       default:
         return '#FADB14'
     }

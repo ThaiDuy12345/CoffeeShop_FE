@@ -6,4 +6,6 @@ export class Account {
   password: string = ""
   address: string = ""
   role: "1" | "0" = "1"
+  status: boolean = true
+  created_date: Date = new Date()
 }

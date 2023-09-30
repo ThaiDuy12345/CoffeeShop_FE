@@ -19,12 +19,22 @@ const routes: Route[] = [
     canActivate: [AdminGuard],
     children: [
       {
+        path: "",
+        redirectTo: "admin-dashboard",
+        pathMatch: "full"
+      },
+      {
         path: "admin-dashboard",
         component: AdminDashboardComponent
       },
       {
         path: "layout-management",
         children: [
+          {
+            path: "",
+            redirectTo: "banner",
+            pathMatch: "full"
+          },
           {
             path: "banner",
             component: BannerComponent

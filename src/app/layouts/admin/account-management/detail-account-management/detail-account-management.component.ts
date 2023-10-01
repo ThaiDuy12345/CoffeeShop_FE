@@ -1,18 +1,19 @@
-import { Component, Input, OnInit, Optional, TemplateRef } from '@angular/core';
+import { Component, Optional, TemplateRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Account } from 'src/app/core/models/account.model';
+import { AccountData } from 'src/app/data/data';
 import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 
 @Component({
-  selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss'],
+  selector: 'app-detail-account-management',
+  templateUrl: './detail-account-management.component.html',
+  styleUrls: ['./detail-account-management.component.scss']
 })
-export class EditUserComponent implements OnInit {
-  @Input() user: Account = new Account();
-  public editUser: Account = new Account();
-  public isEditing: Boolean = false;
+export class DetailAccountManagementComponent {
+  public choosingAccount: Account = new Account()
+  public editAccount: Account = new Account()
   public provinces: any[] = [];
   public districts: any[] = [];
   public wards: any[] = [];
@@ -24,26 +25,30 @@ export class EditUserComponent implements OnInit {
   constructor(
     private messageService: NzMessageService,
     private dialogService: NbDialogService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     @Optional() private dialogRef: NbDialogRef<any>
-  ) {}
+  ){}
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      const id = params['id']
+      if(!id) return
+      const result = AccountData.find(a => a.id === id)
+      if(result) this.choosingAccount = result
+    })
     this.provinces = vietnamSelection.map((item) => {
       return {
         id: item.Id,
         name: item.Name,
       };
     });
+
   }
 
   onClickCancelEdit(): void {
-    this.isEditing = false;
-    this.editUser = new Account();
-  }
-
-  onClickEdit(): void {
-    this.isEditing = true;
-    this.editUser = { ...this.user };
+    this.editAccount = new Account();
+    this.router.navigateByUrl('/admin/account-management')
   }
 
   onChangeProvince(): void {
@@ -96,21 +101,24 @@ export class EditUserComponent implements OnInit {
     });
   }
 
+
   onClickSubmit() {
     if (
       (this.wards.length > 0 && !this.selectedWard) ||
       !this.detailAddress ||
       !this.selectedProvince ||
       !this.selectedDistrict ||
-      !this.editUser.name ||
-      !this.editUser.phone
+      !this.editAccount.name ||
+      !this.editAccount.phone
     ) {
+      console.log(this.editAccount.address)
       this.dialogRef.close();
       this.messageService.error('Bạn cần điền hết thông tin để tiếp tục!!');
       return;
     }
+
     this.dialogRef.close();
     this.messageService.success('Thay đổi thông tin thành công!!');
-    this.isEditing = false;
+    this.router.navigateByUrl('/admin/account-management')
   }
 }

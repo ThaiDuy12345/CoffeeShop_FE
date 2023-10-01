@@ -46,6 +46,10 @@ $error-text-color: #ee7070;
 }
 
 body {
+  #cdk-overlay-1.cdk-overlay-pane{
+    z-index: 1001 !important;
+  }
+
   nb-sidebar{
     .main-content>.scrollable{
       padding-left: 0 !important;

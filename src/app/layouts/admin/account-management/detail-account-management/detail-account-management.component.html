@@ -1,0 +1,189 @@
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>    
+    <nb-card-body>
+      <div  class="flex items-center justify-center">
+        <div class="mx-auto w-full">
+          <form autocomplete="off">
+            <div class="-mx-3 flex flex-wrap">
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                  <label class="mb-3 block font-medium">
+                    Tên: <b>{{ choosingAccount.name }}</b>
+                  </label>
+                  <input
+                    type="text"
+                    nbInput
+                    
+                    name="nameInput"
+                    #nameInput="ngModel"
+                    [(ngModel)]="editAccount.name"
+                    placeholder="Chúng tôi nên gọi bạn là gì?"
+                    class="w-full rounded-md"
+                  />
+                  <small *ngIf="!editAccount.name" class="error-text-color">
+                    Tên vui lòng không được để trống
+                  </small>
+                </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                  <label for="lName" class="mb-3 block font-medium">
+                    Email: <b>{{ choosingAccount.email }}</b>
+                  </label>
+                  <input
+                    type="email"
+                    disabled="true"
+                    
+                    nbInput
+                    placeholder="Không hỗ trợ thay đổi email"
+                    class="w-full rounded-md"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="mb-5">
+              <label for="guest" class="mb-3 block font-medium">
+                Số điện thoại: <b>{{ choosingAccount.phone }}</b>
+              </label>
+              <input
+                type="text"
+                name="phoneInput"
+                nbInput
+                #phoneInput="ngModel"
+                
+                [(ngModel)]="editAccount.phone"
+                placeholder="0123456789"
+                class="w-full rounded-md"
+              />
+              <small
+                *ngIf="editAccount.phone.length !== 10"
+                class="error-text-color"
+              >
+                Số điện thoại vui lòng không được để trống và đúng định dạng
+              </small>
+            </div>
+            <div class="mb-5">
+              <label for="guest" class="mb-3 block font-medium">
+                Địa chỉ: <b>{{ choosingAccount.address }}</b>
+              </label>
+            </div>
+            <div class="-mx-3 flex flex-wrap" >
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                  <label class="mb-3 block font-medium">
+                    Thành Phố/Tỉnh
+                  </label>
+                  <nb-select
+                    (selectedChange)="onChangeProvince()"
+                    name="provinceInput"
+                    #provineInput="ngModel"
+                    [(ngModel)]="selectedProvince"
+                    
+                    class="w-full"
+                  >
+                    <nb-option value="">Thành Phố/Tỉnh</nb-option>
+                    <nb-option [value]="p.id" *ngFor="let p of provinces">{{
+                      p.name
+                    }}</nb-option>
+                  </nb-select>
+                  <small *ngIf="!selectedProvince" class="error-text-color">Vui lòng chọn Thành Phố/Tỉnh</small>
+                </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                  <label for="lName" class="mb-3 block font-medium">
+                    Thành Phố/Quận/Huyện
+                  </label>
+                  <nb-select
+                    (selectedChange)="onChangeDistrict()"
+                    [disabled]="!selectedProvince"
+                    name="districtInput"
+                    #districtInput="ngModel"
+                    [(ngModel)]="selectedDistrict"
+                    
+                    class="w-full"
+                  >
+                    <nb-option value="">Thành Phố/Quận/Huyện</nb-option>
+                    <nb-option [value]="p.id" *ngFor="let p of districts">{{
+                      p.name
+                    }}</nb-option>
+                  </nb-select>
+                  <small *ngIf="!selectedDistrict && districts.length > 0" class="error-text-color">Vui lòng chọn Thành Phố/Quận/Huyện</small>
+                </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                  <label for="lName" class="mb-3 block font-medium">
+                    Phường/Xã
+                  </label>
+                  <nb-select
+                    name="wardInput"
+                    #wardInput="ngModel"
+                    [disabled]="!selectedDistrict || wards.length === 0"
+                    [(ngModel)]="selectedWard"
+                    
+                    class="w-full"
+                    placeholder="Phường"
+                  >
+                    <nb-option value="">Phường/Xã</nb-option>
+                    <nb-option [value]="p.id" *ngFor="let p of wards">{{
+                      p.name
+                    }}</nb-option>
+                  </nb-select>
+                  <small *ngIf="!selectedWard && wards.length > 0" class="error-text-color">Vui lòng chọn Phường/Xã</small>
+                </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                  <label for="lName" class="mb-3 block font-medium">
+                    Địa chỉ cụ thể
+                  </label>
+                  <input
+                    type="text"
+                    nbInput
+                    name="addressInput"
+                    #addressInput="ngModel"
+                    
+                    [disabled]="!selectedProvince || !selectedDistrict"
+                    [(ngModel)]="detailAddress"
+                    placeholder="789 Huỳnh Tấn Phát, Phường 9, Quận 7, TP HCM"
+                    class="w-full rounded-md"
+                  />
+                  <small *ngIf="(selectedWard && wards.length > 0 && !detailAddress) || (selectedDistrict && districts.length > 0 && wards.length <= 0 && !detailAddress)" class="error-text-color">
+                    Địa chỉ vui lòng không để trống
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                nbButton
+                status="danger"
+                class="mr-3 mb-3"
+                
+                (click)="onClickCancelEdit()"
+              >
+                Huỷ
+              </button>
+              <button nbButton (click)="open(dialog)" status="success"  class="mb-3">
+                Xác nhận
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <ng-template #dialog let-data let-ref="dialogRef">
+        <nb-card>
+          <nb-card-body>{{ data }}</nb-card-body>
+          <nb-card-footer class="space-x-3">
+            <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+            <button nbButton status="success" (click)="onClickSubmit()">Xác nhận</button>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template>
+    </nb-card-body>
+  </nb-card>
+</div>

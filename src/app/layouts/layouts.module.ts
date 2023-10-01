@@ -92,6 +92,7 @@ import { BannerComponent } from './admin/layout-management/banner/banner.compone
 import { PopularProductComponent } from './admin/layout-management/popular-product/popular-product.component';
 import { AdminChartComponent } from '../shared/components/admin-chart/admin-chart.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DetailAccountManagementComponent } from './admin/account-management/detail-account-management/detail-account-management.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -129,6 +130,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CategoryManagementComponent,
     FeedbackManagementComponent,
     OrderManagementComponent,
+    DetailAccountManagementComponent,
     SalesManagementComponent,
     AdminDashboardComponent,
     AdminHeaderComponent,

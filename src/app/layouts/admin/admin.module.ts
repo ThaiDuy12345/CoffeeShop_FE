@@ -12,6 +12,7 @@ import { SalesManagementComponent } from './sales-management/sales-management.co
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { BannerComponent } from './layout-management/banner/banner.component';
 import { PopularProductComponent } from './layout-management/popular-product/popular-product.component';
+import { DetailAccountManagementComponent } from './account-management/detail-account-management/detail-account-management.component';
 const routes: Route[] = [
   {
     path: "",
@@ -51,7 +52,11 @@ const routes: Route[] = [
       },
       {
         path: "account-management",
-        component: AccountManagementComponent
+        component: AccountManagementComponent,
+      },
+      {
+        path: "account-management/:id",
+        component: DetailAccountManagementComponent
       },
       {
         path: "product-management",

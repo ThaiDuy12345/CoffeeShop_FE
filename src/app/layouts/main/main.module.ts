@@ -55,6 +55,7 @@ const routes: Route[] = [
       {
         path: 'support',
         component: SupportComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: "cart",

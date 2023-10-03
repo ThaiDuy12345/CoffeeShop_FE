@@ -8,7 +8,6 @@ import { Order } from 'src/app/core/models/order.model';
 import { FormatService } from 'src/app/core/services/format.service';
 import { AccountData, FeedBackData, OrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
-import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils'
 @Component({
   selector: 'app-account-management',
   templateUrl: './account-management.component.html',

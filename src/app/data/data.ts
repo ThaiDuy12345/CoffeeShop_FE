@@ -64,7 +64,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}cloudFeeHanhNhanNuong.webp`,
     category: CategoryData[0],
     isPopular: false,
-    creation_date: new Date('2023-09-01')
+    creation_date: new Date('2023-09-01'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "1",
@@ -75,7 +77,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}cafeSuaDa.webp`,
     category: CategoryData[0],
     isPopular: true,
-    creation_date: new Date('2023-09-02')
+    creation_date: new Date('2023-09-02'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "2",
@@ -86,7 +90,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}hiTeaVai.webp`,
     category: CategoryData[1],
     isPopular: false,
-    creation_date: new Date('2023-09-03')
+    creation_date: new Date('2023-09-03'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "3",
@@ -97,7 +103,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}banhMiThitNguoi.webp`,
     category: CategoryData[2],
     isPopular: true,
-    creation_date: new Date('2023-08-26')
+    creation_date: new Date('2023-08-26'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "4",
@@ -108,7 +116,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}mochiKemChocolate.webp`,
     category: CategoryData[2],
     isPopular: false,
-    creation_date: new Date('2023-09-11')
+    creation_date: new Date('2023-09-11'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "5",
@@ -119,7 +129,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}theCoffeeHouseSuaDa.webp`,
     category: CategoryData[0],
     isPopular: true,
-    creation_date: new Date('2023-08-10')
+    creation_date: new Date('2023-08-10'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "6",
@@ -130,7 +142,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}thungCafeSuaEspresso.webp`,
     category: CategoryData[3],
     isPopular: false,
-    creation_date: new Date('2023-08-10')
+    creation_date: new Date('2023-08-10'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "7",
@@ -141,7 +155,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}caPheDenDaHop.webp`,
     category: CategoryData[3],
     isPopular: false,
-    creation_date: new Date('2023-08-10')
+    creation_date: new Date('2023-08-10'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "8",
@@ -152,7 +168,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
     category: CategoryData[3],
     isPopular: false,
-    creation_date: new Date('2023-08-10')
+    creation_date: new Date('2023-08-10'),
+    status: true,
+    sold_quantity: 0
   },
   {
     id: "9",
@@ -163,7 +181,9 @@ export const ProductData: Product[] = [
     picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
     category: CategoryData[3],
     isPopular: true,
-    creation_date: new Date('2023-08-10')
+    creation_date: new Date('2023-08-10'),
+    status: true,
+    sold_quantity: 0
   }
 ]
 

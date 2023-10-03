@@ -10,4 +10,6 @@ export class Product{
   creation_date: Date = new Date()
   isPopular: boolean = false
   category: Category = new Category()
+  status: boolean = true
+  sold_quantity: number = 0
 }

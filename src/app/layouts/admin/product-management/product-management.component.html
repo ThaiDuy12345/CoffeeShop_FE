@@ -1,1 +1,267 @@
-<p>product-management works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>
+    <nb-card-header class="border-none">
+      Danh sách sản phẩm
+    </nb-card-header>
+    <nb-card-body class="border-none">
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        Lưu ý: Chỉ những sản phẩm có trạng thái "hoạt động" mới có thể xuất hiện trên hệ thống COFFEE
+      </div>
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        <div class="flex justify-start items-center"><input nbInput placeholder="Tìm kiếm sản phẩm"></div>
+      </div>
+      <nz-table #table [nzData]="products" nzShowPagination="false">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Lượt bán</th>
+            <th>Ngày tạo</th>
+            <th>Trạng thái</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data">
+            <td>{{data.id}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.category.name}}</td>
+            <td>{{data.sold_quantity}}</td>
+            <td>{{formatDate(data.creation_date)}}</td>
+            <td>
+              <nz-tag 
+                nzPopconfirmPlacement="bottom"
+                (nzOnCancel)="null"
+                nzPopconfirmTitle="Xác nhận ẩn sản phẩm này?"
+                nz-popconfirm
+                nzOkText="Xác nhận"
+                nzCancelText="Huỷ"
+                (nzOnConfirm)="confirmChange(data.id, false)"
+                *ngIf="data.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+              >
+                <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
+                <span class="center-an-item">Hoạt động</span>
+              </nz-tag>
+              <nz-tag 
+                nzPopconfirmPlacement="bottom"
+                (nzOnCancel)="null"
+                nzPopconfirmTitle="Xác nhận kích hoạt sản phẩm này?"
+                nz-popconfirm
+                nzOkText="Xác nhận"
+                nzCancelText="Huỷ"    
+                (nzOnConfirm)="confirmChange(data.id, true)"
+                *ngIf="!data.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
+              >
+                <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
+                <span class="center-an-item text-left">Ẩn</span>
+              </nz-tag>
+            </td>
+            <td>
+              <div class="grid grid-cols-1 w-full h-full">
+                <div class="cursor-pointer second-text-color">
+                  Thông tin
+                </div>
+                <div>
+                  <nz-divider class="my-1"></nz-divider>
+                </div>
+                <div class="cursor-pointer second-text-color">
+                  Chi tiết
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<!-- 
+
+<nz-drawer
+  [nzWidth]="'100%'"
+  [nzClosable]="false"
+  [nzVisible]="detailVisible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="detailVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-5 gap-5">
+      <div class="col-span-5 mb-0">
+        <div class="inline-block mr-3">
+          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Tên: {{ choosingAccount.name }}</span><br/>
+          <span class="second-main-text-color">Email: {{ choosingAccount.email }}</span>
+        </div>
+        <div class="inline-block">
+          <span class="second-main-text-color">Số lượng đơn hàng: <b>{{ accountOrders.length }}</b></span><br/>
+          <span class="second-main-text-color">Số lượng đánh giá: <b>{{ accountFeedbacks.length }}</b></span>
+        </div>
+      </div>
+      <div class="col-span-2"><nb-card class="mb-0">
+        <nb-card-header class="border-none">
+          Danh sách đơn hàng
+        </nb-card-header>
+        <nb-card-body class="border-none">
+          <nz-table #table2 [nzData]="accountOrders" nzShowPagination="false">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ngày đặt</th>
+                <th>Tổng giá</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of table2.data">
+                <td class="second-text-color cursor-pointer">{{data.id}}</td>
+                <td>{{formatDate(data.orderDate) }}</td>
+                <td>{{data.totalPrice}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nb-card-body>
+      </nb-card></div>
+      <div class="col-span-3"><nb-card class="mb-0">
+        <nb-card-header class="border-none">
+          Danh sách phản hồi sản phẩm
+        </nb-card-header>
+        <nb-card-body class="border-none">
+          <nz-table #table3 [nzData]="accountFeedbacks" nzShowPagination="false">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tên sản phẩm</th>
+                <th>Số sao</th>
+                <th>Ngày tạo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of table3.data">
+                <td>{{data.id}}</td>
+                <td>{{data.product.name}}</td>
+                <td>
+                  <ng-container
+                  *ngFor="let icon of [].constructor(data.star); let i = index"
+                >
+                  <fa-icon
+                    [icon]="icons['faStar']"
+                    [style]="'color: ' + renderStarColor(data.star)"
+                    size="lg"
+                  ></fa-icon>
+                </ng-container>
+                </td>
+                <td>{{ formatDate(data.creationDate) }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nb-card-body>
+      </nb-card></div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzWidth]="'600px'"
+  [nzClosable]="false"
+  [nzVisible]="inforVisible"
+  nzPlacement="right"
+  [nzTitle]="title2"
+  (nzOnClose)="inforVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-3">
+      <div>
+        <div class="inline-block mr-3">
+          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Tên: {{ choosingAccount.name }}</span><br/>
+          <span class="second-main-text-color">Email: {{ choosingAccount.email }}</span>
+        </div> 
+      </div>
+      <div>
+        <nz-divider class="my-2"></nz-divider>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faIdCard']" class="mr-3"></fa-icon><span>#{{ choosingAccount.id }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faPhone']" class="mr-3"></fa-icon><span>{{ choosingAccount.phone }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faUserTie']" class="mr-3"></fa-icon>
+          <span>
+            <nz-tag 
+              class="main-bg-text-color mr-0 py-1 rounded text-white"
+              >
+                <span>{{ choosingAccount.role === "1" ? 'Khách hàng' : 'Quản trị viên'}}</span>
+            </nz-tag>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faEye']" class="mr-3"></fa-icon>
+          <span>
+            <nz-tag 
+                *ngIf="choosingAccount.status" class="main-bg-text-color mr-0 py-1 rounded text-white"
+              >
+                <span>Hoạt động</span>
+            </nz-tag>
+            <nz-tag 
+              *ngIf="!choosingAccount.status" class="mr-0 py-1 rounded main-text-color"
+            >
+              <span>Ẩn</span>
+            </nz-tag>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faCalendar']" class="mr-3"></fa-icon><span>{{ formatDate(choosingAccount.created_date) }}</span>
+        </div>
+      </div>
+      <div class="justify-end items-center flex">
+        <button nbButton status="primary" [routerLink]="['/admin/account-management', choosingAccount.id]">Sửa thông tin tài khoản</button>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title1>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Chi tiết tài khoản
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #title2>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="inforVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Thông tin tài khoản
+    </div>
+  </div>
+</ng-template> -->

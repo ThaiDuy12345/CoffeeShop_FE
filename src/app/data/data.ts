@@ -63,7 +63,7 @@ export const ProductData: Product[] = [
     description: "Vị đắng nhẹ từ cà phê phin truyền thống kết hợp Espresso Ý, lẫn chút ngọt ngào của kem sữa và lớp foam trứng cacao, nhấn thêm hạnh nhân nướng thơm bùi, kèm topping thạch cà phê dai giòn mê ly. Tất cả cùng quyện hoà trong một thức uống làm vị giác 'thức giấc', thơm ngon hết nấc.",
     picture: `${imagePath}cloudFeeHanhNhanNuong.webp`,
     category: CategoryData[0],
-    isPopular: false,
+    isPopular: true,
     creation_date: new Date('2023-09-01'),
     status: true,
     sold_quantity: 0
@@ -167,7 +167,7 @@ export const ProductData: Product[] = [
     description: "Thật dễ dàng để bắt đầu ngày mới với tách cà phê sữa đá sóng sánh, thơm ngon như cà phê pha phin. Vị đắng thanh của cà phê hoà quyện với vị ngọt béo của sữa, giúp bạn luôn tỉnh táo và hứng khởi cho ngày làm việc thật hiệu quả.",
     picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
     category: CategoryData[3],
-    isPopular: false,
+    isPopular: true,
     creation_date: new Date('2023-08-10'),
     status: true,
     sold_quantity: 0

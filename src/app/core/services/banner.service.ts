@@ -25,9 +25,35 @@ export class BannerService{
     )
   }
 
+  updateMainBanner(image_id: string = ""): Observable<any> {
+    return this.http.put(
+      this.apiService.bannerService() + `/${this.mainBannerId}`,
+      {
+        image_id: image_id
+      }
+    ).pipe(
+      catchError((err: HttpErrorResponse) =>{ 
+        return throwError(() => err)
+      })
+    )
+  }
+
   getPopupBanner(): Observable<any> {
     return this.http.get(
       this.apiService.bannerService() + `/${this.popupBannerId}`
+    ).pipe(
+      catchError((err: HttpErrorResponse) =>{ 
+        return throwError(() => err)
+      })
+    )
+  }
+
+  updatePopupBanner(image_id: string = ""): Observable<any> {
+    return this.http.put(
+      this.apiService.bannerService() + `/${this.popupBannerId}`,
+      {
+        image_id: image_id
+      }
     ).pipe(
       catchError((err: HttpErrorResponse) =>{ 
         return throwError(() => err)

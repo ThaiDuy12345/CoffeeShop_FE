@@ -5,7 +5,7 @@
     <div class="col-span-4 font-bold text-lg">Banner Pop Up</div>
     <div class="col-span-2">
       <app-image
-        [src]="'assets/brand-icons/sale.png'"
+        [src]="'data:image/jpeg;base64,' + popupBanner.image.url"
         [classes]="'w-[80vw] rounded-xl'"
       ></app-image>
     </div>
@@ -15,7 +15,10 @@
         Nội dung thích hợp: Event, khuyến mãi, giảm giá trong ngày...
       </div>
       <input type="file" accept="image/*" #file1 class="hidden" (change)="onPopUpBannerInputChange(file1.files)">
-      <button nbButton status="primary" (click)="file1.click()">Thay đổi</button>
+      <button [nbSpinner]="isLoadingPopupBanner" nbButton status="primary" class="mr-2" (click)="file1.click()">Thay đổi</button>
+      <button [nbSpinner]="isLoadingCancelPopupBanner" status="danger" nbButton (click)="onPopUpBannerInputChange(null, 'RESET')">
+        <fa-icon [icon]="icons['faTrash']"></fa-icon>
+      </button>
     </div>
   </div>
   <div class="grid grid-cols-4 gap-5">
@@ -24,7 +27,7 @@
       <app-image
         [classes]="'w-full'"
         [lazyClasses]="'min-h-[300px]'"
-        [src]="'assets/brand-icons/banner.jpg'"
+        [src]="'data:image/jpeg;base64,' + mainBanner.image.url"
       ></app-image>
     </div>
     <div class="col-span-2 space-y-4">
@@ -36,7 +39,10 @@
         Lưu ý: Banner chính sẽ chỉ chấp nhận hình ảnh có chiều rộng lớn hơn chiều dài
       </div>
       <input type="file" accept="image/*" #file2 class="hidden" (change)="onMainBannerInputChange(file2.files)">
-      <button nbButton status="primary" (click)="file2.click()">Thay đổi</button>
+      <button [nbSpinner]="isLoadingMainBanner" nbButton status="primary" class="mr-2" (click)="file2.click()">Thay đổi</button>
+      <button [nbSpinner]="isLoadingCancelMainBanner" status="danger" nbButton (click)="onMainBannerInputChange(null, 'RESET')">
+        <fa-icon [icon]="icons['faTrash']"></fa-icon>
+      </button>
     </div>
   </div>
 </div>

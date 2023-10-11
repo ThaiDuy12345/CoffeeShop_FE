@@ -7,7 +7,6 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { BannerService } from 'src/app/core/services/banner.service';
-import { merge } from 'rxjs';
 import { Banner } from 'src/app/core/models/banner.model';
 @Component({
   selector: 'app-dashboard',

@@ -9,8 +9,13 @@
       <div class="mb-5 grid grid-cols-1 gap-5">
         Lưu ý: Chỉ những tài khoản có trạng thái "hoạt động" mới có thể sử dụng hệ thống web của COFFEE
       </div>
-      <div class="mb-5 grid grid-cols-1 gap-5">
-        <div class="flex justify-start items-center"><input nbInput placeholder="Tìm kiếm tài khoản"></div>
+      <div class="mb-5 grid grid-cols-2 gap-5">
+        <div class="flex justify-start items-center">
+          <input nbInput placeholder="Tìm kiếm tài khoản">
+        </div>
+        <div class="flex justify-end items-center">
+          <button nbButton status="info" [routerLink]="'/admin/account-management/new'">Thêm</button>
+        </div>
       </div>
       <nz-table #table [nzData]="accounts" nzShowPagination="false">
         <thead>

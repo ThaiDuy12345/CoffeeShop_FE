@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from './core/services/api.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,6 +9,27 @@ import { Component } from '@angular/core';
     
   ]
 })
-export class AppComponent {
-  public title = 'CoffeeShopWebsite';
+export class AppComponent implements OnInit {
+  public isReady: Boolean = false
+  public isDelay: Boolean = false
+  constructor(
+    private apiService: ApiService,
+    private messageService: NzMessageService
+  ){}
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.isDelay = true
+    }, 4000)
+    this.apiService.isAlive().subscribe({
+      next: (res) => {
+        if(res.status === 200){
+          this.isReady = true
+        }
+      },
+      error: (err) => {
+        this.messageService.error(err.message)
+      }
+    })
+  }
 }

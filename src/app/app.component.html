@@ -1,1 +1,15 @@
-<app-layouts></app-layouts>
+<app-layouts *ngIf="isReady"></app-layouts>
+
+<div *ngIf="!isReady" class="w-full h-full center-an-item bg-white">
+  <div>
+    <div class="center-an-item font-bold">
+      <div>
+        <div class="text-center">Đang tải web..</div>
+        <div class="text-center" *ngIf="isDelay">Lần đầu tải web cần khởi động server hơi lâu...Xin hãy kiên nhẫn!!</div>
+      </div>
+    </div>
+    <div class="center-an-item mt-3">
+      <span nz-icon nzType="loading" nzTheme="outline"></span>
+    </div>
+  </div>
+</div>

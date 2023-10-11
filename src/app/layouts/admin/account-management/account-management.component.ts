@@ -21,7 +21,6 @@ export class AccountManagementComponent{
   public accountFeedbacks: FeedBack[] = []
   public accountOrders: Order[] = []
 
-
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,

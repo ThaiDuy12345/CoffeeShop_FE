@@ -36,6 +36,7 @@
           *ngIf="!item.subItems"
           class="h-full"
           nz-menu-item
+          nzMatchRouter
           [routerLink]="item.link"
         >
           <div class="h-full center-an-item">
@@ -170,7 +171,7 @@
               </li>
             </ul>
           </li>
-          <li *ngIf="!item.subItems" nz-menu-item [routerLink]="item.link">
+          <li *ngIf="!item.subItems" nzMatchRouter nz-menu-item [routerLink]="item.link">
             <div class="center-an-item">
               <span nz-icon [nzType]="item.icon"></span
               ><span class="ml-3">{{ item.label }}</span>

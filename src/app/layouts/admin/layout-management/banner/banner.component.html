@@ -5,7 +5,7 @@
     <div class="col-span-4 font-bold text-lg">Banner Pop Up</div>
     <div class="col-span-2">
       <app-image
-        [src]="'data:image/jpeg;base64,' + popupBanner.image.url"
+        [src]="'data:image/jpeg;base64,' + popupBanner"
         [classes]="'w-[80vw] rounded-xl'"
       ></app-image>
     </div>
@@ -27,7 +27,7 @@
       <app-image
         [classes]="'w-full'"
         [lazyClasses]="'min-h-[300px]'"
-        [src]="'data:image/jpeg;base64,' + mainBanner.image.url"
+        [src]="'data:image/jpeg;base64,' + mainBanner"
       ></app-image>
     </div>
     <div class="col-span-2 space-y-4">

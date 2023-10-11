@@ -1,5 +1,4 @@
 import { BannerService } from 'src/app/core/services/banner.service';
-import { Banner } from './../../../../core/models/banner.model';
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from 'src/app/core/services/image.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -13,8 +12,8 @@ import { Icon } from 'src/app/core/models/icon.model';
 })
 export class BannerComponent implements OnInit{
   public icons: Icon = icons
-  public mainBanner: Banner = new Banner()
-  public popupBanner: Banner = new Banner()
+  public mainBanner: string = ""
+  public popupBanner: string = ""
   public isLoadingMainBanner: boolean = false
   public isLoadingCancelMainBanner: boolean = false
   public isLoadingPopupBanner: boolean = false
@@ -32,24 +31,12 @@ export class BannerComponent implements OnInit{
   initData(): void {
     this.bannerService.getMainBanner().subscribe(res => {
       if(res.status === 200){
-        this.mainBanner = {
-          id: res.data._id,
-          image: {
-            id: res.data.image._id,
-            url: res.data.image.url
-          }
-        }
+        this.mainBanner = res.data.image.url
       }
     })
     this.bannerService.getPopupBanner().subscribe(res => {
       if(res.status === 200){
-        this.popupBanner = {
-          id: res.data._id,
-          image: {
-            id: res.data.image._id,
-            url: res.data.image.url
-          }
-        }
+        this.popupBanner = res.data.image.url
       }
     })
   }
@@ -65,10 +52,7 @@ export class BannerComponent implements OnInit{
         if(res.status === 200){
           this.bannerService.updateMainBanner(res.data._id).subscribe(res2 => {
             if(res2.status === 200){
-              this.mainBanner.image = {
-                id: res2.data.image._id,
-                url: res2.data.image.url
-              }
+              this.mainBanner = res2.data.image.url
               this.isLoadingMainBanner = false
               this.messageService.success("Cập nhật ảnh thành công!!");
             }else {
@@ -85,10 +69,7 @@ export class BannerComponent implements OnInit{
       this.isLoadingCancelMainBanner = true
       this.bannerService.updateMainBanner().subscribe(res2 => {
         if(res2.status === 200){
-          this.mainBanner.image = {
-            id: res2.data.image._id,
-            url: res2.data.image.url
-          }
+          this.mainBanner = res2.data.image.url
           this.isLoadingCancelMainBanner = false
           this.messageService.success("Cập nhật ảnh thành công!!");
         }else {
@@ -110,10 +91,7 @@ export class BannerComponent implements OnInit{
         if(res.status === 200){
           this.bannerService.updatePopupBanner(res.data._id).subscribe(res2 => {
             if(res2.status === 200){
-              this.popupBanner.image = {
-                id: res2.data.image._id,
-                url: res2.data.image.url
-              }
+              this.popupBanner = res2.data.image.url
               this.isLoadingPopupBanner = false
               this.messageService.success("Cập nhật ảnh thành công!!");
             }else {
@@ -130,10 +108,7 @@ export class BannerComponent implements OnInit{
       this.isLoadingCancelPopupBanner = true
       this.bannerService.updatePopupBanner().subscribe(res2 => {
         if(res2.status === 200){
-          this.popupBanner.image = {
-            id: res2.data.image._id,
-            url: res2.data.image.url
-          }
+          this.popupBanner = res2.data.image.url
           this.isLoadingCancelPopupBanner = false
           this.messageService.success("Cập nhật ảnh thành công!!");
         }else {

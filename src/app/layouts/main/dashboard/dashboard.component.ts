@@ -7,7 +7,6 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { BannerService } from 'src/app/core/services/banner.service';
-import { Banner } from 'src/app/core/models/banner.model';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,8 +14,8 @@ import { Banner } from 'src/app/core/models/banner.model';
 })
 export class DashboardComponent implements OnInit {
   public mostPopularProducts: Product[] = ProductData
-  public bannerPopup: Banner = new Banner()
-  public bannerMain: Banner = new Banner()
+  public bannerPopup: string = ""
+  public bannerMain: string = ""
   public bannerMainReplace: string = ""
   public bannerPopupReplace: string = ""
   public icons: Icon = icons
@@ -39,26 +38,14 @@ export class DashboardComponent implements OnInit {
     try{
       this.bannerService.getMainBanner().subscribe(responses => {
         if(responses.status === 200) {
-          this.bannerMain = {
-            id: responses.data._id,
-            image: {
-              id: responses.data.image._id,
-              url: responses.data.image.url
-            }        
-          }
+          this.bannerMain = responses.data.image.url
         }else{
           this.bannerMainReplace = "assets/brand-icons/banner.jpg"
         }
       })
       this.bannerService.getPopupBanner().subscribe(responses => {
         if(responses.status === 200) {
-          this.bannerPopup = {
-            id: responses.data._id,
-            image: {
-              id: responses.data.image._id,
-              url: responses.data.image.url
-            }        
-          }
+          this.bannerPopup = responses.data.image.url
         }else{
           this.bannerMainReplace = "assets/brand-icons/sale.png"
         }

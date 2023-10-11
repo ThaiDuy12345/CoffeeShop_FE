@@ -59,6 +59,10 @@ const routes: Route[] = [
         component: DetailAccountManagementComponent
       },
       {
+        path: "account-management/new",
+        component: DetailAccountManagementComponent
+      },
+      {
         path: "product-management",
         component: ProductManagementComponent
       },

@@ -34,6 +34,7 @@ import { NZ_I18N, vi_VN } from 'ng-zorro-antd/i18n';
     SocialLoginModule,
     HttpClientModule,
     NzIconModule,
+    HttpClientModule,
     NbLayoutModule,
     NzBackTopModule,
     NbMenuModule.forRoot(),

@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { Icon } from 'src/app/core/models/icon.model';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { BannerService } from 'src/app/core/services/banner.service';
+import { merge } from 'rxjs';
+import { Banner } from 'src/app/core/models/banner.model';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,6 +16,10 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 })
 export class DashboardComponent implements OnInit {
   public mostPopularProducts: Product[] = ProductData
+  public bannerPopup: Banner = new Banner()
+  public bannerMain: Banner = new Banner()
+  public bannerMainReplace: string = ""
+  public bannerPopupReplace: string = ""
   public icons: Icon = icons
   @ViewChild('dialog', { static: true }) public myTemplate!: TemplateRef<any>
   
@@ -21,11 +28,47 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     @Optional() private dialogRef: NbDialogRef<any>,
     private dialogService: NbDialogService,
+    private bannerService: BannerService
   ){}
   
   ngOnInit(): void {
     this.mostPopularProducts = ProductData.filter(product => product.isPopular === true)
-    this.triggerSales(this.myTemplate)
+    this.initData()
+  }
+
+  initData(): void {
+    try{
+      this.bannerService.getMainBanner().subscribe(responses => {
+        if(responses.status === 200) {
+          this.bannerMain = {
+            id: responses.data._id,
+            image: {
+              id: responses.data.image._id,
+              url: responses.data.image.url
+            }        
+          }
+        }else{
+          this.bannerMainReplace = "assets/brand-icons/banner.jpg"
+        }
+      })
+      this.bannerService.getPopupBanner().subscribe(responses => {
+        if(responses.status === 200) {
+          this.bannerPopup = {
+            id: responses.data._id,
+            image: {
+              id: responses.data.image._id,
+              url: responses.data.image.url
+            }        
+          }
+        }else{
+          this.bannerMainReplace = "assets/brand-icons/sale.png"
+        }
+        this.triggerSales(this.myTemplate)
+      })
+    }catch(err: any){
+      console.error(err.message)
+    }
+    
   }
 
   triggerSales(ref: TemplateRef<any>): void {

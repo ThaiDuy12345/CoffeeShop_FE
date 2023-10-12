@@ -93,6 +93,7 @@ import { PopularProductComponent } from './admin/layout-management/popular-produ
 import { AdminChartComponent } from '../shared/components/admin-chart/admin-chart.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DetailAccountManagementComponent } from './admin/account-management/detail-account-management/detail-account-management.component';
+import { DetailProductManagementComponent } from './admin/product-management/detail-product-management/detail-product-management.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -118,6 +119,7 @@ import { DetailAccountManagementComponent } from './admin/account-management/det
     ImageComponent,
     CartComponent,
     StepOneOrderComponent,
+    DetailProductManagementComponent,
     StepTwoOrderComponent,
     StepThreeOrderComponent,
     AdminComponent,

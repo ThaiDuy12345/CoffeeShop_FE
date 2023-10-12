@@ -13,6 +13,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { BannerComponent } from './layout-management/banner/banner.component';
 import { PopularProductComponent } from './layout-management/popular-product/popular-product.component';
 import { DetailAccountManagementComponent } from './account-management/detail-account-management/detail-account-management.component';
+import { DetailProductManagementComponent } from './product-management/detail-product-management/detail-product-management.component';
 const routes: Route[] = [
   {
     path: "",
@@ -61,6 +62,14 @@ const routes: Route[] = [
       {
         path: "account-management/new",
         component: DetailAccountManagementComponent
+      },
+      {
+        path: "product-management/:id",
+        component: DetailProductManagementComponent
+      },
+      {
+        path: "product-management/new",
+        component: DetailProductManagementComponent
       },
       {
         path: "product-management",

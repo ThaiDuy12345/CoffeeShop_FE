@@ -14,6 +14,8 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 export class ProductManagementComponent {
   public icons: Icon = icons
   public products: Product[] = ProductData
+  public detailVisible: boolean = false
+  public choosingProduct: Product = new Product()
 
   constructor(
     private messageService: NzMessageService,
@@ -37,5 +39,10 @@ export class ProductManagementComponent {
       )
     }
     return this.formatService.formatDate(new Date())
+  }
+
+  viewAProduct(data: Product): void {
+    if(!data) return
+    this.choosingProduct = data
   }
 }

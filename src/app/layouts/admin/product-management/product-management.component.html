@@ -9,8 +9,11 @@
       <div class="mb-5 grid grid-cols-1 gap-5">
         Lưu ý: Chỉ những sản phẩm có trạng thái "hoạt động" mới có thể xuất hiện trên hệ thống COFFEE
       </div>
-      <div class="mb-5 grid grid-cols-1 gap-5">
+      <div class="mb-5 grid grid-cols-2 gap-5">
         <div class="flex justify-start items-center"><input nbInput placeholder="Tìm kiếm sản phẩm"></div>
+        <div class="flex justify-end items-center">
+          <button nbButton status="info" [routerLink]="'/admin/product-management/new'">Thêm</button>
+        </div>
       </div>
       <nz-table #table [nzData]="products" nzShowPagination="false">
         <thead>
@@ -18,7 +21,6 @@
             <th>#</th>
             <th>Tên sản phẩm</th>
             <th>Danh mục</th>
-            <th>Lượt bán</th>
             <th>Ngày tạo</th>
             <th>Trạng thái</th>
             <th></th>
@@ -29,7 +31,6 @@
             <td>{{data.id}}</td>
             <td>{{data.name}}</td>
             <td>{{data.category.name}}</td>
-            <td>{{data.sold_quantity}}</td>
             <td>{{formatDate(data.creation_date)}}</td>
             <td>
               <nz-tag 
@@ -61,13 +62,13 @@
             </td>
             <td>
               <div class="grid grid-cols-1 w-full h-full">
-                <div class="cursor-pointer second-text-color">
+                <div class="cursor-pointer second-text-color" [routerLink]="['/admin/product-management', data.id]">
                   Thông tin
                 </div>
                 <div>
                   <nz-divider class="my-1"></nz-divider>
                 </div>
-                <div class="cursor-pointer second-text-color">
+                <div class="cursor-pointer second-text-color" (click)="detailVisible = true; viewAProduct(data)">
                   Chi tiết
                 </div>
               </div>
@@ -79,7 +80,7 @@
   </nb-card>
 </div>
 
-<!-- 
+
 
 <nz-drawer
   [nzWidth]="'100%'"
@@ -92,80 +93,45 @@
   <ng-container *nzDrawerContent>
     <div class="grid grid-cols-5 gap-5">
       <div class="col-span-5 mb-0">
-        <div class="inline-block mr-3">
-          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        <div class="inline-block mr-4">
+          <app-image [src]="choosingProduct.picture" [classes]="'h-[40px] rounded'"></app-image>
         </div>
-        <div class="inline-block mr-3">
-          <span class="font-bold">Tên: {{ choosingAccount.name }}</span><br/>
-          <span class="second-main-text-color">Email: {{ choosingAccount.email }}</span>
+        <div class="inline-block mr-4">
+          <span class="font-bold">Mã sản phẩm: {{ choosingProduct.id }}</span><br/>
+          <span class="second-main-text-color">Tên sản phẩm: {{ choosingProduct.name }}</span>
+        </div>
+        <br/>
+        <br/>
+        <div class="inline-block mr-4">
+          <span class="second-main-text-color">Ngày tạo: <b>{{ formatDate(choosingProduct.creation_date) }}</b></span><br/>
+          <span class="second-main-text-color">Lượt thích: <b>23</b></span>
         </div>
         <div class="inline-block">
-          <span class="second-main-text-color">Số lượng đơn hàng: <b>{{ accountOrders.length }}</b></span><br/>
-          <span class="second-main-text-color">Số lượng đánh giá: <b>{{ accountFeedbacks.length }}</b></span>
+          <span class="second-main-text-color">Đã bán: <b>10</b></span><br/>
+          <span class="second-main-text-color">Tổng đánh giá: <b>11</b></span>
         </div>
       </div>
-      <div class="col-span-2"><nb-card class="mb-0">
-        <nb-card-header class="border-none">
-          Danh sách đơn hàng
-        </nb-card-header>
-        <nb-card-body class="border-none">
-          <nz-table #table2 [nzData]="accountOrders" nzShowPagination="false">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Ngày đặt</th>
-                <th>Tổng giá</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of table2.data">
-                <td class="second-text-color cursor-pointer">{{data.id}}</td>
-                <td>{{formatDate(data.orderDate) }}</td>
-                <td>{{data.totalPrice}}</td>
-              </tr>
-            </tbody>
-          </nz-table>
-        </nb-card-body>
-      </nb-card></div>
-      <div class="col-span-3"><nb-card class="mb-0">
-        <nb-card-header class="border-none">
-          Danh sách phản hồi sản phẩm
-        </nb-card-header>
-        <nb-card-body class="border-none">
-          <nz-table #table3 [nzData]="accountFeedbacks" nzShowPagination="false">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Số sao</th>
-                <th>Ngày tạo</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of table3.data">
-                <td>{{data.id}}</td>
-                <td>{{data.product.name}}</td>
-                <td>
-                  <ng-container
-                  *ngFor="let icon of [].constructor(data.star); let i = index"
-                >
-                  <fa-icon
-                    [icon]="icons['faStar']"
-                    [style]="'color: ' + renderStarColor(data.star)"
-                    size="lg"
-                  ></fa-icon>
-                </ng-container>
-                </td>
-                <td>{{ formatDate(data.creationDate) }}</td>
-              </tr>
-            </tbody>
-          </nz-table>
-        </nb-card-body>
-      </nb-card></div>
+      <div class="col-span-2">
+      </div>
+      <div class="col-span-3">
+
+      </div>
     </div>
   </ng-container>
 </nz-drawer>
 
+
+<ng-template #title1>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Chi tiết tài khoản
+    </div>
+  </div>
+</ng-template>
+<!-- 
 <nz-drawer
   [nzWidth]="'600px'"
   [nzClosable]="false"
@@ -243,17 +209,6 @@
     </div>
   </ng-container>
 </nz-drawer>
-
-<ng-template #title1>
-  <div class="grid grid-cols-2">
-    <div class="flex justify-start items-center">
-      <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
-    </div>
-    <div class="font-bold flex justify-end items-center">
-      Chi tiết tài khoản
-    </div>
-  </div>
-</ng-template>
 
 <ng-template #title2>
   <div class="grid grid-cols-2">

@@ -80,7 +80,7 @@
       >
     </div>
   </div>
-  <div *ngIf="!isMobileScreen()" class="col-span-1 flex items-center justify-start">
+  <div *ngIf="!isMobileScreen() && user.name" class="col-span-1 flex items-center justify-start">
     <nz-badge [nzDot]="true" class="cursor-pointer" nz-popover [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click">
       <fa-icon size="lg" [icon]="icons['faBell']"></fa-icon>
     </nz-badge>

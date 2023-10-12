@@ -1,0 +1,19 @@
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>    
+    <nb-card-body class="grid grid-cols-1">
+      
+      
+      <ng-template #dialog let-data let-ref="dialogRef">
+        <nb-card>
+          <nb-card-body>{{ data }}</nb-card-body>
+          <nb-card-footer class="space-x-3">
+            <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+            <button nbButton status="success" >Xác nhận</button>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template>
+    </nb-card-body>
+  </nb-card>
+</div>

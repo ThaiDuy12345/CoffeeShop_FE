@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
+import { ProductSizeData } from 'src/app/data/data';
 
 @Component({
   selector: 'app-product-list',
@@ -31,6 +32,10 @@ export class ProductListComponent implements OnInit, OnChanges {
     }else {
       this.classes = `w-full grid grid-cols-${this.cols} gap-5`
     }
+  }
+
+  getPrice(productId: string): number {
+    return ProductSizeData.filter(ps => ps.product.id === productId && ps.size_name === "S")[0].price
   }
 
   formatPrice(price: number): string {

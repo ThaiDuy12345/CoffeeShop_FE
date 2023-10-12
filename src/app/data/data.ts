@@ -6,6 +6,7 @@ import { FeedBack } from "../core/models/feedback.model"
 import { Order } from "../core/models/order.model"
 import { FavoriteProduct } from '../core/models/favorite-product.model';
 import { Notification } from '../core/models/notification.model';
+import { ProductSize } from '../core/models/product-size.model';
 
 
 const imagePath = "assets/product-pictures/"
@@ -132,58 +133,75 @@ export const ProductData: Product[] = [
     creation_date: new Date('2023-08-10'),
     status: true,
     sold_quantity: 0
+  }
+]
+
+export const ProductSizeData: ProductSize[] = [
+  {
+    id: "0",
+    size_name: "S",
+    price: 19000,
+    product: ProductData[0]
+  },
+  {
+    id: "1",
+    size_name: "M",
+    price: 29000,
+    product: ProductData[0]
+  },
+  {
+    id: "2",
+    size_name: "S",
+    price: 29000,
+    product: ProductData[1]
+  },
+  {
+    id: "3",
+    size_name: "S",
+    price: 29000,
+    product: ProductData[2]
+  },
+  {
+    id: "4",
+    size_name: "S",
+    price: 49000,
+    product: ProductData[3]
+  },
+  {
+    id: "5",
+    size_name: "M",
+    price: 59000,
+    product: ProductData[3]
   },
   {
     id: "6",
-    name: "Thùng Cà Phê Sữa Espresso",
-    price: 336000,
-    quantity: 5,
-    description: "Được sản xuất theo công nghệ Nhật, Cà Phê Sữa Espresso The Coffee House giữ trọn hương vị đậm đà của 100% cà phê Robusta nguyên chất quyện hoà cùng sữa béo thơm lừng. Bật nắp trải nghiệm ngay chất cà phê mạnh mẽ giúp sảng khoái tức thì, tuôn trào hứng khởi",
-    picture: `${imagePath}thungCafeSuaEspresso.webp`,
-    category: CategoryData[3],
-    isPopular: false,
-    creation_date: new Date('2023-08-10'),
-    status: true,
-    sold_quantity: 0
+    size_name: "S",
+    price: 39000,
+    product: ProductData[4]
   },
   {
     id: "7",
-    name: "Cà Phê Đen Đá Hộp (14 gói x 16g)",
-    price: 58000,
-    quantity: 3,
-    description: "Cà Phê Đen Đá hoà tan The Coffee House với 100% hạt cà phê Robusta mang đến hương vị mạnh cực bốc, đậm đắng đầy lôi cuốn, đúng gu người Việt.",
-    picture: `${imagePath}caPheDenDaHop.webp`,
-    category: CategoryData[3],
-    isPopular: false,
-    creation_date: new Date('2023-08-10'),
-    status: true,
-    sold_quantity: 0
+    size_name: "M",
+    price: 39000,
+    product: ProductData[4]
   },
   {
     id: "8",
-    name: "Cà Phê Sữa Đá Hòa Tan Túi 25x22G",
-    price: 99000,
-    quantity: 18,
-    description: "Thật dễ dàng để bắt đầu ngày mới với tách cà phê sữa đá sóng sánh, thơm ngon như cà phê pha phin. Vị đắng thanh của cà phê hoà quyện với vị ngọt béo của sữa, giúp bạn luôn tỉnh táo và hứng khởi cho ngày làm việc thật hiệu quả.",
-    picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
-    category: CategoryData[3],
-    isPopular: true,
-    creation_date: new Date('2023-08-10'),
-    status: true,
-    sold_quantity: 0
+    size_name: "S",
+    price: 29000,
+    product: ProductData[5]
   },
   {
     id: "9",
-    name: "Cà Phê Sữa Đá Hòa Tan (10 gói x 22g)",
-    price: 44000,
-    quantity: 10,
-    description: "Thật dễ dàng để bắt đầu ngày mới với tách cà phê sữa đá sóng sánh, thơm ngon như cà phê pha phin. Vị đắng thanh của cà phê hoà quyện với vị ngọt béo của sữa, giúp bạn luôn tỉnh táo và hứng khởi cho ngày làm việc thật hiệu quả.",
-    picture: `${imagePath}cafeSuaDaHoaTanTui.webp`,
-    category: CategoryData[3],
-    isPopular: true,
-    creation_date: new Date('2023-08-10'),
-    status: true,
-    sold_quantity: 0
+    size_name: "M",
+    price: 39000,
+    product: ProductData[5]
+  },
+  {
+    id: "10",
+    size_name: "L",
+    price: 49000,
+    product: ProductData[5]
   }
 ]
 

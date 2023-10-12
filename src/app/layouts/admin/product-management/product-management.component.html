@@ -65,12 +65,6 @@
                 <div class="cursor-pointer second-text-color" [routerLink]="['/admin/product-management', data.id]">
                   Thông tin
                 </div>
-                <div>
-                  <nz-divider class="my-1"></nz-divider>
-                </div>
-                <div class="cursor-pointer second-text-color" (click)="detailVisible = true; viewAProduct(data)">
-                  Chi tiết
-                </div>
               </div>
             </td>
           </tr>
@@ -82,7 +76,7 @@
 
 
 
-<nz-drawer
+<!-- <nz-drawer
   [nzWidth]="'100%'"
   [nzClosable]="false"
   [nzVisible]="detailVisible"
@@ -118,10 +112,10 @@
       </div>
     </div>
   </ng-container>
-</nz-drawer>
+</nz-drawer> -->
 
 
-<ng-template #title1>
+<!-- <ng-template #title1>
   <div class="grid grid-cols-2">
     <div class="flex justify-start items-center">
       <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
@@ -130,7 +124,7 @@
       Chi tiết tài khoản
     </div>
   </div>
-</ng-template>
+</ng-template> -->
 <!-- 
 <nz-drawer
   [nzWidth]="'600px'"

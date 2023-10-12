@@ -5,11 +5,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
-import { FeedBackData, ProductData, FavoriteProductData } from 'src/app/data/data';
+import { FeedBackData, ProductData, FavoriteProductData, ProductSizeData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormatService } from 'src/app/core/services/format.service';
+import { ProductSize } from 'src/app/core/models/product-size.model';
 
 @Component({
   selector: 'app-detail-product',
@@ -26,9 +27,12 @@ export class DetailProductComponent implements OnInit {
     quantity: 0,
   };
   public product: Product = new Product();
+  public productSize: ProductSize[] = []
   public relatedProducts: Product[] = [];
+  public productSizeOption: string[] = []
   public feedBackProducts: FeedBack[] = [];
   public feedBackProductsPg: FeedBack[] = [];
+  public choosingSize: number = 0
   public avarageStar: number = 0;
   public feedBackPageIndex: number = 1;
   public starRating: number = 0;
@@ -53,9 +57,25 @@ export class DetailProductComponent implements OnInit {
         return;
       }
       this.product = result;
+      this.loadProductSize();
       this.loadRelatedProducts();
       this.loadFeedBackProduct();
     });
+  }
+
+  loadProductSize(): void {
+    this.productSize = ProductSizeData.filter(ps => ps.product.id === this.product.id)
+    this.productSizeOption = this.productSize.map(ps => 
+      `Size ${ps.size_name}`
+    )
+  }
+
+  getPrice(index: number): number {
+    return this.productSize[index].price
+  }
+
+  handleProductSizeChange(index: number): void{
+    this.choosingSize = index
   }
 
   loadRelatedProducts(): void {

@@ -3,7 +3,90 @@
 >
   <nb-card>    
     <nb-card-body class="grid grid-cols-1">
-      
+      <div class="font-bold mb-5">
+        Thông tin sản phẩm
+      </div>
+      <div class="grid grid-cols-1 mb-5">
+        <div class="col-span-1 grid grid-cols-5 gap-3">
+          <div class="col-span-1">
+            <app-image [src]="product.picture" [classes]="'rounded w-full'"></app-image>
+          </div>
+          <div class="col-span-4 italic text-red-400">
+            Lưu ý: Khi thay đổi ảnh, ảnh cần đúng kích thước với tỷ lệ 1:1...
+            <br/>
+            <br/>
+            <div>
+              <button nbButton>Đổi ảnh</button>
+            </div>
+          </div>
+        </div>
+        <div class="my-5">
+          <nz-divider></nz-divider>
+        </div>
+        <div class="col-span-1 gap-3 grid grid-cols-7">
+          <div class="col-span-2 second-main-text-color">
+            Mã sản phẩm: 
+          </div>
+          <div class="col-span-5 font-bold">
+            #{{ product.id }}
+          </div>
+          <div class="col-span-2 second-main-text-color">
+            Tên sản phẩm: 
+          </div>
+          <div class="col-span-5 font-bold">
+            {{ product.name }}
+          </div>
+          <div class="col-span-2 second-main-text-color">
+            Mô tả sản phẩm: 
+          </div>
+          <div class="col-span-5 italic">
+            {{ product.description }}
+          </div>
+          <div class="col-span-2 second-main-text-color">
+            Ngày tạo sản phẩm: 
+          </div>
+          <div class="col-span-5">
+            {{ formatDate(product.creation_date) }} ({{ timeSince(product.creation_date) }})
+          </div>
+          <div class="col-span-2 second-main-text-color">
+            Trạng thái sản phẩm: 
+          </div>
+          <div class="col-span-5">
+            <nz-tag 
+                *ngIf="product.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+              >
+                <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
+                <span class="center-an-item">Hoạt động</span>
+              </nz-tag>
+              <nz-tag 
+                *ngIf="!product.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
+              >
+                <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
+                <span class="center-an-item text-left">Ẩn</span>
+              </nz-tag>
+          </div>
+          <div class="col-span-2 second-main-text-color">
+            Thuộc về danh mục: 
+          </div>
+          <div class="col-span-5 text-blue-500 cursor-pointer " [routerLink]="'/admin/category-management'">
+            {{ product.category.name }}
+          </div>
+        </div>
+        <div class="flex justify-end items-center">
+          <button nbButton>Chỉnh sửa</button>
+        </div>
+      </div>
+
+      <div class="my-5">
+        <nz-divider></nz-divider>
+      </div>
+
+      <div class="font-bold">
+        Kích cỡ sản phẩm
+      </div>
+      <div>
+        
+      </div>
       
       <ng-template #dialog let-data let-ref="dialogRef">
         <nb-card>

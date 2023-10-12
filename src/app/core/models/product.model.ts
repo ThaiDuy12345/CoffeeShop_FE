@@ -1,3 +1,4 @@
+import { ProductSizeData } from "src/app/data/data"
 import { Category } from "./category.model"
 
 export class Product{
@@ -12,4 +13,5 @@ export class Product{
   category: Category = new Category()
   status: boolean = true
   sold_quantity: number = 0
+  
 }

@@ -23,57 +23,9 @@
         <div class="my-5">
           <nz-divider></nz-divider>
         </div>
-        <div class="col-span-1 gap-3 grid grid-cols-7">
-          <div class="col-span-2 second-main-text-color">
-            Mã sản phẩm: 
-          </div>
-          <div class="col-span-5 font-bold">
-            #{{ product.id }}
-          </div>
-          <div class="col-span-2 second-main-text-color">
-            Tên sản phẩm: 
-          </div>
-          <div class="col-span-5 font-bold">
-            {{ product.name }}
-          </div>
-          <div class="col-span-2 second-main-text-color">
-            Mô tả sản phẩm: 
-          </div>
-          <div class="col-span-5 italic">
-            {{ product.description }}
-          </div>
-          <div class="col-span-2 second-main-text-color">
-            Ngày tạo sản phẩm: 
-          </div>
-          <div class="col-span-5">
-            {{ formatDate(product.creation_date) }} ({{ timeSince(product.creation_date) }})
-          </div>
-          <div class="col-span-2 second-main-text-color">
-            Trạng thái sản phẩm: 
-          </div>
-          <div class="col-span-5">
-            <nz-tag 
-                *ngIf="product.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
-              >
-                <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
-                <span class="center-an-item">Hoạt động</span>
-              </nz-tag>
-              <nz-tag 
-                *ngIf="!product.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
-              >
-                <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
-                <span class="center-an-item text-left">Ẩn</span>
-              </nz-tag>
-          </div>
-          <div class="col-span-2 second-main-text-color">
-            Thuộc về danh mục: 
-          </div>
-          <div class="col-span-5 text-blue-500 cursor-pointer " [routerLink]="'/admin/category-management'">
-            {{ product.category.name }}
-          </div>
-        </div>
+        <app-basic-form [product]="product"></app-basic-form>
         <div class="flex justify-end items-center">
-          <button nbButton>Chỉnh sửa</button>
+          <button nbButton>Chỉnh sửa thông tin</button>
         </div>
       </div>
 
@@ -81,19 +33,19 @@
         <nz-divider></nz-divider>
       </div>
 
-      <div class="font-bold">
+      <div class="font-bold mb-5">
         Kích cỡ sản phẩm
       </div>
-      <div>
-        
+      <app-size-form [product]="product" class="mb-3"></app-size-form>
+      <div class="flex justify-end items-center">
+        <button nbButton [disabled]="isAtMaxSize()">{{ isAtMaxSize() ? "Đạt giới hạn size" : "Thêm size"}}</button>
       </div>
-      
       <ng-template #dialog let-data let-ref="dialogRef">
         <nb-card>
           <nb-card-body>{{ data }}</nb-card-body>
           <nb-card-footer class="space-x-3">
             <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-            <button nbButton status="success" >Xác nhận</button>
+            <button nbButton status="success">Xác nhận</button>
           </nb-card-footer>
         </nb-card>
       </ng-template>

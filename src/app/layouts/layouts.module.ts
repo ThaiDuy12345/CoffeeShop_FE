@@ -50,6 +50,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -94,6 +95,8 @@ import { AdminChartComponent } from '../shared/components/admin-chart/admin-char
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DetailAccountManagementComponent } from './admin/account-management/detail-account-management/detail-account-management.component';
 import { DetailProductManagementComponent } from './admin/product-management/detail-product-management/detail-product-management.component';
+import { BasicFormComponent } from './admin/product-management/detail-product-management/basic-form/basic-form.component';
+import { SizeFormComponent } from './admin/product-management/detail-product-management/size-form/size-form.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -136,6 +139,8 @@ import { DetailProductManagementComponent } from './admin/product-management/det
     SalesManagementComponent,
     AdminDashboardComponent,
     AdminHeaderComponent,
+    BasicFormComponent,
+    SizeFormComponent,
     AdminSidebarComponent
   ],
   imports: [
@@ -150,6 +155,7 @@ import { DetailProductManagementComponent } from './admin/product-management/det
     NbRadioModule,
     NzTableModule,
     NzSegmentedModule,
+    NzToolTipModule,
     NzBadgeModule,
     NzTabsModule,
     NzPaginationModule,

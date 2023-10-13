@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
-import { ProductData } from 'src/app/data/data';
+import { ProductData, ProductSizeData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -52,11 +52,16 @@ export class DetailProductManagementComponent implements OnInit{
     return this.formatService.timeAgoSince(new Date())
   }
 
-  getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
-    new Promise((resolve, reject) => {
+  getBase64 (file: File): Promise<string | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
-  });
+    })
+  }
+
+  isAtMaxSize(): boolean {
+    return ProductSizeData.filter(ps => ps.product.id === this.product.id).length === 3
+  }
 }

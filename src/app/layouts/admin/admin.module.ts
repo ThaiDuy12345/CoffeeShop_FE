@@ -14,6 +14,8 @@ import { BannerComponent } from './layout-management/banner/banner.component';
 import { PopularProductComponent } from './layout-management/popular-product/popular-product.component';
 import { DetailAccountManagementComponent } from './account-management/detail-account-management/detail-account-management.component';
 import { DetailProductManagementComponent } from './product-management/detail-product-management/detail-product-management.component';
+import { BasicFormComponent } from './product-management/detail-product-management/basic-form/basic-form.component';
+import { SizeFormComponent } from './product-management/detail-product-management/size-form/size-form.component';
 const routes: Route[] = [
   {
     path: "",

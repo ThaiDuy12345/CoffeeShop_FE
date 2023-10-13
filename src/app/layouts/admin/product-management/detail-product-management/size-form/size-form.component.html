@@ -1,0 +1,43 @@
+<div class="col-span-1 gap-3 grid grid-cols-1">
+  <nz-table #table2 [nzData]="productSizes" nzShowPagination="false">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Loại size</th>
+        <th>Giá</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of table2.data; let i = index">
+        <ng-template [ngIf]="currentEditItem === i">
+          <td class="second-text-color cursor-pointer">{{ data.id }}</td>
+          <td>
+            <nb-select placeholder="Size sản phẩm" [(selected)]="editItem.size_name">
+              <nb-option value="S">Size Nhỏ (S)</nb-option>
+              <nb-option value="M">Size Vừa (M)</nb-option>
+              <nb-option value="L">Size Lớn (L)</nb-option>
+            </nb-select>
+          </td>
+          <td>
+            <input nbInput type="number" placeholder="Giá Size" [(ngModel)]="editItem.price"/>
+          </td>
+          <td>
+            <fa-icon [icon]="icons['faCheck']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Lưu"></fa-icon>
+            <fa-icon [icon]="icons['faBan']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Hủy" (click)="onClickCancel()"></fa-icon>
+          </td>
+        </ng-template>
+        <ng-template [ngIf]="currentEditItem !== i">
+          <td class="second-text-color cursor-pointer">{{data.id}}</td>
+          <td>Size {{ data.size_name }}</td>
+          <td>{{ data.price }}</td>
+          <td>
+            <fa-icon *ngIf="currentEditItem === -1" [icon]="icons['faPencil']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Chỉnh sửa" (click)="currentEditItem = i; editItem = data"></fa-icon>
+            <fa-icon *ngIf="currentEditItem === -1" [icon]="icons['faTrash']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Xóa"></fa-icon>
+          </td>
+        </ng-template>
+        
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

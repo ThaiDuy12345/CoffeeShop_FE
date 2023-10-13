@@ -16,6 +16,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 export class DetailProductManagementComponent implements OnInit{
   public product: Product = new Product()
   public icons: Icon = icons
+  public onEditMode: Boolean = false
   constructor(
     private messageService: NzMessageService,
     private dialogService: NbDialogService,
@@ -41,6 +42,30 @@ export class DetailProductManagementComponent implements OnInit{
       )
     }
     return this.formatService.formatDate(new Date())
+  }
+
+  handleInputChange(fileList: FileList | null): void {
+    if(fileList === null) return
+    const file: File = fileList[0]
+    const r = new FileReader()
+    r.onload = (e) => {
+      if(e && e.target && e.target.result && e.target.result instanceof ArrayBuffer) {
+        
+        this.product.picture = 'data:image/jpeg;base64,' + this.arrayBufferToBase64(e.target.result)
+      }
+    }
+    r.readAsArrayBuffer(file)
+  }
+
+  arrayBufferToBase64(buffer: ArrayBuffer) {
+    // Chuyển đổi ArrayBuffer thành dạng Base64
+    const binary = new Uint8Array(buffer);
+    const binaryArray = Array.from(binary);
+    let binaryString = '';
+    for (let i = 0; i < binaryArray.length; i++) {
+      binaryString += String.fromCharCode(binaryArray[i]);
+    }
+    return btoa(binaryString);
   }
 
   timeSince(date: Date | string): string {

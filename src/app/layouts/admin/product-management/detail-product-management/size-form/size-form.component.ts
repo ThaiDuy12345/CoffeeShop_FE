@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { ProductSize } from 'src/app/core/models/product-size.model';
 import { Product } from 'src/app/core/models/product.model';
@@ -17,6 +18,10 @@ export class SizeFormComponent implements OnInit{
   public icons: Icon = icons
   public productSizes: ProductSize[] = [];
 
+  constructor(
+    private messageService: NzMessageService
+  ) {}
+
   ngOnInit(): void {
     this.productSizes = ProductSizeData.filter(ps => ps.product.id === this.product.id)
   }
@@ -24,5 +29,18 @@ export class SizeFormComponent implements OnInit{
   onClickCancel(): void {
     this.currentEditItem = -1
     this.editItem = new ProductSize()
+  }
+
+  onSaveEditItem(): void {
+    this.productSizes[this.currentEditItem] = this.editItem
+    this.messageService.success("Chỉnh sửa size thành công")
+
+    this.onClickCancel()
+  }
+
+  onConfirmDelete(sizeId: string): void {
+    delete this.productSizes[this.productSizes.findIndex(ps => ps.id === sizeId)]
+    this.messageService.success("Xóa size thành công")
+
   }
 }

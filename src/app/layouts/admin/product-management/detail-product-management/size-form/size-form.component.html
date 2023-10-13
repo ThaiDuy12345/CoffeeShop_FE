@@ -23,7 +23,7 @@
             <input nbInput type="number" placeholder="Giá Size" [(ngModel)]="editItem.price"/>
           </td>
           <td>
-            <fa-icon [icon]="icons['faCheck']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Lưu"></fa-icon>
+            <fa-icon [icon]="icons['faCheck']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Lưu" (click)="onSaveEditItem()"></fa-icon>
             <fa-icon [icon]="icons['faBan']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Hủy" (click)="onClickCancel()"></fa-icon>
           </td>
         </ng-template>
@@ -33,10 +33,18 @@
           <td>{{ data.price }}</td>
           <td>
             <fa-icon *ngIf="currentEditItem === -1" [icon]="icons['faPencil']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Chỉnh sửa" (click)="currentEditItem = i; editItem = data"></fa-icon>
-            <fa-icon *ngIf="currentEditItem === -1" [icon]="icons['faTrash']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Xóa"></fa-icon>
+            <fa-icon 
+              nzPopconfirmPlacement="bottom"
+              (nzOnCancel)="null"
+              nzPopconfirmTitle="Xác nhận xóa size này?"
+              nz-popconfirm
+              nzOkText="Xác nhận"
+              nzCancelText="Huỷ"
+              (nzOnConfirm)="onConfirmDelete(data.id)"
+              *ngIf="currentEditItem === -1" [icon]="icons['faTrash']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Xóa">
+            </fa-icon>
           </td>
         </ng-template>
-        
       </tr>
     </tbody>
   </nz-table>

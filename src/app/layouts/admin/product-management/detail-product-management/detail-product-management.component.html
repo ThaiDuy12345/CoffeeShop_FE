@@ -15,17 +15,18 @@
             Lưu ý: Khi thay đổi ảnh, ảnh cần đúng kích thước với tỷ lệ 1:1...
             <br/>
             <br/>
+            <input type="file" accept="image/*" class="hidden" #file (change)="handleInputChange(file.files)"/>
             <div>
-              <button nbButton>Đổi ảnh</button>
+              <button nbButton (click)="file.click()">Đổi ảnh</button>
             </div>
           </div>
         </div>
         <div class="my-5">
           <nz-divider></nz-divider>
         </div>
-        <app-basic-form [product]="product"></app-basic-form>
+        <app-basic-form [product]="product" [onEditMode]="onEditMode" class="mb-3"></app-basic-form>
         <div class="flex justify-end items-center">
-          <button nbButton>Chỉnh sửa thông tin</button>
+          <button nbButton (click)="onEditMode = !onEditMode">Chỉnh sửa thông tin</button>
         </div>
       </div>
 

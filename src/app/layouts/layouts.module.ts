@@ -56,6 +56,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
@@ -150,6 +151,7 @@ import { SizeFormComponent } from './admin/product-management/detail-product-man
     AdminModule,
     NbSelectModule,
     NzBreadCrumbModule,
+    NzUploadModule,
     FormsModule,
     NzCollapseModule,
     NbRadioModule,

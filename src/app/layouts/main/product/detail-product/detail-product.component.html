@@ -29,17 +29,15 @@
         <div class="row-span-2">
           <div class="font-bold w-full text-4xl mb-5">{{ product.name }}</div>
           <div class="w-full mb-5">
-            <span class="me-5">
-              <ng-container *ngIf="avarageStar > 0">
-                <ng-container
-                  *ngFor="let icon of [].constructor(avarageStar); let i = index"
-                >
-                  <fa-icon
-                    [icon]="icons['faStar']"
-                    [style]="'color: ' + renderStarColor(avarageStar)"
-                    size="lg"
-                  ></fa-icon>
-                </ng-container>
+            <span class="me-5" *ngIf="avarageStar > 0">
+              <ng-container
+                *ngFor="let icon of [].constructor(avarageStar); let i = index"
+              >
+                <fa-icon
+                  [icon]="icons['faStar']"
+                  [style]="'color: ' + renderStarColor(avarageStar)"
+                  size="lg"
+                ></fa-icon>
               </ng-container>
             </span>
             <span class="me-5">
@@ -54,10 +52,6 @@
           <div class="w-full text-3xl text-[#EE7070] font-bold">
             {{ formatPrice(getPrice(choosingSize)) }}
           </div>
-          <nz-divider [nzText]="text"></nz-divider>
-          <ng-template #text>
-            <fa-icon [icon]="icons['faCartFlatbed']" size="2x" class="text-lg"></fa-icon>
-          </ng-template>
           <div class="w-full mt-5 mb-5">
             <nz-segmented (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>
           </div>

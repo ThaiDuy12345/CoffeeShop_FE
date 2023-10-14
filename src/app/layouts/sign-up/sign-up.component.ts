@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbIconLibraries } from '@nebular/theme';
 import Cookies from 'js-cookie';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
@@ -9,7 +8,6 @@ import { icons } from 'src/app/shared/utils/icon.utils';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  public activeIndex: number = 0;
   public icons = icons
   public isLoading: boolean = false
   public account: {
@@ -31,10 +29,6 @@ export class SignUpComponent implements OnInit {
   constructor(
     private router: Router
   ){}
-
-  changeTab(index: number): void {
-    
-  }
 
   isEmailValidate(): Boolean {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.account.email)

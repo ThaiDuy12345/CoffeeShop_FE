@@ -2,16 +2,16 @@
   <div class="col-span-2 sm:col-span-3"></div>
   <div class="col-span-2 sm:col-span-1">
     <nb-select class="w-full" multiple placeholder="Tất cả" selectable="false">
-      <nb-option value="coffee"
-        ><span class="text-[#3366ff]">Chờ xét duyệt</span></nb-option
+      <nb-option
+        ><span class="text-[#3366ff]">Chờ xét duyệt/Chuẩn bị đơn</span></nb-option
       >
-      <nb-option value="tea"
+      <nb-option
         ><span class="text-[#ffaa00]">Đang vận chuyển</span></nb-option
       >
-      <nb-option value="food"
+      <nb-option
         ><span class="text-[#00d68f]">Đã hoàn thành</span></nb-option
       >
-      <nb-option value="package"
+      <nb-option
         ><span class="text-[#ff3d71]">Đã huỷ</span></nb-option
       >
     </nb-select>
@@ -61,7 +61,7 @@
     </ng-template>
     <div class="my-16 px-10">
       <nb-stepper
-        [orientation]="getWidth() <= 767 ? 'vertical':'horizontal'"
+        [orientation]="getWidth() <= 767 ? 'vertical' : 'horizontal'"
         [selectedIndex]="getSelectedIndex(or.status)"
         disableStepNavigation="true"
       >
@@ -155,7 +155,9 @@
                       <span>x{{ item.quantity }}</span>
                     </div>
                   </div>
-                  <div class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center">
+                  <div
+                    class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center"
+                  >
                     <span class="font-bold">{{
                       formatPrice(item.subTotal)
                     }}</span>
@@ -169,3 +171,10 @@
     </div>
   </nz-collapse-panel>
 </nz-collapse>
+
+<nz-result
+  *ngIf="order.length === 0"
+  [nzIcon]="'smile-twotone'"
+  nzTitle="Ối, chưa có đơn hàng nào cả!!"
+>
+</nz-result>

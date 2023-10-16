@@ -61,11 +61,7 @@
               </nz-tag>
             </td>
             <td>
-              <div class="grid grid-cols-1 w-full h-full">
-                <div class="cursor-pointer second-text-color" [routerLink]="['/admin/product-management', data.id]">
-                  Thông tin
-                </div>
-              </div>
+              <fa-icon [icon]="icons['faCircleInfo']" [routerLink]="['/admin/product-management', data.id]" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Thông tin"></fa-icon>
             </td>
           </tr>
         </tbody>

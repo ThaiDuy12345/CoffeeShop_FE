@@ -65,17 +65,8 @@
               </nz-tag>
             </td>
             <td>
-              <div class="grid grid-cols-1 w-full h-full">
-                <div class="cursor-pointer second-text-color" (click)="inforVisible = true; viewAnAccount(data)">
-                  Thông tin
-                </div>
-                <div>
-                  <nz-divider class="my-1"></nz-divider>
-                </div>
-                <div class="cursor-pointer second-text-color" (click)="detailVisible = true; viewAnAccount(data)">
-                  Chi tiết
-                </div>
-              </div>
+              <fa-icon [icon]="icons['faCircleInfo']" (click)="inforVisible = true; viewAnAccount(data)" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Thông tin"></fa-icon>
+              <fa-icon [icon]="icons['faChartSimple']" (click)="detailVisible = true; viewAnAccount(data)" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Chi tiết"></fa-icon>
             </td>
           </tr>
         </tbody>

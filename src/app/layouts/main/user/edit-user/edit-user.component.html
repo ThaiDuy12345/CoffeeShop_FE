@@ -46,18 +46,11 @@
           type="text"
           name="phoneInput"
           nbInput
-          #phoneInput="ngModel"
+          disabled="true"
           *ngIf="isEditing"
-          [(ngModel)]="editUser.phone"
-          placeholder="0123456789"
+          placeholder="Không hỗ trợ thay đổi số điện thoại"
           class="w-full rounded-md"
         />
-        <small
-          *ngIf="isEditing && editUser.phone.length !== 10"
-          class="error-text-color"
-        >
-          Số điện thoại vui lòng không được để trống và đúng định dạng
-        </small>
       </div>
       <div class="mb-5">
         <label for="guest" class="mb-3 block font-medium">
@@ -77,9 +70,9 @@
               [(ngModel)]="selectedProvince"
               *ngIf="isEditing"
               class="w-full"
+              placeholder="Thành Phố/Tỉnh"
             >
-              <nb-option value="">Thành Phố/Tỉnh</nb-option>
-              <nb-option [value]="p.id" *ngFor="let p of provinces">{{
+              <nb-option [value]="{name: p.name, id: p.id}" *ngFor="let p of provinces">{{
                 p.name
               }}</nb-option>
             </nb-select>
@@ -99,9 +92,9 @@
               [(ngModel)]="selectedDistrict"
               *ngIf="isEditing"
               class="w-full"
+              placeholder="Thành Phố/Quận/Huyện"
             >
-              <nb-option value="">Thành Phố/Quận/Huyện</nb-option>
-              <nb-option [value]="p.id" *ngFor="let p of districts">{{
+              <nb-option [value]="{name: p.name, id: p.id}" *ngFor="let p of districts">{{
                 p.name
               }}</nb-option>
             </nb-select>
@@ -122,8 +115,7 @@
               class="w-full"
               placeholder="Phường"
             >
-              <nb-option value="">Phường/Xã</nb-option>
-              <nb-option [value]="p.id" *ngFor="let p of wards">{{
+              <nb-option [value]="{name: p.name, id: p.id}" *ngFor="let p of wards">{{
                 p.name
               }}</nb-option>
             </nb-select>
@@ -184,7 +176,7 @@
     <nb-card-body>{{ data }}</nb-card-body>
     <nb-card-footer class="space-x-3">
       <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-      <button nbButton status="success" (click)="onClickSubmit()">Xác nhận</button>
+      <button nbButton status="success" (click)="onClickSubmit()" [nbSpinner]="submitLoading">Xác nhận</button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

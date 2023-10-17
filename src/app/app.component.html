@@ -3,13 +3,18 @@
 <div *ngIf="!isReady" class="w-full h-full center-an-item bg-white">
   <div>
     <div class="center-an-item font-bold">
-      <div>
+      <div *ngIf="!failToLoad">
         <div class="text-center">Đang tải web..</div>
         <div class="text-center" *ngIf="isDelay">Lần đầu tải web cần khởi động server hơi lâu...Xin hãy kiên nhẫn!!</div>
       </div>
+      <div *ngIf="failToLoad">
+        <div class="text-center">Lỗi server 400</div>
+        <div class="text-center" *ngIf="isDelay">Xin hãy reload lại web hoặc thử lại sau!!</div>
+      </div>
     </div>
     <div class="center-an-item mt-3">
-      <span nz-icon nzType="loading" nzTheme="outline"></span>
+      <span *ngIf="failToLoad" nz-icon nzType="disconnect" nzTheme="outline"></span>
+      <span *ngIf="!failToLoad" nz-icon nzType="loading" nzTheme="outline"></span>
     </div>
   </div>
 </div>

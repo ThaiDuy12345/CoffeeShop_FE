@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Optional, TemplateRef } from '@angular/core';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Account } from 'src/app/core/models/account.model';
+import { AccountService } from 'src/app/core/services/account.service';
 import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 
 @Component({
@@ -16,15 +17,26 @@ export class EditUserComponent implements OnInit {
   public provinces: any[] = [];
   public districts: any[] = [];
   public wards: any[] = [];
-  public selectedProvince: string = '';
-  public selectedDistrict: string = '';
-  public selectedWard: string = '';
+  public submitLoading: boolean = false
+  public selectedProvince: {name: string, id: string} = {
+    name: "",
+    id: ""
+  };
+  public selectedDistrict: {name: string, id: string} = {
+    name: "",
+    id: ""
+  };
+  public selectedWard: {name: string, id: string} = {
+    name: "",
+    id: ""
+  };
   public detailAddress: string = '';
 
   constructor(
     private messageService: NzMessageService,
     private dialogService: NbDialogService,
-    @Optional() private dialogRef: NbDialogRef<any>
+    @Optional() private dialogRef: NbDialogRef<any>,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -48,10 +60,16 @@ export class EditUserComponent implements OnInit {
 
   onChangeProvince(): void {
     const province = vietnamSelection.find(
-      (c) => c.Id === this.selectedProvince
+      (c) => c.Id === this.selectedProvince.id
     );
-    this.selectedDistrict = '';
-    this.selectedWard = '';
+    this.selectedDistrict = {
+      name: "",
+      id: ""
+    };
+    this.selectedWard = {
+      name: "",
+      id: ""
+    };
     this.detailAddress = '';
     this.wards = [];
     this.districts = [];
@@ -65,15 +83,18 @@ export class EditUserComponent implements OnInit {
   }
 
   onChangeDistrict(): void {
-    this.selectedWard = '';
+    this.selectedWard = {
+      name: "",
+      id: ""
+    };
     this.wards = [];
     this.detailAddress = '';
     const province = vietnamSelection.find(
-      (c) => c.Id === this.selectedProvince
+      (c) => c.Id === this.selectedProvince.id
     );
     if (!province) return;
     const district = province.Districts.find(
-      (d) => d.Id === this.selectedDistrict
+      (d) => d.Id === this.selectedDistrict.id
     );
     if (!district) return;
     if (district.Wards.length === 1) {
@@ -98,10 +119,10 @@ export class EditUserComponent implements OnInit {
 
   onClickSubmit() {
     if (
-      (this.wards.length > 0 && !this.selectedWard) ||
+      (this.wards.length > 0 && !this.selectedWard.id) ||
       !this.detailAddress ||
-      !this.selectedProvince ||
-      !this.selectedDistrict ||
+      !this.selectedProvince.id ||
+      !this.selectedDistrict.id ||
       !this.editUser.name ||
       !this.editUser.phone
     ) {
@@ -109,8 +130,41 @@ export class EditUserComponent implements OnInit {
       this.messageService.error('Bạn cần điền hết thông tin để tiếp tục!!');
       return;
     }
-    this.dialogRef.close();
-    this.messageService.success('Thay đổi thông tin thành công!!');
-    this.isEditing = false;
+    this.submitLoading = true
+    const formatAddress = this.selectedWard ? 
+      `${this.detailAddress}, ${this.selectedWard.name}, ${this.selectedDistrict.name}, ${this.selectedProvince.name}, Việt Nam` 
+      :
+      `${this.detailAddress}, ${this.selectedDistrict.name}, ${this.selectedProvince.name}, Việt Nam` 
+    
+    this.accountService.put(this.user.phone, {
+      accountName: this.editUser.name,
+      accountAddress: formatAddress,
+      accountPassword: this.user.password,
+      accountRole: this.user.role,
+      accountActive: this.user.active
+    }).subscribe({
+      next: (res) => {
+        this.dialogRef.close();
+        this.submitLoading = false
+        if(res.status){
+          this.messageService.success('Thay đổi thông tin cá nhân thành công');
+          this.user.name = res.data.accountName
+          this.user.address = res.data.accountAddress
+          this.isEditing = false;
+        }else {
+          this.messageService.error('Thay đổi thông tin thất bại');
+          this.isEditing = false;
+        }
+      },
+      error: (err) => {
+        this.dialogRef.close();
+        this.submitLoading = false
+        console.log(err.error.message)
+        this.messageService.error('Đã có lỗi xảy ra');
+        this.isEditing = false;
+      }
+    })
+
+    
   }
 }

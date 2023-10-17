@@ -27,10 +27,10 @@ export class ShoppingCartComponent implements OnInit{
     const id = Cookies.get('id')
     if(!id) return
 
-    const res = AccountData.find(a => a.id === id)
+    const res = AccountData.find(a => a.phone === id)
     this.user = res ? res : new Account()
 
-    this.detailOrder = DetailOrderData.filter(o => o.order.account.id === this.user.id)
+    this.detailOrder = DetailOrderData.filter(o => o.order.account.phone === this.user.phone)
   }
 
   formatPrice(price: number = 0): string {

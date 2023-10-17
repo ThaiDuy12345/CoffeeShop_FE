@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import Cookies from 'js-cookie';
-import { AccountData, NotificationData } from 'src/app/data/data';
+import { AccountData } from 'src/app/data/data';
 import { icons } from '../../utils/icon.utils';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FilterStore } from 'src/app/core/stores/filter.store';
-import { Location } from '@angular/common';
 import { Icon } from 'src/app/core/models/icon.model';
-import { Notification } from 'src/app/core/models/notification.model';
+import { AccountService } from 'src/app/core/services/account.service';
 @Component({
   selector: 'app-admin-header',
   templateUrl: './admin-header.component.html',
@@ -36,12 +34,22 @@ export class AdminHeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private message: NzMessageService,
-    private filterStore: FilterStore,
-    private location: Location
+    private accountService: AccountService
   ) {}
   ngOnInit(): void {
-    const user = AccountData.find((item) => item.id === Cookies.get('id'));
-    if (user) this.user.name = user.name;
+    const userPhone = Cookies.get('id')
+    if(userPhone === undefined) return
+    
+    this.accountService.getByPhone({ accountPhone: userPhone }).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.user.name = res.data.accountName;
+        }
+      },
+      error: (err) => {
+
+      }
+    })
   }
 
   onClickSignOut(): void {

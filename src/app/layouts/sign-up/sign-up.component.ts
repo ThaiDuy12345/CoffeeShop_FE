@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { AccountService } from 'src/app/core/services/account.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-sign-up',
@@ -30,7 +31,8 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private accountService: AccountService
   ){}
 
   isEmailValidate(): Boolean {
@@ -50,12 +52,31 @@ export class SignUpComponent implements OnInit {
       this.isEmailValidate() === false ||
       this.isPasswordValidate() === false
     ) return
-    
+
     this.isLoading = true
-    setTimeout(() => {
-      this.isLoading = false
-      this.messageService.success("Đăng ký thành công, Xin vui lòng đăng nhập vào tài khoản vừa tạo")
-      this.router.navigateByUrl('/sign-in')
-    }, 3000)
+    this.accountService.register({
+      accountName: this.account.name,
+      accountPhone: "+84" + this.account.phone.substring(1),
+      accountPassword: this.account.password,
+      accountEmail: this.account.email,
+      accountAddress: "",
+      accountRole: 2,
+      accountActive: true
+    }).subscribe({
+      next: (res) => {
+        this.isLoading = false
+        if(res.status){
+          this.messageService.success("Đăng ký thành công, Xin vui lòng đăng nhập vào tài khoản vừa tạo")
+          this.router.navigateByUrl('/sign-in')
+        }else{
+          this.messageService.error("Đăng ký thất bại, Xin vui lòng kiểm tra lại thông tin")
+        }
+      },
+      error: (err) => {
+        console.log(err)
+        this.isLoading = false
+        this.messageService.error("Đăng ký thất bại, Xin vui lòng kiểm tra lại thông tin")
+      }
+    })
   }
 }

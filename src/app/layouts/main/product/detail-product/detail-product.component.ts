@@ -139,7 +139,7 @@ export class DetailProductComponent implements OnInit {
   isUserLoveThisProduct(): boolean {
     const user = Cookies.get('id')
     if(!user) return false
-    const result = FavoriteProductData.find(p => p.account.id === user && p.product.id === this.product.id)
+    const result = FavoriteProductData.find(p => p.account.phone === user && p.product.id === this.product.id)
     return result ? true : false
   }
 

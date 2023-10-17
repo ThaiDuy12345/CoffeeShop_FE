@@ -34,7 +34,7 @@ export class DetailAccountManagementComponent {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id']
       if(!id) return
-      const result = AccountData.find(a => a.id === id)
+      const result = AccountData.find(a => a.phone === id)
       if(result) this.choosingAccount = result
     })
     this.provinces = vietnamSelection.map((item) => {

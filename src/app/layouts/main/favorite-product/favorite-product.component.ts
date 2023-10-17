@@ -15,7 +15,7 @@ export class FavoriteProductComponent implements OnInit{
     setTimeout(() => {
       const user = Cookies.get('id')
       if(user){
-        const result = FavoriteProductData.filter(p => p.account.id === user)
+        const result = FavoriteProductData.filter(p => p.account.phone === user)
         this.allProduct = result.map(p => p.product)
       }
       this.isLoading = false 

@@ -34,7 +34,7 @@ export class HistoryOrderComponent implements OnInit{
     const user = Cookies.get('id')
     if(!user) return
 
-    this.order = OrderData.filter(order => order.account.id === user)
+    this.order = OrderData.filter(order => order.account.phone === user)
   }
 
   getStatus(status: number): string {

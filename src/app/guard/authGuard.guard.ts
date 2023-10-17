@@ -1,7 +1,7 @@
 import { AuthService } from './../core/services/auth.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, takeWhile } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,8 +20,18 @@ export class AuthGuard {
     Promise<Boolean> | 
     Boolean 
   {
-    if(this.authService.isSignedIn()) return true
-    this.router.navigate(["/sign-in"])
-    return false
+    return new Observable<Boolean>(observer => {
+      this.authService.isSignedIn()
+      .subscribe({
+        next: (result) => {
+          observer.next(result)
+          observer.complete()
+        },
+        error: err => {
+          observer.next(false)
+          observer.complete()
+        }
+      })
+    })
   }
 }

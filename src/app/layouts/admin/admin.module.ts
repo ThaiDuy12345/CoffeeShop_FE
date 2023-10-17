@@ -14,13 +14,12 @@ import { BannerComponent } from './layout-management/banner/banner.component';
 import { PopularProductComponent } from './layout-management/popular-product/popular-product.component';
 import { DetailAccountManagementComponent } from './account-management/detail-account-management/detail-account-management.component';
 import { DetailProductManagementComponent } from './product-management/detail-product-management/detail-product-management.component';
-import { BasicFormComponent } from './product-management/detail-product-management/basic-form/basic-form.component';
-import { SizeFormComponent } from './product-management/detail-product-management/size-form/size-form.component';
+import { StaffGuard } from 'src/app/guard/staffGuard.guard';
 const routes: Route[] = [
   {
     path: "",
     component: AdminComponent,
-    canActivate: [AdminGuard],
+    canActivate: [StaffGuard],
     children: [
       {
         path: "",
@@ -33,6 +32,7 @@ const routes: Route[] = [
       },
       {
         path: "layout-management",
+        canActivate: [AdminGuard],
         children: [
           {
             path: "",
@@ -51,10 +51,12 @@ const routes: Route[] = [
       },
       {
         path: "support-management",
+        canActivate: [AdminGuard],
         component: SupportManagementComponent
       },
       {
         path: "account-management",
+        canActivate: [AdminGuard],
         component: AccountManagementComponent,
       },
       {
@@ -75,14 +77,17 @@ const routes: Route[] = [
       },
       {
         path: "product-management",
+        canActivate: [AdminGuard],
         component: ProductManagementComponent
       },
       {
         path: "category-management",
+        canActivate: [AdminGuard],
         component: CategoryManagementComponent
       },
       {
         path: "feedback-management",
+        canActivate: [AdminGuard],
         component: FeedbackManagementComponent
       },
       {
@@ -91,6 +96,7 @@ const routes: Route[] = [
       },
       {
         path: "sales-management",
+        canActivate: [AdminGuard],
         component: SalesManagementComponent
       }
     ]

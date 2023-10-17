@@ -23,7 +23,7 @@ export class OrderComponent implements OnInit{
 
   ngOnInit(): void {
     const userId = Cookies.get('id')
-    const user = AccountData.find(item => item.id === userId)
+    const user = AccountData.find(item => item.phone === userId)
     this.user = user ? user : new Account()
     this.activatedRoute.params.subscribe((params: any) => {
       if(params['id']) {

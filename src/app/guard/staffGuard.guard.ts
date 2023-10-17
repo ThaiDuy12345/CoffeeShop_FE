@@ -5,11 +5,10 @@ import { Observable, forkJoin, takeWhile } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminGuard {
+export class StaffGuard {
 
   constructor(
     private authService: AuthService,
-    private router: Router
   ){}
 
   canActivate(
@@ -21,7 +20,7 @@ export class AdminGuard {
     Boolean 
   {
     return new Observable<Boolean>(observer => {
-      this.authService.isAdmin()
+      this.authService.isStaff()
       .subscribe({
         next: (result) => {
           observer.next(result)

@@ -11,7 +11,7 @@
       </div>
       <div class="mb-5 grid grid-cols-2 gap-5">
         <div class="flex justify-start items-center">
-          <input nbInput placeholder="Tìm kiếm tài khoản">
+          <input nbInput placeholder="Tìm kiếm tài khoản" [(ngModel)]="searchInput" (change)="filterBySearch()">
         </div>
         <div class="flex justify-end items-center">
           <button nbButton status="info" [routerLink]="'/admin/account-management/new'">Thêm</button>
@@ -20,22 +20,18 @@
       <nz-table #table [nzData]="accounts" nzShowPagination="false">
         <thead>
           <tr>
-            <th>#</th>
             <th>Tên</th>
             <th>Số điện thoại</th>
             <th>Email</th>
-            <th>Ngày tạo</th>
             <th>Trạng thái</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of table.data">
-            <td>{{data.id}}</td>
             <td>{{data.name}}</td>
             <td>{{data.phone}}</td>
             <td>{{data.email}}</td>
-            <td>{{ formatDate(data.created_date) }}</td>
             <td>
               <nz-tag 
                 nzPopconfirmPlacement="bottom"
@@ -44,8 +40,8 @@
                 nz-popconfirm
                 nzOkText="Xác nhận"
                 nzCancelText="Huỷ"
-                (nzOnConfirm)="confirmChange(data.id, false)"
-                *ngIf="data.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                (nzOnConfirm)="confirmChange(data.phone, false)"
+                *ngIf="data.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
               >
                 <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
                 <span class="center-an-item">Hoạt động</span>
@@ -57,8 +53,8 @@
                 nz-popconfirm
                 nzOkText="Xác nhận"
                 nzCancelText="Huỷ"    
-                (nzOnConfirm)="confirmChange(data.id, true)"
-                *ngIf="!data.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
+                (nzOnConfirm)="confirmChange(data.phone, true)"
+                *ngIf="!data.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
               >
                 <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
                 <span class="center-an-item text-left">Ẩn</span>
@@ -185,17 +181,12 @@
       </div>
       <div>
         <div>
-          <fa-icon [icon]="icons['faIdCard']" class="mr-3"></fa-icon><span>#{{ choosingAccount.id }}</span>
-        </div>
-      </div>
-      <div>
-        <div>
           <fa-icon [icon]="icons['faPhone']" class="mr-3"></fa-icon><span>{{ choosingAccount.phone }}</span>
         </div>
       </div>
       <div>
         <div>
-          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address }}</span>
+          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address ? choosingAccount.address : "chưa có" }}</span>
         </div>
       </div>
       <div>
@@ -205,7 +196,7 @@
             <nz-tag 
               class="main-bg-text-color mr-0 py-1 rounded text-white"
               >
-                <span>{{ choosingAccount.role === "1" ? 'Khách hàng' : 'Quản trị viên'}}</span>
+                <span>{{ choosingAccount.role === 1 ? 'Khách hàng' : 'Quản trị viên'}}</span>
             </nz-tag>
           </span>
         </div>
@@ -215,25 +206,20 @@
           <fa-icon [icon]="icons['faEye']" class="mr-3"></fa-icon>
           <span>
             <nz-tag 
-                *ngIf="choosingAccount.status" class="main-bg-text-color mr-0 py-1 rounded text-white"
+                *ngIf="choosingAccount.active" class="main-bg-text-color mr-0 py-1 rounded text-white"
               >
                 <span>Hoạt động</span>
             </nz-tag>
             <nz-tag 
-              *ngIf="!choosingAccount.status" class="mr-0 py-1 rounded main-text-color"
+              *ngIf="!choosingAccount.active" class="mr-0 py-1 rounded main-text-color"
             >
               <span>Ẩn</span>
             </nz-tag>
           </span>
         </div>
       </div>
-      <div>
-        <div>
-          <fa-icon [icon]="icons['faCalendar']" class="mr-3"></fa-icon><span>{{ formatDate(choosingAccount.created_date) }}</span>
-        </div>
-      </div>
       <div class="justify-end items-center flex">
-        <button nbButton status="primary" [routerLink]="['/admin/account-management', choosingAccount.id]">Sửa thông tin tài khoản</button>
+        <button nbButton status="primary" [routerLink]="['/admin/account-management', choosingAccount.phone]">Sửa thông tin tài khoản</button>
       </div>
     </div>
   </ng-container>

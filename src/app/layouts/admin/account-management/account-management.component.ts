@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Account } from 'src/app/core/models/account.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Order } from 'src/app/core/models/order.model';
+import { AccountService } from 'src/app/core/services/account.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { AccountData, FeedBackData, OrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -12,25 +13,85 @@ import { icons } from 'src/app/shared/utils/icon.utils';
   templateUrl: './account-management.component.html',
   styleUrls: ['./account-management.component.scss']
 })
-export class AccountManagementComponent{
-  public accounts: Account[] = AccountData
+export class AccountManagementComponent implements OnInit {
+  public accounts: Account[] = []
   public icons: Icon = icons
   public inforVisible: boolean = false
   public detailVisible: boolean = false
   public choosingAccount: Account = new Account()
   public accountFeedbacks: FeedBack[] = []
   public accountOrders: Order[] = []
+  public searchInput: string = ""
 
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
+    private accountService: AccountService
   ){}
 
-  confirmChange(accountId: string, status: boolean): void{
-    const index = this.accounts.findIndex(account => account.id === accountId)
+  ngOnInit(): void {
+    this.initData()
+  }
+
+  initData(): void {
+    this.accountService.getAll().subscribe({
+      next: (res) => {
+        if(res.status){
+          this.accounts = res.data.map((acc: any) => {
+            return {
+              phone: acc.accountPhone,
+              name: acc.accountName,
+              email: acc.accountEmail,
+              password: acc.accountPassword,
+              role: acc.accountRole,
+              active: acc.accountActive
+            }
+          })
+
+          if(this.searchInput){
+            this.accounts = this.accounts.filter((a) => {
+              if(   a.email.includes(this.searchInput)
+                 || a.name.includes(this.searchInput)
+                 || a.phone.includes(this.searchInput)
+                ) return true
+
+              return false
+            })
+          }
+        }
+      },
+      error: (err) => {
+        console.log(err)
+        this.messageService.error("Lỗi không xác định, hãy xin thử lại sau")
+      }
+    })
+  }
+
+  filterBySearch(): void {
+    this.initData()
+  }
+
+  confirmChange(accountPhone: string, active: boolean): void{
+    const index = this.accounts.findIndex(account => account.phone === accountPhone)
     if(index !== -1){
-      this.accounts[index].status = status
-      this.messageService.success("Thay đổi trạng thái thành công")
+      this.accountService.put(this.accounts[index].phone, {
+        accountName: this.accounts[index].name,
+        accountEmail: this.accounts[index].email,
+        accountPassword: this.accounts[index].password,
+        accountActive: active,
+        accountRole: this.accounts[index].role,
+        accountAddress: this.accounts[index].address
+      }).subscribe({
+        next: (res) => {
+          if(res.status){
+            this.messageService.success("Thay đổi trạng thái thành công")
+            this.accounts[index].active = res.data.accountActive
+          }else{
+            this.messageService.error("Thay đổi trạng thái thất bại")
+          }
+        }
+      })
+      
     }else{
       this.messageService.error("Thay đổi trạng thái thất bại")
     }
@@ -62,11 +123,11 @@ export class AccountManagementComponent{
   }
 
   getAccountFeedbacks(): FeedBack[]{
-    return FeedBackData.filter(fb => fb.account.id === this.choosingAccount.id)
+    return FeedBackData.filter(fb => fb.account.phone === this.choosingAccount.phone)
   }
 
   getAccountOrders(): Order[]{
-    return OrderData.filter(order => order.account.id === this.choosingAccount.id)
+    return OrderData.filter(order => order.account.phone === this.choosingAccount.phone)
   }
 
   // priceSortOrder(a: Product, b: Product): number {

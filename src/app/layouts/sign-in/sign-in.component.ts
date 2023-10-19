@@ -39,7 +39,7 @@ export class SignInComponent implements OnInit {
     @Optional() private dialogRef: NbDialogRef<any>,
     private dialogService: NbDialogService,
     private authService: SocialAuthService,
-    private authenService: AuthService
+    private authenService: AuthService,
   ){}
 
   ngOnInit(): void {
@@ -75,6 +75,9 @@ export class SignInComponent implements OnInit {
           this.isLoading = false
           return
         }
+        
+        this.authenService.saveAccountToStore(res.data)
+
         //Hết hạn trong vòng 30 phút
         Cookies.set('id', res.data.accountPhone, { 
           expires: new Date(new Date().getTime() + 30 * 60 * 1000 ) 

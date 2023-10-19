@@ -6,6 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { AccountService } from "./account.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { Router } from "@angular/router";
+import { AuthenticationStore } from "../stores/authentication.store";
 @Injectable({
   providedIn: "root"
 })
@@ -15,7 +16,8 @@ export class AuthService {
     private accountService: AccountService,
     private httpClient: HttpClient,
     private messageService: NzMessageService,
-    private router: Router
+    private router: Router,
+    private authenticationStore: AuthenticationStore
   ){}
   
   isSignedIn(): Observable<any> {
@@ -30,7 +32,14 @@ export class AuthService {
       }
       this.accountService.getByPhone({ accountPhone: id }).subscribe({
         next: (res) => {
-          observer.next(res.status)
+          const result = res.status
+          if(result){
+            result && this.saveAccountToStore(res.data)
+            observer.next(true)
+          }else{
+            Cookies.remove('id')
+            observer.next(false)
+          }
           observer.complete()
         },
         error: (err) => {
@@ -57,7 +66,14 @@ export class AuthService {
       }
       this.accountService.getByPhone({ accountPhone: id }).subscribe({
         next: (res) => {
-          observer.next(res.status && res.data.accountRole === 0)
+          const result = res.status && res.data.accountRole === 0
+          if(result){
+            result && this.saveAccountToStore(res.data)
+            observer.next(true)
+          }else{
+            Cookies.remove('id')
+            observer.next(false)
+          }
           observer.complete()
         },
         error: (err) => {
@@ -69,6 +85,7 @@ export class AuthService {
           observer.complete()
         }
       })
+      
     })
   }
   
@@ -84,7 +101,14 @@ export class AuthService {
       }
       this.accountService.getByPhone({ accountPhone: id }).subscribe({
         next: (res) => {
-          observer.next(res.status && (res.data.accountRole === 0 || res.data.accountRole === 1))
+          const result = res.status && (res.data.accountRole === 0 || res.data.accountRole === 1)
+          if(result){
+            result && this.saveAccountToStore(res.data)
+            observer.next(true)
+          }else{
+            Cookies.remove('id')
+            observer.next(false)
+          }
           observer.complete()
         },
         error: (err) => {
@@ -96,6 +120,22 @@ export class AuthService {
           observer.complete()
         }
       })
+    })
+  }
+
+  saveAccountToStore(data: any): void {
+    this.authenticationStore.update(state => {
+      return {
+        account: {
+          name: data.accountName,
+          phone: data.accountPhone,
+          email: data.accountEmail,
+          password: data.accountPassword,
+          active: data.accountActive,
+          role: data.accountRole,
+          address: data.accountAddress
+        }
+      }
     })
   }
 

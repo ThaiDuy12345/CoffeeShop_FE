@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import Cookies from 'js-cookie';
 import { AccountData, NotificationData } from 'src/app/data/data';
 import { icons } from '../../utils/icon.utils';
@@ -9,15 +9,18 @@ import { Location } from '@angular/common';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Notification } from 'src/app/core/models/notification.model';
 import { AccountService } from 'src/app/core/services/account.service';
+import { Subject } from 'rxjs';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   public visible: boolean = false
   public icons: Icon = icons
   public notifications: Notification[] = NotificationData
+  private tempSubject: Subject<any> = new Subject<any>
   public items = [
     {
       label: 'Sản phẩm',
@@ -89,33 +92,32 @@ export class HeaderComponent implements OnInit {
     private message: NzMessageService,
     private filterStore: FilterStore,
     private location: Location,
-    private accountService: AccountService
+    private authenticationStore: AuthenticationStore
   ) {}
+
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
+
   ngOnInit(): void {
     this.initData()
   }
 
   initData(): void {
-    const userPhone = Cookies.get('id')
-    if(userPhone === undefined) return
-    
-    this.accountService.getByPhone({ accountPhone: userPhone }).subscribe({
+    this.tempSubject.subscribe({
       next: (res) => {
-        if (res.status) {
-          this.user.name = res.data.accountName;
-          res.data.accountRole === 0 && this.user.subItems.push({
+        if(res.account.phone){
+          this.user.name = res.account.name;
+          res.account.role === 0 && this.user.subItems.push({
             title: 'TRANG ADMIN',
             icon: icons['faUserTie'],
             link: '/admin/admin-dashboard'
           })
         }
-      },
-      error: (err) => {
-
       }
     })
 
-    
+    this.authenticationStore._select(state => state).subscribe(this.tempSubject)
   }
 
   onClickSignOut(): void {

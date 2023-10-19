@@ -7,7 +7,7 @@ import { AuthenticationStore } from '../core/stores/authentication.store';
   providedIn: 'root',
 })
 export class StaffGuard {
-
+  
   constructor(
     private authService: AuthService,
     private authenticationStore: AuthenticationStore
@@ -22,16 +22,20 @@ export class StaffGuard {
     Boolean 
   {
     return new Observable<Boolean>(observer => {
-      this.authService.isStaff()
-      .subscribe({
-        next: (result) => {
-          observer.next(result)
-          observer.complete()
-        },
-        error: err => {
-          observer.next(false)
-          observer.complete()
+      this.authenticationStore._select(state => state).subscribe(state => {
+        if(state.account.phone && (state.account.role === 1 || state.account.role === 0)) observer.next(true)
+        else{
+          this.authService.isStaff()
+          .subscribe({
+            next: (result) => {
+              observer.next(result)
+            },
+            error: err => {
+              observer.next(false)
+            }
+          })
         }
+        observer.complete()
       })
     })
   }

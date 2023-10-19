@@ -46,6 +46,14 @@ $error-text-color: #ee7070;
 }
 
 body {
+  .ant-message-notice-content{
+    border-radius: 30px 30px 30px 30px;
+  }
+
+  // .ant-message-notice-content{
+
+  // }
+
   #cdk-overlay-1.cdk-overlay-pane{
     z-index: 1001 !important;
   }

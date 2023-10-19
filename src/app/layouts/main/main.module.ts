@@ -38,22 +38,22 @@ const routes: Route[] = [
         path: "product",
         children: [
           {
-            path: '',
+            path: "",
             component: ProductComponent
           },
           {
-            path: ':id',
+            path: ":id",
             component: DetailProductComponent
           },
         ]
       },
       {
-        path: 'favorite-product',
+        path: "favorite-product",
         component: FavoriteProductComponent,
         canActivate: [AuthGuard]
       },
       {
-        path: 'support',
+        path: "support",
         component: SupportComponent,
         canActivate: [AuthGuard]
       },
@@ -63,9 +63,14 @@ const routes: Route[] = [
         component: CartComponent
       },
       {
-        path: "order/:id",
+        path: "order",
         canActivate: [AuthGuard],
-        component: OrderComponent
+        children: [
+          {
+            path: ":id",
+            component: OrderComponent
+          }
+        ]
       }
     ]
   }

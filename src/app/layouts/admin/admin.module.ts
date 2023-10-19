@@ -57,28 +57,39 @@ const routes: Route[] = [
       {
         path: "account-management",
         canActivate: [AdminGuard],
-        component: AccountManagementComponent,
-      },
-      {
-        path: "account-management/:id",
-        component: DetailAccountManagementComponent
-      },
-      {
-        path: "account-management/new",
-        component: DetailAccountManagementComponent
-      },
-      {
-        path: "product-management/:id",
-        component: DetailProductManagementComponent
-      },
-      {
-        path: "product-management/new",
-        component: DetailProductManagementComponent
+        children: [
+          {
+            path: "",
+            component: AccountManagementComponent,
+          },
+          {
+            path: "new",
+            component: DetailAccountManagementComponent
+          },
+          {
+            path: ":id",
+            component: DetailAccountManagementComponent
+          },
+        ]
+        
       },
       {
         path: "product-management",
         canActivate: [AdminGuard],
-        component: ProductManagementComponent
+        children: [
+          {
+            path: "",
+            component: ProductManagementComponent
+          },
+          {
+            path: ":id",
+            component: DetailProductManagementComponent
+          },
+          {
+            path: "new",
+            component: DetailProductManagementComponent
+          },
+        ]
       },
       {
         path: "category-management",

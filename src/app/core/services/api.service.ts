@@ -37,12 +37,10 @@ export class ApiService{
     return new Observable((observer) => {
       this.isNodeJSAlive().subscribe(res => {
         if(!res){
-          console.log(res)
           observer.next(res)
           observer.complete()
         }else{
           this.isSpringBootAlive().subscribe(res => {
-            console.log(res)
             observer.next(res)
             observer.complete()
           })

@@ -2,6 +2,7 @@ import { AuthService } from './../core/services/auth.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, forkJoin, takeWhile } from 'rxjs';
+import { AuthenticationStore } from '../core/stores/authentication.store';
 @Injectable({
   providedIn: 'root',
 })
@@ -9,7 +10,8 @@ export class AuthGuard {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private authenticationStore: AuthenticationStore
   ){}
 
   canActivate(
@@ -21,15 +23,20 @@ export class AuthGuard {
     Boolean 
   {
     return new Observable<Boolean>(observer => {
-      this.authService.isSignedIn()
-      .subscribe({
-        next: (result) => {
-          observer.next(result)
-          observer.complete()
-        },
-        error: err => {
-          observer.next(false)
-          observer.complete()
+      this.authenticationStore._select(state => state).subscribe(state => {
+        if(state.account.phone) observer.next(true)
+        else{
+          this.authService.isSignedIn()
+          .subscribe({
+            next: (result) => {
+              observer.next(result)
+              observer.complete()
+            },
+            error: err => {
+              observer.next(false)
+              observer.complete()
+            }
+          })
         }
       })
     })

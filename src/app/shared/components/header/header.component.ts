@@ -108,11 +108,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: (res) => {
         if(res.account.phone){
           this.user.name = res.account.name;
-          res.account.role === 0 && this.user.subItems.push({
-            title: 'TRANG ADMIN',
-            icon: icons['faUserTie'],
-            link: '/admin/admin-dashboard'
-          })
+          
+          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') && res.account.role === 0 && 
+            this.user.subItems.push({
+              title: 'TRANG ADMIN',
+              icon: icons['faUserTie'],
+              link: '/admin/admin-dashboard'
+            })
         }
       }
     })
@@ -139,6 +141,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   isMobileScreen(): Boolean {
-    return window.innerWidth < 950
+    return window.innerWidth < 1050
   }
 }

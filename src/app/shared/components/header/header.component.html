@@ -1,20 +1,22 @@
-<div class="grid grid-cols-9 w-full">
-  <div
-    class="cursor-pointer col-span-1 center-an-item"
-  >
-    <img [routerLink]="'/main/dashboard'" src="assets/brand-icons/main.png" class="w-16" />
+<div class="grid grid-cols-9 w-full h-full">
+  <div class="cursor-pointer col-span-1 center-an-item">
+    <img
+      [routerLink]="'/main/dashboard'"
+      src="assets/brand-icons/main.png"
+      class="w-16"
+    />
   </div>
-  <div *ngIf="!isMobileScreen()" class="col-span-5">
+  <div *ngIf="!isMobileScreen()" class="col-span-4">
     <ul
       nz-menu
       nzMode="horizontal"
       nzSelectable="false"
-      class="border-b-0 h-full"
+      class="border-b-0 h-full center-an-item"
     >
       <ng-container *ngFor="let item of items">
         <li
           *ngIf="item.subItems"
-          class="h-full"
+          class="h-[50%]"
           nz-submenu
           [routerLink]="item.link"
           [nzTitle]="item.label"
@@ -34,7 +36,7 @@
         </li>
         <li
           *ngIf="!item.subItems"
-          class="h-full"
+          class="h-[50%]"
           nz-menu-item
           nzMatchRouter
           [routerLink]="item.link"
@@ -47,20 +49,18 @@
       </ng-container>
     </ul>
   </div>
-  <div *ngIf="!isMobileScreen()" class="col-span-2 justify-items-end">
+  <div *ngIf="!isMobileScreen()" class="col-span-3 justify-items-end">
     <ul
       *ngIf="user.name"
       nzSelectable="false"
       nz-menu
       nzMode="horizontal"
-      class="border-b-0 h-full"
+      class="border-b-0 h-full center-an-item"
     >
-      <li
-        class="h-full"
-        nz-submenu
-        [nzTitle]="user.label + ', ' + user.name"
-        [nzIcon]="user.icon"
-      >
+      <ng-template #title>
+        <span class="truncate">{{ user.label + ", " + user.name }}</span>
+      </ng-template>
+      <li id="user-dropdown" class="h-[50%]" nz-submenu [nzTitle]="title" [nzIcon]="user.icon">
         <ul>
           <li
             [routerLink]="i.link ? i.link : []"
@@ -80,8 +80,18 @@
       >
     </div>
   </div>
-  <div *ngIf="!isMobileScreen() && user.name" class="col-span-1 flex items-center justify-start">
-    <nz-badge [nzDot]="true" class="cursor-pointer" nz-popover [nzPopoverTitle]="titleTemplate" [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click">
+  <div
+    *ngIf="!isMobileScreen() && user.name"
+    class="col-span-1 flex items-center justify-start"
+  >
+    <nz-badge
+      [nzDot]="true"
+      class="cursor-pointer"
+      nz-popover
+      [nzPopoverTitle]="titleTemplate"
+      [nzPopoverContent]="contentTemplate"
+      nzPopoverTrigger="click"
+    >
       <fa-icon size="lg" [icon]="icons['faBell']"></fa-icon>
     </nz-badge>
   </div>
@@ -91,10 +101,18 @@
   <ng-template #contentTemplate>
     <div class="grid grid-cols-1">
       <ng-container *ngFor="let i of notifications; let id = index">
-        <div [ngClass]="{ 
-          'cursor-pointer': i.type === 'LINK' 
-        }" class="py-[15px] justify-start items-center grid grid-cols-10 gap-2" [routerLink]="i.type === 'LINK' ? i.link : null">
-          <fa-icon class="col-span-1" size="xl" [icon]="icons['faBell']"></fa-icon>
+        <div
+          [ngClass]="{
+            'cursor-pointer': i.type === 'LINK'
+          }"
+          class="py-[15px] justify-start items-center grid grid-cols-10 gap-2"
+          [routerLink]="i.type === 'LINK' ? i.link : null"
+        >
+          <fa-icon
+            class="col-span-1"
+            size="xl"
+            [icon]="icons['faBell']"
+          ></fa-icon>
           <span class="col-span-9">{{ i.content }}</span>
         </div>
       </ng-container>
@@ -115,16 +133,14 @@
   <ng-container *nzDrawerContent>
     <div>
       <div
-          *ngIf="!user.name"
-          class="w-full h-full center-an-item cursor-pointer"
+        *ngIf="!user.name"
+        class="w-full h-full center-an-item cursor-pointer"
+      >
+        <span class="second-text-color" [routerLink]="'/sign-in'"
+          >Đăng nhập</span
+        >&ensp;/&ensp;<span class="second-text-color" [routerLink]="'/sign-up'"
+          >Đăng ký</span
         >
-          <span class="second-text-color" [routerLink]="'/sign-in'"
-            >Đăng nhập</span
-          >&ensp;/&ensp;<span
-            class="second-text-color"
-            [routerLink]="'/sign-up'"
-            >Đăng ký</span
-          >
       </div>
       <nz-divider *ngIf="!user.name"></nz-divider>
       <ul
@@ -171,7 +187,12 @@
               </li>
             </ul>
           </li>
-          <li *ngIf="!item.subItems" nzMatchRouter nz-menu-item [routerLink]="item.link">
+          <li
+            *ngIf="!item.subItems"
+            nzMatchRouter
+            nz-menu-item
+            [routerLink]="item.link"
+          >
             <div class="center-an-item">
               <span nz-icon [nzType]="item.icon"></span
               ><span class="ml-3">{{ item.label }}</span>

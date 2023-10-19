@@ -20,4 +20,12 @@ $main-text-color: #43da89;
     display: flex;
     align-items: center;
   }
+
+  .ant-menu-item{
+    padding: 0px 10px !important;
+  }
+
+  #user-dropdown{
+    padding: 0px !important;
+  }
 }

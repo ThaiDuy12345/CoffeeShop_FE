@@ -29,13 +29,14 @@ export class StaffGuard {
           .subscribe({
             next: (result) => {
               observer.next(result)
+              observer.complete()
             },
             error: err => {
               observer.next(false)
+              observer.complete()
             }
           })
         }
-        observer.complete()
       })
     })
   }

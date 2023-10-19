@@ -6,12 +6,16 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AccountService } from 'src/app/core/services/account.service';
+import { Subject } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 @Component({
   selector: 'app-admin-header',
   templateUrl: './admin-header.component.html',
   styleUrls: ['./admin-header.component.scss'],
 })
 export class AdminHeaderComponent implements OnInit {
+  private tempSubject: Subject<any> = new Subject();
   public visible: boolean = false
   public icons: Icon = icons
   public user = {
@@ -34,22 +38,22 @@ export class AdminHeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private message: NzMessageService,
-    private accountService: AccountService
+    private authenticationStore: AuthenticationStore
   ) {}
-  ngOnInit(): void {
-    const userPhone = Cookies.get('id')
-    if(userPhone === undefined) return
-    
-    this.accountService.getByPhone({ accountPhone: userPhone }).subscribe({
-      next: (res) => {
-        if (res.status) {
-          this.user.name = res.data.accountName;
-        }
-      },
-      error: (err) => {
 
-      }
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
+
+  ngOnInit(): void {
+    this.initData()
+  }
+
+  initData(): void {
+    this.tempSubject.subscribe({
+      next: (res) => this.user.name = res.account.name
     })
+    this.authenticationStore._select(state => state).subscribe(this.tempSubject)
   }
 
   onClickSignOut(): void {
@@ -61,6 +65,6 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   isMobileScreen(): Boolean {
-    return window.innerWidth < 950
+    return window.innerWidth < 1050
   }
 }

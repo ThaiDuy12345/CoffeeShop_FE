@@ -1,8 +1,8 @@
-<div class="grid grid-cols-2 w-full">
+<div class="grid grid-cols-2 w-full h-full">
   <div
-    class="cursor-pointer col-span-1 flex justify-start items-center"
+    class="col-span-1 flex justify-start items-center"
   >
-    <img [routerLink]="'/main/dashboard'" src="assets/brand-icons/main.png" class="w-16" />
+    <img [routerLink]="'/main/dashboard'" src="assets/brand-icons/main.png" class="w-16 ml-3 cursor-pointer" />
   </div>
   <div *ngIf="!isMobileScreen()" class="flex justify-end items-center">
     <ul
@@ -10,10 +10,10 @@
       nzSelectable="false"
       nz-menu
       nzMode="horizontal"
-      class="border-b-0 h-full"
+      class="border-b-0 h-full center-an-item"
     >
       <li
-        class="h-full"
+        class="h-[50%]"
         nz-submenu
         [nzTitle]="user.label + ', ' + user.name"
         [nzIcon]="user.icon"
@@ -31,7 +31,7 @@
       </li>
     </ul>
   </div>
-  <div *ngIf="isMobileScreen()" class="flex justify-end items-center">
+  <div *ngIf="isMobileScreen()" class="flex justify-end items-center mr-3">
     <fa-icon [icon]="icons['faBars']" (click)="visible = true"></fa-icon>
   </div>
 </div>

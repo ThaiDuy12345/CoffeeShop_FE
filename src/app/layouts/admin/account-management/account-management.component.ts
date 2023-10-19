@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faBedPulse } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Account } from 'src/app/core/models/account.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
@@ -15,6 +16,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 })
 export class AccountManagementComponent implements OnInit {
   public accounts: Account[] = []
+  public isLoading: boolean = false
   public icons: Icon = icons
   public inforVisible: boolean = false
   public detailVisible: boolean = false
@@ -34,6 +36,7 @@ export class AccountManagementComponent implements OnInit {
   }
 
   initData(): void {
+    this.isLoading = true
     this.accountService.getAll().subscribe({
       next: (res) => {
         if(res.status){
@@ -44,7 +47,8 @@ export class AccountManagementComponent implements OnInit {
               email: acc.accountEmail,
               password: acc.accountPassword,
               role: acc.accountRole,
-              active: acc.accountActive
+              active: acc.accountActive,
+              address: acc.accountAddress
             }
           })
 
@@ -59,10 +63,12 @@ export class AccountManagementComponent implements OnInit {
             })
           }
         }
+        this.isLoading = false
       },
       error: (err) => {
+        this.isLoading = false
         console.log(err)
-        this.messageService.error("Lỗi không xác định, hãy xin thử lại sau")
+        this.messageService.error(err.error.message)
       }
     })
   }
@@ -74,6 +80,7 @@ export class AccountManagementComponent implements OnInit {
   confirmChange(accountPhone: string, active: boolean): void{
     const index = this.accounts.findIndex(account => account.phone === accountPhone)
     if(index !== -1){
+      this.isLoading = true
       this.accountService.put(this.accounts[index].phone, {
         accountName: this.accounts[index].name,
         accountEmail: this.accounts[index].email,
@@ -89,9 +96,13 @@ export class AccountManagementComponent implements OnInit {
           }else{
             this.messageService.error("Thay đổi trạng thái thất bại")
           }
+          this.isLoading = false
+        },
+        error: (err) => {
+          this.messageService.error("Thay đổi trạng thái thất bại")
+          this.isLoading = false
         }
       })
-      
     }else{
       this.messageService.error("Thay đổi trạng thái thất bại")
     }

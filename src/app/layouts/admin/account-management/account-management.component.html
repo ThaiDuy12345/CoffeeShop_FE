@@ -17,7 +17,7 @@
           <button nbButton status="info" [routerLink]="'/admin/account-management/new'">Thêm</button>
         </div>
       </div>
-      <nz-table #table [nzData]="accounts" nzShowPagination="false">
+      <nz-table #table [nzLoading]="isLoading" [nzData]="accounts" nzShowPagination="false">
         <thead>
           <tr>
             <th>Tên</th>
@@ -186,7 +186,7 @@
       </div>
       <div>
         <div>
-          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address ? choosingAccount.address : "chưa có" }}</span>
+          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address ? choosingAccount.address : "Chưa có" }}</span>
         </div>
       </div>
       <div>

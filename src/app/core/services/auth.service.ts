@@ -24,7 +24,7 @@ export class AuthService {
     return new Observable(observer => {
       const id = Cookies.get('id')
       if(!id) {
-        this.messageService.error('Tài khoản đã hết hạn, xin vui lòng đăng nhập lại')
+        this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
         this.router.navigateByUrl('/sign-in')
         observer.next(false)
         observer.complete()
@@ -58,7 +58,7 @@ export class AuthService {
     return new Observable(observer => {
       const id = Cookies.get('id')
       if(!id) {
-        this.messageService.error('Tài khoản đã hết hạn, xin vui lòng đăng nhập lại')
+        this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
         this.router.navigateByUrl('/sign-in')
         observer.next(false)
         observer.complete()
@@ -93,7 +93,7 @@ export class AuthService {
     return new Observable(observer => {
       const id = Cookies.get('id')
       if(!id) {
-        this.messageService.error('Tài khoản đã hết hạn, xin vui lòng đăng nhập lại')
+        this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
         this.router.navigateByUrl('/sign-in')
         observer.next(false)
         observer.complete()
@@ -113,7 +113,7 @@ export class AuthService {
         },
         error: (err) => {
           console.log(err)
-          this.messageService.error('Xác thực tài khoản thất bại, vui lòng đăng nhập lại')
+          this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
           this.router.navigateByUrl('/sign-in')
           Cookies.remove('id')
           observer.next(false)

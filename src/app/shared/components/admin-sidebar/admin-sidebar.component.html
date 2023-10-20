@@ -11,7 +11,7 @@
 <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
   <ng-container *ngFor="let item of items">
     <li
-      *ngIf="item.subItems"
+      *ngIf="item.subItems && sideBarValidate(item.required)"
       nz-submenu
       [nzTitle]="item.label"
       [nzIcon]="item.icon"
@@ -27,7 +27,7 @@
         </li>
       </ul>
     </li>
-    <li *ngIf="!item.subItems" nz-menu-item nzMatchRouter [routerLink]="item.link">
+    <li *ngIf="!item.subItems && sideBarValidate(item.required)" nz-menu-item nzMatchRouter [routerLink]="item.link">
       <span nz-icon [nzType]="item.icon"></span>
       <span class="ml-3">{{ item.label }}</span>
     </li>

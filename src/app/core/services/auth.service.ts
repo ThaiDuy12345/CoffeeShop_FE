@@ -15,39 +15,35 @@ export class AuthService {
     private apiService: ApiService,
     private accountService: AccountService,
     private httpClient: HttpClient,
-    private messageService: NzMessageService,
-    private router: Router,
-    private authenticationStore: AuthenticationStore
+    private authenticationStore: AuthenticationStore,
+    private messageService: NzMessageService
   ){}
   
   isSignedIn(): Observable<any> {
     return new Observable(observer => {
       const id = Cookies.get('id')
       if(!id) {
-        this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
-        this.router.navigateByUrl('/sign-in')
-        observer.next(false)
+        this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+        observer.next({ status: false, link: "/sign-in" })
         observer.complete()
         return
       }
       this.accountService.getByPhone({ accountPhone: id }).subscribe({
         next: (res) => {
-          const result = res.status
-          if(result){
-            result && this.saveAccountToStore(res.data)
-            observer.next(true)
-          }else{
+          if(!res.status){
             Cookies.remove('id')
-            observer.next(false)
+            this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+            observer.next({ status: false, link: "/sign-in" })
+          }else{
+            this.saveAccountToStore(res.data)
+            observer.next({ status: true, link: "" })
           }
           observer.complete()
         },
         error: (err) => {
-          console.log(err)
-          this.messageService.error('Xác thực tài khoản thất bại, vui lòng đăng nhập lại')
-          this.router.navigateByUrl('/sign-in')
           Cookies.remove('id')
-          observer.next(false)
+          this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+          observer.next({ status: false, link: "/sign-in" })
           observer.complete()
         }
       })
@@ -58,30 +54,31 @@ export class AuthService {
     return new Observable(observer => {
       const id = Cookies.get('id')
       if(!id) {
-        this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
-        this.router.navigateByUrl('/sign-in')
-        observer.next(false)
+        this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+        observer.next({ status: false, link: "/sign-in" })
         observer.complete()
         return
       }
       this.accountService.getByPhone({ accountPhone: id }).subscribe({
         next: (res) => {
-          const result = res.status && res.data.accountRole === 0
-          if(result){
-            result && this.saveAccountToStore(res.data)
-            observer.next(true)
-          }else{
+          if(!res.status){
             Cookies.remove('id')
-            observer.next(false)
+            this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+            observer.next({ status: false, link: "/sign-in" })
+          }else{
+            if(res.data.accountRole === 0){
+              this.saveAccountToStore(res.data)
+              observer.next({ status: true, link: "" })
+            }else{
+              observer.next({ status: false, link: "/main/dashboard" })
+            }
           }
           observer.complete()
         },
         error: (err) => {
-          console.log(err)
-          this.messageService.error('Xác thực tài khoản thất bại, vui lòng đăng nhập lại')
-          this.router.navigateByUrl('/sign-in')
           Cookies.remove('id')
-          observer.next(false)
+          this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+          observer.next({ status: false, link: "/sign-in" })
           observer.complete()
         }
       })
@@ -89,34 +86,35 @@ export class AuthService {
     })
   }
   
-  isStaff(): Observable<Boolean> {
+  isStaff(): Observable<any> {
     return new Observable(observer => {
       const id = Cookies.get('id')
       if(!id) {
-        this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
-        this.router.navigateByUrl('/sign-in')
-        observer.next(false)
+        this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+        observer.next({ status: false, link: "/sign-in" })
         observer.complete()
         return
       }
       this.accountService.getByPhone({ accountPhone: id }).subscribe({
         next: (res) => {
-          const result = res.status && (res.data.accountRole === 0 || res.data.accountRole === 1)
-          if(result){
-            result && this.saveAccountToStore(res.data)
-            observer.next(true)
-          }else{
+          if(!res.status){
             Cookies.remove('id')
-            observer.next(false)
+            this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+            observer.next({ status: false, link: "/sign-in" })
+          }else{
+            if(res.data.accountRole === 0 || res.data.accountRole === 1){
+              this.saveAccountToStore(res.data)
+              observer.next({ status: true, link: "" })
+            }else{
+              observer.next({ status: false, link: "/main/dashboard" })
+            }
           }
           observer.complete()
         },
         error: (err) => {
-          console.log(err)
-          this.messageService.error('Xin vui lòng đăng nhập để tiếp tục')
-          this.router.navigateByUrl('/sign-in')
           Cookies.remove('id')
-          observer.next(false)
+          this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+          observer.next({ status: false, link: "/sign-in" })
           observer.complete()
         }
       })

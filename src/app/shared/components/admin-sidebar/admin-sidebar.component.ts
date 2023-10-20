@@ -3,6 +3,7 @@ import { AdminSidebarStore } from './../../../core/stores/admin-siderbar.store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { icons } from '../../utils/icon.utils';
 import { Subject } from 'rxjs';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -13,66 +14,78 @@ export class AdminSidebarComponent implements OnInit, OnDestroy {
   public icons: Icon = icons
   public isCollapsed: boolean = false;
   public initAdminSidebarState = new Subject<any>();
+  public adminRoleState = new Subject<any>();
+  public isAdmin: boolean = true
   public items = [
     {
       label: 'Trang Chính',
       icon: 'home',
-      link: '/admin/admin-dashboard'
+      link: '/admin/admin-dashboard',
+      required: false
     },
     {
       label: 'Layout Web',
       icon: 'layout',
+      required: true,
       subItems: [
         {
           title: 'Banner',
           icon: icons['faImage'],
-          link: '/admin/layout-management/banner'
+          link: '/admin/layout-management/banner',
         },
         {
           title: 'Sản phẩm Hot',
           icon: icons['faDiceSix'],
-          link: '/admin/layout-management/popular-product'
+          link: '/admin/layout-management/popular-product',
         }
       ],
     },
     {
       label: 'Tài Khoản',
       icon: 'user',
-      link: '/admin/account-management'
+      link: '/admin/account-management',
+      required: true
     },
     {
       label: 'Sản Phẩm',
       icon: 'appstore',
-      link: '/admin/product-management'
+      link: '/admin/product-management',
+      required: true
     },
     {
       label: 'Danh Mục Sản Phẩm',
       icon: 'book',
-      link: '/admin/category-management'
+      link: '/admin/category-management',
+      required: true
     },
     {
       label: 'Phản Hồi Sản Phẩm',
       icon: 'notification',
-      link: '/admin/feedback-management'
+      link: '/admin/feedback-management',
+      required: true
     },
     {
       label: 'Đơn Hàng',
       icon: 'coffee',
-      link: '/admin/order-management'
+      link: '/admin/order-management',
+      required: false
     },
     {
       label: 'Khuyến Mãi',
       icon: 'barcode',
-      link: '/admin/sales-management'
+      link: '/admin/sales-management',
+      required: true
     },
     {
       label: 'Đơn Hỗ Trợ',
       icon: 'mail',
-      link: '/admin/support-management'
+      link: '/admin/support-management',
+      required: true
     },
   ];
   constructor(
-    private adminSidebarStore: AdminSidebarStore
+    private adminSidebarStore: AdminSidebarStore,
+    private authenticationStore: AuthenticationStore
   ){}
 
   ngOnDestroy(): void {
@@ -80,6 +93,18 @@ export class AdminSidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initAdminSidebar()
+    this.initAdminRole()
+  }
+
+  initAdminRole(): void {
+    this.adminRoleState.subscribe(state => {
+      this.isAdmin = state.account.role === 0
+    })
+    this.authenticationStore._select((state) => state).subscribe(this.adminRoleState);
+  }
+
+  initAdminSidebar(): void {
     this.initAdminSidebarState.subscribe(state => {
       this.isCollapsed = state.state === 'compacted'
     })
@@ -98,5 +123,11 @@ export class AdminSidebarComponent implements OnInit, OnDestroy {
         }
       }
     })
+  }
+
+  sideBarValidate(required: boolean): boolean {
+    if(this.isAdmin) return true
+    
+    return !required
   }
 }

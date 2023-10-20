@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if(res.account.phone){
           this.user.name = res.account.name;
           
-          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') && res.account.role === 0 && 
+          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') && (res.account.role === 0 || res.account.role === 1) && 
             this.user.subItems.push({
               title: 'TRANG ADMIN',
               icon: icons['faUserTie'],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faBedPulse } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
 import { Icon } from 'src/app/core/models/icon.model';
@@ -88,19 +89,20 @@ export class AccountManagementComponent implements OnInit {
         accountActive: active,
         accountRole: this.accounts[index].role,
         accountAddress: this.accounts[index].address
-      }).subscribe({
+      }).pipe(finalize(() => {
+        this.isLoading = false
+      })).subscribe({
         next: (res) => {
           if(res.status){
             this.messageService.success("Thay đổi trạng thái thành công")
             this.accounts[index].active = res.data.accountActive
           }else{
-            this.messageService.error("Thay đổi trạng thái thất bại")
+            this.messageService.error(res.message)
           }
-          this.isLoading = false
         },
         error: (err) => {
-          this.messageService.error("Thay đổi trạng thái thất bại")
-          this.isLoading = false
+          this.messageService.error(err.error.message)
+          
         }
       })
     }else{

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Optional, TemplateRef } from '@angular/core';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -196,10 +197,11 @@ export class EditUserComponent implements OnInit {
       accountPassword: this.user.password,
       accountRole: this.user.role,
       accountActive: this.user.active
-    }).subscribe({
+    }).pipe(finalize(() => {
+      this.dialogRef.close();
+      this.submitLoading = false
+    })).subscribe({
       next: (res) => {
-        this.dialogRef.close();
-        this.submitLoading = false
         if(res.status){
           this.messageService.success('Thay đổi thông tin cá nhân thành công');
           this.authenService.saveAccountToStore(res.data)
@@ -207,15 +209,10 @@ export class EditUserComponent implements OnInit {
           this.onClickCancelEdit()
         }else {
           this.messageService.error('Thay đổi thông tin thất bại');
-          this.isEditing = false;
         }
       },
       error: (err) => {
-        this.dialogRef.close();
-        this.submitLoading = false
         this.messageService.error(err.error.message);
-        this.isEditing = false;
-        this.onClickCancelEdit()
       }
     })
   }

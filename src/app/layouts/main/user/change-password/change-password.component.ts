@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { AccountService } from 'src/app/core/services/account.service';
+import { finalize } from 'rxjs';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -42,10 +43,11 @@ export class ChangePasswordComponent {
       accountPassword: this.newPassword,
       accountRole: this.user.role,
       accountActive: this.user.active
-    }).subscribe({
+    }).pipe(finalize(() => {
+      this.dialogRef.close();
+      this.submitLoading = false
+    })).subscribe({
       next: (res) => {
-        this.dialogRef.close()
-        this.submitLoading = false
         if(res.status){
           this.messageService.success("Thay đổi mật khẩu thành công, vui lòng đăng nhập lại!!")
           Cookies.remove('id')
@@ -55,9 +57,7 @@ export class ChangePasswordComponent {
         }
       },
       error: (err) => {
-        this.submitLoading = false
-        this.dialogRef.close()
-        this.messageService.error("Thay đổi mật khẩu không thành công, vui lòng thử lại!!")
+        this.messageService.error(err.error.message)
       }
     })
   }

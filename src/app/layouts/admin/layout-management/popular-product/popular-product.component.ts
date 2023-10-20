@@ -14,6 +14,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 export class PopularProductComponent {
   public products: Product[] = ProductData
   public icons: Icon = icons
+  public isLoading: boolean = false
 
   constructor(
     private messageService: NzMessageService
@@ -24,6 +25,7 @@ export class PopularProductComponent {
   }
 
   confirmChange(productId: string, isPopular: boolean): void{
+    this.isLoading = true
     const index = this.products.findIndex(product => product.id === productId)
     if(index !== -1){
       this.products[index].isPopular = isPopular
@@ -31,6 +33,7 @@ export class PopularProductComponent {
     }else{
       this.messageService.error("Thay đổi trạng thái thất bại")
     }
+    this.isLoading = false
   }
 
   priceSortOrder(a: Product, b: Product): number {

@@ -143,11 +143,25 @@ export class AccountManagementComponent implements OnInit {
     return OrderData.filter(order => order.account.phone === this.choosingAccount.phone)
   }
 
-  // priceSortOrder(a: Product, b: Product): number {
-  //   return a.price - b.price
-  // }
+  activeSortOrder(a: Account, b: Account): number {
+    return a.active === true ? 1 : -1
+  }
 
-  // isPopularFilter(isPopularFilter: boolean, item:Product): boolean {
-  //   return item.isPopular === isPopularFilter
-  // }
+  isActiveFilter(isActiveFilter: boolean, item: Account): boolean {
+    return item.active === isActiveFilter
+  }
+
+  roleSortOrder(a: Account, b: Account): number {
+    if(a.role === 0 && b.role === 1){
+      return 1
+    }else if(a.role === 0 && b.role === 2){
+      return 1
+    }else {
+      return -1
+    }
+  }
+
+  roleFilter(roleFilter: number[], item: Account): boolean {
+    return roleFilter.includes(item.role)
+  }
 }

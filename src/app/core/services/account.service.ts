@@ -18,12 +18,6 @@ export class AccountService {
       this.httpClient.get(this.apiService.accountService().toString())
     )
   }
-  
-  create(params: any): Observable<any>{
-    return this.apiService.errorHandle(
-      this.httpClient.post(this.apiService.accountService().toString(), params)
-    )
-  }
 
   register(params: any): Observable<any>{
     return this.apiService.errorHandle(

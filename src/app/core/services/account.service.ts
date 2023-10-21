@@ -36,5 +36,11 @@ export class AccountService {
       this.httpClient.get(this.apiService.accountService().toString() + `/${params.accountPhone}`)
     )
   }
+
+  getByEmail(params: { accountEmail: string }): Observable<any>{
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.accountService().toString() + `/${params.accountEmail}`)
+    )
+  }
   
 }

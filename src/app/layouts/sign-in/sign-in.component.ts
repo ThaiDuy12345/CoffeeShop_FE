@@ -9,6 +9,7 @@ import { SocialUser } from "@abacritt/angularx-social-login";
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { AccountService } from 'src/app/core/services/account.service';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -40,13 +41,13 @@ export class SignInComponent implements OnInit {
     private dialogService: NbDialogService,
     private authService: SocialAuthService,
     private authenService: AuthService,
+    private accountService: AccountService
   ){}
 
   ngOnInit(): void {
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      this.loggedIn = (user != null);
-      if(user) console.log(user)
+      this.signInByEmail(user.email)
     });
 
     Cookies.get('id') && this.router.navigate(['/main/dashboard'])
@@ -64,10 +65,45 @@ export class SignInComponent implements OnInit {
     }
     this.isLoading = true
     this.isSubmitted = true
+    this.signIn()
+    
+  }
 
+  signIn(): void {
     this.authenService.signIn({
       accountEmail: this.account.email,
       accountPassword: this.account.password
+    }).subscribe({
+      next: (res) => {
+        if(res.status === false || res.data.accountActive === false){
+          this.message.error('Email hoặc mật khẩu không chính xác.')
+          this.isLoading = false
+          return
+        }
+        
+        this.authenService.saveAccountToStore(res.data)
+
+        //Hết hạn trong vòng 30 phút
+        Cookies.set('id', res.data.accountPhone, { 
+          expires: new Date(new Date().getTime() + 30 * 60 * 1000 ) 
+        })
+        
+        this.message.success(`Đăng nhập thành công, Chào bạn ${res.data.accountName}`)
+        this.router.navigate(["/main/dashboard"])
+      },
+      error: (err: any) => {
+        this.message.error(err.error.message)
+        this.isLoading = false
+        console.log(err)
+      }
+    })
+  }
+
+  signInByEmail(email: string): void {
+    if(!email) return
+
+    this.accountService.getByEmail({
+      accountEmail: this.account.email,
     }).subscribe({
       next: (res) => {
         if(res.status === false || res.data.accountActive === false){

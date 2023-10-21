@@ -39,7 +39,7 @@ export class AccountService {
 
   getByEmail(params: { accountEmail: string }): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.get(this.apiService.accountService().toString() + `/${params.accountEmail}`)
+      this.httpClient.get(this.apiService.accountService().toString() + `/email/${params.accountEmail}`)
     )
   }
   

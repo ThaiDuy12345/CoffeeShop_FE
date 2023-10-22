@@ -3,7 +3,7 @@ import { ApiService } from './core/services/api.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from './core/models/icon.model';
 import { icons } from './shared/utils/icon.utils';
-import { environment } from 'src/enviroment/enviroment';
+import { environment } from "src/environments/environment";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

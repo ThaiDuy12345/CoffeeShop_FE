@@ -9,6 +9,7 @@ import { AccountService } from 'src/app/core/services/account.service';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-admin-header',
   templateUrl: './admin-header.component.html',
@@ -38,7 +39,8 @@ export class AdminHeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private message: NzMessageService,
-    private authenticationStore: AuthenticationStore
+    private authenticationStore: AuthenticationStore,
+    private authService: SocialAuthService
   ) {}
 
   ngOnDestroy(): void {
@@ -58,6 +60,7 @@ export class AdminHeaderComponent implements OnInit {
 
   onClickSignOut(): void {
     Cookies.remove('id');
+    this.authService.signOut()
     this.message.success(
       `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
     );

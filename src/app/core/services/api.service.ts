@@ -7,14 +7,15 @@ import { Observable, catchError, throwError } from "rxjs";
 })
 export class ApiService{
   private base_nodejs_url = "https://coffeeshop-service.onrender.com/api"
-  private base_spring_boot_url = "https://coffee-shop-spring.azurewebsites.net"
-  // private base_spring_boot_url = "http://localhost:8080"
+  // private base_spring_boot_url = "https://coffee-shop-spring.azurewebsites.net"
+  private base_spring_boot_url = "http://localhost:8080"
   private service_nodejs = {
     IMAGE: '/image',
     BANNER: '/banner'
   }
   private service_spring_boot = {
     ACCOUNT: '/accounts',
+    DISCOUNT: '/discounts'
   }
 
   constructor(

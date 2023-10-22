@@ -1,3 +1,4 @@
+import { AuthService } from './../../../core/services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import Cookies from 'js-cookie';
 import { AccountData, NotificationData } from 'src/app/data/data';
@@ -8,9 +9,9 @@ import { FilterStore } from 'src/app/core/stores/filter.store';
 import { Location } from '@angular/common';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Notification } from 'src/app/core/models/notification.model';
-import { AccountService } from 'src/app/core/services/account.service';
 import { Subject } from 'rxjs';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -92,7 +93,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private message: NzMessageService,
     private filterStore: FilterStore,
     private location: Location,
-    private authenticationStore: AuthenticationStore
+    private authenticationStore: AuthenticationStore,
+    private authService: SocialAuthService
   ) {}
 
   ngOnDestroy(): void {
@@ -109,7 +111,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if(res.account.phone){
           this.user.name = res.account.name;
           
-          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') && (res.account.role === 0 || res.account.role === 1) && 
+          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') && 
+            (res.account.role === 0 || res.account.role === 1) && 
             this.user.subItems.push({
               title: 'TRANG ADMIN',
               icon: icons['faUserTie'],
@@ -124,6 +127,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onClickSignOut(): void {
     Cookies.remove('id');
+    this.authService.signOut()
     this.message.success(
       `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
     );

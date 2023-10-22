@@ -10,6 +10,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AccountService } from 'src/app/core/services/account.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -30,7 +31,7 @@ export class SignInComponent implements OnInit {
   public forgotPasswordCode: string = ''
   public newPassword: string = ''
   public newConfirmPassword: string = ''
-
+  public tempSubject: Subject<any> = new Subject()
   public user: SocialUser = new SocialUser();
   public loggedIn: boolean = true;
 
@@ -44,11 +45,22 @@ export class SignInComponent implements OnInit {
     private accountService: AccountService
   ){}
 
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
+
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.signInByEmail(user.email)
-    });
+    this.tempSubject.subscribe({
+      next: (user) => {
+        this.user = user;
+        this.user && this.signInByEmail(user.email)
+      }, 
+      error: (err) => {
+        console.log(err)
+      }
+    })
+    
+    this.authService.authState.subscribe(this.tempSubject);
 
     Cookies.get('id') && this.router.navigate(['/main/dashboard'])
   }
@@ -103,11 +115,11 @@ export class SignInComponent implements OnInit {
     if(!email) return
 
     this.accountService.getByEmail({
-      accountEmail: this.account.email,
+      accountEmail: email,
     }).subscribe({
       next: (res) => {
         if(res.status === false || res.data.accountActive === false){
-          this.message.error('Email hoặc mật khẩu không chính xác.')
+          this.message.error(res.message)
           this.isLoading = false
           return
         }

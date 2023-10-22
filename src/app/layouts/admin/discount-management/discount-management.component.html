@@ -1,0 +1,197 @@
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>
+    <nb-card-header class="border-none">
+      Danh sách các mã giảm giá
+    </nb-card-header>
+    <nb-card-body class="border-none">
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        Lưu ý: Chỉ những các mã giảm giá "còn trong thời hạn" mới có thể được áp
+        dụng trên hệ thống COFFEE
+      </div>
+      <div class="mb-5 grid grid-cols-2 gap-5">
+        <div class="flex justify-start items-center">
+          <input nbInput placeholder="Tìm kiếm mã giảm giá" />
+        </div>
+        <div class="flex justify-end items-center">
+          <button
+            nbButton
+            status="info"
+            [routerLink]="'/admin/discount-management/new'"
+          >
+            Thêm
+          </button>
+        </div>
+      </div>
+      <nz-table
+        #table
+        [nzData]="discounts"
+        [nzLoading]="isLoading"
+        nzShowPagination="false"
+      >
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mã giảm giá</th>
+            <th>Ngày tạo</th>
+            <th>Ngày hết hạn</th>
+            <th [nzAlign]="'center'">Trạng thái</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data">
+            <td>{{ data.id }}</td>
+            <td>{{ data.code }}</td>
+            <td>{{ formatDate(data.creationDate) }}</td>
+            <td>{{ formatDate(data.expiredDate) }}</td>
+            <td>
+              <span class="center-an-item">
+                <nz-tag
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnCancel)="(null)"
+                  nzPopconfirmTitle="Xác nhận kết thúc hiệu lực của mã này, bạn sẽ không thể tái tạo lại?"
+                  nz-popconfirm
+                  nzOkText="Xác nhận"
+                  nzCancelText="Huỷ"
+                  (nzOnConfirm)="confirmChange(data.id)"
+                  *ngIf="compareDate(data.creationDate, data.expiredDate)"
+                  class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[30px]"
+                >
+                  <fa-icon
+                    class="center-an-item"
+                    [icon]="icons['faCalendarCheck']"
+                  ></fa-icon>
+                </nz-tag>
+                <nz-tag
+                  *ngIf="!compareDate(data.creationDate, data.expiredDate)"
+                  class="center-an-item mr-0 py-1 rounded main-text-color w-[30px]"
+                  nz-tooltip
+                  nzTooltipTitle="Mã giảm giá này đã hết hạn hiệu lực và không thể khôi phục"
+                >
+                  <fa-icon
+                    class="center-an-item"
+                    [icon]="icons['faCalendarXmark']"
+                  ></fa-icon>
+                </nz-tag>
+              </span>
+            </td>
+            <td>
+              <fa-icon
+                [icon]="icons['faCircleInfo']"
+                (click)="inforVisible = true; viewADiscount(data)"
+                class="mx-2 cursor-pointer"
+                nz-tooltip
+                nzTooltipTitle="Thông tin"
+              ></fa-icon>
+              <fa-icon
+                [icon]="icons['faChartSimple']"
+                (click)="(null)"
+                class="mx-2 cursor-pointer"
+                nz-tooltip
+                nzTooltipTitle="Chi tiết"
+              ></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<!-- <nz-drawer
+  [nzWidth]="'100%'"
+  [nzClosable]="false"
+  [nzVisible]="detailVisible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="detailVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-5 gap-5">
+      <div class="col-span-5 mb-0">
+        <div class="inline-block mr-4">
+          <app-image [src]="choosingProduct.picture" [classes]="'h-[40px] rounded'"></app-image>
+        </div>
+        <div class="inline-block mr-4">
+          <span class="font-bold">Mã sản phẩm: {{ choosingProduct.id }}</span><br/>
+          <span class="second-main-text-color">Tên sản phẩm: {{ choosingProduct.name }}</span>
+        </div>
+        <br/>
+        <br/>
+        <div class="inline-block mr-4">
+          <span class="second-main-text-color">Ngày tạo: <b>{{ formatDate(choosingProduct.creation_date) }}</b></span><br/>
+          <span class="second-main-text-color">Lượt thích: <b>23</b></span>
+        </div>
+        <div class="inline-block">
+          <span class="second-main-text-color">Đã bán: <b>10</b></span><br/>
+          <span class="second-main-text-color">Tổng đánh giá: <b>11</b></span>
+        </div>
+      </div>
+      <div class="col-span-2">
+      </div>
+      <div class="col-span-3">
+
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer> -->
+
+<!-- <ng-template #title1>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Chi tiết tài khoản
+    </div>
+  </div>
+</ng-template> -->
+
+<nz-drawer
+  [nzWidth]="'600px'"
+  [nzClosable]="false"
+  [nzVisible]="inforVisible"
+  nzPlacement="right"
+  [nzTitle]="title2"
+  (nzOnClose)="inforVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-3">
+      <div>
+        <div class="inline-block mr-3">
+          <fa-icon [icon]="icons['faQrcode']" size="3x"></fa-icon>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Mã code: {{ choosingDiscount.code }}</span><br/>
+          <span class="font-bold">Id giảm giá: {{ choosingDiscount.id }}</span>
+        </div> 
+      </div>
+      <div>
+        <nz-divider class="my-2"></nz-divider>
+      </div>
+      <div class="grid grid-cols-4 gap-5 mb-5">
+        <div class="col-span-2"><fa-icon [icon]="icons['faCalendarCheck']" class="mr-2"></fa-icon>Ngày tạo:</div><div class="col-span-2">{{ formatDate(choosingDiscount.creationDate) }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faCalendarXmark']" class="mr-2"></fa-icon>Ngày hết hạn:</div><div class="col-span-2">{{ formatDate(choosingDiscount.expiredDate) }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faPercent']" class="mr-2"></fa-icon>Giá tổi thiếu để áp dụng:</div><div class="col-span-2">{{ formatNumber(choosingDiscount.minimumOrderPrice) }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Mức giảm:</div><div class="col-span-2">{{ formatNumber(choosingDiscount.amount) }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faClock']" class="mr-2"></fa-icon>Trạng thái hiện tại:</div><div class="col-span-2">{{ compareDate(choosingDiscount.creationDate, choosingDiscount.expiredDate) ? 'Hoạt động' : 'Hết hiệu lực'}}</div>
+      </div>
+      <div class="justify-end items-center flex">
+        <button nbButton status="primary" [routerLink]="['/admin/discount-management', choosingDiscount.id]">Chỉnh sửa</button>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title2>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="inforVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Thông tin giảm giá
+    </div>
+  </div>
+</ng-template>

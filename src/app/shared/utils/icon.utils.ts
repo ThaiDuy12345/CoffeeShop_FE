@@ -50,7 +50,13 @@ import {
   faCalendar,
   faBan,
   faChartSimple,
-  faBug
+  faBug,
+  faCalendarCheck,
+  faCalendarXmark,
+  faQrcode,
+  faClock,
+  faPercent,
+  faTag
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -107,5 +113,11 @@ export const icons: Icon = {
   faCalendar: faCalendar,
   faBan: faBan,
   faChartSimple: faChartSimple,
-  faBug: faBug
+  faBug: faBug,
+  faCalendarCheck: faCalendarCheck,
+  faCalendarXmark: faCalendarXmark,
+  faQrcode: faQrcode,
+  faClock: faClock,
+  faPercent: faPercent,
+  faTag: faTag
 };

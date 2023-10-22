@@ -251,7 +251,7 @@
 </nz-drawer>
 
 <nz-drawer
-  [nzWidth]="'400px'"
+  [nzWidth]="'600px'"
   [nzClosable]="false"
   [nzVisible]="inforVisible"
   nzPlacement="right"
@@ -275,50 +275,32 @@
       <div>
         <nz-divider class="my-2"></nz-divider>
       </div>
-      <div>
-        <div>
-          <fa-icon [icon]="icons['faPhone']" class="mr-3"></fa-icon
-          ><span>{{ choosingAccount.phone }}</span>
-        </div>
-      </div>
-      <div>
-        <div>
-          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon
-          ><span>{{
-            choosingAccount.address ? choosingAccount.address : "Chưa có"
-          }}</span>
-        </div>
-      </div>
-      <div>
-        <div>
-          <fa-icon [icon]="icons['faUserTie']" class="mr-3"></fa-icon>
-          <span>
-            <nz-tag class="main-bg-text-color mr-0 py-1 rounded text-white">
-              <span>{{
-                choosingAccount.role === 1 ? "Khách hàng" : "Quản trị viên"
-              }}</span>
-            </nz-tag>
-          </span>
-        </div>
-      </div>
-      <div>
-        <div>
-          <fa-icon [icon]="icons['faEye']" class="mr-3"></fa-icon>
-          <span>
-            <nz-tag
-              *ngIf="choosingAccount.active"
-              class="main-bg-text-color mr-0 py-1 rounded text-white"
-            >
-              <span>Hoạt động</span>
-            </nz-tag>
-            <nz-tag
-              *ngIf="!choosingAccount.active"
-              class="mr-0 py-1 rounded main-text-color"
-            >
-              <span>Ẩn</span>
-            </nz-tag>
-          </span>
-        </div>
+      <div class="grid grid-cols-4 gap-5 mb-5">
+        <div class="col-span-2"><fa-icon [icon]="icons['faPhone']" class="mr-2"></fa-icon>Số điện thoại:</div>
+        <div class="col-span-2">{{ choosingAccount.phone }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faLocationDot']" class="mr-2"></fa-icon>Địa chỉ:</div>
+        <div class="col-span-2">{{
+          choosingAccount.address ? choosingAccount.address : "Chưa có"
+        }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faUserTie']" class="mr-2"></fa-icon>Quyền hạn:</div>
+        <div class="col-span-2">{{
+          choosingAccount.role === 1 ? "Khách hàng" : "Quản trị viên"
+        }}</div>
+        <div class="col-span-2"><fa-icon [icon]="icons['faClock']" class="mr-2"></fa-icon>Trạng thái hiện tại:</div>
+        <div class="col-span-2"><span>
+          <nz-tag
+            *ngIf="choosingAccount.active"
+            class="main-bg-text-color mr-0 py-1 rounded text-white"
+          >
+            <span>Hoạt động</span>
+          </nz-tag>
+          <nz-tag
+            *ngIf="!choosingAccount.active"
+            class="mr-0 py-1 rounded main-text-color"
+          >
+            <span>Ẩn</span>
+          </nz-tag>
+        </span></div>
       </div>
       <div class="justify-end items-center flex">
         <button

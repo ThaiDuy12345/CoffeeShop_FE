@@ -8,13 +8,14 @@ import { ProductManagementComponent } from './product-management/product-managem
 import { CategoryManagementComponent } from './category-management/category-management.component';
 import { FeedbackManagementComponent } from './feedback-management/feedback-management.component';
 import { OrderManagementComponent } from './order-management/order-management.component';
-import { SalesManagementComponent } from './sales-management/sales-management.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { BannerComponent } from './layout-management/banner/banner.component';
 import { PopularProductComponent } from './layout-management/popular-product/popular-product.component';
 import { DetailAccountManagementComponent } from './account-management/detail-account-management/detail-account-management.component';
 import { DetailProductManagementComponent } from './product-management/detail-product-management/detail-product-management.component';
 import { StaffGuard } from 'src/app/guard/staffGuard.guard';
+import { DiscountManagementComponent } from './discount-management/discount-management.component';
+import { DetailDiscountManagementComponent } from './discount-management/detail-discount-management/detail-discount-management.component';
 const routes: Route[] = [
   {
     path: "",
@@ -106,9 +107,22 @@ const routes: Route[] = [
         component: OrderManagementComponent
       },
       {
-        path: "sales-management",
+        path: "discount-management",
         canActivate: [AdminGuard],
-        component: SalesManagementComponent
+        children: [
+          {
+            path: "",
+            component: DiscountManagementComponent
+          },
+          {
+            path: "new",
+            component: DiscountManagementComponent
+          },
+          {
+            path: ":id",
+            component: DiscountManagementComponent
+          }
+        ]
       }
     ]
   }

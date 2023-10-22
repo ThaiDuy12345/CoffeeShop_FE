@@ -86,7 +86,7 @@ import { ProductManagementComponent } from './admin/product-management/product-m
 import { CategoryManagementComponent } from './admin/category-management/category-management.component';
 import { FeedbackManagementComponent } from './admin/feedback-management/feedback-management.component';
 import { OrderManagementComponent } from './admin/order-management/order-management.component';
-import { SalesManagementComponent } from './admin/sales-management/sales-management.component';
+import { DiscountManagementComponent } from './admin/discount-management/discount-management.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminHeaderComponent } from '../shared/components/admin-header/admin-header.component';
 import { AdminSidebarComponent } from '../shared/components/admin-sidebar/admin-sidebar.component';
@@ -98,6 +98,7 @@ import { DetailAccountManagementComponent } from './admin/account-management/det
 import { DetailProductManagementComponent } from './admin/product-management/detail-product-management/detail-product-management.component';
 import { BasicFormComponent } from './admin/product-management/detail-product-management/basic-form/basic-form.component';
 import { SizeFormComponent } from './admin/product-management/detail-product-management/size-form/size-form.component';
+import { DetailDiscountManagementComponent } from './admin/discount-management/detail-discount-management/detail-discount-management.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -137,7 +138,8 @@ import { SizeFormComponent } from './admin/product-management/detail-product-man
     FeedbackManagementComponent,
     OrderManagementComponent,
     DetailAccountManagementComponent,
-    SalesManagementComponent,
+    DiscountManagementComponent,
+    DetailDiscountManagementComponent,
     AdminDashboardComponent,
     AdminHeaderComponent,
     BasicFormComponent,

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { ApiService } from './core/services/api.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from './core/models/icon.model';
 import { icons } from './shared/utils/icon.utils';
+import { environment } from 'src/enviroment/enviroment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,6 +23,10 @@ export class AppComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.initData()
+  }
+  
+  initData(): void {
     setTimeout(() => {
       this.isDelay = true
     }, 4000)

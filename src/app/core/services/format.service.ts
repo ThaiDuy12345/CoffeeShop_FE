@@ -36,4 +36,8 @@ export class FormatService {
   formatDate(date: Date): string {
     return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()
   }
+
+  formatTimeStamp(timeStamp: number): string {
+    return this.formatDate(new Date(timeStamp))
+  }
 }

@@ -71,9 +71,9 @@ export class AdminSidebarComponent implements OnInit, OnDestroy {
       required: false
     },
     {
-      label: 'Khuyến Mãi',
+      label: 'Giảm giá',
       icon: 'barcode',
-      link: '/admin/sales-management',
+      link: '/admin/discount-management',
       required: true
     },
     {

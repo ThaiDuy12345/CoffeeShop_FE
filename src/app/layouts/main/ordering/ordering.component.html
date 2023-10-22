@@ -28,25 +28,25 @@
       </div>
       <div class="px-5 grid grid-cols-1">
         <ng-container *ngIf="current === 0">
-          <app-step-one-order
-            [order]="order"
+          <app-step-one-ordering
+            [ordering]="ordering"
             [detailOrders]="detailOrders"
             [user]="user"
-          ></app-step-one-order>
+          ></app-step-one-ordering>
         </ng-container>
         <ng-container *ngIf="current === 1">
-          <app-step-two-order
-            [order]="order"
+          <app-step-two-ordering
+            [ordering]="ordering"
             [detailOrders]="detailOrders"
             [user]="user"
-          > </app-step-two-order>
+          > </app-step-two-ordering>
         </ng-container>
         <ng-container *ngIf="current === 2">
-          <app-step-three-order> </app-step-three-order>
+          <app-step-three-ordering> </app-step-three-ordering>
         </ng-container>
       </div>
     </nb-card-body>
-    <nb-card-footer class="border-none">
+    <nb-card-footer class="bordering-none">
       <h1 class="second-main-text-color" *ngIf="current === 1">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đã chấp thuận điều khoản dịch vụ của chúng tôi.</h1>
       <div class="space-x-5">
         <button nbButton status="primary" *ngIf="current === 0" (click)="onClickNextStep(current + 1)">

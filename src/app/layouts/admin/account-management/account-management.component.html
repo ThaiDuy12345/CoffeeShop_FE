@@ -2,10 +2,10 @@
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
   <nb-card>
-    <nb-card-header class="border-none">
+    <nb-card-header class="bordering-none">
       Danh sách hồ sơ tài khoản
     </nb-card-header>
-    <nb-card-body class="border-none">
+    <nb-card-body class="bordering-none">
       <div class="mb-5 grid grid-cols-1 gap-5">
         Lưu ý: Chỉ những tài khoản có trạng thái "hoạt động" mới có thể sử dụng
         hệ thống web của COFFEE
@@ -42,7 +42,7 @@
             <th>Email</th>
             <th
               [nzAlign]="'center'"
-              [nzSortFn]="activeSortOrder"
+              [nzSortFn]="activeSortOrdering"
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
               [nzFilterMultiple]="false"
@@ -56,7 +56,7 @@
             </th>
             <th
               [nzAlign]="'center'"
-              [nzSortFn]="roleSortOrder"
+              [nzSortFn]="roleSortOrdering"
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
               [nzFilterMultiple]="true"
@@ -168,7 +168,7 @@
         </div>
         <div class="inline-block">
           <span class="second-main-text-color"
-            >Số lượng đơn hàng: <b>{{ accountOrders.length }}</b></span
+            >Số lượng đơn hàng: <b>{{ accountOrderings.length }}</b></span
           ><br />
           <span class="second-main-text-color"
             >Số lượng đánh giá: <b>{{ accountFeedbacks.length }}</b></span
@@ -177,11 +177,11 @@
       </div>
       <div class="col-span-2">
         <nb-card class="mb-0">
-          <nb-card-header class="border-none">
+          <nb-card-header class="bordering-none">
             Danh sách đơn hàng
           </nb-card-header>
-          <nb-card-body class="border-none">
-            <nz-table #table2 [nzData]="accountOrders" nzShowPagination="false">
+          <nb-card-body class="bordering-none">
+            <nz-table #table2 [nzData]="accountOrderings" nzShowPagination="false">
               <thead>
                 <tr>
                   <th>#</th>
@@ -194,7 +194,7 @@
                   <td class="second-text-color cursor-pointer">
                     {{ data.id }}
                   </td>
-                  <td>{{ formatDate(data.orderDate) }}</td>
+                  <td>{{ formatDate(data.orderingDate) }}</td>
                   <td>{{ data.totalPrice }}</td>
                 </tr>
               </tbody>
@@ -204,10 +204,10 @@
       </div>
       <div class="col-span-3">
         <nb-card class="mb-0">
-          <nb-card-header class="border-none">
+          <nb-card-header class="bordering-none">
             Danh sách phản hồi sản phẩm
           </nb-card-header>
-          <nb-card-body class="border-none">
+          <nb-card-body class="bordering-none">
             <nz-table
               #table3
               [nzData]="accountFeedbacks"

@@ -72,11 +72,11 @@ import { ImageComponent } from '../shared/components/image/image.component';
 import { DetailProductComponent } from './main/product/detail-product/detail-product.component';
 import { CartComponent } from './main/cart/cart.component';
 import { ShoppingCartComponent } from './main/cart/shopping-cart/shopping-cart.component';
-import { HistoryOrderComponent } from './main/cart/history-order/history-order.component';
-import { OrderComponent } from './main/order/order.component';
-import { StepOneOrderComponent } from './main/order/step-one-order/step-one-order.component';
-import { StepTwoOrderComponent } from './main/order/step-two-order/step-two-order.component';
-import { StepThreeOrderComponent } from './main/order/step-three-order/step-three-order.component';
+import { HistoryOrderingComponent } from './main/cart/history-ordering/history-ordering.component';
+import { OrderingComponent } from './main/ordering/ordering.component';
+import { StepOneOrderingComponent } from './main/ordering/step-one-ordering/step-one-ordering.component';
+import { StepTwoOrderingComponent } from './main/ordering/step-two-ordering/step-two-ordering.component';
+import { StepThreeOrderingComponent } from './main/ordering/step-three-ordering/step-three-ordering.component';
 import { FavoriteProductComponent } from './main/favorite-product/favorite-product.component';
 import { SupportComponent } from './main/support/support.component';
 import { AdminComponent } from './admin/admin.component';
@@ -85,7 +85,7 @@ import { AccountManagementComponent } from './admin/account-management/account-m
 import { ProductManagementComponent } from './admin/product-management/product-management.component';
 import { CategoryManagementComponent } from './admin/category-management/category-management.component';
 import { FeedbackManagementComponent } from './admin/feedback-management/feedback-management.component';
-import { OrderManagementComponent } from './admin/order-management/order-management.component';
+import { OrderingManagementComponent } from './admin/ordering-management/ordering-management.component';
 import { DiscountManagementComponent } from './admin/discount-management/discount-management.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminHeaderComponent } from '../shared/components/admin-header/admin-header.component';
@@ -116,17 +116,17 @@ import { DetailDiscountManagementComponent } from './admin/discount-management/d
     ProductListComponent,
     DetailProductComponent,
     ShoppingCartComponent,
-    HistoryOrderComponent,
+    HistoryOrderingComponent,
     FooterComponent,
     UserComponent,
     AboutComponent,
-    OrderComponent,
+    OrderingComponent,
     ImageComponent,
     CartComponent,
-    StepOneOrderComponent,
+    StepOneOrderingComponent,
     DetailProductManagementComponent,
-    StepTwoOrderComponent,
-    StepThreeOrderComponent,
+    StepTwoOrderingComponent,
+    StepThreeOrderingComponent,
     AdminComponent,
     BannerComponent,
     PopularProductComponent,
@@ -136,7 +136,7 @@ import { DetailDiscountManagementComponent } from './admin/discount-management/d
     ProductManagementComponent,
     CategoryManagementComponent,
     FeedbackManagementComponent,
-    OrderManagementComponent,
+    OrderingManagementComponent,
     DetailAccountManagementComponent,
     DiscountManagementComponent,
     DetailDiscountManagementComponent,

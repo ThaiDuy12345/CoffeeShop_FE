@@ -5,10 +5,10 @@ import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
 import { Icon } from 'src/app/core/models/icon.model';
-import { Order } from 'src/app/core/models/order.model';
+import { Ordering } from 'src/app/core/models/ordering.model';
 import { AccountService } from 'src/app/core/services/account.service';
 import { FormatService } from 'src/app/core/services/format.service';
-import { AccountData, FeedBackData, OrderData } from 'src/app/data/data';
+import { AccountData, FeedBackData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-account-management',
@@ -23,7 +23,7 @@ export class AccountManagementComponent implements OnInit {
   public detailVisible: boolean = false
   public choosingAccount: Account = new Account()
   public accountFeedbacks: FeedBack[] = []
-  public accountOrders: Order[] = []
+  public accountOrderings: Ordering[] = []
   public searchInput: string = ""
 
   constructor(
@@ -110,13 +110,8 @@ export class AccountManagementComponent implements OnInit {
     }
   }
   
-  formatDate(date: Date | string): string {
-    if(date){
-      return this.formatService.formatDate(
-        typeof date === "string" ? new Date(date) : date
-      )
-    }
-    return this.formatService.formatDate(new Date())
+  formatDate(date: number): string {
+    return this.formatService.formatTimeStamp(date)
   }
 
   renderStarColor(star: number): string {
@@ -132,18 +127,18 @@ export class AccountManagementComponent implements OnInit {
     if(!data) return
     this.choosingAccount = data
     this.accountFeedbacks = this.getAccountFeedbacks()
-    this.accountOrders = this.getAccountOrders()
+    this.accountOrderings = this.getAccountOrderings()
   }
 
   getAccountFeedbacks(): FeedBack[]{
     return FeedBackData.filter(fb => fb.account.phone === this.choosingAccount.phone)
   }
 
-  getAccountOrders(): Order[]{
-    return OrderData.filter(order => order.account.phone === this.choosingAccount.phone)
+  getAccountOrderings(): Ordering[]{
+    return OrderingData.filter(ordering => ordering.account.phone === this.choosingAccount.phone)
   }
 
-  activeSortOrder(a: Account, b: Account): number {
+  activeSortOrdering(a: Account, b: Account): number {
     return a.active === true ? 1 : -1
   }
 
@@ -151,7 +146,7 @@ export class AccountManagementComponent implements OnInit {
     return item.active === isActiveFilter
   }
 
-  roleSortOrder(a: Account, b: Account): number {
+  roleSortOrdering(a: Account, b: Account): number {
     if(a.role === 0 && b.role === 1){
       return 1
     }else if(a.role === 0 && b.role === 2){

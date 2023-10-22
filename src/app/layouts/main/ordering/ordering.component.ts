@@ -4,19 +4,19 @@ import Cookies from 'js-cookie';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
-import { Order } from 'src/app/core/models/order.model';
-import { AccountData, DetailOrderData, OrderData } from 'src/app/data/data';
+import { Ordering } from 'src/app/core/models/ordering.model';
+import { AccountData, DetailOrderData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  selector: 'app-ordering',
+  templateUrl: './ordering.component.html',
+  styleUrls: ['./ordering.component.scss']
 })
-export class OrderComponent implements OnInit{
+export class OrderingComponent implements OnInit{
   public icons: Icon = icons
   public current: number = 0 
-  public order: Order = new Order()
+  public ordering: Ordering = new Ordering()
   public detailOrders: DetailOrder[] = []
   public isLoading: boolean = false
   public user: Account = new Account()
@@ -27,10 +27,10 @@ export class OrderComponent implements OnInit{
     this.user = user ? user : new Account()
     this.activatedRoute.params.subscribe((params: any) => {
       if(params['id']) {
-        const order = OrderData.find(item => item.id === params['id'])
-        if(order){
-          this.order = order
-          this.detailOrders = DetailOrderData.filter(item => item.order.id === this.order.id)
+        const ordering = OrderingData.find(item => item.id === params['id'])
+        if(ordering){
+          this.ordering = ordering
+          this.detailOrders = DetailOrderData.filter(item => item.ordering.id === this.ordering.id)
           return
         }
       }

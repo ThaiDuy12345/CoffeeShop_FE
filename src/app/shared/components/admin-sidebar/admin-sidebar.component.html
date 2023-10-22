@@ -2,7 +2,7 @@
   'justify-end': !isCollapsed,
   'justify-center': isCollapsed
 }" class="flex items-center">
-  <button class=" border-none bg-none p-4 hover:text-blue-500 transition-colors" (click)="changeState()">
+  <button class=" bordering-none bg-none p-4 hover:text-blue-500 transition-colors" (click)="changeState()">
     <fa-icon class="center-an-item" [icon]="icons['faArrowLeft']" *ngIf="!isCollapsed"></fa-icon>
     <fa-icon class="center-an-item" [icon]="icons['faArrowRight']" *ngIf="isCollapsed"></fa-icon>
   </button>

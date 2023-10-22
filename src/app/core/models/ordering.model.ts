@@ -1,9 +1,9 @@
 import { Account } from "./account.model"
 
-export class Order {
+export class Ordering {
   id: string = ""
   status: 0 | 1 | 2 | 3 | 4 | -1 = 0
   account: Account = new Account()
-  orderDate: string = ""
+  orderingDate: number = new Date().getTime()
   totalPrice: number = 0
 }

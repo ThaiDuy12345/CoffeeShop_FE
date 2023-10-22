@@ -45,9 +45,9 @@ export class DiscountManagementComponent implements OnInit{
               code: acc.discountCode,
               creationDate: acc.discountCreationDate,
               expiredDate: acc.discountExpiredDate,
-              minimumOrderPrice: acc.discountMinimumOrderPrice,
+              minimumOrderingPrice: acc.discountMinimumOrderingPrice,
               amount: acc.discountAmount,
-              orderings: acc.orderingEntities
+              orderingings: res.data.orderingEntities
             }
           })
         }else{
@@ -60,6 +60,10 @@ export class DiscountManagementComponent implements OnInit{
     })
   }
 
+  onDetailVisible(): void {
+    
+  }
+
   confirmChange(discountId: string): void{
     const index = this.discounts.findIndex(discount => discount.id === discountId)
     if(index !== -1){
@@ -69,7 +73,7 @@ export class DiscountManagementComponent implements OnInit{
         discountCode: this.discounts[index].code,
         discountCreationDate: this.discounts[index].creationDate,
         discountExpiredDate:  new Date().getTime(),
-        discountMinimumOrderPrice: this.discounts[index].minimumOrderPrice,
+        discountMinimumOrderingPrice: this.discounts[index].minimumOrderingPrice,
         discountAmount: this.discounts[index].amount
       }).pipe(finalize(() => {
         this.isLoading = false

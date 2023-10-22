@@ -6,7 +6,7 @@ import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { FormatService } from 'src/app/core/services/format.service';
 import { FilterStore } from 'src/app/core/stores/filter.store';
-import { AccountData, DetailOrderData, OrderData } from 'src/app/data/data';
+import { AccountData, DetailOrderData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -30,7 +30,7 @@ export class ShoppingCartComponent implements OnInit{
     const res = AccountData.find(a => a.phone === id)
     this.user = res ? res : new Account()
 
-    this.detailOrder = DetailOrderData.filter(o => o.order.account.phone === this.user.phone)
+    this.detailOrder = DetailOrderData.filter(o => o.ordering.account.phone === this.user.phone)
   }
 
   formatPrice(price: number = 0): string {

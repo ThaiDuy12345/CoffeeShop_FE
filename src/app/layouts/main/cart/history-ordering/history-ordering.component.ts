@@ -4,19 +4,19 @@ import Cookies from 'js-cookie';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { ProductData } from 'src/app/data/data';
-import { Order } from 'src/app/core/models/order.model';
+import { Ordering } from 'src/app/core/models/ordering.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
-import { DetailOrderData, OrderData } from 'src/app/data/data';
+import { DetailOrderData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
-  selector: 'app-history-order',
-  templateUrl: './history-order.component.html',
-  styleUrls: ['./history-order.component.scss']
+  selector: 'app-history-ordering',
+  templateUrl: './history-ordering.component.html',
+  styleUrls: ['./history-ordering.component.scss']
 })
-export class HistoryOrderComponent implements OnInit{
-  public order: Order[] = []
+export class HistoryOrderingComponent implements OnInit{
+  public ordering: Ordering[] = []
   public icons: Icon = icons
   public selectedStepIndex: number = 1
   public mostPopularProducts: Product[] = ProductData
@@ -27,14 +27,14 @@ export class HistoryOrderComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.loadOrder()
+    this.loadOrdering()
   }
 
-  loadOrder(): void {
+  loadOrdering(): void {
     const user = Cookies.get('id')
     if(!user) return
 
-    this.order = OrderData.filter(order => order.account.phone === user)
+    this.ordering = OrderingData.filter(ordering => ordering.account.phone === user)
   }
 
   getStatus(status: number): string {
@@ -48,7 +48,7 @@ export class HistoryOrderComponent implements OnInit{
     }
   }
 
-  timeSince(date: string): string {
+  timeSince(date: number): string {
     return this.formatService.timeAgoSince(new Date(date));
   }
 
@@ -57,12 +57,12 @@ export class HistoryOrderComponent implements OnInit{
     return this.formatService.formatPrice(price);
   }
 
-  getDetailOrder(order: Order): DetailOrder[]{
-    return DetailOrderData.filter(detailOrder => detailOrder.order.id === order.id)
+  getDetailOrder(ordering: Ordering): DetailOrder[]{
+    return DetailOrderData.filter(detailOrder => detailOrder.ordering.id === ordering.id)
   }
 
-  getSelectedIndex(orderStatus: number): number {
-    switch(orderStatus) {
+  getSelectedIndex(orderingStatus: number): number {
+    switch(orderingStatus) {
       case 1: return 0
       case 2: return 1
       case 3: return 2

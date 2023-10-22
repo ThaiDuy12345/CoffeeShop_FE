@@ -28,7 +28,7 @@ export class SupportComponent implements OnInit, OnDestroy {
   ){}
 
   ngOnDestroy(): void {
-    
+    this.tempSubject.complete()
   }
 
   ngOnInit(): void {

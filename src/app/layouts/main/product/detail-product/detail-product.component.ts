@@ -112,8 +112,8 @@ export class DetailProductComponent implements OnInit {
     return this.feedBackProducts.slice(begin, last);
   }
 
-  timeSince(date: Date): string {
-    return this.formatService.timeAgoSince(date);
+  timeSince(date: number): string {
+    return this.formatService.timeAgoSince(new Date(date));
   }
 
   renderStarColor(star: number): string {

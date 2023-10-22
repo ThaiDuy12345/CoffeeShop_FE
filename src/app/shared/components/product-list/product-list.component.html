@@ -1,7 +1,7 @@
 <div *ngIf="view === 'ICON'" [class]="classes">
-  <nb-card [routerLink]="['/main/product', item.id]" *ngFor="let item of products" class="border-none">
-    <nb-card-body class="border-none"> <app-image [classes]="'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image></nb-card-body>
-    <nb-card-footer class="border-none py-0">
+  <nb-card [routerLink]="['/main/product', item.id]" *ngFor="let item of products" class="bordering-none">
+    <nb-card-body class="bordering-none"> <app-image [classes]="'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image></nb-card-body>
+    <nb-card-footer class="bordering-none py-0">
       <div class="font-bold text-lg truncate">{{item.name}}</div>
       <div class="second-main-text-color text-md">{{ formatPrice(getPrice(item.id)) }} </div>
     </nb-card-footer>
@@ -9,8 +9,8 @@
 </div>
 
 <div *ngIf="view === 'LIST'" [class]="classes">
-  <nb-card [routerLink]="['/main/product', item.id]" *ngFor="let item of products" class="border-none">
-    <nb-card-body class="border-none grid grid-cols-4 gap-5">
+  <nb-card [routerLink]="['/main/product', item.id]" *ngFor="let item of products" class="bordering-none">
+    <nb-card-body class="bordering-none grid grid-cols-4 gap-5">
       <div class="lg:col-span-1 col-span-2">
         <app-image [classes]="'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'" [lazyClasses]="'min-h-[300px]'" [src]="item.picture"></app-image>
       </div>

@@ -159,7 +159,7 @@
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="border-none grid grid-cols-2">
+    <nb-card-header class="bordering-none grid grid-cols-2">
       <div class="text-start text-lg font-bold">Các lượt phản hồi</div>
       <div class="text-end second-text-color">
         <span (click)="open(dialog)" class="cursor-pointer">
@@ -276,7 +276,7 @@
       >
       </nz-result>
     </nb-card-body>
-    <nb-card-footer class="border-none center-an-item">
+    <nb-card-footer class="bordering-none center-an-item">
       <nz-pagination
         (nzPageIndexChange)="onFeedBackPageChange($event)"
         [nzPageIndex]="feedBackPageIndex"
@@ -286,14 +286,14 @@
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="border-none font-bold text-lg"> Sản phẩm liên quan </nb-card-header>
+    <nb-card-header class="bordering-none font-bold text-lg"> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
       <app-product-list
         [products]="relatedProducts"
         [isRelatedProductList]="true"
       ></app-product-list>
     </nb-card-body>
-    <nb-card-footer class="border-none center-an-item">
+    <nb-card-footer class="bordering-none center-an-item">
       <a nbButton status="info" class="text-center block" (click)="navigateRelatedProduct()"
         ><fa-icon [icon]="icons['faBars']" class="mr-2"></fa-icon>Xem thêm</a
       >

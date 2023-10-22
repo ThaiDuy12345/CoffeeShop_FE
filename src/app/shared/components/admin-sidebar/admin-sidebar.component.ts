@@ -67,7 +67,7 @@ export class AdminSidebarComponent implements OnInit, OnDestroy {
     {
       label: 'Đơn Hàng',
       icon: 'coffee',
-      link: '/admin/order-management',
+      link: '/admin/ordering-management',
       required: false
     },
     {

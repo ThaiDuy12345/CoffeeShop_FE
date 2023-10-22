@@ -2,10 +2,10 @@
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
   <nb-card>
-    <nb-card-header class="border-none">
+    <nb-card-header class="bordering-none">
       Các sản phẩm phổ biến
     </nb-card-header>
-    <nb-card-body class="border-none">
+    <nb-card-body class="bordering-none">
       <div class="second-main-text-color mb-5">
         Lưu ý: sản phẩm phổ biến được chọn chỉ có tối đa 6 sản phẩm
       </div>
@@ -18,7 +18,7 @@
             <th>#</th>
             <th>Tên sản phẩm</th>
             <th
-              [nzSortFn]="priceSortOrder"  
+              [nzSortFn]="priceSortOrdering"  
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
             >Giá</th>

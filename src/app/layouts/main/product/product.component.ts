@@ -66,12 +66,12 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.search = '';
           }
 
-          if (state.order === 1) {
+          if (state.ordering === 1) {
             this.allProduct = this.allProduct.sort(
               (itemA, itemB) => itemB.price - itemA.price
             );
             this.optionIndex = 1
-          } else if (state.order === 2) {
+          } else if (state.ordering === 2) {
             this.allProduct = this.allProduct.sort(
               (itemA, itemB) => itemA.price - itemB.price
             );
@@ -123,7 +123,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   handleIndexChange(index: number): void {
     console.log(index);
     if (index === 0 || index === 1 || index === 2) {
-      this.filterStore.update({ order: index });
+      this.filterStore.update({ ordering: index });
     }
   }
 

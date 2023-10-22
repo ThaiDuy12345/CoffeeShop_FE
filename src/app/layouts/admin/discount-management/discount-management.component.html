@@ -2,10 +2,10 @@
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
   <nb-card>
-    <nb-card-header class="border-none">
+    <nb-card-header class="bordering-none">
       Danh sách các mã giảm giá
     </nb-card-header>
-    <nb-card-body class="border-none">
+    <nb-card-body class="bordering-none">
       <div class="mb-5 grid grid-cols-1 gap-5">
         Lưu ý: Chỉ những các mã giảm giá "còn trong thời hạn" mới có thể được áp
         dụng trên hệ thống COFFEE
@@ -87,7 +87,7 @@
               ></fa-icon>
               <fa-icon
                 [icon]="icons['faChartSimple']"
-                (click)="(null)"
+                (click)="detailVisible = true; viewADiscount(data)"
                 class="mx-2 cursor-pointer"
                 nz-tooltip
                 nzTooltipTitle="Chi tiết"
@@ -128,77 +128,21 @@
         <nb-card>
           <nb-card-header> Các đơn hàng đã sử dụng mã giảm giá </nb-card-header>
           <nb-card-body>
-            <nz-table
-              #table
-              [nzData]="discounts"
-              [nzLoading]="isLoading"
-              nzShowPagination="false"
-            >
+            <nz-table #table2 [nzData]="choosingDiscount.orderings" nzShowPagination="false">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Mã giảm giá</th>
-                  <th>Ngày tạo</th>
-                  <th>Ngày hết hạn</th>
-                  <th [nzAlign]="'center'">Trạng thái</th>
-                  <th></th>
+                  <th>Ngày đặt</th>
+                  <th>Tổng giá</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let data of table.data">
-                  <td>{{ data.id }}</td>
-                  <td>{{ data.code }}</td>
-                  <td>{{ formatDate(data.creationDate) }}</td>
-                  <td>{{ formatDate(data.expiredDate) }}</td>
-                  <td>
-                    <span class="center-an-item">
-                      <nz-tag
-                        nzPopconfirmPlacement="bottom"
-                        (nzOnCancel)="(null)"
-                        nzPopconfirmTitle="Xác nhận kết thúc hiệu lực của mã này, bạn sẽ không thể tái tạo lại?"
-                        nz-popconfirm
-                        nzOkText="Xác nhận"
-                        nzCancelText="Huỷ"
-                        (nzOnConfirm)="confirmChange(data.id)"
-                        *ngIf="compareDate(data.creationDate, data.expiredDate)"
-                        class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[30px]"
-                      >
-                        <fa-icon
-                          class="center-an-item"
-                          [icon]="icons['faCalendarCheck']"
-                        ></fa-icon>
-                      </nz-tag>
-                      <nz-tag
-                        *ngIf="
-                          !compareDate(data.creationDate, data.expiredDate)
-                        "
-                        class="center-an-item mr-0 py-1 rounded main-text-color w-[30px]"
-                        nz-tooltip
-                        nzTooltipTitle="Mã giảm giá này đã hết hạn hiệu lực và không thể khôi phục"
-                      >
-                        <fa-icon
-                          class="center-an-item"
-                          [icon]="icons['faCalendarXmark']"
-                        ></fa-icon>
-                      </nz-tag>
-                    </span>
+                <tr *ngFor="let data of table2.data">
+                  <td class="second-text-color cursor-pointer">
+                    {{ data.id }}
                   </td>
-                  <td>
-                    <fa-icon
-                      [icon]="icons['faCircleInfo']"
-                      (click)="inforVisible = true; viewADiscount(data)"
-                      class="mx-2 cursor-pointer"
-                      nz-tooltip
-                      nzTooltipTitle="Thông tin"
-                    ></fa-icon>
-                    <fa-icon
-                      [icon]="icons['faChartSimple']"
-                      (click)="(null)"
-                      class="mx-2 cursor-pointer"
-                      nz-tooltip
-                      nzTooltipTitle="Chi tiết"
-                    ></fa-icon>
-                  </td>
+                  <td>{{ formatDate(data.orderingDate) }}</td>
+                  <td>{{ data.totalPrice }}</td>
                 </tr>
               </tbody>
             </nz-table>
@@ -268,7 +212,7 @@
           thiếu để áp dụng:
         </div>
         <div class="col-span-2">
-          {{ formatNumber(choosingDiscount.minimumOrderPrice) }}
+          {{ formatNumber(choosingDiscount.minimumOrderingPrice) }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Mức giảm:

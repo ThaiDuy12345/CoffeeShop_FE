@@ -6,6 +6,6 @@ export class FeedBack{
   star: number = 0
   comment: string = ""
   product: Product = new Product()
-  creationDate: Date = new Date()
+  creationDate: number = new Date().getTime()
   account: Account = new Account()
 }

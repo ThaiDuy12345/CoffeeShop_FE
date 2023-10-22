@@ -8,7 +8,7 @@ import { AboutComponent } from './about/about.component';
 import { ProductComponent } from './product/product.component';
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
 import { CartComponent } from './cart/cart.component';
-import { OrderComponent } from './order/order.component';
+import { OrderingComponent } from './ordering/ordering.component';
 import { FavoriteProductComponent } from './favorite-product/favorite-product.component';
 import { SupportComponent } from './support/support.component';
 const routes: Route[] = [
@@ -63,12 +63,12 @@ const routes: Route[] = [
         component: CartComponent
       },
       {
-        path: "order",
+        path: "ordering",
         canActivate: [AuthGuard],
         children: [
           {
             path: ":id",
-            component: OrderComponent
+            component: OrderingComponent
           }
         ]
       }

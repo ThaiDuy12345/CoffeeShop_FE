@@ -7,7 +7,7 @@ import { AccountManagementComponent } from './account-management/account-managem
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { CategoryManagementComponent } from './category-management/category-management.component';
 import { FeedbackManagementComponent } from './feedback-management/feedback-management.component';
-import { OrderManagementComponent } from './order-management/order-management.component';
+import { OrderingManagementComponent } from './ordering-management/ordering-management.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { BannerComponent } from './layout-management/banner/banner.component';
 import { PopularProductComponent } from './layout-management/popular-product/popular-product.component';
@@ -103,8 +103,8 @@ const routes: Route[] = [
         component: FeedbackManagementComponent
       },
       {
-        path: "order-management",
-        component: OrderManagementComponent
+        path: "ordering-management",
+        component: OrderingManagementComponent
       },
       {
         path: "discount-management",

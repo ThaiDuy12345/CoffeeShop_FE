@@ -4,12 +4,12 @@
   </div>
   <div class="col-span-3 md:col-span-1">
     <nb-card>
-      <nb-card-header class="border-none grid grid-cols-1">
+      <nb-card-header class="bordering-none grid grid-cols-1">
         <span class="text-red-400 text-lg">
           <fa-icon [icon]="icons['faLocationDot']"></fa-icon>&ensp;Thông tin người nhận
         </span>
       </nb-card-header>
-      <nb-card-body class="border-none grid grid-cols-1">
+      <nb-card-body class="bordering-none grid grid-cols-1">
         <span class="mb-5 font-medium">
           <fa-icon [icon]="icons['faUser']"></fa-icon>&ensp;{{ user.name }}
         </span>
@@ -20,7 +20,7 @@
           <fa-icon [icon]="icons['faLocationArrow']"></fa-icon>&ensp;{{ user.address }}
         </span>
       </nb-card-body>
-      <nb-card-footer class="border-none">
+      <nb-card-footer class="bordering-none">
         <a [routerLink]="'/main/user'">
           Thay đổi &ensp;  <fa-icon [icon]="icons['faPencil']"></fa-icon> 
         </a>

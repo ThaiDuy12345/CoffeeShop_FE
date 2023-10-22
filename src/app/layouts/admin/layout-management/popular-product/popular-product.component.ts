@@ -36,7 +36,7 @@ export class PopularProductComponent {
     this.isLoading = false
   }
 
-  priceSortOrder(a: Product, b: Product): number {
+  priceSortOrdering(a: Product, b: Product): number {
     return a.price - b.price
   }
 

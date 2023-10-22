@@ -42,12 +42,7 @@
           <div>
             <div>
               <span class="mr-2"> - Người gửi:</span>
-              <input
-                [disabled]="isLoading"
-                nbInput
-                placeholder="Tên của bạn"
-                [(ngModel)]="name"
-              />
+              <span class="font-semibold">{{ account.name }}</span>
             </div>
             <div><span> - Người nhận: COFFEE</span></div>
           </div>
@@ -71,12 +66,7 @@
               <span>
                 <h1>
                   <span class="mr-2">Chào COFFEE, tôi tên là</span>
-                  <input
-                    [disabled]="isLoading"
-                    nbInput
-                    placeholder="Tên của bạn"
-                    [(ngModel)]="name"
-                  />,
+                  <span class="font-semibold">{{ account.name }}</span>,
                 </h1>
               </span>
               <span class="mb-2">
@@ -116,15 +106,7 @@
                 <span>Thân gửi,</span>
               </span>
               <span>
-                <span
-                  ><input
-                    [disabled]="isLoading"
-                    [(ngModel)]="content"
-                    nbInput
-                    placeholder="Tên của bạn"
-                    [(ngModel)]="name"
-                  />.</span
-                >
+                <span class="font-semibold">{{ account.name }}.</span>
               </span>
             </nb-card-body>
           </nb-card>

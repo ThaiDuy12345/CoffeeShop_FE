@@ -31,11 +31,7 @@ export class AuthGuard {
         })
       ).subscribe(state => {
         if(state.account.phone) observer.next(true)
-        else if(!state.account.phone){
-          observer.next(false)
-          this.messageService.error("Bạn cần đăng nhập để tiếp tục")
-          this.router.navigateByUrl('/sign-in')
-        }else{
+        else{
           this.authService.isSignedIn()
           .subscribe({
             next: (result) => {

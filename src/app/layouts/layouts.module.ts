@@ -47,6 +47,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
@@ -156,6 +157,7 @@ import { DetailDiscountManagementComponent } from './admin/discount-management/d
     NzUploadModule,
     FormsModule,
     NzCollapseModule,
+    NzDatePickerModule,
     NbRadioModule,
     NzTableModule,
     NzSegmentedModule,

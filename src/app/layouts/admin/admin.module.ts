@@ -116,11 +116,11 @@ const routes: Route[] = [
           },
           {
             path: "new",
-            component: DiscountManagementComponent
+            component: DetailDiscountManagementComponent
           },
           {
             path: ":id",
-            component: DiscountManagementComponent
+            component: DetailDiscountManagementComponent
           }
         ]
       }

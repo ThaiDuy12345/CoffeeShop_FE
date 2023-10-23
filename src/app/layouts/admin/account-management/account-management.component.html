@@ -194,7 +194,7 @@
                   <td class="second-text-color cursor-pointer">
                     {{ data.id }}
                   </td>
-                  <td>{{ formatDate(data.orderingDate) }}</td>
+                  <td>{{ formatDate(data.date) }}</td>
                   <td>{{ data.totalPrice }}</td>
                 </tr>
               </tbody>
@@ -284,7 +284,7 @@
         }}</div>
         <div class="col-span-2"><fa-icon [icon]="icons['faUserTie']" class="mr-2"></fa-icon>Quyền hạn:</div>
         <div class="col-span-2">{{
-          choosingAccount.role === 1 ? "Khách hàng" : "Quản trị viên"
+          choosingAccount.role === 2 ? "Khách hàng" : choosingAccount.role === 1 ? "Nhân Viên" : "Quản trị viên"
         }}</div>
         <div class="col-span-2"><fa-icon [icon]="icons['faClock']" class="mr-2"></fa-icon>Trạng thái hiện tại:</div>
         <div class="col-span-2"><span>

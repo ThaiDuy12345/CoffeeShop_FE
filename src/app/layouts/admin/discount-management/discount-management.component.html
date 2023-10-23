@@ -12,7 +12,9 @@
       </div>
       <div class="mb-5 grid grid-cols-2 gap-5">
         <div class="flex justify-start items-center">
-          <input nbInput placeholder="Tìm kiếm mã giảm giá" />
+          <input nbInput placeholder="Tìm kiếm mã giảm giá" 
+          [(ngModel)]="searchInput"
+          (change)="filterBySearch()"/>
         </div>
         <div class="flex justify-end items-center">
           <button
@@ -34,9 +36,20 @@
           <tr>
             <th>#</th>
             <th>Mã giảm giá</th>
-            <th>Ngày tạo</th>
-            <th>Ngày hết hạn</th>
-            <th [nzAlign]="'center'">Trạng thái</th>
+            <th
+              [nzSortFn]="creationDateDiscountSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Ngày tạo</th>
+            <th
+              [nzSortFn]="expiredDateDiscountSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Ngày hết hạn
+            </th>
+            <th 
+            [nzAlign]="'center'"
+            >Trạng thái</th>
             <th></th>
           </tr>
         </thead>
@@ -51,12 +64,12 @@
                 <nz-tag
                   nzPopconfirmPlacement="bottom"
                   (nzOnCancel)="(null)"
-                  nzPopconfirmTitle="Xác nhận kết thúc hiệu lực của mã này, bạn sẽ không thể tái tạo lại?"
+                  nzPopconfirmTitle="Xác nhận kết thúc hiệu lực của mã này, khách hàng sẽ không thể sử dụng mã?"
                   nz-popconfirm
                   nzOkText="Xác nhận"
                   nzCancelText="Huỷ"
                   (nzOnConfirm)="confirmChange(data.id)"
-                  *ngIf="compareDate(data.creationDate, data.expiredDate)"
+                  *ngIf="compareDate(data.expiredDate)"
                   class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[30px]"
                 >
                   <fa-icon
@@ -65,10 +78,10 @@
                   ></fa-icon>
                 </nz-tag>
                 <nz-tag
-                  *ngIf="!compareDate(data.creationDate, data.expiredDate)"
+                  *ngIf="!compareDate(data.expiredDate)"
                   class="center-an-item mr-0 py-1 rounded main-text-color w-[30px]"
                   nz-tooltip
-                  nzTooltipTitle="Mã giảm giá này đã hết hạn hiệu lực và không thể khôi phục"
+                  nzTooltipTitle="Mã giảm giá này đã hết hạn hiệu lực, xin vui lòng cập nhật lại thời gian hết hạn để kích hoạt lại"
                 >
                   <fa-icon
                     class="center-an-item"
@@ -133,7 +146,9 @@
                 <tr>
                   <th>#</th>
                   <th>Ngày đặt</th>
-                  <th>Tổng giá</th>
+                  <th>Giá (trước khi áp dụng mã)</th>
+                  <th>Tổng giá (sau khi áp dụng)</th>
+                  <th>Giá trị giảm</th>
                 </tr>
               </thead>
               <tbody>
@@ -141,8 +156,14 @@
                   <td class="second-text-color cursor-pointer">
                     {{ data.id }}
                   </td>
-                  <td>{{ formatDate(data.orderingDate) }}</td>
+                  <td>{{ formatDate(data.date) }}</td>
+                  <td>{{ data.price + data.shippingFee }}</td>
                   <td>{{ data.totalPrice }}</td>
+                  <td>
+                    <span>
+                      <fa-icon [icon]="icons['faArrowDown']" class="mr-2"></fa-icon>{{ comparePercent(data.totalPrice, data.price + data.shippingFee) }}%
+                    </span>
+                  </td>
                 </tr>
               </tbody>
             </nz-table>
@@ -212,7 +233,7 @@
           thiếu để áp dụng:
         </div>
         <div class="col-span-2">
-          {{ formatNumber(choosingDiscount.minimumOrderingPrice) }}
+          {{ formatNumber(choosingDiscount.minimumOrderPrice) }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Mức giảm:
@@ -227,7 +248,6 @@
         <div class="col-span-2">
           {{
             compareDate(
-              choosingDiscount.creationDate,
               choosingDiscount.expiredDate
             )
               ? "Hoạt động"

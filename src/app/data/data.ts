@@ -454,14 +454,20 @@ export const OrderingData: Ordering[] = [
     id: "VN2308685190140",
     status: 4,
     account: AccountData[0],
-    orderingDate: new Date("2023-08-26").getTime(),
+    date: new Date("2023-08-26").getTime(),
+    shippingFee: 15000,
+    price: 212000,
+    note: "bruh",
     totalPrice: 227000
   },
   {
     id: "VN22323623190140",
     status: 2,
     account: AccountData[0],
-    orderingDate: new Date("2023-08-30").getTime(),
+    date: new Date("2023-08-30").getTime(),
+    shippingFee: 15000,
+    price: 216000,
+    note: "bruh",
     totalPrice: 231000
   }
 ]

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
+import { Account } from 'src/app/core/models/account.model';
 import { Discount } from 'src/app/core/models/discount.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { DiscountService } from 'src/app/core/services/discount.service';
@@ -14,11 +15,13 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 })
 export class DiscountManagementComponent implements OnInit{
   public icons: Icon = icons
-  public discounts: Discount[] = []
+  public discounts: Discount[] | [] = []
   public detailVisible: boolean = false
   public inforVisible: boolean = false
   public choosingDiscount: Discount = new Discount()
   public isLoading: boolean = false
+  public searchInput: string = ''
+
 
   constructor(
     private messageService: NzMessageService,
@@ -27,11 +30,11 @@ export class DiscountManagementComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.isLoading = true
     this.initData()
   }
 
   initData(): void {
+    this.isLoading = true
     this.discountService.getAll().pipe(
       finalize(() => {
         this.isLoading = false      
@@ -45,11 +48,24 @@ export class DiscountManagementComponent implements OnInit{
               code: acc.discountCode,
               creationDate: acc.discountCreationDate,
               expiredDate: acc.discountExpiredDate,
-              minimumOrderingPrice: acc.discountMinimumOrderingPrice,
+              minimumOrderPrice: acc.discountMinimumOrderPrice,
               amount: acc.discountAmount,
-              orderingings: res.data.orderingEntities
+              orderings: acc.orderingEntities.map((order: any) => {
+                return {
+                  id: order.orderingID,
+                  status: order.orderingStatus,
+                  account: new Account(),
+                  date: order.orderingCreationDate,
+                  shippingFee: order.orderingShippingFee,
+                  price: order.orderingPrice,
+                  totalPrice: order.orderingTotalPrice,
+                  note: order.orderingNote
+                }
+              })
             }
           })
+
+          if(this.searchInput) this.discounts =  this.discounts.filter(d => d.code.toLowerCase().includes(this.searchInput.toLowerCase()))
         }else{
           this.messageService.error(res.message)
         }
@@ -60,8 +76,12 @@ export class DiscountManagementComponent implements OnInit{
     })
   }
 
-  onDetailVisible(): void {
-    
+  comparePercent(after:number, before: number): number {
+    return Math.round((before - after) * 100 / before)
+  }
+
+  filterBySearch(): void {
+    this.initData()
   }
 
   confirmChange(discountId: string): void{
@@ -73,7 +93,7 @@ export class DiscountManagementComponent implements OnInit{
         discountCode: this.discounts[index].code,
         discountCreationDate: this.discounts[index].creationDate,
         discountExpiredDate:  new Date().getTime(),
-        discountMinimumOrderingPrice: this.discounts[index].minimumOrderingPrice,
+        discountMinimumOrderPrice: this.discounts[index].minimumOrderPrice,
         discountAmount: this.discounts[index].amount
       }).pipe(finalize(() => {
         this.isLoading = false
@@ -96,8 +116,8 @@ export class DiscountManagementComponent implements OnInit{
     }
   }
 
-  compareDate(from: number, to: number): boolean{
-    return new Date(from) >= new Date() && new Date() <= new Date(to)
+  compareDate(to: number): boolean{
+    return new Date() <= new Date(to)
   }
 
   formatDate(date: number): string {
@@ -111,5 +131,13 @@ export class DiscountManagementComponent implements OnInit{
   viewADiscount(data: Discount): void {
     if(!data) return
     this.choosingDiscount = data
+  }
+
+  expiredDateDiscountSort(discountA: Discount, discountB: Discount): number {
+    return new Date(discountA.expiredDate) > new Date(discountB.expiredDate) ? 1 : -1
+  }
+
+  creationDateDiscountSort(discountA: Discount, discountB: Discount): number {
+    return new Date(discountA.creationDate) > new Date(discountB.creationDate) ? 1 : -1
   }
 }

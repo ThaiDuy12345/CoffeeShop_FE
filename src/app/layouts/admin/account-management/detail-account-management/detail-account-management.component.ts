@@ -217,7 +217,6 @@ export class DetailAccountManagementComponent {
   }
 
   onClickSubmit() {
-    console.log(this.editAccount)
     if (
       !this.isAddressCorrect() ||
       !this.editAccount.name ||

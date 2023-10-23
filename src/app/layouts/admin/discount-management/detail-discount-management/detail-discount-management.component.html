@@ -1,1 +1,102 @@
-<p>detail-discount-management works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>    
+    <nb-card-body [nbSpinner]="isLoading">
+      <div  class="flex items-center justify-center">
+        <div class="mx-auto w-full">
+          <form autocomplete="off">
+            <div class="mb-5">
+              <label for="lName" class="mb-3 block font-medium">
+                Ngày tạo: <b>{{ formatDate(choosingDiscount.creationDate) }}</b>
+              </label>
+            </div>
+            <div class="mb-5">
+              <label class="mb-3 block font-medium">
+                Mã code: <b>{{ choosingDiscount.code }}</b>
+              </label>
+              <input
+                type="text"
+                nbInput
+                (input)="onInputDiscountCode()"
+                name="codeInput"
+                #codeInput="ngModel"
+                [(ngModel)]="editDiscount.code"
+                placeholder="Mã code để áp dụng giảm giá"
+                class="w-full rounded-md"
+              />
+              <small *ngIf="!editDiscount.code" class="error-text-color">
+                Mã code xin vui lòng không được để trống
+              </small>
+            </div>
+            <div class="mb-5">
+              <label for="guest" class="mb-3 block font-medium">
+                Ngày hết hiệu lực: <b>{{ formatDate(choosingDiscount.expiredDate) }}</b>
+              </label>
+              <nz-date-picker name="expiredDateInput" #expiredDateInput="ngModel" class="w-full h-[40px]" [(ngModel)]="expiredDate" (ngModelChange)="onChangeExpiredDate($event)"></nz-date-picker>
+            </div>
+            <div class="mb-5">
+              <label for="guest" class="mb-3 block font-medium">
+                Giá tối thiểu để áp dụng: <b>{{ formatNumber(choosingDiscount.minimumOrderPrice) }}</b>
+              </label>
+              <input
+                type="number"
+                name="minimumOrderPriceInput"
+                #minimumOrderPriceInput="ngModel"
+                [(ngModel)]="editDiscount.minimumOrderPrice"
+                nbInput
+                placeholder="50000"
+                class="w-full rounded-md"
+              />
+              <small *ngIf="!(editDiscount.minimumOrderPrice >= 0)" class="error-text-color">
+                Giá tối thiểu phải ít nhất bằng 0đ
+              </small>
+            </div>
+            <div class="mb-5">
+              <label for="guest" class="mb-3 block font-medium">
+                Mức giá sẽ giảm: <b>{{ formatNumber(choosingDiscount.amount) }}</b>
+              </label>
+              <input
+                type="number"
+                autocomplete="off"
+                name="amountInput"
+                #amountInput="ngModel"
+                [(ngModel)]="editDiscount.amount"
+                nbInput
+                placeholder="50000"
+                class="w-full rounded-md"
+              />
+              <small *ngIf="!(editDiscount.amount >= 0 && editDiscount.amount < editDiscount.minimumOrderPrice)" class="error-text-color">
+                Mức giá giảm tối thiểu phải ít nhất bằng 0đ và phải nhỏ hơn giá tối thiểu của mã giảm giá
+              </small>
+            </div>
+            <div>
+              <button
+                nbButton
+                status="danger"
+                class="mr-3 mb-3"
+                
+                (click)="onClickCancelEdit()"
+              >
+                Huỷ
+              </button>
+              <button nbButton (click)="open(dialog)" status="success" class="mb-3">
+                Xác nhận
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <ng-template #dialog let-data let-ref="dialogRef">
+        <nb-card>
+          <nb-card-body>{{ data }}</nb-card-body>
+          <nb-card-footer class="space-x-3">
+            <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+            <button nbButton status="success" (click)="onClickSubmit()" [nbSpinner]="submitLoading">Xác nhận</button>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template>
+    </nb-card-body>
+  </nb-card>
+</div>

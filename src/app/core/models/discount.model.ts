@@ -5,7 +5,7 @@ export class Discount {
   code: string = ""
   creationDate: number = new Date().getTime()
   expiredDate: number = new Date().getTime()
-  minimumOrderingPrice: number = 0
+  minimumOrderPrice: number = 0
   amount: number = 0
-  orderings: any[] = []
+  orderings: Ordering[] = []
 }

@@ -56,7 +56,8 @@ import {
   faQrcode,
   faClock,
   faPercent,
-  faTag
+  faTag,
+  faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -119,5 +120,6 @@ export const icons: Icon = {
   faQrcode: faQrcode,
   faClock: faClock,
   faPercent: faPercent,
-  faTag: faTag
+  faTag: faTag,
+  faArrowDown: faArrowDown
 };

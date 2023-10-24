@@ -15,7 +15,8 @@ export class ApiService{
   }
   private service_spring_boot = {
     ACCOUNT: '/accounts',
-    DISCOUNT: '/discounts'
+    DISCOUNT: '/discounts',
+    CATEGORY: '/categories'
   }
 
   constructor(
@@ -36,6 +37,10 @@ export class ApiService{
 
   discountService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.DISCOUNT
+  }
+
+  categoryService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.CATEGORY
   }
 
   isAlive(): Observable<Boolean>{

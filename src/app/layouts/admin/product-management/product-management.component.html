@@ -2,10 +2,10 @@
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
   <nb-card>
-    <nb-card-header class="bordering-none">
+    <nb-card-header class="border-none">
       Danh sách sản phẩm
     </nb-card-header>
-    <nb-card-body class="bordering-none">
+    <nb-card-body class="border-none">
       <div class="mb-5 grid grid-cols-1 gap-5">
         Lưu ý: Chỉ những sản phẩm có trạng thái "hoạt động" mới có thể xuất hiện trên hệ thống COFFEE
       </div>
@@ -30,8 +30,8 @@
           <tr *ngFor="let data of table.data">
             <td>{{data.id}}</td>
             <td>{{data.name}}</td>
-            <td>{{data.category.name}}</td>
-            <td>{{formatDate(data.creation_date)}}</td>
+            <td>{{data.category?.name}}</td>
+            <td>{{formatDate(data.creationDate)}}</td>
             <td>
               <nz-tag 
                 nzPopconfirmPlacement="bottom"
@@ -41,7 +41,7 @@
                 nzOkText="Xác nhận"
                 nzCancelText="Huỷ"
                 (nzOnConfirm)="confirmChange(data.id, false)"
-                *ngIf="data.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                *ngIf="data.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
               >
                 <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
                 <span class="center-an-item">Hoạt động</span>
@@ -54,7 +54,7 @@
                 nzOkText="Xác nhận"
                 nzCancelText="Huỷ"    
                 (nzOnConfirm)="confirmChange(data.id, true)"
-                *ngIf="!data.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
+                *ngIf="!data.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
               >
                 <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
                 <span class="center-an-item text-left">Ẩn</span>

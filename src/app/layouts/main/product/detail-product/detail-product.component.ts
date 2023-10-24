@@ -80,7 +80,13 @@ export class DetailProductComponent implements OnInit {
 
   loadRelatedProducts(): void {
     const result = ProductData.filter(
-      (item) => item.category.id === this.product.category.id
+      (item) => {
+        if(item.category && this.product.category){
+          return item.category.id === this.product.category.id
+        }else {
+          return false
+        }
+      }
     );
     this.relatedProducts = result.slice(0, 5);
   }
@@ -145,8 +151,9 @@ export class DetailProductComponent implements OnInit {
 
   navigateRelatedProduct(): void {
     this.filterStore.update((state) => {
+
       return {
-        category: [this.product.category.name],
+        category: this.product.category ? [this.product.category.name] : [],
         search: '',
       };
     });

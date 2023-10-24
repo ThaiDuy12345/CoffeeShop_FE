@@ -21,20 +21,20 @@
     Ngày tạo sản phẩm: 
   </div>
   <div class="col-span-5">
-    {{ formatDate(product.creation_date) }} ({{ timeSince(product.creation_date) }})
+    {{ formatDate(product.creationDate) }} ({{ timeSince(product.creationDate) }})
   </div>
   <div class="col-span-2 second-main-text-color">
     Trạng thái sản phẩm: 
   </div>
   <div class="col-span-5">
     <nz-tag 
-        *ngIf="product.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+        *ngIf="product.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
       >
         <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
         <span class="center-an-item">Hoạt động</span>
       </nz-tag>
       <nz-tag 
-        *ngIf="!product.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
+        *ngIf="!product.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
       >
         <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
         <span class="center-an-item text-left">Ẩn</span>
@@ -44,7 +44,7 @@
     Thuộc về danh mục: 
   </div>
   <div class="col-span-5">
-    <span class="text-blue-500 cursor-pointer" [routerLink]="'/admin/category-management'">{{ product.category.name }}</span>
+    <span class="text-blue-500 cursor-pointer" [routerLink]="'/admin/category-management'">{{ product.category === undefined ? "NaN" : product.category.name }}</span>
   </div>
 </div>
 
@@ -72,20 +72,20 @@
     Ngày tạo sản phẩm: 
   </div>
   <div class="col-span-5">
-    {{ formatDate(product.creation_date) }} ({{ timeSince(product.creation_date) }})
+    {{ formatDate(product.creationDate) }} ({{ timeSince(product.creationDate) }})
   </div>
   <div class="col-span-2 second-main-text-color">
     Trạng thái sản phẩm: 
   </div>
   <div class="col-span-5">
     <nz-tag 
-        *ngIf="product.status" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+        *ngIf="product.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
       >
         <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
         <span class="center-an-item text-left">Hoạt động</span>
       </nz-tag>
       <nz-tag 
-        *ngIf="!product.status" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
+        *ngIf="!product.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
       >
         <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
         <span class="center-an-item text-left">Ẩn</span>
@@ -95,7 +95,7 @@
     Thuộc về danh mục: 
   </div>
   <div class="col-span-5">
-    <nb-select class="w-full" placeholder="Danh mục sản phẩm" [(selected)]="product.category.id">
+    <nb-select class="w-full" placeholder="Danh mục sản phẩm" [(selected)]="product.category === undefined ? 0 : product.category.id">
       <nb-option *ngFor="let o of categoryOptions" [value]="o.id">{{ o.name }}</nb-option>
     </nb-select>
   </div>

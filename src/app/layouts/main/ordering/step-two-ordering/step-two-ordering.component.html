@@ -4,7 +4,7 @@
   </div>
   <div class="ordering-last md:ordering-none col-span-4 md:col-span-2 grid grid-col-1">
     <nb-card>
-      <nb-card-header class="bordering-none grid grid-cols-1">
+      <nb-card-header class="border-none grid grid-cols-1">
         <span class="text-red-400 text-lg">
           <fa-icon [icon]="icons['faMoneyCheck']"></fa-icon>&ensp;Phương thức thanh toán
         </span>
@@ -18,7 +18,7 @@
       </nb-card-body>
     </nb-card>
     <nb-card>
-      <nb-card-header class="bordering-none grid grid-cols-1">
+      <nb-card-header class="border-none grid grid-cols-1">
         <span class="text-red-400 text-lg">
           <fa-icon [icon]="icons['faCreditCard']"></fa-icon>&ensp;Thanh Toán
         </span>
@@ -44,7 +44,7 @@
           <span class="text-right"> - 0 đ</span>
         </div>
       </nb-card-body>
-      <nb-card-footer class="grid grid-cols-2 bordering-none font-medium bg-[#33425a] text-lg text-white">
+      <nb-card-footer class="grid grid-cols-2 border-none font-medium bg-[#33425a] text-lg text-white">
         <span class="text-left">Tổng giá tạm tính</span>
         <span class="text-right">{{ formatPrice(ordering.totalPrice) }}</span>
       </nb-card-footer>
@@ -55,7 +55,7 @@
       <nb-card-header class="text-lg font-bold">
         Hoá đơn
       </nb-card-header>
-      <nb-card-body class="bordering-none grid grid-cols-1">
+      <nb-card-body class="border-none grid grid-cols-1">
         <div class="mb-10 grid grid-cols-1">
           <span class="mb-3 font-bold">
             {{ user.name }} / {{ user.phone }}
@@ -71,15 +71,15 @@
           </ng-template>
         </div>
         <ng-container *ngFor="let item of detailOrders">
-          <nb-card class="mb-2 bordering-none">
-            <nb-card-body class="px-0 bordering-none">
+          <nb-card class="mb-2 border-none">
+            <nb-card-body class="px-0 border-none">
               <div class="grid grid-cols-2 gap-5">
                 <div>
                   <div class="w-full h-auto mb-5">
-                    <b class="break-words">{{ item.product.name }}</b>
+                    <b class="break-words">{{ item.productSize.product.name }}</b>
                   </div>
                   <div class="w-full h-auto second-main-text-color">
-                    <span>{{ formatPrice(item.product.price) }}</span>
+                    <span>{{ formatPrice(item.productSize.price) }}</span>
                   </div>
                   <div class="w-full h-auto second-main-text-color">
                     <span>x{{ item.quantity }}</span>

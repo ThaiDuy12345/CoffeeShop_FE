@@ -14,4 +14,5 @@ $nb-themes: nb-register-theme((
   color-success-600: unquote("#1a263b"),
   font-family-primary: unquote("CustomFont"),
   font-family-secondary: font-family-primary,
+  text-subtitle-font-size: unquote("14px")
 ),default, default);

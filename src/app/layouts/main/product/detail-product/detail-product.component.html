@@ -4,7 +4,7 @@
       <a class="second-text-color" [routerLink]="'/main/product'">Menu</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item (click)="navigateRelatedProduct()">
-      <a class="second-text-color">{{ product.category.name }}</a>
+      <a class="second-text-color">{{ product.category?.name }}</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item class="second-main-text-color">{{
       product.name
@@ -23,7 +23,7 @@
       <app-image
         class="lg:col-span-2 col-span-5"
         [classes]="'rounded-lg'"
-        [src]="product.picture"
+        [src]="product.imageUrl"
       ></app-image>
       <div class="lg:col-span-3 col-span-5 grid grid-rows-3">
         <div class="row-span-2">
@@ -54,16 +54,6 @@
           </div>
           <div class="w-full mt-5 mb-5">
             <nz-segmented (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>
-          </div>
-          <div class="w-full mt-5 mb-5">
-            <span class="me-5">
-              Số lượng tồn kho:
-              <b>{{
-                product.quantity === -1
-                  ? "Luôn sẵn có"
-                  : product.quantity + " sản phẩm sẵn có"
-              }}</b>
-            </span>
           </div>
           <div class="w-full mt-5">
             <span class="me-5"> Số lượng: </span>
@@ -159,7 +149,7 @@
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="bordering-none grid grid-cols-2">
+    <nb-card-header class="border-none grid grid-cols-2">
       <div class="text-start text-lg font-bold">Các lượt phản hồi</div>
       <div class="text-end second-text-color">
         <span (click)="open(dialog)" class="cursor-pointer">
@@ -276,7 +266,7 @@
       >
       </nz-result>
     </nb-card-body>
-    <nb-card-footer class="bordering-none center-an-item">
+    <nb-card-footer class="border-none center-an-item">
       <nz-pagination
         (nzPageIndexChange)="onFeedBackPageChange($event)"
         [nzPageIndex]="feedBackPageIndex"
@@ -286,14 +276,14 @@
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="bordering-none font-bold text-lg"> Sản phẩm liên quan </nb-card-header>
+    <nb-card-header class="border-none font-bold text-lg"> Sản phẩm liên quan </nb-card-header>
     <nb-card-body>
       <app-product-list
         [products]="relatedProducts"
         [isRelatedProductList]="true"
       ></app-product-list>
     </nb-card-body>
-    <nb-card-footer class="bordering-none center-an-item">
+    <nb-card-footer class="border-none center-an-item">
       <a nbButton status="info" class="text-center block" (click)="navigateRelatedProduct()"
         ><fa-icon [icon]="icons['faBars']" class="mr-2"></fa-icon>Xem thêm</a
       >

@@ -1,18 +1,18 @@
 import { Ordering } from "./ordering.model"
-import { Product } from "./product.model"
+import { ProductSize } from "./product-size.model"
 
 export class DetailOrder {
   id: string = ""
   quantity: number = 1
-  product: Product = new Product()
+  productSize: ProductSize = new ProductSize()
   ordering: Ordering = new Ordering()
   subTotal?: number = 0
 
   constructor(item: DetailOrder){
     this.id = item.id
     this.quantity = item.quantity
-    this.product = item.product
+    this.productSize = item.productSize
     this.ordering = item.ordering
-    this.subTotal = this.quantity * this.product.price
+    this.subTotal = this.quantity * this.productSize.price
   }
 }

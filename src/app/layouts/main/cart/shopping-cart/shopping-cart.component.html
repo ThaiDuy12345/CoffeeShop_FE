@@ -28,20 +28,20 @@
             <div class="grid grid-cols-5 my-6 gap-5">
               <div class="col-span-5 sm:col-span-1">
                 <app-image
-                  [src]="item.product.picture"
-                  [classes]="'rounded-lg'"
+                  [src]="item.productSize.product.imageUrl"
+                  [classes]="'rounded-lg'"s
                 ></app-image>
               </div>
               <div class="col-span-5 sm:col-span-4 grid grid-rows-3 mt-0">
                 <div class="row-span-1 grid grid-cols-6 gap-5 mb-5 sm:mb-0">
                   <div class="col-span-6 sm:col-span-2">
                     <div class="h-auto w-full">
-                      <b class="break-words">{{ item.product.name }}</b>
+                      <b class="break-words">{{ item.productSize.product.name }}</b>
                     </div>
                   </div>
                   <div class="sm:col-span-1 col-span-2">
                     <div class="h-auto w-full">
-                      <span>{{ formatPrice(item.product.price) }}</span>
+                      <span>{{ formatPrice(item.productSize.price) }}</span>
                     </div>
                   </div>
                   <div class="col-span-2">
@@ -85,7 +85,7 @@
                 </div>
                 <div class="row-span-1">
                   <span class="italic second-main-text-color line-clamp-3">{{
-                    item.product.description
+                    item.productSize.product.description
                   }}</span>
                 </div>
                 <div class="row-span-1 flex justify-end">

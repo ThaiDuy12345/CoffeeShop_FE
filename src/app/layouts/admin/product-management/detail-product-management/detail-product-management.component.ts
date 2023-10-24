@@ -51,7 +51,7 @@ export class DetailProductManagementComponent implements OnInit{
     r.onload = (e) => {
       if(e && e.target && e.target.result && e.target.result instanceof ArrayBuffer) {
         
-        this.product.picture = 'data:image/jpeg;base64,' + this.arrayBufferToBase64(e.target.result)
+        this.product.imageUrl = 'data:image/jpeg;base64,' + this.arrayBufferToBase64(e.target.result)
       }
     }
     r.readAsArrayBuffer(file)

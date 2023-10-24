@@ -25,7 +25,7 @@ export class ProductManagementComponent {
   confirmChange(productId: string, status: boolean): void{
     const index = this.products.findIndex(product => product.id === productId)
     if(index !== -1){
-      this.products[index].status = status
+      this.products[index].active = status
       this.messageService.success("Thay đổi trạng thái thành công")
     }else{
       this.messageService.error("Thay đổi trạng thái thất bại")

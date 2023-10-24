@@ -49,7 +49,13 @@ export class ProductComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           if (state.category.length > 0) {
             this.allProduct = ProductData.filter((item) =>
-              state.category.includes(item.category.name)
+              {
+                if(item.category){
+                  return state.category.includes(item.category.name)
+                }else{
+                  return false
+                }
+              }
             );
             this.filterSelect = state.category;
           } else {
@@ -66,36 +72,36 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.search = '';
           }
 
-          if (state.ordering === 1) {
-            this.allProduct = this.allProduct.sort(
-              (itemA, itemB) => itemB.price - itemA.price
-            );
-            this.optionIndex = 1
-          } else if (state.ordering === 2) {
-            this.allProduct = this.allProduct.sort(
-              (itemA, itemB) => itemA.price - itemB.price
-            );
-            this.optionIndex = 2
-          } else {
+          // if (state.ordering === 1) {
+          //   this.allProduct = this.allProduct.sort(
+          //     (itemA, itemB) => itemB.price - itemA.price
+          //   );
+          //   this.optionIndex = 1
+          // } else if (state.ordering === 2) {
+          //   this.allProduct = this.allProduct.sort(
+          //     (itemA, itemB) => itemA.price - itemB.price
+          //   );
+          //   this.optionIndex = 2
+          // } else {
             this.allProduct = this.allProduct.sort((itemA, itemB) => {
-              if (itemA.creation_date > itemB.creation_date) {
+              if (itemA.creationDate > itemB.creationDate) {
                 return 1;
               } else {
                 return -1;
               }
             });
             this.optionIndex = 0
-          }
+          // }
 
           if (state.view) {
             this.viewMode = state.view;
           }
 
-          this.allProduct = this.allProduct.filter(
-            (item) =>
-              item.price >= this.priceFilter[0] &&
-              item.price <= this.priceFilter[1]
-          );
+          // this.allProduct = this.allProduct.filter(
+          //   (item) =>
+          //     item.price >= this.priceFilter[0] &&
+          //     item.price <= this.priceFilter[1]
+          // );
           this.isLoading = false;
         }, 600);
       },
@@ -104,12 +110,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   setInitPriceSlider(allProduct: Product[]): void {
-    this.maxPrice = Math.max(...allProduct.map((item) => item.price));
-    this.priceFilter = [this.minPrice, this.maxPrice];
-    this.marks = {
-      [this.minPrice]: this.minPrice.toString(),
-      [this.maxPrice]: this.maxPrice.toString(),
-    };
+    // this.maxPrice = Math.max(...allProduct.map((item) => item.price));
+    // this.priceFilter = [this.minPrice, this.maxPrice];
+    // this.marks = {
+    //   [this.minPrice]: this.minPrice.toString(),
+    //   [this.maxPrice]: this.maxPrice.toString(),
+    // };
   }
 
   onClickResetFilterSearch(): void {

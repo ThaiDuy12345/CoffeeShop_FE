@@ -47,7 +47,7 @@ $error-text-color: #ee7070;
 
 body {
   .ant-message-notice-content{
-    bordering-radius: 30px 30px 30px 30px;
+    border-radius: 30px 30px 30px 30px;
   }
 
   nb-layout-header>nav{
@@ -82,7 +82,7 @@ body {
     display: none !important;
   }
   .ant-popover-inner{
-    bordering-radius: 8px;
+    border-radius: 8px;
   }
   .ant-popover-title{
     padding-top: 15px;
@@ -178,7 +178,7 @@ body {
   }
 
   .error-input-color {
-    bordering-color: $error-text-color !important;
+    border-color: $error-text-color !important;
   }
 }
 

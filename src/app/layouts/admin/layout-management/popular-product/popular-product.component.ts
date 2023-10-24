@@ -36,10 +36,6 @@ export class PopularProductComponent {
     this.isLoading = false
   }
 
-  priceSortOrdering(a: Product, b: Product): number {
-    return a.price - b.price
-  }
-
   isPopularFilter(isPopularFilter: boolean, item:Product): boolean {
     return item.isPopular === isPopularFilter
   }

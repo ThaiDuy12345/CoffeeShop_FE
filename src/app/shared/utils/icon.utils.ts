@@ -54,6 +54,7 @@ import {
   faCalendarCheck,
   faCalendarXmark,
   faQrcode,
+  faShuffle,
   faClock,
   faPercent,
   faTag,
@@ -125,5 +126,6 @@ export const icons: Icon = {
   faTag: faTag,
   faArrowDown: faArrowDown,
   faTags: faTags,
-  faCircleNotch: faCircleNotch
+  faCircleNotch: faCircleNotch,
+  faShuffle: faShuffle
 };

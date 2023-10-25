@@ -4,11 +4,12 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, finalize } from 'rxjs';
 import { Discount } from 'src/app/core/models/discount.model';
+import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { DiscountService } from 'src/app/core/services/discount.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
-
+import { differenceInCalendarDays } from "date-fns"
 @Component({
   selector: 'app-detail-discount-management',
   templateUrl: './detail-discount-management.component.html',
@@ -60,7 +61,18 @@ export class DetailDiscountManagementComponent implements OnInit{
             expiredDate: res.data.discountExpiredDate,
             minimumOrderPrice: res.data.discountMinimumOrderPrice,
             amount: res.data.discountAmount,
-            orderings: []
+            orderings:  res.data.orderingEntities.map((order: any) => {
+              return {
+                id: order.orderingID,
+                status: order.orderingStatus,
+                account: new Account(),
+                date: order.orderingCreationDate,
+                shippingFee: order.orderingShippingFee,
+                price: order.orderingPrice,
+                totalPrice: order.orderingTotalPrice,
+                note: order.orderingNote
+              }
+            })
           }
 
           this.editDiscount = { ...this.choosingDiscount }
@@ -151,5 +163,25 @@ export class DetailDiscountManagementComponent implements OnInit{
 
   formatNumber(number: number): string {
     return this.formatService.formatPrice(number)
+  }
+
+  disabledDate(current: Date): boolean {
+    return differenceInCalendarDays(new Date, current) > 0;
+  }
+
+  generateDatePattern(): void {
+    const dateRef = new Date()
+
+    const date = dateRef.getDate().toString().toUpperCase()
+    const month = (dateRef.getMonth() + 1).toString().toUpperCase()
+    const year = dateRef.getFullYear().toString().slice(2, 4).toUpperCase()
+
+    const pattern = `${date}${month}${year}`
+
+    this.editDiscount.code = this.editDiscount.code.includes(pattern) ? this.editDiscount.code : (this.editDiscount.code + pattern)
+  }
+
+  isEditable(): boolean {
+    return this.choosingDiscount.orderings.length === 0
   }
 }

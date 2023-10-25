@@ -6,7 +6,6 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
-
 @Component({
   selector: 'app-category-management',
   templateUrl: './category-management.component.html',
@@ -95,9 +94,9 @@ export class CategoryManagementComponent {
     this.currentEditItem = new Category()
 
     if(this.isNewMode){
-      const newArray = [...this.categories]
-      delete newArray[0]
-      this.categories = [...newArray]
+      const arr = [...this.categories]
+      arr.shift()
+      this.categories = [...arr]
       this.isNewMode = false
     }
   }

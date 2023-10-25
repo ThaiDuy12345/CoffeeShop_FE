@@ -5,6 +5,9 @@
     <nb-card-body [nbSpinner]="isLoading">
       <div  class="flex items-center justify-center">
         <div class="mx-auto w-full">
+          <div *ngIf="!isEditable()" class="mb-5 error-text-color">
+            Mã giảm giá này đã có 1 số khách hàng áp dụng, bạn không thể chỉnh sửa các thông tin cơ bản trừ thiết lập ngày hiệu lực
+          </div>
           <form autocomplete="off">
             <div class="mb-5">
               <label for="lName" class="mb-3 block font-medium">
@@ -15,16 +18,34 @@
               <label class="mb-3 block font-medium">
                 Mã code: <b>{{ choosingDiscount.code }}</b>
               </label>
-              <input
-                type="text"
-                nbInput
-                (input)="onInputDiscountCode()"
-                name="codeInput"
-                #codeInput="ngModel"
-                [(ngModel)]="editDiscount.code"
-                placeholder="Mã code để áp dụng giảm giá"
-                class="w-full rounded-md"
-              />
+              <nb-form-field class="min-w-0 mt-2">
+                <input
+                  type="text"
+                  nbInput
+                  [disabled]="!isEditable()" 
+                  (input)="onInputDiscountCode()"
+                  name="codeInput"
+                  #codeInput="ngModel"
+                  [(ngModel)]="editDiscount.code"
+                  placeholder="Mã code để áp dụng giảm giá"
+                  class="w-full rounded-md"
+                />
+                <button
+                  nz-tooltip
+                  nzTooltipTitle="Thêm ngày tháng năm để giảm sự trùng lập"
+                  nbSuffix
+                  [disabled]="!isEditable()" 
+                  nbButton
+                  ghost
+                  (click)="generateDatePattern()"
+                >
+                  <nb-icon
+                    [icon]="'shuffle-2-outline'"
+                    pack="eva"
+                  >
+                  </nb-icon>
+                </button>
+              </nb-form-field>
               <small *ngIf="!editDiscount.code" class="error-text-color">
                 Mã code xin vui lòng không được để trống
               </small>
@@ -33,7 +54,7 @@
               <label for="guest" class="mb-3 block font-medium">
                 Ngày hết hiệu lực: <b>{{ formatDate(choosingDiscount.expiredDate) }}</b>
               </label>
-              <nz-date-picker name="expiredDateInput" #expiredDateInput="ngModel" class="w-full h-[40px]" [(ngModel)]="expiredDate" (ngModelChange)="onChangeExpiredDate($event)"></nz-date-picker>
+              <nz-date-picker [nzDisabledDate]="disabledDate" name="expiredDateInput" #expiredDateInput="ngModel" class="w-full h-[40px]" [(ngModel)]="expiredDate" (ngModelChange)="onChangeExpiredDate($event)"></nz-date-picker>
             </div>
             <div class="mb-5">
               <label for="guest" class="mb-3 block font-medium">
@@ -41,6 +62,7 @@
               </label>
               <input
                 type="number"
+                [disabled]="!isEditable()" 
                 name="minimumOrderPriceInput"
                 #minimumOrderPriceInput="ngModel"
                 [(ngModel)]="editDiscount.minimumOrderPrice"
@@ -57,6 +79,7 @@
                 Mức giá sẽ giảm: <b>{{ formatNumber(choosingDiscount.amount) }}</b>
               </label>
               <input
+                [disabled]="!isEditable()" 
                 type="number"
                 autocomplete="off"
                 name="amountInput"

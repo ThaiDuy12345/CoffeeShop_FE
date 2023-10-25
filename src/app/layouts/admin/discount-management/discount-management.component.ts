@@ -15,13 +15,12 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 })
 export class DiscountManagementComponent implements OnInit{
   public icons: Icon = icons
-  public discounts: Discount[] | [] = []
+  public discounts: Discount[] = []
   public detailVisible: boolean = false
   public inforVisible: boolean = false
   public choosingDiscount: Discount = new Discount()
   public isLoading: boolean = false
   public searchInput: string = ''
-
 
   constructor(
     private messageService: NzMessageService,

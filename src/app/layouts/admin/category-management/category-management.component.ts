@@ -23,7 +23,7 @@ export class CategoryManagementComponent {
   public currentEditIndex: number = -1
   public currentEditItem: Category = new Category()
   public isLoadingButton: boolean = false
-
+  public isNewMode: boolean = false
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
@@ -93,6 +93,13 @@ export class CategoryManagementComponent {
   onClickCancelEditCategory(): void {
     this.currentEditIndex = -1
     this.currentEditItem = new Category()
+
+    if(this.isNewMode){
+      const newArray = [...this.categories]
+      delete newArray[0]
+      this.categories = [...newArray]
+      this.isNewMode = false
+    }
   }
 
   onClickAddNewCategory(): void {
@@ -101,6 +108,7 @@ export class CategoryManagementComponent {
       ...this.categories
     ]
     this.currentEditIndex = 0
+    this.isNewMode = true
   }
 
   onClickEditCategory(index: number): void {

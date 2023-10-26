@@ -4,10 +4,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { District, Province, Ward } from 'src/app/core/models/vietnam.model';
 import { AccountService } from 'src/app/core/services/account.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { VietnamService } from 'src/app/core/services/vietnam.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
-import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 
 @Component({
   selector: 'app-edit-user',
@@ -19,21 +20,21 @@ export class EditUserComponent implements OnInit {
   public icons: Icon = icons
   public editUser: Account = new Account();
   public isEditing: Boolean = false;
-  public provinces: any[] = [];
-  public districts: any[] = [];
-  public wards: any[] = [];
+  public provinces: Province[] = [];
+  public districts: District[] = [];
+  public wards: Ward[] = [];
   public submitLoading: boolean = false
-  public selectedProvince: {name: string, id: string} = {
+  public selectedProvince: { name: string, code: number } = {
     name: "",
-    id: ""
+    code: 0
   };
-  public selectedDistrict: {name: string, id: string} = {
+  public selectedDistrict: { name: string, code: number } = {
     name: "",
-    id: ""
+    code: 0
   };
-  public selectedWard: {name: string, id: string} = {
+  public selectedWard: { name: string, code: number } = {
     name: "",
-    id: ""
+    code: 0
   };
   public detailAddress: string = '';
 
@@ -42,16 +43,14 @@ export class EditUserComponent implements OnInit {
     private dialogService: NbDialogService,
     @Optional() private dialogRef: NbDialogRef<any>,
     private accountService: AccountService,
-    private authenService: AuthService
+    private authenService: AuthService,
+    private vietnamService: VietnamService
   ) {}
 
   ngOnInit(): void {
-    this.provinces = vietnamSelection.map((item) => {
-      return {
-        id: item.Id,
-        name: item.Name,
-      };
-    });
+    this.vietnamService.getAll().subscribe((data: Province[]) => {
+      this.provinces = data
+    })
   }
 
   onClickCancelEdit(): void {
@@ -59,15 +58,15 @@ export class EditUserComponent implements OnInit {
     this.editUser = new Account();
     this.selectedProvince = {
       name: "",
-      id: ""
+      code: 0
     };
     this.selectedDistrict = {
       name: "",
-      id: ""
+      code: 0
     };
     this.selectedWard = {
       name: "",
-      id: ""
+      code: 0
     };
 
     this.districts = [];
@@ -81,55 +80,43 @@ export class EditUserComponent implements OnInit {
   }
 
   onChangeProvince(): void {
-    const province = vietnamSelection.find(
-      (c) => c.Id === this.selectedProvince.id
+    const province = this.provinces.find(
+      (c) => c.code === this.selectedProvince.code
     );
     this.selectedDistrict = {
       name: "",
-      id: ""
+      code: 0
     };
     this.selectedWard = {
       name: "",
-      id: ""
+      code: 0
     };
     this.detailAddress = '';
     this.wards = [];
     this.districts = [];
     if (!province) return;
-    this.districts = province.Districts.map((d) => {
-      return {
-        id: d.Id,
-        name: d.Name,
-      };
-    });
+    this.districts = province.districts
   }
 
   onChangeDistrict(): void {
     this.selectedWard = {
       name: "",
-      id: ""
+      code: 0
     };
     this.wards = [];
     this.detailAddress = '';
-    const province = vietnamSelection.find(
-      (c) => c.Id === this.selectedProvince.id
+    const province = this.provinces.find(
+      (c) => c.code === this.selectedProvince.code
     );
     if (!province) return;
-    const district = province.Districts.find(
-      (d) => d.Id === this.selectedDistrict.id
+    const district = province.districts.find(
+      (d) => d.code === this.selectedDistrict.code
     );
     if (!district) return;
-    if (district.Wards.length === 1) {
+    if (district.wards.length === 1) {
       this.wards = [];
     } else {
-      this.wards = district.Wards.map((w) => {
-        if ('Id' in w && 'Name' in w)
-          return {
-            id: w.Id,
-            name: w.Name,
-          };
-        else return null;
-      });
+      this.wards = district.wards
     }
   }
 
@@ -141,37 +128,37 @@ export class EditUserComponent implements OnInit {
 
   isAddressCorrect(): boolean {
     if(
-      !this.selectedProvince.id && 
-      !this.selectedDistrict.id && 
-      !this.selectedWard.id && 
+      !(this.selectedProvince.code !== 0) && 
+      !(this.selectedDistrict.code !== 0) && 
+      !(this.selectedWard.code !== 0) && 
       !this.detailAddress
     ){
       return true
     }
       
     
-    if (this.wards.length === 0 && !this.selectedWard.id) 
+    if (this.wards.length === 0 && !(this.selectedWard.code !== 0)) 
       return this.detailAddress.length > 0 &&
-        this.selectedProvince.id.length > 0 &&
-        this.selectedDistrict.id.length > 0
+        this.selectedProvince.code !== 0 &&
+        this.selectedDistrict.code !== 0
     
     return this.detailAddress.length > 0 &&
-      this.selectedProvince.id.length > 0 &&
-      this.selectedDistrict.id.length > 0 &&
-      this.selectedWard.id.length > 0
+      this.selectedProvince.code !== 0 &&
+      this.selectedDistrict.code !== 0 &&
+      this.selectedWard.code !== 0
     
   }
 
   formatAddress(): string {
     if(
-      !this.selectedProvince.id && 
-      !this.selectedDistrict.id && 
-      !this.selectedWard.id && 
+      !(this.selectedProvince.code !== 0) && 
+      !(this.selectedDistrict.code !== 0) && 
+      !(this.selectedWard.code !== 0) && 
       !this.detailAddress
     )
       return this.user.address
     
-    return this.selectedWard.id ? 
+    return this.selectedWard.code !== 0 ? 
       `${this.detailAddress}, ${this.selectedWard.name}, ${this.selectedDistrict.name}, ${this.selectedProvince.name}, Việt Nam` 
       :
       `${this.detailAddress}, ${this.selectedDistrict.name}, ${this.selectedProvince.name}, Việt Nam` 

@@ -5,7 +5,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { District, Province, Ward } from 'src/app/core/models/vietnam.model';
 import { AccountService } from 'src/app/core/services/account.service';
+import { VietnamService } from 'src/app/core/services/vietnam.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 
@@ -19,25 +21,25 @@ export class DetailAccountManagementComponent {
   public isNew: boolean = false
   public choosingAccount: Account = new Account()
   public editAccount: Account = new Account()
-  public provinces: any[] = [];
-  public districts: any[] = [];
-  public wards: any[] = [];
+  public provinces: Province[] = [];
+  public districts: District[] = [];
+  public wards: Ward[] = [];
   public options: string[] = [
     "Quản trị viên", "Nhân viên", "Khách hàng"
   ]
   public optionIndex?: number = undefined
   public submitLoading: boolean = false
-  public selectedProvince: {name: string, id: string} = {
+  public selectedProvince: { name: string, code: number } = {
     name: "",
-    id: ""
+    code: 0
   };
-  public selectedDistrict: {name: string, id: string} = {
+  public selectedDistrict: { name: string, code: number } = {
     name: "",
-    id: ""
+    code: 0
   };
-  public selectedWard: {name: string, id: string} = {
+  public selectedWard: { name: string, code: number } = {
     name: "",
-    id: ""
+    code: 0
   };
   public detailAddress: string = '';
   public isLoading: boolean = false;
@@ -49,16 +51,14 @@ export class DetailAccountManagementComponent {
     private router: Router,
     @Optional() private dialogRef: NbDialogRef<any>,
     private accountService: AccountService,
+    private vietnamService: VietnamService
   ){}
 
   ngOnInit(): void {
     this.initAccount()
-    this.provinces = vietnamSelection.map((item) => {
-      return {
-        id: item.Id,
-        name: item.Name,
-      };
-    });
+    this.vietnamService.getAll().subscribe((data: Province[]) => {
+      this.provinces = data
+    })
   }
 
   initAccount(): void {
@@ -98,16 +98,17 @@ export class DetailAccountManagementComponent {
     this.editAccount = new Account();
     this.selectedProvince = {
       name: "",
-      id: ""
+      code: 0
     };
     this.selectedDistrict = {
       name: "",
-      id: ""
+      code: 0
     };
     this.selectedWard = {
       name: "",
-      id: ""
+      code: 0
     };
+
     this.districts = [];
     this.wards = [];
     this.detailAddress = ""
@@ -116,55 +117,43 @@ export class DetailAccountManagementComponent {
   }
 
   onChangeProvince(): void {
-    const province = vietnamSelection.find(
-      (c) => c.Id === this.selectedProvince.id
+    const province = this.provinces.find(
+      (c) => c.code === this.selectedProvince.code
     );
     this.selectedDistrict = {
-      id: "",
-      name: ""
+      name: "",
+      code: 0
     };
     this.selectedWard = {
-      id: "",
-      name: ""
+      name: "",
+      code: 0
     };
     this.detailAddress = '';
     this.wards = [];
     this.districts = [];
     if (!province) return;
-    this.districts = province.Districts.map((d) => {
-      return {
-        id: d.Id,
-        name: d.Name,
-      };
-    });
+    this.districts = province.districts
   }
 
   onChangeDistrict(): void {
     this.selectedWard = {
-      id: "",
-      name: ""
+      name: "",
+      code: 0
     };
     this.wards = [];
     this.detailAddress = '';
-    const province = vietnamSelection.find(
-      (c) => c.Id === this.selectedProvince.id
+    const province = this.provinces.find(
+      (c) => c.code === this.selectedProvince.code
     );
     if (!province) return;
-    const district = province.Districts.find(
-      (d) => d.Id === this.selectedDistrict.id
+    const district = province.districts.find(
+      (d) => d.code === this.selectedDistrict.code
     );
     if (!district) return;
-    if (district.Wards.length === 1) {
+    if (district.wards.length === 1) {
       this.wards = [];
     } else {
-      this.wards = district.Wards.map((w) => {
-        if ('Id' in w && 'Name' in w)
-          return {
-            id: w.Id,
-            name: w.Name,
-          };
-        else return null;
-      });
+      this.wards = district.wards
     }
   }
 
@@ -181,36 +170,37 @@ export class DetailAccountManagementComponent {
 
   isAddressCorrect(): boolean {
     if(
-      !this.selectedProvince.id && 
-      !this.selectedDistrict.id && 
-      !this.selectedWard.id && 
+      !(this.selectedProvince.code !== 0) && 
+      !(this.selectedDistrict.code !== 0) && 
+      !(this.selectedWard.code !== 0) && 
       !this.detailAddress
     ){
       return true
     }
+      
     
-    if (this.wards.length === 0 && !this.selectedWard.id) 
+    if (this.wards.length === 0 && !(this.selectedWard.code !== 0)) 
       return this.detailAddress.length > 0 &&
-        this.selectedProvince.id.length > 0 &&
-        this.selectedDistrict.id.length > 0
+        this.selectedProvince.code !== 0 &&
+        this.selectedDistrict.code !== 0
     
     return this.detailAddress.length > 0 &&
-      this.selectedProvince.id.length > 0 &&
-      this.selectedDistrict.id.length > 0 &&
-      this.selectedWard.id.length > 0
+      this.selectedProvince.code !== 0 &&
+      this.selectedDistrict.code !== 0 &&
+      this.selectedWard.code !== 0
     
   }
 
   formatAddress(): string {
     if(
-      !this.selectedProvince.id && 
-      !this.selectedDistrict.id && 
-      !this.selectedWard.id && 
+      !(this.selectedProvince.code !== 0) && 
+      !(this.selectedDistrict.code !== 0) && 
+      !(this.selectedWard.code !== 0) && 
       !this.detailAddress
     )
       return this.choosingAccount.address
     
-    return this.selectedWard.id ? 
+    return this.selectedWard.code !== 0 ? 
       `${this.detailAddress}, ${this.selectedWard.name}, ${this.selectedDistrict.name}, ${this.selectedProvince.name}, Việt Nam` 
       :
       `${this.detailAddress}, ${this.selectedDistrict.name}, ${this.selectedProvince.name}, Việt Nam` 

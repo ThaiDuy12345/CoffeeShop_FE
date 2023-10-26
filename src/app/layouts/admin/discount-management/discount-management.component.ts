@@ -64,7 +64,15 @@ export class DiscountManagementComponent implements OnInit{
             }
           })
 
-          if(this.searchInput) this.discounts =  this.discounts.filter(d => d.code.toLowerCase().includes(this.searchInput.toLowerCase()))
+          if(this.searchInput) this.discounts = this.discounts.filter(d => {
+            return (
+              d.code.toLowerCase().includes(this.searchInput.toLowerCase())
+              ||
+              this.formatDate(d.creationDate).includes(this.searchInput.toLowerCase())
+              ||
+              this.formatDate(d.expiredDate).includes(this.searchInput.toLowerCase())
+            )
+          })
         }else{
           this.messageService.error(res.message)
         }

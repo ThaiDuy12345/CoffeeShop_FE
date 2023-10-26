@@ -76,7 +76,7 @@
               class="w-full"
               placeholder="Thành Phố/Tỉnh"
             >
-              <nb-option [value]="{name: p.name, id: p.id}" *ngFor="let p of provinces">{{
+              <nb-option [value]="{ name: p.name, code: p.code }" *ngFor="let p of provinces">{{
                 p.name
               }}</nb-option>
             </nb-select>
@@ -89,7 +89,7 @@
             </label>
             <nb-select
               (selectedChange)="onChangeDistrict()"
-              [disabled]="!selectedProvince.id"
+              [disabled]="!(selectedProvince.code !== 0)"
               name="districtInput"
               #districtInput="ngModel"
               [(ngModel)]="selectedDistrict"
@@ -97,11 +97,11 @@
               class="w-full"
               placeholder="Thành Phố/Quận/Huyện"
             >
-              <nb-option [value]="{name: p.name, id: p.id}" *ngFor="let p of districts">{{
+              <nb-option [value]="{ name: p.name, code: p.code }" *ngFor="let p of districts">{{
                 p.name
               }}</nb-option>
             </nb-select>
-            <small *ngIf="selectedProvince.id && !selectedDistrict.id && districts.length > 0" class="error-text-color">Vui lòng chọn Thành Phố/Quận/Huyện</small>
+            <small *ngIf="(selectedProvince.code !== 0) && selectedDistrict.code === 0 && districts.length > 0" class="error-text-color">Vui lòng chọn Thành Phố/Quận/Huyện</small>
           </div>
         </div>
         <div class="w-full px-3 sm:w-1/2">
@@ -112,17 +112,17 @@
             <nb-select
               name="wardInput"
               #wardInput="ngModel"
-              [disabled]="!selectedDistrict || wards.length === 0"
+              [disabled]="!(selectedDistrict.code !== 0) || wards.length === 0"
               [(ngModel)]="selectedWard"
               *ngIf="isEditing"
               class="w-full"
               placeholder="Phường"
             >
-              <nb-option [value]="{name: p.name, id: p.id}" *ngFor="let p of wards">{{
+              <nb-option [value]="{ name: p.name, code: p.code }" *ngFor="let p of wards">{{
                 p.name
               }}</nb-option>
             </nb-select>
-            <small *ngIf="!selectedWard.id && wards.length > 0" class="error-text-color">Vui lòng chọn Phường/Xã</small>
+            <small *ngIf="!(selectedDistrict.code !== 0) && wards.length > 0" class="error-text-color">Vui lòng chọn Phường/Xã</small>
           </div>
         </div>
         <div class="w-full px-3 sm:w-1/2">
@@ -136,12 +136,12 @@
               name="addressInput"
               #addressInput="ngModel"
               *ngIf="isEditing"
-              [disabled]="!selectedProvince || !selectedDistrict"
+              [disabled]="!(selectedProvince.code !== 0) || !(selectedDistrict.code !== 0)"
               [(ngModel)]="detailAddress"
               placeholder="789 Huỳnh Tấn Phát, Phường 9, Quận 7, TP HCM"
               class="w-full rounded-md"
             />
-            <small *ngIf="(selectedWard.id && wards.length > 0 && !detailAddress) || (selectedDistrict.id && districts.length > 0 && wards.length <= 0 && !detailAddress)" class="error-text-color">
+            <small *ngIf="(selectedWard.code !== 0 && wards.length > 0 && !detailAddress) || (selectedDistrict.code !== 0 && districts.length > 0 && wards.length <= 0 && !detailAddress)" class="error-text-color">
               Địa chỉ vui lòng không để trống
             </small>
           </div>

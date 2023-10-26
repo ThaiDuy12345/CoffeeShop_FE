@@ -8,6 +8,7 @@ import { environment } from "src/environments/environment";
 export class ApiService{
   private base_nodejs_url = environment.BASE_NODEJS_URL
   private base_spring_boot_url = environment.BASE_SPRING_URL
+  private vietnam_url = environment.BASE_VIETNAM_URL
   // private base_spring_boot_url = "http://localhost:8080"
   private service_nodejs = {
     IMAGE: '/image',
@@ -18,6 +19,8 @@ export class ApiService{
     DISCOUNT: '/discounts',
     CATEGORY: '/categories'
   }
+
+  private service_vietnam = this.vietnam_url
 
   constructor(
     private http: HttpClient
@@ -41,6 +44,10 @@ export class ApiService{
 
   categoryService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.CATEGORY
+  }
+
+  vietnamService(): String {
+    return this.service_vietnam
   }
 
   isAlive(): Observable<Boolean>{

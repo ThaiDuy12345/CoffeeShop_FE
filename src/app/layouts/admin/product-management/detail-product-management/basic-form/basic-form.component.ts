@@ -24,21 +24,11 @@ export class BasicFormComponent implements OnInit{
     this.categoryOptions = CategoryData
   }
 
-  formatDate(date: Date | string): string {
-    if(date){
-      return this.formatService.formatDate(
-        typeof date === "string" ? new Date(date) : date
-      )
-    }
-    return this.formatService.formatDate(new Date())
+  formatDate(date: number): string {
+    return this.formatService.formatDate(new Date(date))
   }
 
-  timeSince(date: Date | string): string {
-    if(date){
-      return this.formatService.timeAgoSince(
-        typeof date === "string" ? new Date(date) : date
-      )
-    }
-    return this.formatService.timeAgoSince(new Date())
+  timeSince(date: number): string {
+    return this.formatService.timeAgoSince(new Date(date))
   }
 }

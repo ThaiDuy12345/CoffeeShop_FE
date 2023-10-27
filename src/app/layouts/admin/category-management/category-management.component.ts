@@ -3,8 +3,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, finalize } from 'rxjs';
 import { Category } from 'src/app/core/models/category.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { Product } from 'src/app/core/models/product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { ProductService } from 'src/app/core/services/product.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-category-management',
@@ -23,10 +25,13 @@ export class CategoryManagementComponent {
   public currentEditItem: Category = new Category()
   public isLoadingButton: boolean = false
   public isNewMode: boolean = false
+  public isDetailLoading: boolean = false
+  public choosingCategoryProduct: Product[] = []
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private productService: ProductService
   ){}
 
   ngOnInit(): void {
@@ -46,18 +51,6 @@ export class CategoryManagementComponent {
             return {
               id: acc.categoryId,
               name: acc.categoryName,
-              products: acc.productEntities.map((p: any) => {
-                return {
-                  id: p.productId,
-                  name: p.productName,
-                  description: p.productDescription,
-                  imageUrl: p.productImageUrl,
-                  creationDate: p.productCreationDate,
-                  isPopular: p.productIsPopular,
-                  active: p.productActive,
-                  category: undefined
-                }
-              })
             }
           })
 
@@ -87,6 +80,8 @@ export class CategoryManagementComponent {
   viewACategory(data: Category): void {
     if(!data) return
     this.choosingCategory = data
+    this.choosingCategoryProduct = []
+    this.getProductByCategory()
   }
 
   onClickCancelEditCategory(): void {
@@ -124,6 +119,39 @@ export class CategoryManagementComponent {
           this.initData()
         }else{
           this.messageService.error(res.message)
+        }
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+  }
+
+  getProductByCategory(): void{
+    this.isDetailLoading = true
+    this.productService.getByCategory({ categoryId: this.choosingCategory.id }).pipe(
+      finalize(() => this.isDetailLoading = false)
+    ).subscribe({
+      next: res => {
+        if(res.status){
+          this.choosingCategoryProduct = res.data.map((p: any) => {
+            return {
+              id: p.productId,
+              name: p.productName,
+              description: p.productDescription,
+              imageUrl: p.productImageUrl,
+              creationDate: p.productCreationDate,
+              isPopular: p.productIsPopular,
+              category: {
+                id: p.category.categoryId,
+                name: p.category.categoryName
+              },
+              active: p.productActive
+            }
+          })
+        }else{
+          this.messageService.error(res.error.message)
+
         }
       },
       error: err => {

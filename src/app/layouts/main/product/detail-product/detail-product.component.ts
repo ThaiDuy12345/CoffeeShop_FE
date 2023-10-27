@@ -153,7 +153,7 @@ export class DetailProductComponent implements OnInit {
     this.filterStore.update((state) => {
 
       return {
-        category: this.product.category ? [this.product.category.name] : [],
+        category: [this.product.category.name],
         search: '',
       };
     });

@@ -15,14 +15,14 @@
           <button nbButton status="info" [routerLink]="'/admin/product-management/new'">Thêm</button>
         </div>
       </div>
-      <nz-table #table [nzData]="products" nzShowPagination="false">
+      <nz-table #table [nzData]="products" [nzLoading]="isLoading" nzShowPagination="false">
         <thead>
           <tr>
             <th>#</th>
             <th>Tên sản phẩm</th>
             <th>Danh mục</th>
             <th>Ngày tạo</th>
-            <th>Trạng thái</th>
+            <th [nzAlign]="'center'">Trạng thái</th>
             <th></th>
           </tr>
         </thead>
@@ -30,35 +30,43 @@
           <tr *ngFor="let data of table.data">
             <td>{{data.id}}</td>
             <td>{{data.name}}</td>
-            <td>{{data.category?.name}}</td>
+            <td>{{data.category.name}}</td>
             <td>{{formatDate(data.creationDate)}}</td>
             <td>
-              <nz-tag 
-                nzPopconfirmPlacement="bottom"
-                (nzOnCancel)="null"
-                nzPopconfirmTitle="Xác nhận ẩn sản phẩm này?"
-                nz-popconfirm
-                nzOkText="Xác nhận"
-                nzCancelText="Huỷ"
-                (nzOnConfirm)="confirmChange(data.id, false)"
-                *ngIf="data.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
-              >
-                <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
-                <span class="center-an-item">Hoạt động</span>
-              </nz-tag>
-              <nz-tag 
-                nzPopconfirmPlacement="bottom"
-                (nzOnCancel)="null"
-                nzPopconfirmTitle="Xác nhận kích hoạt sản phẩm này?"
-                nz-popconfirm
-                nzOkText="Xác nhận"
-                nzCancelText="Huỷ"    
-                (nzOnConfirm)="confirmChange(data.id, true)"
-                *ngIf="!data.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
-              >
-                <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
-                <span class="center-an-item text-left">Ẩn</span>
-              </nz-tag>
+              <span class="center-an-item">
+                <nz-tag
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnCancel)="(null)"
+                  nzPopconfirmTitle="Xác nhận ẩn sản phẩm này?"
+                  nz-popconfirm
+                  nzOkText="Xác nhận"
+                  nzCancelText="Huỷ"
+                  (nzOnConfirm)="confirmChange(data.id, false)"
+                  *ngIf="data.active"
+                  class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[30px]"
+                >
+                  <fa-icon
+                    class="center-an-item"
+                    [icon]="icons['faEye']"
+                  ></fa-icon>
+                </nz-tag>
+                <nz-tag
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnCancel)="(null)"
+                  nzPopconfirmTitle="Xác nhận kích hoạt sản phẩm này?"
+                  nz-popconfirm
+                  nzOkText="Xác nhận"
+                  nzCancelText="Huỷ"
+                  (nzOnConfirm)="confirmChange(data.id, true)"
+                  *ngIf="!data.active"
+                  class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[30px]"
+                >
+                  <fa-icon
+                    class="center-an-item"
+                    [icon]="icons['faEyeSlash']"
+                  ></fa-icon>
+                </nz-tag>
+              </span>
             </td>
             <td>
               <fa-icon [icon]="icons['faCircleInfo']" [routerLink]="['/admin/product-management', data.id]" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Thông tin"></fa-icon>

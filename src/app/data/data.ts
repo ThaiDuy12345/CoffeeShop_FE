@@ -35,23 +35,19 @@ export const AccountData: Account[] = [
 export const CategoryData: Category[] = [
   {
     id: "0",
-    name: "coffee",
-    products: []
+    name: "coffee"
   },
   {
     id: "1",
-    name: "tea",
-    products: []
+    name: "tea"
   },
   {
     id: "2",
-    name: "food",
-    products: []
+    name: "food"
   },
   {
     id: "3",
-    name: "package",
-    products: []
+    name: "package"
   }
 ]
 
@@ -63,7 +59,7 @@ export const ProductData: Product[] = [
     imageUrl: `${imagePath}cloudFeeHanhNhanNuong.webp`,
     category: CategoryData[0],
     isPopular: true,
-    creationDate: new Date('2023-09-01'),
+    creationDate: new Date('2023-09-01').getTime(),
     active: true,
   },
   {
@@ -73,7 +69,7 @@ export const ProductData: Product[] = [
     imageUrl: `${imagePath}cafeSuaDa.webp`,
     category: CategoryData[0],
     isPopular: true,
-    creationDate: new Date('2023-09-02'),
+    creationDate: new Date('2023-09-02').getTime(),
     active: true,
   },
   {
@@ -83,7 +79,7 @@ export const ProductData: Product[] = [
     imageUrl: `${imagePath}hiTeaVai.webp`,
     category: CategoryData[1],
     isPopular: false,
-    creationDate: new Date('2023-09-03'),
+    creationDate: new Date('2023-09-03').getTime(),
     active: true,
   },
   {
@@ -93,7 +89,7 @@ export const ProductData: Product[] = [
     imageUrl: `${imagePath}banhMiThitNguoi.webp`,
     category: CategoryData[2],
     isPopular: true,
-    creationDate: new Date('2023-08-26'),
+    creationDate: new Date('2023-08-26').getTime(),
     active: true,
   },
   {
@@ -103,7 +99,7 @@ export const ProductData: Product[] = [
     imageUrl: `${imagePath}mochiKemChocolate.webp`,
     category: CategoryData[2],
     isPopular: false,
-    creationDate: new Date('2023-09-11'),
+    creationDate: new Date('2023-09-11').getTime(),
     active: true,
   },
   {
@@ -113,7 +109,7 @@ export const ProductData: Product[] = [
     imageUrl: `${imagePath}theCoffeeHouseSuaDa.webp`,
     category: CategoryData[0],
     isPopular: true,
-    creationDate: new Date('2023-08-10'),
+    creationDate: new Date('2023-08-10').getTime(),
     active: true,
   }
 ]

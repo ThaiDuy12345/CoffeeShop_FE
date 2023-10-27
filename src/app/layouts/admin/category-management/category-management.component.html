@@ -51,7 +51,7 @@
                 <fa-icon
                   *ngIf="currentEditIndex === -1"
                   [icon]="icons['faChartSimple']"
-                  (click)="detailVisible = true; viewACategory(data)"
+                  (click)="detailVisible = true; viewACategory(data);"
                   class="mx-2 cursor-pointer"
                   nz-tooltip
                   nzTooltipTitle="Chi tiết"
@@ -127,7 +127,7 @@
       <nb-card>
         <nb-card-header class="border-none"> Các sản phẩm của danh mục </nb-card-header>
         <nb-card-body>
-          <nz-table #table2 [nzData]="choosingCategory.products" nzShowPagination="false">
+          <nz-table #table2 [nzData]="choosingCategoryProduct" [nzLoading]="isDetailLoading" nzShowPagination="false">
             <thead>
               <tr>
                 <th>#</th>

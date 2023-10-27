@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, throwError } from "rxjs";
+import { Observable, catchError, throwError, timeout } from "rxjs";
 import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,8 @@ export class ApiService{
   private service_spring_boot = {
     ACCOUNT: '/accounts',
     DISCOUNT: '/discounts',
-    CATEGORY: '/categories'
+    CATEGORY: '/categories',
+    PRODUCT: '/products'
   }
 
   private service_vietnam = this.vietnam_url
@@ -44,6 +45,10 @@ export class ApiService{
 
   categoryService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.CATEGORY
+  }
+
+  productService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.PRODUCT
   }
 
   vietnamService(): String {
@@ -106,6 +111,7 @@ export class ApiService{
 
   errorHandle(observable: Observable<any>): Observable<any>{
     return observable.pipe(
+      timeout(300000),
       catchError((err: HttpErrorResponse) => throwError(() => err))
     )
   }

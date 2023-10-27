@@ -13,8 +13,10 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
-@import "node_modules/ng-zorro-antd/style/index.min.css"; /* Import base styles */
+@import "node_modules/ng-zorro-antd/style/index.min.css";
 @import "node_modules/ng-zorro-antd/button/style/index.min.css";  /* Import one component's styles */
+
+$border-radius-base: 10px;
 $main-color: #43da89;
 $main-hover-color: #30b970;
 $second-main-color: #eeffd8;

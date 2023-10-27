@@ -4,7 +4,7 @@
       <a class="second-text-color" [routerLink]="'/main/product'">Menu</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item (click)="navigateRelatedProduct()">
-      <a class="second-text-color">{{ product.category?.name }}</a>
+      <a class="second-text-color">{{ product.category.name }}</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item class="second-main-text-color">{{
       product.name

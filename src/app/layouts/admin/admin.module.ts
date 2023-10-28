@@ -83,13 +83,13 @@ const routes: Route[] = [
             component: ProductManagementComponent
           },
           {
-            path: ":id",
-            component: DetailProductManagementComponent
-          },
-          {
             path: "new",
             component: DetailProductManagementComponent
           },
+          {
+            path: ":id",
+            component: DetailProductManagementComponent
+          }
         ]
       },
       {

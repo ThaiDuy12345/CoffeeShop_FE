@@ -23,7 +23,7 @@ export class SizeFormComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.productSizes = ProductSizeData.filter(ps => ps.product.id === this.product.id)
+    this.productSizes = ProductSizeData.filter(ps => ps.product.id === "5")
   }
 
   onClickCancel(): void {

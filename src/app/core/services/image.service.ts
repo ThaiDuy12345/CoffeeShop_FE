@@ -14,12 +14,22 @@ export class ImageService{
   ){}
   
   addNewImage(formData: FormData): Observable<any> {
-    return this.http.post(
+    return this.apiService.errorHandle(this.http.post(
       this.apiService.imageService().toString(),
       formData
-    ).pipe(
-      catchError((err: HttpErrorResponse) => throwError(() => err))
-    )
+    ))
+  }
+
+  getById(image: { imageId: string }): Observable<any> {
+    return this.apiService.errorHandle(this.http.get(
+      this.apiService.imageService().toString() + `/${image.imageId}`,
+    ))
+  }
+
+  delete(image: { imageId: string }): Observable<any> {
+    return this.apiService.errorHandle(this.http.delete(
+      this.apiService.imageService().toString() + `/${image.imageId}`,
+    ))
   }
 
 }

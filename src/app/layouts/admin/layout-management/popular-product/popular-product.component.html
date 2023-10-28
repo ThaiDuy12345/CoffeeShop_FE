@@ -10,9 +10,11 @@
         Lưu ý: sản phẩm phổ biến được chọn chỉ có tối đa 6 sản phẩm
       </div>
       <div class="mb-5 grid grid-cols-1 gap-5">
-        <div class="flex justify-start items-center"><input nbInput placeholder="Tìm kiếm sản phẩm"></div>
+        <div class="flex justify-start items-center">
+          <input nbInput [(ngModel)]="searchInput" (change)="onSearchInput()" placeholder="Tìm kiếm sản phẩm"/>
+        </div>
       </div>
-      <nz-table #table [nzData]="products" nzShowPagination="false" [nbSpinner]="isLoading">
+      <nz-table #table [nzData]="products" nzShowPagination="false" [nzLoading]="isLoading">
         <thead>
           <tr>
             <th>#</th>

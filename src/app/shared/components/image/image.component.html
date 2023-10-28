@@ -1,4 +1,4 @@
-<img [class]="classes" [src]="src" (load)="loaded = true" [ngClass]="{
+<img *ngIf="src" [class]="classes" [src]="src" (load)="loaded = true" [ngClass]="{
   'hidden': !loaded,
 }"/>
-<nz-skeleton-element *ngIf="!loaded" nzType="image" [nzActive]="true" [class]="lazyClasses"></nz-skeleton-element>
+<nz-skeleton-element *ngIf="!loaded || !src" nzType="image" [nzActive]="true" [class]="lazyClasses"></nz-skeleton-element>

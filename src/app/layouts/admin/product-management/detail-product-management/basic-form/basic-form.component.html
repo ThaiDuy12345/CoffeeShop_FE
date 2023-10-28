@@ -24,79 +24,65 @@
     {{ formatDate(product.creationDate) }} ({{ timeSince(product.creationDate) }})
   </div>
   <div class="col-span-2 second-main-text-color">
-    Trạng thái sản phẩm: 
-  </div>
-  <div class="col-span-5">
-    <nz-tag 
-        *ngIf="product.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
-      >
-        <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
-        <span class="center-an-item">Hoạt động</span>
-      </nz-tag>
-      <nz-tag 
-        *ngIf="!product.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
-      >
-        <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
-        <span class="center-an-item text-left">Ẩn</span>
-      </nz-tag>
-  </div>
-  <div class="col-span-2 second-main-text-color">
     Thuộc về danh mục: 
   </div>
   <div class="col-span-5">
     <span class="text-blue-500 cursor-pointer" [routerLink]="'/admin/category-management'">{{ product.category === undefined ? "NaN" : product.category.name }}</span>
   </div>
+  <div class="col-span-2 second-main-text-color">
+    Trạng thái sản phẩm: 
+  </div>
+  <div class="col-span-5">
+    {{ product.active ? 'Kích hoạt': 'Ẩn'}}
+  </div>
 </div>
 
 <div *ngIf="onEditMode" class="col-span-1 gap-3 grid grid-cols-7">
-  
   <div class="col-span-2 second-main-text-color">
     Mã sản phẩm: 
   </div>
   <div class="col-span-5 font-bold">
-    #{{ product.id }}
+    #{{ editProduct.id }}
   </div>
   <div class="col-span-2 second-main-text-color">
     Tên sản phẩm: 
   </div>
-  <div class="col-span-5 font-bold">
-    <input [(ngModel)]="product.name" class="w-full" nbInput placeholder="Tên sản phẩm"/>
+  <div class="col-span-5">
+    <input [disabled]="isLoadingSubmitButton" [(ngModel)]="editProduct.name" class="w-full font-bold" nbInput placeholder="Tên sản phẩm"/>
+    <small *ngIf="!editProduct.name" class="error-text-color">
+      Tên sản phẩm xin vui lòng không để trống
+    </small>
   </div>
   <div class="col-span-2 second-main-text-color">
     Mô tả sản phẩm: 
   </div>
-  <div class="col-span-5 italic">
-    <textarea [(ngModel)]="product.description" class="w-full" nbInput placeholder="Mô tả sản phẩm"></textarea>
+  <div class="col-span-5 ">
+    <textarea [disabled]="isLoadingSubmitButton" [(ngModel)]="editProduct.description" class="w-full italic" nbInput placeholder="Mô tả sản phẩm"></textarea>
+    <small *ngIf="!editProduct.description" class="error-text-color">
+      Mô tả sản phẩm xin vui lòng không để trống
+    </small>
   </div>
   <div class="col-span-2 second-main-text-color">
     Ngày tạo sản phẩm: 
   </div>
   <div class="col-span-5">
-    {{ formatDate(product.creationDate) }} ({{ timeSince(product.creationDate) }})
-  </div>
-  <div class="col-span-2 second-main-text-color">
-    Trạng thái sản phẩm: 
-  </div>
-  <div class="col-span-5">
-    <nz-tag 
-        *ngIf="product.active" class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
-      >
-        <fa-icon class="mr-2 center-an-item" [icon]="icons['faEye']"></fa-icon>
-        <span class="center-an-item text-left">Hoạt động</span>
-      </nz-tag>
-      <nz-tag 
-        *ngIf="!product.active" class="center-an-item cursor-pointer mr-0 py-1 rounded main-text-color w-[100px]"
-      >
-        <fa-icon class="center-an-item mr-2" [icon]="icons['faEyeSlash']"></fa-icon>
-        <span class="center-an-item text-left">Ẩn</span>
-      </nz-tag>
+    {{ formatDate(editProduct.creationDate) }} ({{ timeSince(editProduct.creationDate) }})
   </div>
   <div class="col-span-2 second-main-text-color">
     Thuộc về danh mục: 
   </div>
   <div class="col-span-5">
-    <nb-select class="w-full" placeholder="Danh mục sản phẩm" [(selected)]="product.category === undefined ? 0 : product.category.id">
+    <nb-select [disabled]="isLoadingSubmitButton" (selectedChange)="onChangeCategory($event)" class="w-full" placeholder="Danh mục sản phẩm" [(selected)]="editProduct.category.id">
       <nb-option *ngFor="let o of categoryOptions" [value]="o.id">{{ o.name }}</nb-option>
     </nb-select>
+    <small *ngIf="!editProduct.category.id" class="error-text-color">
+      Danh mục sản phẩm xin vui lòng không để trống
+    </small>
+  </div>
+  <div class="col-span-2 second-main-text-color">
+    Trạng thái sản phẩm: 
+  </div>
+  <div class="col-span-5">
+    {{ editProduct.active ? 'Kích hoạt': 'Ẩn' }}
   </div>
 </div>

@@ -75,7 +75,7 @@ export class ProductManagementComponent implements OnInit {
                 id: p.category.categoryId,
                 name: p.category.categoryName
               },
-              active: true
+              active: p.productActive
             }
           })
 

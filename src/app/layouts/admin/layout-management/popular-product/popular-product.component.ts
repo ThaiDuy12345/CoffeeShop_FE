@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
+import { FormatService } from 'src/app/core/services/format.service';
+import { ProductService } from 'src/app/core/services/product.service';
 import { ProductData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
@@ -11,29 +13,111 @@ import { icons } from 'src/app/shared/utils/icon.utils';
   templateUrl: './popular-product.component.html',
   styleUrls: ['./popular-product.component.scss']
 })
-export class PopularProductComponent {
-  public products: Product[] = ProductData
+export class PopularProductComponent implements OnInit{
+  public products: Product[] = []
   public icons: Icon = icons
   public isLoading: boolean = false
+  public searchInput: string = ""
 
   constructor(
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private productService: ProductService,
+    private formatService: FormatService
   ){}
+
+  ngOnInit(): void {
+    this.initData()
+  }
+
+  initData(): void {
+    this.isLoading = true
+    this.productService.getAll().pipe(
+      finalize(() => {
+        this.isLoading = false
+      })
+    ).subscribe({
+      next: res => {
+        if(res.status){
+          this.products = res.data.filter((p: any) => p.productActive).map((p: any) => {
+            return {
+              id: p.productId,
+              name: p.productName,
+              description: p.productDescription,
+              imageUrl: p.productImageUrl,
+              creationDate: p.productCreationDate,
+              isPopular: p.productIsPopular,
+              category: {
+                id: p.category.categoryId,
+                name: p.category.categoryName
+              },
+              active: p.productActive
+            }
+          })
+
+          if(this.searchInput){
+            this.products = this.products.filter(p => {
+              return (
+                p.category.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
+                p.name.toLowerCase().includes(this.searchInput.toLowerCase())  ||
+                this.formatDate(p.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) 
+              )
+            })
+          }
+        }else{
+          this.messageService.error(res.message)
+        }
+      },
+      error: err => {
+        this.messageService.error(err.error.messsage)
+      }
+    })
+  }
+
+  onSearchInput(): void {
+    this.initData()
+  }
+
+  formatDate(date: number): string {
+    return this.formatService.formatDate(new Date(date))
+  }
 
   getPopularProductLength(): number {
     return this.products.filter(p => p.isPopular === true).length
   }
 
   confirmChange(productId: string, isPopular: boolean): void{
-    this.isLoading = true
     const index = this.products.findIndex(product => product.id === productId)
     if(index !== -1){
-      this.products[index].isPopular = isPopular
-      this.messageService.success("Thay đổi trạng thái thành công")
+      this.isLoading = true
+      this.productService.put(this.products[index].id, {
+        productName: this.products[index].name,
+        productCreationDate: this.products[index].creationDate,
+        productDescription: this.products[index].description,
+        productImageUrl: this.products[index].imageUrl,
+        productActive: this.products[index].active,
+        productIsPopular: isPopular,
+        category: {
+          categoryId: this.products[index].category.id,
+          categoryName: this.products[index].category.name
+        }
+      }).pipe(finalize(() => {
+        this.isLoading = false
+      })).subscribe({
+        next: (res: any) => {
+          if(res.status){
+            this.messageService.success("Thay đổi trạng thái thành công")
+            this.products[index].isPopular = res.data.productIsPopular
+          }else{
+            this.messageService.error(res.message)
+          }
+        },
+        error: (err: any) => {
+          this.messageService.error(err.error.message)
+        }
+      })
     }else{
       this.messageService.error("Thay đổi trạng thái thất bại")
     }
-    this.isLoading = false
   }
 
   isPopularFilter(isPopularFilter: boolean, item:Product): boolean {

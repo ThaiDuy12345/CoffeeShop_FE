@@ -1,52 +1,73 @@
 <div
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
-  <nb-card>    
+  <nb-card [nbSpinner]="isLoading">    
     <nb-card-body class="grid grid-cols-1">
       <div class="font-bold mb-5">
         Thông tin sản phẩm
       </div>
       <div class="grid grid-cols-1 mb-5">
-        <div class="col-span-1 grid grid-cols-5 gap-3">
-          <div class="col-span-1">
-            <app-image [src]="product.imageUrl" [classes]="'rounded w-full'"></app-image>
+        <div class="col-span-1 grid grid-cols-5 gap-3" *ngIf="!isNew" [nbSpinner]="isUploadingNewImage">
+          <div class="col-span-2 md:col-span-1">
+            <app-image [lazyClasses]="'min-h-[150px]'" [src]="'data:image/jpeg;base64,' + productImage" [classes]="'rounded w-full'"></app-image>
           </div>
-          <div class="col-span-4 italic text-red-400">
-            Lưu ý: Khi thay đổi ảnh, ảnh cần đúng kích thước với tỷ lệ 1:1...
+          <div class="col-span-3 md:col-span-4">
+            <i class="text-red-400">Lưu ý: Khi thay đổi ảnh, ảnh cần đúng kích thước với tỷ lệ 1:1...</i>
             <br/>
             <br/>
-            <input type="file" accept="image/*" class="hidden" #file (change)="handleInputChange(file.files)"/>
+            <input type="file" accept="image/*" class="hidden" #file [(ngModel)]="inputFile" (input)="handleInputChange(file.files)"/>
             <div>
-              <button nbButton (click)="file.click()">Đổi ảnh</button>
+              <button [disabled]="onEditMode" nbButton (click)="file.click()" class="mr-5">Đổi ảnh</button>
+              <fa-icon 
+                class="cursor-pointer text-green-400 mr-2" 
+                *ngIf="isUploadNewImage" 
+                [icon]="icons['faCheck']" 
+                nz-tooltip nzTooltipTitle="Lưu ảnh"
+                nzPopconfirmPlacement="bottom"
+                (nzOnCancel)="(null)"
+                nzPopconfirmTitle="Xác nhận tải ảnh mới cho sản phẩm này?"
+                nz-popconfirm
+                nzOkText="Xác nhận"
+                nzCancelText="Huỷ"
+                (nzOnConfirm)="onConfirmUploadImage()"
+              ></fa-icon>
+              <fa-icon (click)="onClickCancelUploadImage()" class="cursor-pointer text-red-400" *ngIf="isUploadNewImage" [icon]="icons['faXmark']" nz-tooltip nzTooltipTitle="Xoá ảnh tải lên"></fa-icon>
             </div>
           </div>
         </div>
+        <div class="my-5" *ngIf="!isNew">
+          <nz-divider></nz-divider>
+        </div>
+        <app-basic-form [product]="product" [isLoadingSubmitButton]="isLoadingSubmitButton" [editProduct]="editProduct" [onEditMode]="onEditMode" class="mb-3"></app-basic-form>
+        <div class="flex justify-end items-center">
+          <ng-container *ngIf="!onEditMode">
+            <button [disabled]="isUploadNewImage" nbButton (click)="onEditMode = true">Chỉnh sửa thông tin</button>
+          </ng-container>
+          <ng-container *ngIf="onEditMode">
+            <button nbButton status="success" (click)="open(dialog)">Lưu</button>
+            <button nbButton status="danger" class="ml-3" (click)="onCancelEditMode()">Huỷ</button>
+          </ng-container>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!isNew">
         <div class="my-5">
           <nz-divider></nz-divider>
         </div>
-        <app-basic-form [product]="product" [onEditMode]="onEditMode" class="mb-3"></app-basic-form>
-        <div class="flex justify-end items-center">
-          <button nbButton (click)="onEditMode = !onEditMode">Chỉnh sửa thông tin</button>
+        <div class="font-bold mb-5">
+          Kích cỡ sản phẩm
         </div>
-      </div>
-
-      <div class="my-5">
-        <nz-divider></nz-divider>
-      </div>
-
-      <div class="font-bold mb-5">
-        Kích cỡ sản phẩm
-      </div>
-      <app-size-form [product]="product" class="mb-3"></app-size-form>
-      <div class="flex justify-end items-center">
-        <button nbButton [disabled]="isAtMaxSize()">{{ isAtMaxSize() ? "Đạt giới hạn size" : "Thêm size"}}</button>
-      </div>
+        <app-size-form [product]="product" class="mb-3"></app-size-form>
+        <div class="flex justify-end items-center">
+          <button nbButton [disabled]="isAtMaxSize()">{{ isAtMaxSize() ? "Đạt giới hạn size" : "Thêm size"}}</button>
+        </div>
+      </ng-container>
       <ng-template #dialog let-data let-ref="dialogRef">
         <nb-card>
           <nb-card-body>{{ data }}</nb-card-body>
           <nb-card-footer class="space-x-3">
             <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-            <button nbButton status="success">Xác nhận</button>
+            <button nbButton status="success" (click)="onSubmitConfirm()" [nbSpinner]="isLoadingSubmitButton">Xác nhận</button>
           </nb-card-footer>
         </nb-card>
       </ng-template>

@@ -61,7 +61,7 @@
   <div class="w-full grid grid-cols-1 text-center my-10">
     <h2 class="font-bold text-3xl">Sản phẩm bán chạy</h2>
   </div>
-  <app-product-list [products]="mostPopularProducts" [cols]="getWidth() < 500 ? 2 : 3"></app-product-list>
+  <app-product-list [nbSpinner]="isLoading" [products]="mostPopularProducts" [cols]="getWidth() < 500 ? 2 : 3"></app-product-list>
   <div class="w-full grid grid-cols-2 my-10 gap-3 mb-20">
     <div class="col-span-2 xl:col-span-1">
       <app-image

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-image',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./image.component.scss']
 })
 export class ImageComponent{
-  @Input() classes: string = ''
+  @Input() classes: string  = ''
   @Input() src: string = ''
   @Input() lazyClasses: string = ''
 

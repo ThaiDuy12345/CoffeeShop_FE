@@ -10,19 +10,44 @@
         Lưu ý: Chỉ những sản phẩm có trạng thái "hoạt động" mới có thể xuất hiện trên hệ thống COFFEE
       </div>
       <div class="mb-5 grid grid-cols-2 gap-5">
-        <div class="flex justify-start items-center"><input nbInput placeholder="Tìm kiếm sản phẩm"></div>
+        <div class="flex justify-start items-center">
+          <input nbInput (change)="onSearchInput()" [(ngModel)]="searchInput" placeholder="Tìm kiếm sản phẩm"/>
+        </div>
         <div class="flex justify-end items-center">
           <button nbButton status="info" [routerLink]="'/admin/product-management/new'">Thêm</button>
         </div>
       </div>
-      <nz-table #table [nzData]="products" [nzLoading]="isLoading" nzShowPagination="false">
+      <nz-table #table [nzData]="products" [nzLoading]="isLoading" [nzPageSize]="4">
         <thead>
           <tr>
             <th>#</th>
             <th>Tên sản phẩm</th>
-            <th>Danh mục</th>
-            <th>Ngày tạo</th>
-            <th [nzAlign]="'center'">Trạng thái</th>
+            <th
+              [nzFilterMultiple]="false"
+              [nzFilters]="categoryFilterList"
+              [nzFilterFn]="categoryFilter"
+            >Danh mục</th>
+            <th
+              [nzSortFn]="dateSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Ngày tạo</th>
+            <th 
+              [nzAlign]="'center'"
+              [nzSortFn]="activeSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+              [nzFilterMultiple]="false"
+              [nzFilters]="[
+                {
+                  text: 'Kích hoạt', value: true
+                },
+                {
+                  text: 'Ẩn', value: false
+                }
+              ]"
+              [nzFilterFn]="activeFilter"
+            >Trạng thái</th>
             <th></th>
           </tr>
         </thead>

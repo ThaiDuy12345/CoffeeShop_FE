@@ -8,8 +8,6 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
   providedIn: 'root'
 })
 export class BannerService{
-  private mainBannerId: string = "65243a5c03b0401f307211a0"
-  private popupBannerId: string = "65243cdd7b2bd52ca2bb1037"
   constructor(
     private apiService: ApiService,
     private http: HttpClient
@@ -17,7 +15,7 @@ export class BannerService{
   
   getMainBanner(): Observable<any> {
     return this.http.get(
-      this.apiService.bannerService() + `/${this.mainBannerId}`
+      this.apiService.bannerService() + `/main`
     ).pipe(
       catchError((err: HttpErrorResponse) =>{ 
         return throwError(() => err)
@@ -25,12 +23,10 @@ export class BannerService{
     )
   }
 
-  updateMainBanner(image_id: string = ""): Observable<any> {
-    return this.http.put(
-      this.apiService.bannerService() + `/${this.mainBannerId}`,
-      {
-        image_id: image_id
-      }
+  updateBanner(params: { type: "main" | "pop_up", formData: FormData }): Observable<any> {
+    return this.http.post(
+      this.apiService.bannerService() + `/${params.type}`,
+      params.formData
     ).pipe(
       catchError((err: HttpErrorResponse) =>{ 
         return throwError(() => err)
@@ -40,7 +36,7 @@ export class BannerService{
 
   getPopupBanner(): Observable<any> {
     return this.http.get(
-      this.apiService.bannerService() + `/${this.popupBannerId}`
+      this.apiService.bannerService() + `/pop_up`
     ).pipe(
       catchError((err: HttpErrorResponse) =>{ 
         return throwError(() => err)
@@ -48,17 +44,13 @@ export class BannerService{
     )
   }
 
-  updatePopupBanner(image_id: string = ""): Observable<any> {
-    return this.http.put(
-      this.apiService.bannerService() + `/${this.popupBannerId}`,
-      {
-        image_id: image_id
-      }
+  resetBanner(params: { type: "main" | "pop_up" }): Observable<any> {
+    return this.http.delete(
+      this.apiService.bannerService() + `/${params.type}`
     ).pipe(
       catchError((err: HttpErrorResponse) =>{ 
         return throwError(() => err)
       })
     )
   }
-
 }

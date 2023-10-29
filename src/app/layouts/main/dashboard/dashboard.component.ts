@@ -42,15 +42,15 @@ export class DashboardComponent implements OnInit {
   initData(): void {
     try{
       this.bannerService.getMainBanner().subscribe(responses => {
-        if(responses.status === 200) {
-          this.bannerMain = responses.data.image.url
+        if(responses.status === true) {
+          this.bannerMain = responses.data.url
         }else{
           this.bannerMainReplace = "assets/brand-icons/banner.jpg"
         }
       })
       this.bannerService.getPopupBanner().subscribe(responses => {
-        if(responses.status === 200) {
-          this.bannerPopup = responses.data.image.url
+        if(responses.status === true) {
+          this.bannerPopup = responses.data.url
         }else{
           this.bannerMainReplace = "assets/brand-icons/sale.png"
         }

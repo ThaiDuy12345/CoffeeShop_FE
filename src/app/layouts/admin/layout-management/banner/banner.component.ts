@@ -48,18 +48,11 @@ export class BannerComponent implements OnInit{
       this.isLoadingMainBanner = true
       const formData = new FormData()
       formData.append('file', files[0])
-      this.imageService.addNewImage(formData).subscribe(res => {
-        if(res.status === 200){
-          this.bannerService.updateMainBanner(res.data._id).subscribe(res2 => {
-            if(res2.status === 200){
-              this.mainBanner = res2.data.image.url
-              this.isLoadingMainBanner = false
-              this.messageService.success("Cập nhật ảnh thành công!!");
-            }else {
-              this.isLoadingMainBanner = false
-              this.messageService.error("Cập nhật ảnh thất bại!!");
-            }
-          })
+      this.bannerService.updateBanner({ type: "main", formData: formData }).subscribe(res => {
+        if(res.status === true){
+          this.mainBanner = res.data.url
+          this.isLoadingMainBanner = false
+          this.messageService.success("Cập nhật ảnh thành công!!");
         }else {
           this.isLoadingMainBanner = false
           this.messageService.error("Cập nhật ảnh thất bại!!");
@@ -67,9 +60,9 @@ export class BannerComponent implements OnInit{
       })
     }else {
       this.isLoadingCancelMainBanner = true
-      this.bannerService.updateMainBanner().subscribe(res2 => {
-        if(res2.status === 200){
-          this.mainBanner = res2.data.image.url
+      this.bannerService.resetBanner({ type: "main" }).subscribe(res => {
+        if(res.status === true){
+          this.mainBanner = res.data.url
           this.isLoadingCancelMainBanner = false
           this.messageService.success("Cập nhật ảnh thành công!!");
         }else {
@@ -87,18 +80,12 @@ export class BannerComponent implements OnInit{
       this.isLoadingPopupBanner = true
       const formData = new FormData()
       formData.append('file', files[0])
-      this.imageService.addNewImage(formData).subscribe(res => {
-        if(res.status === 200){
-          this.bannerService.updatePopupBanner(res.data._id).subscribe(res2 => {
-            if(res2.status === 200){
-              this.popupBanner = res2.data.image.url
-              this.isLoadingPopupBanner = false
-              this.messageService.success("Cập nhật ảnh thành công!!");
-            }else {
-              this.isLoadingPopupBanner = false
-              this.messageService.error("Cập nhật ảnh thất bại!!");
-            }
-          })
+
+      this.bannerService.updateBanner({ type: "pop_up", formData: formData }).subscribe(res => {
+        if(res.status === true){
+          this.popupBanner = res.data.url
+          this.isLoadingPopupBanner = false
+          this.messageService.success("Cập nhật ảnh thành công!!");
         }else {
           this.isLoadingPopupBanner = false
           this.messageService.error("Cập nhật ảnh thất bại!!");
@@ -106,13 +93,13 @@ export class BannerComponent implements OnInit{
       })
     }else {
       this.isLoadingCancelPopupBanner = true
-      this.bannerService.updatePopupBanner().subscribe(res2 => {
-        if(res2.status === 200){
-          this.popupBanner = res2.data.image.url
-          this.isLoadingCancelPopupBanner = false
+      this.bannerService.resetBanner({ type: "pop_up" }).subscribe(res => {
+        if(res.status === true){
+          this.mainBanner = res.data.url
+          this.isLoadingCancelMainBanner = false
           this.messageService.success("Cập nhật ảnh thành công!!");
         }else {
-          this.isLoadingCancelPopupBanner = false
+          this.isLoadingCancelMainBanner = false
           this.messageService.error("Cập nhật ảnh thất bại!!");
         }
       })

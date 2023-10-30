@@ -13,10 +13,10 @@ export class ImageService{
     private http: HttpClient
   ){}
   
-  addNewImage(formData: FormData): Observable<any> {
+  addNewImage(image: { productId: string, formData: FormData }): Observable<any> {
     return this.apiService.errorHandle(this.http.post(
-      this.apiService.imageService().toString(),
-      formData
+      this.apiService.imageService().toString() + `/${image.productId}`,
+      image.formData
     ))
   }
 

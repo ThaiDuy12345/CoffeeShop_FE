@@ -122,7 +122,7 @@ export class DetailProductManagementComponent implements OnInit{
     this.isUploadingNewImage = true
     const formData = new FormData()
     formData.append('file', this.imageFile)
-    this.imageService.addNewImage(formData).pipe(
+    this.imageService.addNewImage({ productId: this.product.id, formData: formData }).pipe(
       finalize(() => {
         this.isUploadingNewImage = false
         this.isUploadNewImage = false
@@ -130,12 +130,12 @@ export class DetailProductManagementComponent implements OnInit{
       })
     ).subscribe({
       next: res => {
-        if(res.status === 200){
+        if(res.status === true){
           this.productService.put(this.product.id, {
             productName: this.product.name,
             productCreationDate: this.product.creationDate,
             productDescription: this.product.description,
-            productImageUrl: res.data._id,
+            productImageUrl: res.data.url,
             productActive: this.product.active,
             productIsPopular: this.product.isPopular,
             category: {

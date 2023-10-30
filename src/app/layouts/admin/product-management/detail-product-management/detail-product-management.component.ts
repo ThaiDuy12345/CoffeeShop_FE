@@ -28,7 +28,6 @@ export class DetailProductManagementComponent implements OnInit{
   public inputFile: string = ""
   public isNew: boolean = false
   public editProduct: Product = new Product()
-  public productImage: string = ""
   constructor(
     private messageService: NzMessageService,
     private dialogService: NbDialogService,
@@ -63,32 +62,13 @@ export class DetailProductManagementComponent implements OnInit{
     })
   }
 
-  imageLoad(): void {
-    if(!this.product.imageUrl){
-      this.productImage = ""
-      return
-    }
-    this.imageService.getById({ imageId: this.product.imageUrl }).subscribe({
-      next: res => {
-        if(res.status === 200){
-          this.productImage = res.data.url
-        }else{
-          this.messageService.error("Lỗi không thể tải ảnh sản phẩm")
-        }
-      },
-      error: err => {
-        this.messageService.error("Lỗi không thể tải ảnh sản phẩm")
-      }
-    })
-  }
-
   handleInputChange(fileList: FileList | null): void {
     if(fileList === null) return
     const file: File = fileList[0]
     const r = new FileReader()
     r.onload = (e) => {
       if(e && e.target && e.target.result && e.target.result instanceof ArrayBuffer) {
-        this.productImage = this.arrayBufferToBase64(e.target.result)
+        this.editProduct.imageUrl = 'data:image/jpeg;base64,' + this.arrayBufferToBase64(e.target.result)
         this.isUploadNewImage = true
         this.imageFile = file
       }else{
@@ -125,14 +105,12 @@ export class DetailProductManagementComponent implements OnInit{
       active: data.productActive
     }
     this.editProduct = { ...this.product }
-    this.imageLoad()
   }
 
   onClickCancelUploadImage() {
     this.editProduct.imageUrl = this.product.imageUrl
     this.isUploadNewImage = false
     this.inputFile = ""
-    this.imageLoad()
   }
 
   onConfirmUploadImage() {

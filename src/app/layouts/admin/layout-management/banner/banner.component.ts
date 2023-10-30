@@ -50,6 +50,7 @@ export class BannerComponent implements OnInit{
       formData.append('file', files[0])
       this.bannerService.updateBanner({ type: "main", formData: formData }).subscribe(res => {
         if(res.status === true){
+          this.mainBanner = "ádasd"
           this.mainBanner = res.data.url
           this.isLoadingMainBanner = false
           this.messageService.success("Cập nhật ảnh thành công!!");

@@ -9,7 +9,7 @@
       <div class="grid grid-cols-1 mb-5">
         <div class="col-span-1 grid grid-cols-5 gap-3" *ngIf="!isNew" [nbSpinner]="isUploadingNewImage">
           <div class="col-span-2 md:col-span-1">
-            <app-image [lazyClasses]="'min-h-[150px]'" [src]="'data:image/jpeg;base64,' + productImage" [classes]="'rounded w-full'"></app-image>
+            <app-image [lazyClasses]="'min-h-[150px]'" [src]="editProduct.imageUrl" [classes]="'rounded w-full'"></app-image>
           </div>
           <div class="col-span-3 md:col-span-4">
             <i class="text-red-400">Lưu ý: Khi thay đổi ảnh, ảnh cần đúng kích thước với tỷ lệ 1:1...</i>

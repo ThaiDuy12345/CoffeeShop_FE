@@ -14,7 +14,7 @@
         Banner Pop Up sẽ xuất hiện như 1 modal mỗi khi người dùng truy cập trang dashboard <br/>
         Nội dung thích hợp: Event, khuyến mãi, giảm giá trong ngày...
       </div>
-      <input type="file" accept="image/*" #file1 class="hidden" (change)="onPopUpBannerInputChange(file1.files)">
+      <input type="file" accept="image/*" #file1 class="hidden" (input)="onPopUpBannerInputChange(file1.files)">
       <button [nbSpinner]="isLoadingPopupBanner" nbButton status="primary" class="mr-2" (click)="file1.click()">Thay đổi</button>
       <button [nbSpinner]="isLoadingCancelPopupBanner" status="danger" nbButton (click)="onPopUpBannerInputChange(null, 'RESET')">
         <fa-icon [icon]="icons['faTrash']"></fa-icon>
@@ -38,7 +38,7 @@
       <div class="second-main-text-color">
         Lưu ý: Banner chính sẽ chỉ chấp nhận hình ảnh có chiều rộng lớn hơn chiều dài
       </div>
-      <input type="file" accept="image/*" #file2 class="hidden" (change)="onMainBannerInputChange(file2.files)">
+      <input type="file" accept="image/*" #file2 class="hidden" (input)="onMainBannerInputChange(file2.files)">
       <button [nbSpinner]="isLoadingMainBanner" nbButton status="primary" class="mr-2" (click)="file2.click()">Thay đổi</button>
       <button [nbSpinner]="isLoadingCancelMainBanner" status="danger" nbButton (click)="onMainBannerInputChange(null, 'RESET')">
         <fa-icon [icon]="icons['faTrash']"></fa-icon>

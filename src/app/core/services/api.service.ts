@@ -74,7 +74,7 @@ export class ApiService{
   isNodeJSAlive(): Observable<boolean>{
     return new Observable((observer) => this.http.get(this.base_nodejs_url).subscribe({
       next: (res: any) => {
-        if(res.status === 200){
+        if(res.status === true){
           observer.next(true)
           observer.complete()
         }else {

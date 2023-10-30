@@ -30,13 +30,13 @@ export class BannerComponent implements OnInit{
 
   initData(): void {
     this.bannerService.getMainBanner().subscribe(res => {
-      if(res.status === 200){
-        this.mainBanner = res.data.image.url
+      if(res.status === true){
+        this.mainBanner = res.data.url
       }
     })
     this.bannerService.getPopupBanner().subscribe(res => {
-      if(res.status === 200){
-        this.popupBanner = res.data.image.url
+      if(res.status === true){
+        this.popupBanner = res.data.url
       }
     })
   }
@@ -95,11 +95,11 @@ export class BannerComponent implements OnInit{
       this.isLoadingCancelPopupBanner = true
       this.bannerService.resetBanner({ type: "pop_up" }).subscribe(res => {
         if(res.status === true){
-          this.mainBanner = res.data.url
-          this.isLoadingCancelMainBanner = false
+          this.popupBanner = res.data.url
+          this.isLoadingCancelPopupBanner = false
           this.messageService.success("Cập nhật ảnh thành công!!");
         }else {
-          this.isLoadingCancelMainBanner = false
+          this.isLoadingCancelPopupBanner = false
           this.messageService.error("Cập nhật ảnh thất bại!!");
         }
       })

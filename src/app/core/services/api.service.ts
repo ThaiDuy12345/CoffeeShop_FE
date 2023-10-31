@@ -18,7 +18,8 @@ export class ApiService{
     ACCOUNT: '/accounts',
     DISCOUNT: '/discounts',
     CATEGORY: '/categories',
-    PRODUCT: '/products'
+    PRODUCT: '/products',
+    PRODUCT_SIZE: '/product_sizes'
   }
 
   private service_vietnam = this.vietnam_url
@@ -49,6 +50,10 @@ export class ApiService{
 
   productService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.PRODUCT
+  }
+
+  productSizeService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.PRODUCT_SIZE
   }
 
   vietnamService(): String {

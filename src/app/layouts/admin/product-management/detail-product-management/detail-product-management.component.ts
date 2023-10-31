@@ -251,8 +251,4 @@ export class DetailProductManagementComponent implements OnInit{
       reader.onerror = error => reject(error);
     })
   }
-
-  isAtMaxSize(): boolean {
-    return ProductSizeData.filter(ps => ps.product.id === this.product.id).length === 3
-  }
 }

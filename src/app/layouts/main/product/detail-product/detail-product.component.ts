@@ -11,6 +11,9 @@ import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormatService } from 'src/app/core/services/format.service';
 import { ProductSize } from 'src/app/core/models/product-size.model';
+import { ProductService } from 'src/app/core/services/product.service';
+import { finalize } from 'rxjs';
+import { ProductSizeService } from 'src/app/core/services/product-size.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -38,6 +41,7 @@ export class DetailProductComponent implements OnInit {
   public starRating: number = 0;
   public isLoadingAddToCartBuntton: boolean = false;
   public isLoadingBuyNowButton: boolean = false;
+  public isLoading: boolean = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private messageService: NzMessageService,
@@ -46,28 +50,82 @@ export class DetailProductComponent implements OnInit {
     private filterStore: FilterStore,
     @Optional() private dialogRef: NbDialogRef<any>,
     private dialogService: NbDialogService,
+    private productService: ProductService,
+    private productSizeService: ProductSizeService,
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      const result = ProductData.find((item) => item.id === params['id']);
-      if (!result) {
+      if(!params['id']){
         this.messageService.error('Mã sản phẩm không tồn tại');
         this.router.navigate(['/main/product']);
         return;
       }
-      this.product = result;
-      this.loadProductSize();
-      this.loadRelatedProducts();
-      this.loadFeedBackProduct();
+
+      this.productService.getById({ productId: params['id'] }).pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+      ).subscribe({
+        next: res => {
+          if(res.status){
+
+            if(!res.data.productActive){
+              this.messageService.error('Mã sản phẩm không tồn tại');
+              this.router.navigate(['/main/product']);
+              return
+            }
+
+            this.product = {
+              id: res.data.productId,
+              name: res.data.productName,
+              description: res.data.productDescription,
+              imageUrl: res.data.productImageUrl,
+              creationDate: res.data.productCreationDate,
+              isPopular: res.data.productIsPopular,
+              category: {
+                id: res.data.category.categoryId,
+                name: res.data.category.categoryName
+              },
+              active: res.data.productActive
+            }
+            this.loadProductSize();
+            this.loadRelatedProducts();
+            // this.loadFeedBackProduct();
+          }else{
+            this.messageService.error(res.message);
+            this.router.navigate(['/main/product']);
+          }
+        },
+        error: err => {
+          this.messageService.error(err.error.message);
+          this.router.navigate(['/main/product']);
+        }
+      })
     });
   }
 
   loadProductSize(): void {
-    this.productSize = ProductSizeData.filter(ps => ps.product.id === this.product.id)
-    this.productSizeOption = this.productSize.map(ps => 
-      `Size ${ps.size_name}`
-    )
+    this.productSizeService.getByProductId({ productId: this.product.id }).subscribe({
+      next: res => {
+        if(res.status) {
+          this.productSize = res.data.map((ps: any) => {
+            return {
+              id: ps.productSizeId,
+              size: ps.productSize,
+              price: ps.productSizePrice,
+              product: new Product()
+            }
+          })
+          this.productSizeOption = this.productSize.map(ps => 
+            `Size ${ps.size}`
+          )
+        }else this.messageService.error(res.message);
+      },
+      error: err => {
+        this.messageService.error(err.error.message);
+      }
+    })    
   }
 
   getPrice(index: number): number {
@@ -79,16 +137,31 @@ export class DetailProductComponent implements OnInit {
   }
 
   loadRelatedProducts(): void {
-    const result = ProductData.filter(
-      (item) => {
-        if(item.category && this.product.category){
-          return item.category.id === this.product.category.id
-        }else {
-          return false
-        }
+    this.productService.getByCategory({ categoryId: this.product.category.id }).subscribe({
+      next: res => {
+        if(res.status){
+          const result = res.data.map((p: any) => {
+            return {
+              id: p.productId,
+              name: p.productName,
+              description: p.productDescription,
+              imageUrl: p.productImageUrl,
+              creationDate: p.productCreationDate,
+              isPopular: p.productIsPopular,
+              category: {
+                id: p.category.categoryId,
+                name: p.category.categoryName
+              },
+              active: p.productActive
+            }
+          })
+          this.relatedProducts = this.productService.filterActiveProducts(result).slice(0, 5)
+        }else this.messageService.error(res.message);
+      },
+      error: err => {
+        this.messageService.error(err.error.message);
       }
-    );
-    this.relatedProducts = result.slice(0, 5);
+    })
   }
 
   onClickShare(): void {
@@ -151,9 +224,8 @@ export class DetailProductComponent implements OnInit {
 
   navigateRelatedProduct(): void {
     this.filterStore.update((state) => {
-
       return {
-        category: [this.product.category.name],
+        category: [this.product.category.id],
         search: '',
       };
     });

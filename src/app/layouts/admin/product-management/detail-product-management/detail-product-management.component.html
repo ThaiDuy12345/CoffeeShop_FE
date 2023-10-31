@@ -57,10 +57,7 @@
         <div class="font-bold mb-5">
           Kích cỡ sản phẩm
         </div>
-        <app-size-form [product]="product" class="mb-3"></app-size-form>
-        <div class="flex justify-end items-center">
-          <button nbButton [disabled]="isAtMaxSize()">{{ isAtMaxSize() ? "Đạt giới hạn size" : "Thêm size"}}</button>
-        </div>
+        <app-size-form *ngIf="product.id" [product]="product" class="mb-3"></app-size-form>
       </ng-container>
       <ng-template #dialog let-data let-ref="dialogRef">
         <nb-card>

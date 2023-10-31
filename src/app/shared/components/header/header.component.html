@@ -13,29 +13,25 @@
       nzSelectable="false"
       class="bordering-b-0 h-full center-an-item"
     >
-      <ng-container *ngFor="let item of items">
         <li
-          *ngIf="item.subItems"
           class="h-[50%]"
           nz-submenu
-          [routerLink]="item.link"
-          [nzTitle]="item.label"
-          [nzIcon]="item.icon"
+          [routerLink]="'/main/product'"
+          [nzTitle]="'Sản phẩm'"
+          [nzIcon]="'appstore'"
         >
           <ul>
             <li
-              (click)="
-                item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null
-              "
+              (click)="onClickNavigate(i.id)"
               nz-menu-item
-              *ngFor="let i of item.subItems"
+              *ngFor="let i of productCategories"
             >
-              <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+              {{ i.name }}
             </li>
           </ul>
         </li>
+      <ng-container *ngFor="let item of items">
         <li
-          *ngIf="!item.subItems"
           class="h-[50%]"
           nz-menu-item
           nzMatchRouter
@@ -167,28 +163,24 @@
             </li>
           </ul>
         </li>
-        <ng-container *ngFor="let item of items">
-          <li
-            *ngIf="item.subItems"
+        <li
             nz-submenu
-            [routerLink]="item.link"
-            [nzTitle]="item.label"
-            [nzIcon]="item.icon"
+            [routerLink]="'/main/product'"
+            [nzTitle]="'Sản phẩm'"
+            [nzIcon]="'appstore'"
           >
             <ul>
               <li
-                (click)="
-                  item.label === 'Sản phẩm' ? onClickNavigate(i.link) : null
-                "
+                (click)="onClickNavigate(i.id)"
                 nz-menu-item
-                *ngFor="let i of item.subItems"
+                *ngFor="let i of productCategories"
               >
-                <fa-icon [icon]="i.icon"></fa-icon>&ensp;{{ i.title }}
+                {{ i.name }}
               </li>
             </ul>
           </li>
+        <ng-container *ngFor="let item of items">
           <li
-            *ngIf="!item.subItems"
             nzMatchRouter
             nz-menu-item
             [routerLink]="item.link"

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { Product } from "../models/product.model";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class ProductService {
     return this.apiService.errorHandle(
       this.httpClient.put(this.apiService.productService().toString() + `/${productId}`, params)
     )
+  }
+
+  filterActiveProducts(products: Product[]): Product[]{
+    return products.filter(p => p.active)
   }
   
 }

@@ -1,7 +1,6 @@
-import { AuthService } from './../../../core/services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import Cookies from 'js-cookie';
-import { AccountData, NotificationData } from 'src/app/data/data';
+import { NotificationData } from 'src/app/data/data';
 import { icons } from '../../utils/icon.utils';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -12,6 +11,8 @@ import { Notification } from 'src/app/core/models/notification.model';
 import { Subject } from 'rxjs';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { CategoryService } from 'src/app/core/services/category.service';
+import { Category } from 'src/app/core/models/category.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -22,34 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public icons: Icon = icons
   public notifications: Notification[] = NotificationData
   private tempSubject: Subject<any> = new Subject<any>
+  public productCategories: Category[] = []
   public items = [
-    {
-      label: 'Sản phẩm',
-      icon: 'appstore',
-      link: '/main/product',
-      subItems: [
-        {
-          title: 'TRÀ',
-          icon: icons['faGlassWater'],
-          link: 'tea',
-        },
-        {
-          title: 'COFFEE',
-          icon: icons['faMugHot'],
-          link: 'coffee',
-        },
-        {
-          title: 'ĐỒ ĂN',
-          icon: icons['faUtensils'],
-          link: 'food',
-        },
-        {
-          title: 'SẢN PHẨM GÓI',
-          icon: icons['faCubes'],
-          link: 'package',
-        },
-      ],
-    },
     {
       label: 'Đơn hàng',
       icon: 'barcode',
@@ -94,7 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private filterStore: FilterStore,
     private location: Location,
     private authenticationStore: AuthenticationStore,
-    private authService: SocialAuthService
+    private authService: SocialAuthService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnDestroy(): void {
@@ -123,6 +99,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
 
     this.authenticationStore._select(state => state).subscribe(this.tempSubject)
+    this.categoryService.getAll().subscribe({
+      next: res => {
+        if(res.status){
+          this.productCategories = res.data.map((ps: any) => {
+            return {
+              id: ps.categoryId,
+              name: ps.categoryName.toUpperCase()
+            }
+          })
+        }
+      }
+    })
   }
 
   onClickSignOut(): void {

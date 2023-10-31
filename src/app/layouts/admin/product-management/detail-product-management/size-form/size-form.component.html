@@ -1,5 +1,10 @@
-<div class="col-span-1 gap-3 grid grid-cols-1">
-  <nz-table #table2 [nzData]="productSizes" nzShowPagination="false">
+<div class="col-span-1 gap-3 grid grid-cols-1 mb-3">
+  <nz-table
+    #table2
+    [nzLoading]="isLoading"
+    [nzData]="productSizes"
+    nzShowPagination="false"
+  >
     <thead>
       <tr>
         <th>#</th>
@@ -13,39 +18,87 @@
         <ng-template [ngIf]="currentEditItem === i">
           <td class="second-text-color cursor-pointer">{{ data.id }}</td>
           <td>
-            <nb-select placeholder="Size sản phẩm" [(selected)]="editItem.size_name">
-              <nb-option value="S">Size Nhỏ (S)</nb-option>
-              <nb-option value="M">Size Vừa (M)</nb-option>
-              <nb-option value="L">Size Lớn (L)</nb-option>
+            <nb-select placeholder="Size sản phẩm" [(selected)]="editItem.size">
+              <nb-option *ngFor="let i of sizeOptions" [value]="i.value">{{
+                i.text
+              }}</nb-option>
             </nb-select>
           </td>
           <td>
-            <input nbInput type="number" placeholder="Giá Size" [(ngModel)]="editItem.price"/>
+            <input
+              nbInput
+              type="number"
+              placeholder="Giá Size"
+              [(ngModel)]="editItem.price"
+            />
           </td>
           <td>
-            <fa-icon [icon]="icons['faCheck']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Lưu" (click)="onSaveEditItem()"></fa-icon>
-            <fa-icon [icon]="icons['faBan']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Hủy" (click)="onClickCancel()"></fa-icon>
+            <fa-icon
+              [icon]="
+                isLoadingSubmitSizeButton
+                  ? icons['faCircleNotch']
+                  : icons['faCheck']
+              "
+              [spin]="isLoadingSubmitSizeButton"
+              class="mx-2 cursor-pointer"
+              nz-tooltip
+              nzTooltipTitle="Lưu"
+              (click)="onSaveEditItem()"
+            ></fa-icon>
+            <fa-icon
+              [icon]="
+                isLoadingDeleteSizeButton
+                  ? icons['faCircleNotch']
+                  : icons['faBan']
+              "
+              [spin]="isLoadingDeleteSizeButton"
+              class="mx-2 cursor-pointer"
+              nz-tooltip
+              nzTooltipTitle="Hủy"
+              (click)="onClickCancelEditProductSize()"
+            ></fa-icon>
           </td>
         </ng-template>
         <ng-template [ngIf]="currentEditItem !== i">
-          <td class="second-text-color cursor-pointer">{{data.id}}</td>
-          <td>Size {{ data.size_name }}</td>
+          <td class="second-text-color cursor-pointer">{{ data.id }}</td>
+          <td>Size {{ data.size }}</td>
           <td>{{ data.price }}</td>
           <td>
-            <fa-icon *ngIf="currentEditItem === -1" [icon]="icons['faPencil']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Chỉnh sửa" (click)="currentEditItem = i; editItem = data"></fa-icon>
-            <fa-icon 
+            <fa-icon
+              *ngIf="currentEditItem === -1"
+              [icon]="icons['faPencil']"
+              class="mx-2 cursor-pointer"
+              nz-tooltip
+              nzTooltipTitle="Chỉnh sửa"
+              (click)="onClickEditProductSize(data, i)"
+            ></fa-icon>
+            <fa-icon
               nzPopconfirmPlacement="bottom"
-              (nzOnCancel)="null"
+              (nzOnCancel)="(null)"
               nzPopconfirmTitle="Xác nhận xóa size này?"
               nz-popconfirm
               nzOkText="Xác nhận"
               nzCancelText="Huỷ"
               (nzOnConfirm)="onConfirmDelete(data.id)"
-              *ngIf="currentEditItem === -1" [icon]="icons['faTrash']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Xóa">
+              *ngIf="currentEditItem === -1"
+              [icon]="icons['faTrash']"
+              class="mx-2 cursor-pointer"
+              nz-tooltip
+              nzTooltipTitle="Xóa"
+            >
             </fa-icon>
           </td>
         </ng-template>
       </tr>
     </tbody>
   </nz-table>
+</div>
+<div class="flex justify-end items-center">
+  <button
+    nbButton
+    (click)="onClickAddNewProductSize()"
+    [disabled]="productSizes.length === 3 || currentEditItem !== -1"
+  >
+    {{ productSizes.length === 3 ? "Đạt giới hạn size" : "Thêm size" }}
+  </button>
 </div>

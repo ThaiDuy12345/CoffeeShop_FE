@@ -117,67 +117,67 @@ export const ProductData: Product[] = [
 export const ProductSizeData: ProductSize[] = [
   {
     id: "0",
-    size_name: "S",
+    size: "S",
     price: 19000,
     product: ProductData[0]
   },
   {
     id: "1",
-    size_name: "M",
+    size: "M",
     price: 29000,
     product: ProductData[0]
   },
   {
     id: "2",
-    size_name: "S",
+    size: "S",
     price: 29000,
     product: ProductData[1]
   },
   {
     id: "3",
-    size_name: "S",
+    size: "S",
     price: 29000,
     product: ProductData[2]
   },
   {
     id: "4",
-    size_name: "S",
+    size: "S",
     price: 49000,
     product: ProductData[3]
   },
   {
     id: "5",
-    size_name: "M",
+    size: "M",
     price: 59000,
     product: ProductData[3]
   },
   {
     id: "6",
-    size_name: "S",
+    size: "S",
     price: 39000,
     product: ProductData[4]
   },
   {
     id: "7",
-    size_name: "M",
+    size: "M",
     price: 39000,
     product: ProductData[4]
   },
   {
     id: "8",
-    size_name: "S",
+    size: "S",
     price: 29000,
     product: ProductData[5]
   },
   {
     id: "9",
-    size_name: "M",
+    size: "M",
     price: 39000,
     product: ProductData[5]
   },
   {
     id: "10",
-    size_name: "L",
+    size: "L",
     price: 49000,
     product: ProductData[5]
   }

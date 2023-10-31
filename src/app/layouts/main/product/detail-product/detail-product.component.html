@@ -50,7 +50,7 @@
             <span class=""> 10 Lượt bán </span>
           </div>
           <div class="w-full text-3xl text-[#EE7070] font-bold">
-            {{ formatPrice(getPrice(choosingSize)) }}
+            {{ productSize.length > 0 ? formatPrice(getPrice(choosingSize)) : null }}
           </div>
           <div class="w-full mt-5 mb-5">
             <nz-segmented (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>

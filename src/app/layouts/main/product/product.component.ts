@@ -1,10 +1,13 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Product } from './../../../core/models/product.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Product } from 'src/app/core/models/product.model';
-import { ProductData } from 'src/app/data/data';
 import { icons } from '../../../shared/utils/icon.utils';
 import { Icon } from 'src/app/core/models/icon.model';
 import { FilterStore } from 'src/app/core/stores/filter.store';
-import { Subject } from 'rxjs';
+import { Subject, finalize } from 'rxjs';
+import { ProductService } from 'src/app/core/services/product.service';
+import { Category } from 'src/app/core/models/category.model';
+import { CategoryService } from 'src/app/core/services/category.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -21,102 +24,143 @@ export class ProductComponent implements OnInit, OnDestroy {
   public minPrice: number = 0;
   public maxPrice: number = 0;
   public search: string = '';
+  public categories: Category[] = []
   public filterSelect: string[] = [];
   public isLoading: boolean = false;
   public priceFilter: [number, number] = [0, 0];
   public initFilterState = new Subject<any>();
   public calculatedCols: 3 | 2 = 3;
   public viewMode: 'ICON' | 'LIST' = 'ICON';
-  constructor(private filterStore: FilterStore) {}
+  constructor(
+    private filterStore: FilterStore,
+    private productService: ProductService,
+    private messageService: NzMessageService,
+    private categoryService: CategoryService,
+  ) {}
 
   ngOnInit(): void {
-    this.setInitPriceSlider(ProductData);
-    this.getProductList();
+    this.isLoading = true
+    this.getCategory()
   }
 
   ngOnDestroy(): void {
     this.initFilterState.complete();
   }
 
+  getCategory(): void {
+    this.categoryService.getAll().subscribe({
+      next: res => {
+        if(res.status){
+          this.categories = res.data.map((c: any) => {
+            return{
+              id: c.categoryId,
+              name: c.categoryName
+            }
+          })
+          this.getProductList()
+        }else this.messageService.error(res.message)
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+  }
+
   getProductList(): void {
+    this.productService.getAll().pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe({
+      next: res => {
+        if(res.status){
+          const result = res.data.map((p: any) => {
+            return {
+              id: p.productId,
+              name: p.productName,
+              description: p.productDescription,
+              imageUrl: p.productImageUrl,
+              creationDate: p.productCreationDate,
+              isPopular: p.productIsPopular,
+              category: {
+                id: p.category.categoryId,
+                name: p.category.categoryName
+              },
+              active: p.productActive
+            }
+          })
+          const filterResults = this.productService.filterActiveProducts(result)
+          this.setInitFilter(filterResults)
+          // this.setInitPriceSlider(filterResults);
+        }else this.messageService.error(res.message)
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+  }
+
+  setInitFilter(productData: Product[]): void {
     this.initFilterState.subscribe({
       next: (state) => {
         if (!state) {
-          this.allProduct = ProductData;
+          this.allProduct = productData;
           return;
         }
-        this.isLoading = true;
-        setTimeout(() => {
-          if (state.category.length > 0) {
-            this.allProduct = ProductData.filter((item) =>
-              {
-                if(item.category){
-                  return state.category.includes(item.category.name)
-                }else{
-                  return false
-                }
-              }
-            );
-            this.filterSelect = state.category;
-          } else {
-            this.allProduct = ProductData;
-            this.filterSelect = [];
-          }
+        if (state.category.length > 0) {
+          this.allProduct = productData.filter((item) =>
+            item.category.id ? state.category.includes(item.category.id) : false 
+          );
+          this.filterSelect = state.category;
+        } else {
+          this.allProduct = productData;
+          this.filterSelect = [];
+        }
 
-          if (state.search.length > 0) {
-            this.search = state.search;
-            this.allProduct = this.allProduct.filter((item) =>
-              item.name.toLowerCase().includes(state.search.toLowerCase())
-            );
-          } else {
-            this.search = '';
-          }
+        if (state.search.length > 0) {
+          this.search = state.search;
+          this.allProduct = this.allProduct.filter((item) =>
+            item.name.toLowerCase().includes(state.search.toLowerCase())
+          );
+        } else {
+          this.search = '';
+        }
 
-          // if (state.ordering === 1) {
-          //   this.allProduct = this.allProduct.sort(
-          //     (itemA, itemB) => itemB.price - itemA.price
-          //   );
-          //   this.optionIndex = 1
-          // } else if (state.ordering === 2) {
-          //   this.allProduct = this.allProduct.sort(
-          //     (itemA, itemB) => itemA.price - itemB.price
-          //   );
-          //   this.optionIndex = 2
-          // } else {
-            this.allProduct = this.allProduct.sort((itemA, itemB) => {
-              if (itemA.creationDate > itemB.creationDate) {
-                return 1;
-              } else {
-                return -1;
-              }
-            });
-            this.optionIndex = 0
-          // }
+        // if (state.ordering === 1) {
+        //   this.allProduct = this.allProduct.sort(
+        //     (itemA, itemB) => itemB.price - itemA.price
+        //   );
+        //   this.optionIndex = 1
+        // } else if (state.ordering === 2) {
+        //   this.allProduct = this.allProduct.sort(
+        //     (itemA, itemB) => itemA.price - itemB.price
+        //   );
+        //   this.optionIndex = 2
+        // } else {
+          this.allProduct = this.allProduct.sort((itemA, itemB) => {
+            return itemA.creationDate > itemB.creationDate ? 1 : -1
+          });
+          this.optionIndex = 0
+        // }
 
-          if (state.view) {
-            this.viewMode = state.view;
-          }
+        if (state.view)  this.viewMode = state.view;
 
-          // this.allProduct = this.allProduct.filter(
-          //   (item) =>
-          //     item.price >= this.priceFilter[0] &&
-          //     item.price <= this.priceFilter[1]
-          // );
-          this.isLoading = false;
-        }, 600);
+        // this.allProduct = this.allProduct.filter(
+        //   (item) =>
+        //     item.price >= this.priceFilter[0] &&
+        //     item.price <= this.priceFilter[1]
+        // );
       },
     });
     this.filterStore._select((state) => state).subscribe(this.initFilterState);
   }
 
-  setInitPriceSlider(allProduct: Product[]): void {
+  // setInitPriceSlider(allProduct: Product[]): void {
     // this.maxPrice = Math.max(...allProduct.map((item) => item.price));
     // this.priceFilter = [this.minPrice, this.maxPrice];
     // this.marks = {
     //   [this.minPrice]: this.minPrice.toString(),
     //   [this.maxPrice]: this.maxPrice.toString(),
     // };
-  }
+  // }
 
   onClickResetFilterSearch(): void {
     this.filterStore.update((state) => {

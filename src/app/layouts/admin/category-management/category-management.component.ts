@@ -107,7 +107,7 @@ export class CategoryManagementComponent {
 
   onClickEditCategory(index: number): void {
     this.currentEditIndex = index
-    this.currentEditItem = this.categories[index]
+    this.currentEditItem = {...this.categories[index]}
   }
 
   onClickSubmitDeleteCategory(index: number): void {

@@ -1,11 +1,13 @@
 <div class="mx-auto container py-10 lg:px-20 px-3">
   <nb-card class="rounded-lg">
-    <nb-card-body class="border-none grid grid-cols-5 gap-x-10 px-3 py-10 sm:px-10">
+    <nb-card-body
+      class="border-none grid grid-cols-5 gap-x-10 px-3 py-10 sm:px-10"
+    >
       <div class="col-span-5 mb-5 bordering-b pb-10">
         <h1 class="text-3xl text-center w-full font-bold mb-10">
           <span class="text-center">Sản phẩm của COFFEE</span>
         </h1>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 gap-5">
           <!-- <label class="col-span-1">
             Sắp xếp theo
           </label>
@@ -13,6 +15,13 @@
           <!-- <div class="col-span-2 md:col-span-1">
             <nz-segmented [nzOptions]="options" (nzValueChange)="handleIndexChange($event)" [(ngModel)]="optionIndex"></nz-segmented>
           </div> -->
+          <div class="col-span-2 italic text-gray-500">
+            Sự sảng khoái bắt đầu từ mỗi ngụm đắng đậm của cafe, tinh tế của
+            trà, và sự ngọt ngào của những chiếc bánh trái thơm béo. Tại cửa
+            hàng của chúng tôi, chúng tôi mang đến cho bạn trải nghiệm thú vị,
+            nơi bạn có thể thả mình vào thế giới hương vị đầy phấn khích, và
+            quên đi những lo âu hàng ngày.
+          </div>
           <div class="col-span-2">
             <h1 class="text-lg text-right w-full font-bold space-x-3">
               <fa-icon
@@ -58,7 +67,9 @@
             (selectedChange)="updateFilter($event)"
             [selected]="filterSelect"
           >
-            <nb-option *ngFor="let i of categories" [value]="i.id">{{ i.name }}</nb-option>
+            <nb-option *ngFor="let i of categories" [value]="i.id">{{
+              i.name
+            }}</nb-option>
           </nb-select>
         </div>
         <!-- <div class="w-full">
@@ -74,7 +85,10 @@
           ></nz-slider>
         </div> -->
       </div>
-      <div class="col-span-5 md:col-span-4 center-an-item" [nbSpinner]="isLoading">
+      <div
+        class="col-span-5 md:col-span-4 center-an-item"
+        [nbSpinner]="isLoading"
+      >
         <ng-template [ngIf]="allProduct.length > 0">
           <app-product-list
             [products]="allProduct"
@@ -94,4 +108,3 @@
     </nb-card-body>
   </nb-card>
 </div>
-  

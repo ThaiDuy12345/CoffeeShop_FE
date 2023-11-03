@@ -179,6 +179,7 @@ export class DetailProductManagementComponent implements OnInit{
       !this.editProduct.description
     ){
       this.messageService.error("Bạn cần điền hết thông tin để tiếp tục!!")
+      this.dialogRef.close()
       return
     }
     this.isLoadingSubmitButton = true

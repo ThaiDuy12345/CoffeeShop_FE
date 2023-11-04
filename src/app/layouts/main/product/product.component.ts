@@ -8,6 +8,7 @@ import { Subject, finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Category } from 'src/app/core/models/category.model';
 import { CategoryService } from 'src/app/core/services/category.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -36,6 +37,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private messageService: NzMessageService,
     private categoryService: CategoryService,
+    private mappingService: MappingService
   ) {}
 
   ngOnInit(): void {
@@ -51,12 +53,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.categoryService.getAll().subscribe({
       next: res => {
         if(res.status){
-          this.categories = res.data.map((c: any) => {
-            return{
-              id: c.categoryId,
-              name: c.categoryName
-            }
-          })
+          this.categories = res.data.map((c: any) => this.mappingService.category(c))
           this.getProductList()
         }else this.messageService.error(res.message)
       },
@@ -72,21 +69,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: res => {
         if(res.status){
-          const result = res.data.map((p: any) => {
-            return {
-              id: p.productId,
-              name: p.productName,
-              description: p.productDescription,
-              imageUrl: p.productImageUrl,
-              creationDate: p.productCreationDate,
-              isPopular: p.productIsPopular,
-              category: {
-                id: p.category.categoryId,
-                name: p.category.categoryName
-              },
-              active: p.productActive
-            }
-          })
+          const result = res.data.map((p: any) => this.mappingService.product(p));
           const filterResults = this.productService.filterActiveProducts(result)
           this.setInitFilter(filterResults)
           // this.setInitPriceSlider(filterResults);

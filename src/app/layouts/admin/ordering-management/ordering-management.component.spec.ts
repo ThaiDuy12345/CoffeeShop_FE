@@ -16,6 +16,6 @@ describe('OrderingManagementComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component.orderings).toHaveSize(9)
   });
 });

@@ -4,6 +4,7 @@ import { Observable, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { ProductData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -22,7 +23,8 @@ export class PopularProductComponent implements OnInit{
   constructor(
     private messageService: NzMessageService,
     private productService: ProductService,
-    private formatService: FormatService
+    private formatService: FormatService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -38,21 +40,7 @@ export class PopularProductComponent implements OnInit{
     ).subscribe({
       next: res => {
         if(res.status){
-          this.products = res.data.filter((p: any) => p.productActive).map((p: any) => {
-            return {
-              id: p.productId,
-              name: p.productName,
-              description: p.productDescription,
-              imageUrl: p.productImageUrl,
-              creationDate: p.productCreationDate,
-              isPopular: p.productIsPopular,
-              category: {
-                id: p.category.categoryId,
-                name: p.category.categoryName
-              },
-              active: p.productActive
-            }
-          })
+          this.products = res.data.filter((p: any) => p.productActive).map((p: any) => this.mappingService.product(p))
 
           if(this.searchInput){
             this.products = this.products.filter(p => {

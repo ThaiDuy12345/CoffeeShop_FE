@@ -4,8 +4,11 @@ import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { Discount } from 'src/app/core/models/discount.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { MappingService } from 'src/app/core/services/mapping.service';
+import { Ordering } from 'src/app/core/models/ordering.model';
 import { DiscountService } from 'src/app/core/services/discount.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { OrderingService } from 'src/app/core/services/ordering.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -21,11 +24,15 @@ export class DiscountManagementComponent implements OnInit{
   public choosingDiscount: Discount = new Discount()
   public isLoading: boolean = false
   public searchInput: string = ''
+  public detailOrderings: Ordering[] = []
+  public isLoadingDetailOrdering: boolean = false
 
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
-    private discountService: DiscountService
+    private discountService: DiscountService,
+    private orderingService: OrderingService,
+    private mappingService: MappingService,
   ){}
 
   ngOnInit(): void {
@@ -41,28 +48,7 @@ export class DiscountManagementComponent implements OnInit{
     ).subscribe({
       next: (res) => {
         if(res.status){
-          this.discounts = res.data.map((acc: any) => {
-            return {
-              id: acc.discountId,
-              code: acc.discountCode,
-              creationDate: acc.discountCreationDate,
-              expiredDate: acc.discountExpiredDate,
-              minimumOrderPrice: acc.discountMinimumOrderPrice,
-              amount: acc.discountAmount,
-              orderings: acc.orderingEntities.map((order: any) => {
-                return {
-                  id: order.orderingID,
-                  status: order.orderingStatus,
-                  account: new Account(),
-                  date: order.orderingCreationDate,
-                  shippingFee: order.orderingShippingFee,
-                  price: order.orderingPrice,
-                  totalPrice: order.orderingTotalPrice,
-                  note: order.orderingNote
-                }
-              })
-            }
-          })
+          this.discounts = res.data.map((p: any) => this.mappingService.discount(p))
 
           if(this.searchInput) this.discounts = this.discounts.filter(d => {
             return (
@@ -138,6 +124,24 @@ export class DiscountManagementComponent implements OnInit{
   viewADiscount(data: Discount): void {
     if(!data) return
     this.choosingDiscount = data
+
+    if(!this.detailVisible) return
+    this.detailOrderings = []
+    this.isLoadingDetailOrdering = true
+    this.orderingService.getAll().pipe(
+      finalize(() => this.isLoadingDetailOrdering = false)
+    ).subscribe({
+      next: res => {
+        if(res.status){
+          this.detailOrderings = res.data.filter((p: any) => p.discount !== null && p.discount.discountId === this.choosingDiscount.id).map((p: any) => 
+            this.mappingService.ordering(p)  
+          )
+        }else this.messageService.error(res.message)
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
   }
 
   expiredDateDiscountSort(discountA: Discount, discountB: Discount): number {

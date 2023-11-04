@@ -7,6 +7,7 @@ import { AccountService } from "./account.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { Router } from "@angular/router";
 import { AuthenticationStore } from "../stores/authentication.store";
+import { MappingService } from "./mapping.service";
 @Injectable({
   providedIn: "root"
 })
@@ -16,7 +17,8 @@ export class AuthService {
     private accountService: AccountService,
     private httpClient: HttpClient,
     private authenticationStore: AuthenticationStore,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private mappingService: MappingService
   ){}
   
   isSignedIn(): Observable<any> {
@@ -124,15 +126,7 @@ export class AuthService {
   saveAccountToStore(data: any): void {
     this.authenticationStore.update(state => {
       return {
-        account: {
-          name: data.accountName,
-          phone: data.accountPhone,
-          email: data.accountEmail,
-          password: data.accountPassword,
-          active: data.accountActive,
-          role: data.accountRole,
-          address: data.accountAddress
-        }
+        account: this.mappingService.account(data)
       }
     })
   }

@@ -19,7 +19,9 @@ export class ApiService{
     DISCOUNT: '/discounts',
     CATEGORY: '/categories',
     PRODUCT: '/products',
-    PRODUCT_SIZE: '/product_sizes'
+    PRODUCT_SIZE: '/product_sizes',
+    ORDERING: '/orderings',
+    DETAIL_ORDER: '/detail-orders'
   }
 
   private service_vietnam = this.vietnam_url
@@ -54,6 +56,14 @@ export class ApiService{
 
   productSizeService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.PRODUCT_SIZE
+  }
+
+  detailOrderService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.DETAIL_ORDER
+  }
+
+  orderingService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.ORDERING
   }
 
   vietnamService(): String {

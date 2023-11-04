@@ -1,1 +1,175 @@
-<p>ordering-management works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>
+    <nb-card-header class="border-none">
+      Danh sách đơn hàng
+    </nb-card-header>
+    <nb-card-body class="border-none">
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        Các nhân viên, admin xin vui lòng chú ý tới các đơn hàng để có thể duyệt đơn hàng của khách một cách sớm nhất
+      </div>
+      <div class="mb-5 grid grid-cols-2 gap-5">
+        <div class="flex justify-start items-center">
+          <input nbInput (change)="onSearchInput()" [(ngModel)]="searchInput" placeholder="Tìm kiếm đơn hàng"/>
+        </div>
+      </div>
+      <nz-table #table [nzData]="orderings" [nzLoading]="isLoading" [nzPageSize]="4">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th
+              [nzSortFn]="dateSort"
+              [nzSortOrder]="'ascend'"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Ngày tạo</th>
+            <th
+              [nzSortFn]="priceSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Tổng giá</th>
+            <th 
+              [nzAlign]="'center'"
+              [nzFilterMultiple]="true"
+              [nzFilters]="[
+                { text: 'Chưa đặt', value: 0 },
+                { text: 'Đợi duyệt', value: 1, byDefault: true },
+                { text: 'Chuẩn bị', value: 2, byDefault: true },
+                { text: 'Đang giao', value: 3, byDefault: true },
+                { text: 'Đã giao', value: 4 },
+                { text: 'Đã huỷ', value: -1 }
+              ]"
+              [nzFilterFn]="statusFilter"
+              [nzSortFn]="statusSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Trạng thái đơn hàng</th>
+            <th 
+              [nzAlign]="'center'"
+              [nzFilterMultiple]="false"
+              [nzFilters]="[
+                { text: 'Đã thanh toán', value: true },
+                { text: 'Chưa thanh toán', value: false },
+              ]"
+              [nzFilterFn]="paymentStatusFilter"
+              [nzSortFn]="paymentStatusSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Thanh toán</th>
+            <th [nzAlign]="'center'">Khách hàng</th>
+            <!-- <th
+              [nzFilterMultiple]="false"
+              [nzFilters]="categoryFilterList"
+              [nzFilterFn]="categoryFilter"
+            >Danh mục</th>
+            <th
+              [nzSortFn]="dateSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >Ngày tạo</th>
+            <th 
+              [nzAlign]="'center'"
+              [nzSortFn]="activeSort"
+              [nzSortOrder]="null"
+              [nzSortDirections]="['descend', 'ascend', null]"
+              [nzFilterMultiple]="false"
+              [nzFilters]="[
+                {
+                  text: 'Kích hoạt', value: true
+                },
+                {
+                  text: 'Ẩn', value: false
+                }
+              ]"
+              [nzFilterFn]="activeFilter"
+            >Trạng thái</th> -->
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data">
+            <td>{{data.id}}</td>
+            <td>{{formatDate(data.date)}}</td>
+            <td>{{formatPrice(data.totalPrice)}}</td>
+            <td>
+              <span class="center-an-item">
+                <nz-tag
+                  nz-tooltip
+                  nzTooltipTitle="Khách hàng vẫn chưa đặt hàng"
+                  *ngIf="data.status === 0"
+                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                >
+                  Chưa đặt hàng
+                </nz-tag>
+                <nz-tag
+                  nz-tooltip
+                  nzTooltipTitle="Khách hàng đã đặt hàng, đợi xét duyệt từ nhân viên hoặc admin"
+                  *ngIf="data.status === 1"
+                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                >
+                  Đợi xét duyệt
+                </nz-tag>
+                <nz-tag
+                  nz-tooltip
+                  nzTooltipTitle="Đơn hàng đã được duyệt, đang chuẩn bị hàng"
+                  *ngIf="data.status === 2"
+                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                >
+                  Chuẩn bị
+                </nz-tag>
+                <nz-tag
+                  nz-tooltip
+                  nzTooltipTitle="Đơn hàng đã được bàn giao cho shipper và đang trên đường giao"
+                  *ngIf="data.status === 3"
+                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                >
+                  Đang giao
+                </nz-tag>
+                <nz-tag
+                  nz-tooltip
+                  nzTooltipTitle="Đơn hàng đã được giao thành công"
+                  *ngIf="data.status === 4"
+                  class="center-an-item bg-green-500 mr-0 py-1 rounded text-white w-[100px]"
+                >
+                  Thành công
+                </nz-tag>
+                <nz-tag
+                  nz-tooltip
+                  nzTooltipTitle="Đơn hàng đã bị huỷ (Người đặt từ chối nhận hàng, bùng đơn, giao thất bại,...)"
+                  *ngIf="data.status === -1"
+                  class="center-an-item bg-red-500 mr-0 py-1 rounded text-white w-[100px]"
+                >
+                  Đã huỷ
+                </nz-tag>
+              </span>
+            </td>
+            <td>
+              <span class="center-an-item">
+                <fa-icon 
+                  nz-tooltip
+                  *ngIf="!data.paymentStatus"
+                  nzTooltipTitle="Khách hàng vẫn chưa thanh toán cho đơn hàng này"
+                  [icon]="icons['faXmark']" 
+                  class="text-red-400"
+                ></fa-icon>
+                <fa-icon 
+                  nz-tooltip
+                  *ngIf="data.paymentStatus"
+                  nzTooltipTitle="Khách hàng đã thanh toán đơn hàng này"
+                  [icon]="icons['faCheck']" 
+                  class="text-green-400"
+                ></fa-icon>
+              </span>
+            </td>
+            <td>
+              <span class="center-an-item">{{data.account.name}}</span>
+            </td>
+            <td>
+              <fa-icon [icon]="icons['faCircleInfo']" [routerLink]="['/admin/ordering-management', data.id]" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Thông tin"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nb-card-body>
+  </nb-card>
+</div>

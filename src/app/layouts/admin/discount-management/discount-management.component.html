@@ -141,7 +141,7 @@
         <nb-card>
           <nb-card-header class="border-none"> Các đơn hàng đã sử dụng mã giảm giá </nb-card-header>
           <nb-card-body>
-            <nz-table #table2 [nzData]="choosingDiscount.orderings" nzShowPagination="false">
+            <nz-table #table2 [nzData]="detailOrderings" [nzLoading]="isLoadingDetailOrdering" nzShowPagination="false">
               <thead>
                 <tr>
                   <th>#</th>

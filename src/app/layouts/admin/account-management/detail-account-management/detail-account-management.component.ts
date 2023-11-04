@@ -7,6 +7,7 @@ import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { District, Province, Ward } from 'src/app/core/models/vietnam.model';
 import { AccountService } from 'src/app/core/services/account.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { VietnamService } from 'src/app/core/services/vietnam.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
@@ -51,7 +52,8 @@ export class DetailAccountManagementComponent {
     private router: Router,
     @Optional() private dialogRef: NbDialogRef<any>,
     private accountService: AccountService,
-    private vietnamService: VietnamService
+    private vietnamService: VietnamService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -77,15 +79,7 @@ export class DetailAccountManagementComponent {
         })
       ).subscribe({
         next: (res) => {
-          this.choosingAccount = {
-            name: res.data.accountName,
-            phone: res.data.accountPhone,
-            address: res.data.accountAddress,
-            active: res.data.accountActive,
-            role: res.data.accountRole,
-            password: res.data.accountPassword,
-            email: res.data.accountEmail
-          }
+          this.choosingAccount = this.mappingService.account(res.data)
 
           this.editAccount = { ...this.choosingAccount }
         },

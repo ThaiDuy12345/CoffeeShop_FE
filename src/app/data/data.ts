@@ -7,6 +7,7 @@ import { Ordering } from "../core/models/ordering.model"
 import { FavoriteProduct } from '../core/models/favorite-product.model';
 import { Notification } from '../core/models/notification.model';
 import { ProductSize } from '../core/models/product-size.model';
+import { Discount } from '../core/models/discount.model';
 
 
 const imagePath = "assets/product-pictures/"
@@ -436,8 +437,10 @@ export const OrderingData: Ordering[] = [
     id: "VN2308685190140",
     status: 4,
     account: AccountData[0],
+    discount: new Discount(),
     date: new Date("2023-08-26").getTime(),
     shippingFee: 15000,
+    paymentStatus: false,
     price: 212000,
     note: "bruh",
     totalPrice: 227000
@@ -446,8 +449,10 @@ export const OrderingData: Ordering[] = [
     id: "VN22323623190140",
     status: 2,
     account: AccountData[0],
+    discount: new Discount(),
     date: new Date("2023-08-30").getTime(),
     shippingFee: 15000,
+    paymentStatus: false,
     price: 216000,
     note: "bruh",
     totalPrice: 231000
@@ -455,37 +460,42 @@ export const OrderingData: Ordering[] = [
 ]
 
 export const DetailOrderData: DetailOrder[] = [
-  {...new DetailOrder({
+  {
     id: "0",
     quantity: 1,
     productSize: ProductSizeData[0],
-    ordering: OrderingData[0]
-  })},
-  {...new DetailOrder({
+    ordering: OrderingData[0],
+    subTotal: 0
+  },
+  {
     id: "1",
-    quantity: 2,
+    quantity: 2,  
     productSize: ProductSizeData[5],
-    ordering: OrderingData[0]
-  })},
-  {...new DetailOrder({
+    ordering: OrderingData[0],
+    subTotal: 0
+  },
+  {
     id: "2",
     quantity: 4,
     productSize: ProductSizeData[3],
-    ordering: OrderingData[0]
-  })},
+    ordering: OrderingData[0],
+    subTotal: 0
+  },
 
-  {...new DetailOrder({
+  {
     id: "3",
     quantity: 3,
     productSize: ProductSizeData[5],
-    ordering: OrderingData[1]
-  })},
-  {...new DetailOrder({
+    ordering: OrderingData[1],
+    subTotal: 0
+  },
+  {
     id: "4",
     quantity: 6,
     productSize: ProductSizeData[1],
-    ordering: OrderingData[1]
-  })},
+    ordering: OrderingData[1],
+    subTotal: 0
+  },
 
 ]
 

@@ -16,6 +16,7 @@ import { DetailProductManagementComponent } from './product-management/detail-pr
 import { StaffGuard } from 'src/app/guard/staffGuard.guard';
 import { DiscountManagementComponent } from './discount-management/discount-management.component';
 import { DetailDiscountManagementComponent } from './discount-management/detail-discount-management/detail-discount-management.component';
+import { DetailOrderingManagementComponent } from './ordering-management/detail-ordering-management/detail-ordering-management.component';
 const routes: Route[] = [
   {
     path: "",
@@ -104,7 +105,16 @@ const routes: Route[] = [
       },
       {
         path: "ordering-management",
-        component: OrderingManagementComponent
+        children: [
+          {
+            path: "",
+            component: OrderingManagementComponent
+          },
+          {
+            path: ":id",
+            component: DetailOrderingManagementComponent
+          }
+        ]
       },
       {
         path: "discount-management",
@@ -130,7 +140,6 @@ const routes: Route[] = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  declarations: [
-  ],
+  declarations: [],
 })
 export class AdminModule { }

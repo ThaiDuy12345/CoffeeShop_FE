@@ -5,7 +5,7 @@
     <nb-card-body [nbSpinner]="isLoading">
       <div  class="flex items-center justify-center">
         <div class="mx-auto w-full">
-          <div *ngIf="!isEditable()" class="mb-5 error-text-color">
+          <div *ngIf="!isEditable" class="mb-5 error-text-color">
             Mã giảm giá này đã có 1 số khách hàng áp dụng, bạn không thể chỉnh sửa các thông tin cơ bản trừ thiết lập ngày hiệu lực
           </div>
           <form autocomplete="off">
@@ -22,7 +22,7 @@
                 <input
                   type="text"
                   nbInput
-                  [disabled]="!isEditable()" 
+                  [disabled]="!isEditable" 
                   (input)="onInputDiscountCode()"
                   name="codeInput"
                   #codeInput="ngModel"
@@ -34,7 +34,7 @@
                   nz-tooltip
                   nzTooltipTitle="Thêm ngày tháng năm để giảm sự trùng lập"
                   nbSuffix
-                  [disabled]="!isEditable()" 
+                  [disabled]="!isEditable" 
                   nbButton
                   ghost
                   (click)="generateDatePattern()"
@@ -62,7 +62,7 @@
               </label>
               <input
                 type="number"
-                [disabled]="!isEditable()" 
+                [disabled]="!isEditable" 
                 name="minimumOrderPriceInput"
                 #minimumOrderPriceInput="ngModel"
                 [(ngModel)]="editDiscount.minimumOrderPrice"
@@ -79,7 +79,7 @@
                 Mức giá sẽ giảm: <b>{{ formatNumber(choosingDiscount.amount) }}</b>
               </label>
               <input
-                [disabled]="!isEditable()" 
+                [disabled]="!isEditable" 
                 type="number"
                 autocomplete="off"
                 name="amountInput"

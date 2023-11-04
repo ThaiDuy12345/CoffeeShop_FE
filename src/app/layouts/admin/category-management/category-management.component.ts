@@ -6,6 +6,7 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
@@ -31,7 +32,8 @@ export class CategoryManagementComponent {
     private messageService: NzMessageService,
     private formatService: FormatService,
     private categoryService: CategoryService,
-    private productService: ProductService
+    private productService: ProductService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -47,12 +49,7 @@ export class CategoryManagementComponent {
     ).subscribe({
       next: (res) => {
         if(res.status){
-          this.categories = res.data.map((acc: any) => {
-            return {
-              id: acc.categoryId,
-              name: acc.categoryName,
-            }
-          })
+          this.categories = res.data.map((acc: any) => this.mappingService.category(acc))
 
           if(this.searchInput) this.categories =  this.categories.filter(d => d.name.toLowerCase().includes(this.searchInput.toLowerCase()))
         }else{
@@ -134,21 +131,7 @@ export class CategoryManagementComponent {
     ).subscribe({
       next: res => {
         if(res.status){
-          this.choosingCategoryProduct = res.data.map((p: any) => {
-            return {
-              id: p.productId,
-              name: p.productName,
-              description: p.productDescription,
-              imageUrl: p.productImageUrl,
-              creationDate: p.productCreationDate,
-              isPopular: p.productIsPopular,
-              category: {
-                id: p.category.categoryId,
-                name: p.category.categoryName
-              },
-              active: p.productActive
-            }
-          })
+          this.choosingCategoryProduct = res.data.map((p: any) => this.mappingService.product(p))
         }else{
           this.messageService.error(res.error.message)
 

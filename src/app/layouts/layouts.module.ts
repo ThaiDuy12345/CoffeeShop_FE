@@ -62,7 +62,7 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
-import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { ProductListComponent } from '../shared/components/product-list/product-list.component';
 import { UserComponent } from './main/user/user.component';
 import { EditUserComponent } from './main/user/edit-user/edit-user.component';
@@ -100,6 +100,7 @@ import { DetailProductManagementComponent } from './admin/product-management/det
 import { BasicFormComponent } from './admin/product-management/detail-product-management/basic-form/basic-form.component';
 import { SizeFormComponent } from './admin/product-management/detail-product-management/size-form/size-form.component';
 import { DetailDiscountManagementComponent } from './admin/discount-management/detail-discount-management/detail-discount-management.component';
+import { DetailOrderingManagementComponent } from './admin/ordering-management/detail-ordering-management/detail-ordering-management.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -127,6 +128,7 @@ import { DetailDiscountManagementComponent } from './admin/discount-management/d
     StepOneOrderingComponent,
     DetailProductManagementComponent,
     StepTwoOrderingComponent,
+    DetailOrderingManagementComponent,
     StepThreeOrderingComponent,
     AdminComponent,
     BannerComponent,
@@ -204,6 +206,6 @@ import { DetailDiscountManagementComponent } from './admin/discount-management/d
     NbSidebarModule,
     NbCardModule,
     NbLayoutModule,
-  ],
+  ]
 })
 export class LayoutsModule {}

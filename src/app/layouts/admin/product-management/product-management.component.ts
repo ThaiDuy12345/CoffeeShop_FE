@@ -6,7 +6,6 @@ import { Product } from 'src/app/core/models/product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { ProductService } from 'src/app/core/services/product.service';
-import { ProductData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({

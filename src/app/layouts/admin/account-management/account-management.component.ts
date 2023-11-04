@@ -8,6 +8,7 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { AccountService } from 'src/app/core/services/account.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { AccountData, FeedBackData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
@@ -29,7 +30,8 @@ export class AccountManagementComponent implements OnInit {
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -41,17 +43,7 @@ export class AccountManagementComponent implements OnInit {
     this.accountService.getAll().subscribe({
       next: (res) => {
         if(res.status){
-          this.accounts = res.data.map((acc: any) => {
-            return {
-              phone: acc.accountPhone,
-              name: acc.accountName,
-              email: acc.accountEmail,
-              password: acc.accountPassword,
-              role: acc.accountRole,
-              active: acc.accountActive,
-              address: acc.accountAddress
-            }
-          })
+          this.accounts = res.data.map((acc: any) => this.mappingService.account(acc))
 
           if(this.searchInput){
             this.accounts = this.accounts.filter((a) => {

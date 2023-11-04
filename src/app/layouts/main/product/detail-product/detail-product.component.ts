@@ -14,6 +14,7 @@ import { ProductSize } from 'src/app/core/models/product-size.model';
 import { ProductService } from 'src/app/core/services/product.service';
 import { finalize } from 'rxjs';
 import { ProductSizeService } from 'src/app/core/services/product-size.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -52,6 +53,7 @@ export class DetailProductComponent implements OnInit {
     private dialogService: NbDialogService,
     private productService: ProductService,
     private productSizeService: ProductSizeService,
+    private mappingService: MappingService
   ) {}
 
   ngOnInit(): void {
@@ -76,19 +78,7 @@ export class DetailProductComponent implements OnInit {
               return
             }
 
-            this.product = {
-              id: res.data.productId,
-              name: res.data.productName,
-              description: res.data.productDescription,
-              imageUrl: res.data.productImageUrl,
-              creationDate: res.data.productCreationDate,
-              isPopular: res.data.productIsPopular,
-              category: {
-                id: res.data.category.categoryId,
-                name: res.data.category.categoryName
-              },
-              active: res.data.productActive
-            }
+            this.product = this.mappingService.product(res.data)
             this.loadProductSize();
             this.loadRelatedProducts();
             // this.loadFeedBackProduct();
@@ -109,14 +99,7 @@ export class DetailProductComponent implements OnInit {
     this.productSizeService.getByProductId({ productId: this.product.id }).subscribe({
       next: res => {
         if(res.status) {
-          this.productSize = res.data.map((ps: any) => {
-            return {
-              id: ps.productSizeId,
-              size: ps.productSize,
-              price: ps.productSizePrice,
-              product: new Product()
-            }
-          })
+          this.productSize = res.data.map((ps: any) => this.mappingService.productSize(ps))
           this.productSizeOption = this.productSize.map(ps => 
             `Size ${ps.size}`
           )
@@ -140,21 +123,7 @@ export class DetailProductComponent implements OnInit {
     this.productService.getByCategory({ categoryId: this.product.category.id }).subscribe({
       next: res => {
         if(res.status){
-          const result = res.data.map((p: any) => {
-            return {
-              id: p.productId,
-              name: p.productName,
-              description: p.productDescription,
-              imageUrl: p.productImageUrl,
-              creationDate: p.productCreationDate,
-              isPopular: p.productIsPopular,
-              category: {
-                id: p.category.categoryId,
-                name: p.category.categoryName
-              },
-              active: p.productActive
-            }
-          })
+          const result = res.data.map((p: any) => this.mappingService.product(p))
           this.relatedProducts = this.productService.filterActiveProducts(result).slice(0, 5)
         }else this.messageService.error(res.message);
       },

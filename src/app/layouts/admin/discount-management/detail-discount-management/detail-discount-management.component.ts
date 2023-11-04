@@ -10,6 +10,8 @@ import { DiscountService } from 'src/app/core/services/discount.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { differenceInCalendarDays } from "date-fns"
+import { OrderingService } from 'src/app/core/services/ordering.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 @Component({
   selector: 'app-detail-discount-management',
   templateUrl: './detail-discount-management.component.html',
@@ -23,6 +25,7 @@ export class DetailDiscountManagementComponent implements OnInit{
   public submitLoading: boolean = false
   public isLoading: boolean = false;
   public expiredDate?: Date = undefined
+  public isEditable: boolean = true
 
   constructor(
     private messageService: NzMessageService,
@@ -31,7 +34,9 @@ export class DetailDiscountManagementComponent implements OnInit{
     private router: Router,
     @Optional() private dialogRef: NbDialogRef<any>,
     private discountService: DiscountService,
-    private formatService: FormatService
+    private formatService: FormatService,
+    private orderingService: OrderingService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -54,30 +59,28 @@ export class DetailDiscountManagementComponent implements OnInit{
         })
       ).subscribe({
         next: (res) => {
-          this.choosingDiscount = {
-            id: res.data.discountId,
-            code: res.data.discountCode,
-            creationDate: res.data.discountCreationDate,
-            expiredDate: res.data.discountExpiredDate,
-            minimumOrderPrice: res.data.discountMinimumOrderPrice,
-            amount: res.data.discountAmount,
-            orderings:  res.data.orderingEntities.map((order: any) => {
-              return {
-                id: order.orderingID,
-                status: order.orderingStatus,
-                account: new Account(),
-                date: order.orderingCreationDate,
-                shippingFee: order.orderingShippingFee,
-                price: order.orderingPrice,
-                totalPrice: order.orderingTotalPrice,
-                note: order.orderingNote
-              }
-            })
-          }
+          this.choosingDiscount = this.mappingService.discount(res.data)
 
           this.editDiscount = { ...this.choosingDiscount }
         },
         error: (err: any) => this.messageService.error(err.error.message)
+      })
+
+      this.orderingService.getAll().subscribe({
+        next: res => {
+          if(res.status){
+            this.isEditable = res.data.filter((p: any) => 
+              p.discount !== null && p.discount.discountId === id
+            ).length > 0
+          }else{
+            this.messageService.error(res.message)
+            this.isEditable = false   
+          }
+        },
+        error: err => {
+          this.messageService.error(err.error.message)
+          this.isEditable = false 
+        }
       })
     })
   }
@@ -161,6 +164,7 @@ export class DetailDiscountManagementComponent implements OnInit{
     })
   }
 
+
   formatNumber(number: number): string {
     return this.formatService.formatPrice(number)
   }
@@ -179,9 +183,5 @@ export class DetailDiscountManagementComponent implements OnInit{
     const pattern = `${date}${month}${year}`
 
     this.editDiscount.code = this.editDiscount.code.includes(pattern) ? this.editDiscount.code : (this.editDiscount.code + pattern)
-  }
-
-  isEditable(): boolean {
-    return this.choosingDiscount.orderings.length === 0
   }
 }

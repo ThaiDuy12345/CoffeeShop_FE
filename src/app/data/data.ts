@@ -461,21 +461,18 @@ export const OrderingData: Ordering[] = [
 
 export const DetailOrderData: DetailOrder[] = [
   {
-    id: "0",
     quantity: 1,
     productSize: ProductSizeData[0],
     ordering: OrderingData[0],
     subTotal: 0
   },
   {
-    id: "1",
     quantity: 2,  
     productSize: ProductSizeData[5],
     ordering: OrderingData[0],
     subTotal: 0
   },
   {
-    id: "2",
     quantity: 4,
     productSize: ProductSizeData[3],
     ordering: OrderingData[0],
@@ -483,14 +480,12 @@ export const DetailOrderData: DetailOrder[] = [
   },
 
   {
-    id: "3",
     quantity: 3,
     productSize: ProductSizeData[5],
     ordering: OrderingData[1],
     subTotal: 0
   },
   {
-    id: "4",
     quantity: 6,
     productSize: ProductSizeData[1],
     ordering: OrderingData[1],

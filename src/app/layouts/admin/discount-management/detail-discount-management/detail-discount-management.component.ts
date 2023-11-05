@@ -4,7 +4,6 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, finalize } from 'rxjs';
 import { Discount } from 'src/app/core/models/discount.model';
-import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { DiscountService } from 'src/app/core/services/discount.service';
 import { FormatService } from 'src/app/core/services/format.service';
@@ -70,7 +69,7 @@ export class DetailDiscountManagementComponent implements OnInit{
         next: res => {
           if(res.status){
             this.isEditable = res.data.filter((p: any) => 
-              p.discount !== null && p.discount.discountId === id
+              p.discountEntity !== null && p.discountEntity.discountId === id
             ).length > 0
           }else{
             this.messageService.error(res.message)

@@ -41,6 +41,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -176,6 +177,7 @@ import { DetailOrderingManagementComponent } from './admin/ordering-management/d
     NzPopoverModule,
     NzMessageModule,
     NbStepperModule,
+    NzSpinModule,
     NzTimelineModule,
     NzDrawerModule,
     GoogleSigninButtonModule,

@@ -1,1 +1,359 @@
-<p>detail-ordering-management works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card class="min-h-[400px]">
+    <nb-card-body>
+      <div *ngIf="isLoading" class="h-full center-an-item">
+        <nz-spin nzSimple></nz-spin>
+      </div>
+      <ng-container *ngIf="!isLoading">
+        <div class="col-span-1">
+          <div
+            *ngIf="
+              !ordering.paymentStatus &&
+              (ordering.totalPrice >= 150000 || getProductLength() >= 5) &&
+              [1, 2, 3].includes(ordering.status)
+            " 
+            class="mb-5 text-red-400">
+            Lưu ý: Đơn hàng được thanh toán bằng phương thức COD và 
+            có giá trị hoá đơn trên 150.000VNĐ hoặc trên 5 sản phẩm. Admin 
+            và nhân viên cần gọi điện xác nhận khách hàng trước khi duyệt đơn.
+          </div>
+          <div
+            *ngIf="
+              ordering.paymentStatus &&
+              (ordering.totalPrice >= 150000 || getProductLength() >= 5) &&
+              [1, 2, 3].includes(ordering.status)
+            " 
+            class="mb-5 text-[#3366ff]">
+            Lưu ý: Đơn hàng đã được thanh toán bằng phương thức "TRẢ TRƯỚC". Admin 
+            và nhân viên không cần gọi điện xác nhận khách hàng.
+          </div>
+          <div class="font-bold mb-5">Thông tin đơn hàng</div>
+          <div class="grid grid-cols-5 gap-3">
+            <div class="md:col-span-1 col-span-2">
+              <fa-icon [icon]="icons['faTags']" class="mr-3"></fa-icon
+              ><span class="bold">Mã hoá đơn:</span>
+            </div>
+            <div class="md:col-span-4 col-span-3">
+              <span class="error-text-color font-semibold"
+                >#{{ ordering.id }}</span
+              >
+            </div>
+            <div class="md:col-span-1 col-span-2">
+              <fa-icon [icon]="icons['faBagShopping']" class="mr-3"></fa-icon
+              ><span>Trạng thái:</span>
+            </div>
+            <div class="md:col-span-4 col-span-3">
+              <div
+                *ngIf="ordering.status === 1"
+                class="text-[#3366ff] truncate"
+              >
+                Đơn hàng đã được đặt và đợi xác nhận thông tin
+              </div>
+              <div
+                *ngIf="ordering.status === 2"
+                class="text-[#3366ff] truncate"
+              >
+                Đơn hàng đã được xác nhận và đợi bàn giao cho đơn vị vận chuyển
+              </div>
+              <div
+                *ngIf="ordering.status === 3"
+                class="text-[#3366ff] truncate"
+              >
+                Đơn hàng đã được bàn giao và đang trên đường tới chỗ bạn
+              </div>
+              <div
+                *ngIf="ordering.status === 4"
+                class="text-green-400 truncate"
+              >
+                Đơn hàng đã được giao thành công
+              </div>
+              <div
+                *ngIf="ordering.status === -1"
+                class="text-red-400 truncate"
+              >
+                Đơn hàng đã bị huỷ
+              </div>
+            </div>
+            <div class="md:col-span-1 col-span-2">
+              <fa-icon [icon]="icons['faCalendar']" class="mr-3"></fa-icon
+              ><span>Ngày tạo:</span>
+            </div>
+            <div class="md:col-span-4 col-span-3">
+              <span
+                >{{ formatDate(ordering.date) }} -
+                {{ timeSince(ordering.date) }}</span
+              >
+            </div>
+            <div class="md:col-span-1 col-span-2">
+              <fa-icon [icon]="icons['faNoteSticky']" class="mr-3"></fa-icon
+              ><span>Ghi chú:</span>
+            </div>
+            <div class="md:col-span-4 col-span-3">
+              <span>{{ ordering.note }}</span>
+            </div>
+            <div class="md:col-span-1 col-span-2">
+              <fa-icon [icon]="icons['faCreditCard']" class="mr-3"></fa-icon
+              ><span>Đã thanh toán:</span>
+            </div>
+            <div class="md:col-span-4 col-span-3">
+              <span>
+                <fa-icon
+                  nz-tooltip
+                  *ngIf="!ordering.paymentStatus"
+                  nzTooltipTitle="Khách hàng vẫn chưa thanh toán cho đơn hàng này"
+                  [icon]="icons['faXmark']"
+                  class="text-red-400"
+                ></fa-icon>
+                <fa-icon
+                  nz-tooltip
+                  *ngIf="ordering.paymentStatus"
+                  nzTooltipTitle="Khách hàng đã thanh toán đơn hàng này"
+                  [icon]="icons['faCheck']"
+                  class="text-green-400"
+                ></fa-icon>
+              </span>
+            </div>
+          </div>
+          <div class="my-16 px-10">
+            <nb-stepper
+              [orientation]="getWidth() <= 767 ? 'vertical' : 'horizontal'"
+              [selectedIndex]="getSelectedIndex(ordering.status)"
+              disableStepNavigation="true"
+            >
+              <nb-step
+                [completed]="getSelectedIndex(ordering.status) >= 0"
+                label="Đợi xác nhận thông tin"
+              >
+              </nb-step>
+              <nb-step
+                [completed]="getSelectedIndex(ordering.status) >= 1"
+                label="Đợi bàn giao cho đơn vị vận chuyển"
+              >
+              </nb-step>
+              <nb-step
+                [completed]="getSelectedIndex(ordering.status) >= 2"
+                label="Đang vận chuyển"
+              >
+              </nb-step>
+              <nb-step
+                [completed]="getSelectedIndex(ordering.status) >= 4"
+                *ngIf="getSelectedIndex(ordering.status) !== 5"
+                label="Giao hàng thành công"
+              >
+              </nb-step>
+              <nb-step
+                [completed]="getSelectedIndex(ordering.status) >= 5"
+                *ngIf="getSelectedIndex(ordering.status) === 5"
+                label="Giao hàng thất bại"
+              >
+              </nb-step>
+            </nb-stepper>
+          </div>
+          <div class="grid grid-cols-4 gap-5">
+            <nb-card class="col-span-2">
+              <nb-card-body>
+                <div class="grid grid-cols-4 gap-3">
+                  <div class="font-bold col-span-4 mb-7">
+                    Thông tin khách hàng
+                  </div>
+                  <div class="col-span-2">
+                    <fa-icon [icon]="icons['faUser']" class="mr-3"></fa-icon
+                    ><span>Họ tên:</span>
+                  </div>
+                  <div class="col-span-2">
+                    <span class="font-bold">{{ ordering.account.name }}</span>
+                  </div>
+                  <div class="col-span-2">
+                    <fa-icon [icon]="icons['faPhone']" class="mr-3"></fa-icon
+                    ><span>Số điện thoại:</span>
+                  </div>
+                  <div class="col-span-2">
+                    <span class="second-main-text-color">{{
+                      ordering.account.phone
+                    }}</span>
+                  </div>
+                  <div class="col-span-2">
+                    <fa-icon
+                      [icon]="icons['faLocationDot']"
+                      class="mr-3"
+                    ></fa-icon
+                    ><span>Địa chỉ:</span>
+                  </div>
+                  <div class="col-span-2">
+                    <span class="second-main-text-color">{{
+                      ordering.account.address
+                    }}</span>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <nb-card
+              class="ordering-last md:ordering-none col-span-2 md:col-span-2"
+            >
+              <nb-card-body>
+                <div class="grid grid-cols-1">
+                  <div class="font-bold mb-7">Thông tin thanh toán</div>
+                  <div class="grid grid-cols-2 mb-3">
+                    <span class="text-left">Giá trị hoá đơn:</span>
+                    <span class="text-right">{{
+                      formatPrice(ordering.price)
+                    }}</span>
+                  </div>
+                  <div class="grid grid-cols-2 mb-3">
+                    <span class="text-left">Tiền ship:</span>
+                    <span class="text-right">{{
+                      formatPrice(ordering.shippingFee)
+                    }}</span>
+                  </div>
+                  <div class="grid grid-cols-2 mb-3">
+                    <span class="text-left">Mã giảm giá:</span>
+                    <span
+                      *ngIf="ordering.discount.code"
+                      class="text-right cursor-pointer text-blue-500 hover:text-blue-300"
+                      >{{ ordering.discount.code }}</span
+                    >
+                    <span
+                      *ngIf="!ordering.discount.code"
+                      class="text-right"
+                    >
+                      Không có
+                    </span>
+                  </div>
+                  <div class="grid grid-cols-2 mb-3">
+                    <span class="text-left">Giảm giá:</span>
+                    <span class="text-right">
+                      -
+                      {{
+                        formatPrice(
+                          ordering.discount ? ordering.discount.amount : 0
+                        )
+                      }}</span
+                    >
+                  </div>
+                  <div class="grid grid-cols-2 mb-3">
+                    <span class="text-left">Thuế VAC:</span>
+                    <span class="text-right">{{ formatPrice(0) }}</span>
+                  </div>
+                </div>
+              </nb-card-body>
+              <nb-card-footer
+                class="grid grid-cols-2 border-none font-medium bg-[#33425a] text-lg text-white"
+              >
+                <span class="text-left">Tổng giá:</span>
+                <span class="text-right">{{
+                  formatPrice(ordering.totalPrice)
+                }}</span>
+              </nb-card-footer>
+            </nb-card>
+            <div class="col-span-4">
+              <span class="font-bold mb-7">Thông tin đơn hàng chi tiết</span>
+            </div>
+            <div class="col-span-4">
+              <ng-container *ngFor="let item of detailOrderPaginates">
+                <nb-card class="mb-2">
+                  <nb-card-body>
+                    <div class="grid grid-cols-7 gap-5">
+                      <div class="col-span-3 sm:col-span-1">
+                        <app-image
+                          [src]="item.productSize.product.imageUrl"
+                          [classes]="'rounded-lg cursor-pointer'"
+                          (click)="navigate(item.productSize.product.id)"
+                        ></app-image>
+                      </div>
+                      <div
+                        class="col-span-4 sm:col-span-6 grid grid-cols-4 gap-5"
+                      >
+                        <div class="col-span-4 sm:col-span-2">
+                          <div class="w-full h-auto mb-5">
+                            <b class="break-words">{{
+                              item.productSize.product.name
+                            }} - Size {{
+                              item.productSize.size.toUpperCase()
+                            }}</b>
+                          </div>
+                          <div class="w-full h-auto second-main-text-color">
+                            <span>{{
+                              formatPrice(item.productSize.price)
+                            }}</span>
+                          </div>
+                          <div class="w-full h-auto second-main-text-color">
+                            <span>x{{ item.quantity }}</span>
+                          </div>
+                        </div>
+                        <div
+                          class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center"
+                        >
+                          <span class="font-bold">{{
+                            formatPrice(item.subTotal)
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+              </ng-container>
+              <ng-container *ngIf="detailOrders.length === 0">
+                <nz-result
+                  [nzIcon]="'smile-twotone'"
+                  nzTitle="Ối, vẫn chưa có sản phẩm nào cả!!"
+                >
+                </nz-result>
+              </ng-container>
+            </div>
+            <div class="col-span-4 grid grid-col-1">
+              <div class="flex justify-end items-center">
+                <button nbButton status="primary" (click)="openToApprove(dialogToApprove)">Duyệt đơn hàng</button>
+                <button nbButton status="danger" class="ml-5" (click)="openToApprove(dialogToCancel)">Huỷ đơn</button>
+                
+              </div>
+            </div>
+            <nz-pagination [nzPageSize]="detailOrderPaginateSize" (nzPageIndexChange)="geDetailOrdersByPage($event)" [nzPageIndex]="1" [nzTotal]="detailOrders.length"></nz-pagination>
+          </div>
+        </div>
+
+        <ng-template #dialogToApprove let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-body>Xác nhận duyệt đơn hàng? Hãy kiểm tra thông tin thật kỹ vì không thể quay lại trạng thái ban đầu</nb-card-body>
+            <nb-card-footer class="space-x-3">
+              <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+              <button nbButton status="success" (click)="(null)">
+                Xác nhận
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+
+        <ng-template #dialogToCancel let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-body>Bạn cần gọi điện xác nhận với khách hàng trước khi huỷ.</nb-card-body>
+            <nb-card-footer class="space-x-3">
+              <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+              <button nbButton status="success" (click)="onConfirmToCancel(dialogConfirmCancel)">
+                Tôi đã gọi điện xác nhận
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+
+        <ng-template #dialogConfirmCancel let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-body>Chắc chắn bạn muốn huỷ đơn hàng?</nb-card-body>
+            <nb-card-footer class="space-x-3">
+              <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+              <button [disabled]="disabledCoolDownCancelOrder !== 0" nbButton status="success" (click)="(null)">
+                {{
+                  disabledCoolDownCancelOrder !== 0 ? 
+                    'Có thể huỷ đơn hàng sau ' + disabledCoolDownCancelOrder + " giây"
+                    :
+                    'Xác nhận huỷ đơn hàng'
+                }} 
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+      </ng-container>
+    </nb-card-body>
+  </nb-card>
+</div>

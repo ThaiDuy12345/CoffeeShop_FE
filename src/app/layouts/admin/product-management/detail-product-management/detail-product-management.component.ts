@@ -6,6 +6,7 @@ import { Observable, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { ImageService } from 'src/app/core/services/image.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { ProductSizeData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -35,7 +36,8 @@ export class DetailProductManagementComponent implements OnInit{
     private router: Router,
     @Optional() private dialogRef: NbDialogRef<any>,
     private productService: ProductService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -91,19 +93,7 @@ export class DetailProductManagementComponent implements OnInit{
   }
 
   reloadProductData(data: any): void {
-    this.product = {
-      id: data.productId,
-      name: data.productName,
-      description: data.productDescription,
-      imageUrl: data.productImageUrl,
-      creationDate: data.productCreationDate,
-      isPopular: data.productIsPopular,
-      category: {
-        id: data.category.categoryId,
-        name: data.category.categoryName
-      },
-      active: data.productActive
-    }
+    this.product = this.mappingService.product(data)
     this.editProduct = { ...this.product }
   }
 

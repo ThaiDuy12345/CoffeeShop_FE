@@ -59,9 +59,24 @@ body {
   // .ant-message-notice-content{
 
   // }
+  .ant-result-icon>.anticon{
+    font-size: 50px !important;
+  }
+  .ant-result-title{
+    font-size: 17px !important;
+  }
 
   #cdk-overlay-1.cdk-overlay-pane{
     z-index: 1001 !important;
+  }
+
+  .ant-table-footer, .ant-table-thead>tr>th{
+    color: $main-text-color !important;
+    font-weight: bold !important;
+  }
+
+  .ant-table{
+    color: $second-text-color !important;
   }
 
   nb-sidebar{

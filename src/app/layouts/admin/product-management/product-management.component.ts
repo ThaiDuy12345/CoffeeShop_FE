@@ -5,6 +5,7 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
@@ -25,7 +26,8 @@ export class ProductManagementComponent implements OnInit {
     private messageService: NzMessageService,
     private formatService: FormatService,
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private mappingService: MappingService
   ){}
 
   ngOnInit(): void {
@@ -62,21 +64,7 @@ export class ProductManagementComponent implements OnInit {
     ).subscribe({
       next: res => {
         if(res.status){
-          this.products = res.data.map((p: any) => {
-            return {
-              id: p.productId,
-              name: p.productName,
-              description: p.productDescription,
-              imageUrl: p.productImageUrl,
-              creationDate: p.productCreationDate,
-              isPopular: p.productIsPopular,
-              category: {
-                id: p.category.categoryId,
-                name: p.category.categoryName
-              },
-              active: p.productActive
-            }
-          })
+          this.products = res.data.map((p: any) => this.mappingService.product(p))
 
           if(this.searchInput){
             this.products = this.products.filter(p => {

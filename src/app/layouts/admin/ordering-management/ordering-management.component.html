@@ -32,8 +32,8 @@
               [nzAlign]="'center'"
               [nzFilterMultiple]="true"
               [nzFilters]="[
-                { text: 'Chưa đặt', value: 0 },
-                { text: 'Đợi duyệt', value: 1, byDefault: true },
+                { text: 'Chưa đặt hàng', value: 0 },
+                { text: 'Đợi xét duyệt', value: 1, byDefault: true },
                 { text: 'Chuẩn bị', value: 2, byDefault: true },
                 { text: 'Đang giao', value: 3, byDefault: true },
                 { text: 'Đã giao', value: 4 },
@@ -105,7 +105,7 @@
                   nz-tooltip
                   nzTooltipTitle="Khách hàng đã đặt hàng, đợi xét duyệt từ nhân viên hoặc admin"
                   *ngIf="data.status === 1"
-                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-[#3366ff] mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Đợi xét duyệt
                 </nz-tag>
@@ -113,7 +113,7 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã được duyệt, đang chuẩn bị hàng"
                   *ngIf="data.status === 2"
-                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-[#3366ff] mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Chuẩn bị
                 </nz-tag>
@@ -121,7 +121,7 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã được bàn giao cho shipper và đang trên đường giao"
                   *ngIf="data.status === 3"
-                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-[#3366ff] mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Đang giao
                 </nz-tag>
@@ -131,7 +131,7 @@
                   *ngIf="data.status === 4"
                   class="center-an-item bg-green-500 mr-0 py-1 rounded text-white w-[100px]"
                 >
-                  Thành công
+                  Đã giao
                 </nz-tag>
                 <nz-tag
                   nz-tooltip
@@ -165,7 +165,7 @@
               <span class="center-an-item">{{data.account.name}}</span>
             </td>
             <td>
-              <fa-icon [icon]="icons['faCircleInfo']" [routerLink]="['/admin/ordering-management', data.id]" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Thông tin"></fa-icon>
+              <fa-icon *ngIf="data.status !== 0" [icon]="icons['faCircleInfo']" [routerLink]="['/admin/ordering-management', data.id]" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Thông tin"></fa-icon>
             </td>
           </tr>
         </tbody>

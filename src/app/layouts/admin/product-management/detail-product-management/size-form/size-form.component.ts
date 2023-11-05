@@ -4,6 +4,7 @@ import { Observable, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { ProductSize } from 'src/app/core/models/product-size.model';
 import { Product } from 'src/app/core/models/product.model';
+import { MappingService } from 'src/app/core/services/mapping.service';
 import { ProductSizeService } from 'src/app/core/services/product-size.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
@@ -31,7 +32,8 @@ export class SizeFormComponent implements OnInit{
 
   constructor(
     private messageService: NzMessageService,
-    private productSizeService: ProductSizeService
+    private productSizeService: ProductSizeService,
+    private mappingService: MappingService
   ) {}
 
   ngOnInit(): void {
@@ -52,14 +54,7 @@ export class SizeFormComponent implements OnInit{
   }
 
   loadSizeData(data: any): void {
-    this.productSizes = data.map((ps: any) => {
-      return {
-        id: ps.productSizeId,
-        size: ps.productSize,
-        price: ps.productSizePrice,
-        product: new Product()
-      }
-    })
+    this.productSizes = data.map((ps: any) => this.mappingService.productSize(ps))
   }
 
   onClickCancel(): void {

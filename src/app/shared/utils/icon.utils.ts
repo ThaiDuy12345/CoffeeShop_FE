@@ -60,7 +60,8 @@ import {
   faTag,
   faArrowDown,
   faTags,
-  faCircleNotch
+  faCircleNotch,
+  faNoteSticky
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -127,5 +128,6 @@ export const icons: Icon = {
   faArrowDown: faArrowDown,
   faTags: faTags,
   faCircleNotch: faCircleNotch,
-  faShuffle: faShuffle
+  faShuffle: faShuffle,
+  faNoteSticky: faNoteSticky
 };

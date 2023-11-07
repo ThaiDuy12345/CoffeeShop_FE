@@ -97,7 +97,7 @@
                   nz-tooltip
                   nzTooltipTitle="Khách hàng vẫn chưa đặt hàng"
                   *ngIf="data.status === 0"
-                  class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-[#F5F5F5] mr-0 py-1 rounded text-[#293147] w-[100px]"
                 >
                   Chưa đặt hàng
                 </nz-tag>
@@ -105,7 +105,7 @@
                   nz-tooltip
                   nzTooltipTitle="Khách hàng đã đặt hàng, đợi xét duyệt từ nhân viên hoặc admin"
                   *ngIf="data.status === 1"
-                  class="center-an-item bg-[#3366ff] mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-[#557cef] mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Đợi xét duyệt
                 </nz-tag>
@@ -113,7 +113,14 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã được duyệt, đang chuẩn bị hàng"
                   *ngIf="data.status === 2"
-                  class="center-an-item bg-[#3366ff] mr-0 py-1 rounded text-white w-[100px]"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnCancel)="(null)"
+                  nzPopconfirmTitle="Xác nhận đơn hàng đã được bàn giao cho đội vận chuyển và trên đường giao?"
+                  nz-popconfirm
+                  nzOkText="Xác nhận"
+                  nzCancelText="Huỷ"
+                  (nzOnConfirm)="onConfirmToApprove(data)"
+                  class="cursor-pointer center-an-item bg-[#3d5cb9] mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Chuẩn bị
                 </nz-tag>
@@ -121,7 +128,14 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã được bàn giao cho shipper và đang trên đường giao"
                   *ngIf="data.status === 3"
-                  class="center-an-item bg-[#3366ff] mr-0 py-1 rounded text-white w-[100px]"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnCancel)="(null)"
+                  nzPopconfirmTitle="Xác nhận đơn hàng đã hoàn thành?"
+                  nz-popconfirm
+                  nzOkText="Xác nhận"
+                  nzCancelText="Huỷ"
+                  (nzOnConfirm)="onConfirmToApprove(data)"
+                  class="cursor-pointer center-an-item bg-[#273b75] mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Đang giao
                 </nz-tag>
@@ -129,7 +143,7 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã được giao thành công"
                   *ngIf="data.status === 4"
-                  class="center-an-item bg-green-500 mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-green-400 mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Đã giao
                 </nz-tag>
@@ -137,7 +151,7 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã bị huỷ (Người đặt từ chối nhận hàng, bùng đơn, giao thất bại,...)"
                   *ngIf="data.status === -1"
-                  class="center-an-item bg-red-500 mr-0 py-1 rounded text-white w-[100px]"
+                  class="center-an-item bg-red-400 mr-0 py-1 rounded text-white w-[100px]"
                 >
                   Đã huỷ
                 </nz-tag>

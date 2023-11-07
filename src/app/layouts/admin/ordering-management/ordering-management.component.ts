@@ -64,7 +64,7 @@ export class OrderingManagementComponent {
             this.orderings = this.orderings.filter(p => {
               return (
                 p.account.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
-                p.totalPrice.toString().includes(this.searchInput.toLowerCase())  ||
+                this.formatPrice(p.totalPrice).includes(this.searchInput.toLowerCase())  ||
                 this.formatDate(p.date).toLowerCase().includes(this.searchInput.toLowerCase()) 
               )
             })
@@ -119,6 +119,33 @@ export class OrderingManagementComponent {
 
   paymentStatusFilter(paymentStatusFilter: boolean, item: Ordering): boolean {
     return item.paymentStatus === paymentStatusFilter
+  }
+
+  onConfirmToApprove(data: Ordering): void {
+    this.orderingService.put({ orderingId: data.id, payload: {
+      orderingStatus: data.status + 1,
+      orderingShippingFee: data.shippingFee,
+      discountEntity: data.discount.id ? {
+        discountId: data.discount.id
+      } : null,
+      orderingPaymentStatus: data.status + 1 === 4 ? true : data.paymentStatus
+    }}).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.messageService.success("Thao tác thành công")
+        const index = this.orderings.findIndex(or => or.id === data.id)
+        const newArr = [...this.orderings]
+        newArr[index] = {...this.mappingService.ordering(res.data)}
+        this.orderings = [...newArr]
+        console.log(this.orderings)
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
   }
 
   // activeSort(a: Ordering, b: Ordering): number {

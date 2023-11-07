@@ -25,6 +25,9 @@ export class DetailOrderingManagementComponent {
   public detailOrderPaginates: DetailOrder[] = []
   public detailOrderPaginateSize: number = 3
   public disabledCoolDownCancelOrder: number = 0
+  public isLoadingButton: boolean = false
+  public failReason: string = ""
+  public control: any
 
   constructor(
     private messageService: NzMessageService,
@@ -84,6 +87,35 @@ export class DetailOrderingManagementComponent {
     })
   }
 
+  onConfirmToApprove(): void {
+    this.isLoadingButton = true
+    this.orderingService.put({ orderingId: this.ordering.id, payload: {
+      orderingStatus: this.ordering.status + 1,
+      orderingShippingFee: this.ordering.shippingFee,
+      discountEntity: this.ordering.discount.id ? {
+        discountId: this.ordering.discount.id
+      } : null,
+      orderingPaymentStatus: this.ordering.status + 1 === 4 ? true : this.ordering.paymentStatus
+    }}).pipe(
+      finalize(() => {
+        this.isLoadingButton = false
+        this.dialogRef.close()
+      })
+    ).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.messageService.success("Thao tác thành công")
+        this.ordering = {...this.mappingService.ordering(res.data)}
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+  }
+
   geDetailOrdersByPage(pageIndex: number): void {
     const startIndex = (pageIndex - 1) *this.detailOrderPaginateSize;
     const endIndex = startIndex + this.detailOrderPaginateSize;
@@ -110,8 +142,7 @@ export class DetailOrderingManagementComponent {
       case 1: return 0
       case 2: return 1
       case 3: return 2
-      case 4: return 4
-      default: return 5
+      default: return 3
     }
   }
 
@@ -123,7 +154,7 @@ export class DetailOrderingManagementComponent {
     this.dialogRef = this.dialogService.open(dialog);
   }
 
-  onConfirmToCancel(dialog: TemplateRef<any>): void {
+  openConfirmToCancel(dialog: TemplateRef<any>): void {
     this.dialogRef.close()
     this.dialogRef = this.dialogService.open(dialog);
     this.disabledCoolDownCancelOrder = 5
@@ -131,6 +162,73 @@ export class DetailOrderingManagementComponent {
       if(this.disabledCoolDownCancelOrder === 0) clearInterval(interval)
       else this.disabledCoolDownCancelOrder--
     }, 1000)
+  }
+
+  onConfirmToCancel(): void {
+    this.isLoadingButton = true
+    this.orderingService.put({ orderingId: this.ordering.id, payload: {
+      orderingStatus: -1,
+      orderingShippingFee: this.ordering.shippingFee,
+      discountEntity: this.ordering.discount.id ? {
+        discountId: this.ordering.discount.id
+      } : null,
+      orderingPaymentStatus: this.ordering.paymentStatus
+    }}).pipe(
+      finalize(() => {
+        this.isLoadingButton = false
+        this.dialogRef.close()
+      })
+    ).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.messageService.success("Thao tác thành công")
+        this.ordering = {...this.mappingService.ordering(res.data)}
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+  }
+
+  onConfirmToFail(): void {
+    if(!this.failReason){
+      this.messageService.error("Xin hãy điền lý do thất bại để tiếp tục")
+      return
+    }
+    this.isLoadingButton = true
+    this.orderingService.put({ orderingId: this.ordering.id, payload: {
+      orderingStatus: -1,
+      orderingShippingFee: this.ordering.shippingFee,
+      orderingNote: this.ordering.note + ` - (${this.failReason})`,
+      discount: this.ordering.discount ? {
+        discountId: this.ordering.discount.id
+      } : null,
+      orderingPaymentStatus: this.ordering.paymentStatus
+    }}).pipe(
+      finalize(() => {
+        this.isLoadingButton = false
+        this.dialogRef.close()
+      })
+    ).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.messageService.success("Thao tác thành công")
+        this.ordering = {...this.mappingService.ordering(res.data)}
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+  }
+
+  openToFail(dialog: TemplateRef<any>): void {
+    this.dialogRef = this.dialogService.open(dialog);
   }
 
   getWidth(): number {

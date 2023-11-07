@@ -133,7 +133,7 @@ export class DiscountManagementComponent implements OnInit{
     ).subscribe({
       next: res => {
         if(res.status){
-          this.detailOrderings = res.data.filter((p: any) => p.discount !== null && p.discount.discountId === this.choosingDiscount.id).map((p: any) => 
+          this.detailOrderings = res.data.filter((p: any) => p.discountEntity !== null && p.discountEntity.discountId === this.choosingDiscount.id).map((p: any) => 
             this.mappingService.ordering(p)  
           )
         }else this.messageService.error(res.message)

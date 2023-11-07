@@ -1,4 +1,5 @@
 <div
+  id="order-management-control"
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
   <nb-card class="min-h-[400px]">
@@ -12,7 +13,7 @@
             *ngIf="
               !ordering.paymentStatus &&
               (ordering.totalPrice >= 150000 || getProductLength() >= 5) &&
-              [1, 2, 3].includes(ordering.status)
+              ordering.status === 1
             " 
             class="mb-5 text-red-400">
             Lưu ý: Đơn hàng được thanh toán bằng phương thức COD và 
@@ -23,28 +24,42 @@
             *ngIf="
               ordering.paymentStatus &&
               (ordering.totalPrice >= 150000 || getProductLength() >= 5) &&
-              [1, 2, 3].includes(ordering.status)
+              ordering.status === 1
             " 
             class="mb-5 text-[#3366ff]">
             Lưu ý: Đơn hàng đã được thanh toán bằng phương thức "TRẢ TRƯỚC". Admin 
             và nhân viên không cần gọi điện xác nhận khách hàng.
           </div>
+          <div
+            *ngIf="
+              ordering.status === 2
+            " 
+            class="mb-5 text-[#3366ff]">
+            Hãy chuẩn bị đơn hàng càng nhanh càng tốt...nhân viên và admin đang công tác vui lòng đảm bảo đội ngũ vận chuyển sẵn sàng tới khi khâu chuẩn bị hoàn thành
+          </div>
+          <div
+            *ngIf="
+              ordering.status === 3
+            " 
+            class="mb-5 text-[#3366ff]">
+            Đơn hàng đã và đang trên đường giao tới khách hàng, vui lòng nhấn "hoàn thành đơn hàng" nếu đơn hàng được giao thành công, hoặc "đơn hàng thất bại" nếu đơn hàng không được giao tới người đặt
+          </div>
           <div class="font-bold mb-5">Thông tin đơn hàng</div>
           <div class="grid grid-cols-5 gap-3">
-            <div class="md:col-span-1 col-span-2">
+            <div class="col-span-2">
               <fa-icon [icon]="icons['faTags']" class="mr-3"></fa-icon
               ><span class="bold">Mã hoá đơn:</span>
             </div>
-            <div class="md:col-span-4 col-span-3">
+            <div class="col-span-3">
               <span class="error-text-color font-semibold"
                 >#{{ ordering.id }}</span
               >
             </div>
-            <div class="md:col-span-1 col-span-2">
+            <div class="col-span-2">
               <fa-icon [icon]="icons['faBagShopping']" class="mr-3"></fa-icon
               ><span>Trạng thái:</span>
             </div>
-            <div class="md:col-span-4 col-span-3">
+            <div class="col-span-3">
               <div
                 *ngIf="ordering.status === 1"
                 class="text-[#3366ff] truncate"
@@ -76,28 +91,28 @@
                 Đơn hàng đã bị huỷ
               </div>
             </div>
-            <div class="md:col-span-1 col-span-2">
+            <div class="col-span-2">
               <fa-icon [icon]="icons['faCalendar']" class="mr-3"></fa-icon
               ><span>Ngày tạo:</span>
             </div>
-            <div class="md:col-span-4 col-span-3">
+            <div class="col-span-3">
               <span
                 >{{ formatDate(ordering.date) }} -
                 {{ timeSince(ordering.date) }}</span
               >
             </div>
-            <div class="md:col-span-1 col-span-2">
+            <div class="col-span-2">
               <fa-icon [icon]="icons['faNoteSticky']" class="mr-3"></fa-icon
               ><span>Ghi chú:</span>
             </div>
-            <div class="md:col-span-4 col-span-3">
+            <div class="col-span-3">
               <span>{{ ordering.note }}</span>
             </div>
-            <div class="md:col-span-1 col-span-2">
+            <div class="col-span-2">
               <fa-icon [icon]="icons['faCreditCard']" class="mr-3"></fa-icon
               ><span>Đã thanh toán:</span>
             </div>
-            <div class="md:col-span-4 col-span-3">
+            <div class="col-span-3">
               <span>
                 <fa-icon
                   nz-tooltip
@@ -123,29 +138,29 @@
               disableStepNavigation="true"
             >
               <nb-step
-                [completed]="getSelectedIndex(ordering.status) >= 0"
+                [completed]="ordering.status === -1 || ordering.status > 0"
                 label="Đợi xác nhận thông tin"
               >
               </nb-step>
               <nb-step
-                [completed]="getSelectedIndex(ordering.status) >= 1"
+                [completed]="ordering.status === -1  || ordering.status > 1"
                 label="Đợi bàn giao cho đơn vị vận chuyển"
               >
               </nb-step>
               <nb-step
-                [completed]="getSelectedIndex(ordering.status) >= 2"
+                [completed]="ordering.status === -1  || ordering.status > 2"
                 label="Đang vận chuyển"
               >
               </nb-step>
               <nb-step
-                [completed]="getSelectedIndex(ordering.status) >= 4"
-                *ngIf="getSelectedIndex(ordering.status) !== 5"
+                [completed]="ordering.status > 3"
+                *ngIf="ordering.status !== -1"
                 label="Giao hàng thành công"
               >
               </nb-step>
               <nb-step
-                [completed]="getSelectedIndex(ordering.status) >= 5"
-                *ngIf="getSelectedIndex(ordering.status) === 5"
+                [completed]="ordering.status === -1"
+                *ngIf="ordering.status === -1"
                 label="Giao hàng thất bại"
               >
               </nb-step>
@@ -302,23 +317,65 @@
                 </nz-result>
               </ng-container>
             </div>
+            <nz-pagination [nzPageSize]="detailOrderPaginateSize" (nzPageIndexChange)="geDetailOrdersByPage($event)" [nzPageIndex]="1" [nzTotal]="detailOrders.length"></nz-pagination>
             <div class="col-span-4 grid grid-col-1">
               <div class="flex justify-end items-center">
-                <button nbButton status="primary" (click)="openToApprove(dialogToApprove)">Duyệt đơn hàng</button>
-                <button nbButton status="danger" class="ml-5" (click)="openToApprove(dialogToCancel)">Huỷ đơn</button>
-                
+                <button *ngIf="ordering.status === 1" nbButton status="primary" (click)="openToApprove(dialogToApprove)">Duyệt đơn hàng</button>
+                <button *ngIf="ordering.status === 2" nbButton status="primary" (click)="openToApprove(dialogToTransfer)">Tiếp tục</button>
+                <button *ngIf="ordering.status === 3" nbButton status="success" (click)="openToApprove(dialogToComplete)">Xác nhận giao hàng thành công</button>
+                <button *ngIf="[1, 2].includes(ordering.status)" nbButton status="danger" class="ml-5" (click)="openToApprove(dialogToCancel)">Huỷ đơn</button>
+                <button *ngIf="ordering.status === 3" nbButton status="warning" class="ml-5" (click)="openToFail(dialogToFailTransfer)">Xác nhận giao hàng thất bại</button>
               </div>
             </div>
-            <nz-pagination [nzPageSize]="detailOrderPaginateSize" (nzPageIndexChange)="geDetailOrdersByPage($event)" [nzPageIndex]="1" [nzTotal]="detailOrders.length"></nz-pagination>
           </div>
         </div>
+
+        <ng-template #dialogToComplete let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-body>Xác nhận đơn hàng giao thành công?</nb-card-body>
+            <nb-card-footer class="space-x-3">
+              <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+              <button nbButton status="success" [nbSpinner]="isLoadingButton" (click)="onConfirmToApprove()">
+                Xác nhận
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+
+        <ng-template #dialogToFailTransfer let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-body>
+              <div>Xác nhận đơn hàng giao thất bại? Hãy xem xét thật kỹ và điền lý do trước khi tiếp tục<br/>Lưu ý: Chúng tôi sẽ đặt lý do vào ghi chú của đơn hàng!!</div>
+              <br/>
+              <input nbInput [(ngModel)]="failReason" type="text" class="w-full" placeholder="Lý do đơn hàng thất bại!!"/>
+            </nb-card-body>
+            <nb-card-footer class="space-x-3">
+              <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+              <button nbButton status="success" [nbSpinner]="isLoadingButton" (click)="onConfirmToFail()">
+                Xác nhận
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
+
+        <ng-template #dialogToTransfer let-data let-ref="dialogRef">
+          <nb-card>
+            <nb-card-body>Xác nhận chuyển tiếp đơn hàng? Hãy chuẩn bị hàng thật kỹ trước khi tiếp tục <br/>Lưu ý: không thể huỷ đơn hàng sau bước này!!</nb-card-body>
+            <nb-card-footer class="space-x-3">
+              <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+              <button nbButton status="success" [nbSpinner]="isLoadingButton" (click)="onConfirmToApprove()">
+                Xác nhận
+              </button>
+            </nb-card-footer>
+          </nb-card>
+        </ng-template>
 
         <ng-template #dialogToApprove let-data let-ref="dialogRef">
           <nb-card>
             <nb-card-body>Xác nhận duyệt đơn hàng? Hãy kiểm tra thông tin thật kỹ vì không thể quay lại trạng thái ban đầu</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-              <button nbButton status="success" (click)="(null)">
+              <button nbButton status="success" [nbSpinner]="isLoadingButton" (click)="onConfirmToApprove()">
                 Xác nhận
               </button>
             </nb-card-footer>
@@ -330,7 +387,7 @@
             <nb-card-body>Bạn cần gọi điện xác nhận với khách hàng trước khi huỷ.</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-              <button nbButton status="success" (click)="onConfirmToCancel(dialogConfirmCancel)">
+              <button nbButton status="success" (click)="openConfirmToCancel(dialogConfirmCancel)">
                 Tôi đã gọi điện xác nhận
               </button>
             </nb-card-footer>
@@ -342,7 +399,7 @@
             <nb-card-body>Chắc chắn bạn muốn huỷ đơn hàng?</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-              <button [disabled]="disabledCoolDownCancelOrder !== 0" nbButton status="success" (click)="(null)">
+              <button [nbSpinner]="isLoadingButton" [disabled]="disabledCoolDownCancelOrder !== 0" nbButton status="success" (click)="onConfirmToCancel()">
                 {{
                   disabledCoolDownCancelOrder !== 0 ? 
                     'Có thể huỷ đơn hàng sau ' + disabledCoolDownCancelOrder + " giây"

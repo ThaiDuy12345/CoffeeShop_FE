@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subject, finalize, take } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
+import { Ordering } from 'src/app/core/models/ordering.model';
+import { DetailOrderService } from 'src/app/core/services/detail-order.service';
 import { FormatService } from 'src/app/core/services/format.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
+import { OrderingService } from 'src/app/core/services/ordering.service';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { FilterStore } from 'src/app/core/stores/filter.store';
-import { AccountData, DetailOrderData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -14,23 +20,68 @@ import { icons } from 'src/app/shared/utils/icon.utils';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent implements OnInit{
-  public detailOrder: DetailOrder[] = []
+export class ShoppingCartComponent implements OnInit, OnDestroy{
+  public detailOrders: DetailOrder[] = []
+  public ordering: Ordering = new Ordering()
   public icons: Icon = icons
   public user: Account = new Account()
+  public tempSubject: Subject<any> = new Subject<any>()
+  public isLoading: boolean = false
   constructor(
     private filterStore: FilterStore,
-    private router: Router,
-    private formatService: FormatService
+    private formatService: FormatService,
+    private orderingService: OrderingService,
+    private detailOrderService: DetailOrderService,
+    private mappingService: MappingService,
+    private authenticationStore: AuthenticationStore,
+    private messageService: NzMessageService,
+    private router: Router
   ){}
+
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
+
   ngOnInit(): void {
-    const id = Cookies.get('id')
-    if(!id) return
+    this.isLoading = true
+    this.tempSubject.subscribe({
+      next: res => {
+        if(res.account && res.account.phone){
+          this.fetchCurrentOrderingCart(res.account.phone)
+        }else{
+          this.router.navigateByUrl('/sign-in')
+          this.messageService.error("Không thể lấy được thông tin người dùng")
+        }
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
 
-    const res = AccountData.find(a => a.phone === id)
-    this.user = res ? res : new Account()
+    this.authenticationStore._select(state => state).subscribe(this.tempSubject)
+  }
 
-    this.detailOrder = DetailOrderData.filter(o => o.ordering.account.phone === this.user.phone)
+  fetchCurrentOrderingCart(accountPhone: string): void {
+    this.orderingService.getTheCurrentCart({ accountPhone: accountPhone }).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe({
+      next: res => {
+        if(res.status){
+          this.ordering = { ...this.mappingService.ordering(res.data) }
+          this.fetchDetailOrders();
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message),
+    })
+  }
+
+  fetchDetailOrders(): void {
+    this.detailOrderService.getByOrderId({ orderingId: this.ordering.id }).subscribe({
+      next: res => {
+        if(res.status){
+          this.detailOrders = res.data.map((o: any) => this.mappingService.detailOrder(o)) 
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message),
+    })
   }
 
   formatPrice(price: number = 0): string {
@@ -47,7 +98,7 @@ export class ShoppingCartComponent implements OnInit{
 
   getTotalQuantity(): number {
     let quantity = 0
-    this.detailOrder.forEach((item) => {
+    this.detailOrders.forEach((item) => {
       quantity = quantity + item.quantity
     })
     return quantity

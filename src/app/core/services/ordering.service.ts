@@ -18,6 +18,12 @@ export class OrderingService {
     )
   }
 
+  getTheCurrentCart(params: { accountPhone: string }): Observable<any>{
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.orderingService().toString() + `/account/${params.accountPhone}`)
+    )
+  }
+
   post(params: { accountPhone: string, payload: any }): Observable<any>{
     return this.apiService.errorHandle(
       this.httpClient.post(this.apiService.orderingService().toString() + `/${params.accountPhone}`, params.payload)

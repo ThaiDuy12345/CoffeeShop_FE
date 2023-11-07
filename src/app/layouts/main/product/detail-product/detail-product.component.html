@@ -62,15 +62,15 @@
                 <button
                   nbButton
                   (click)="
-                    selected.quantity > 0
-                      ? (selected.quantity = selected.quantity - 1)
+                    productSizeQuantity > 0
+                      ? (productSizeQuantity = productSizeQuantity - 1)
                       : null
                   "
                 >
                   -
                 </button>
                 <input
-                  [(ngModel)]="selected.quantity"
+                  [(ngModel)]="productSizeQuantity"
                   name="quantityInput"
                   #quantityInput="ngModel"
                   nbInput
@@ -78,7 +78,7 @@
                 />
                 <button
                   nbButton
-                  (click)="selected.quantity = selected.quantity + 1"
+                  (click)="productSizeQuantity = productSizeQuantity + 1"
                 >
                   +
                 </button>

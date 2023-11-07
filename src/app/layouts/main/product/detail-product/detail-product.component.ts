@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -12,24 +12,23 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormatService } from 'src/app/core/services/format.service';
 import { ProductSize } from 'src/app/core/models/product-size.model';
 import { ProductService } from 'src/app/core/services/product.service';
-import { finalize } from 'rxjs';
+import { Subject, finalize, take } from 'rxjs';
 import { ProductSizeService } from 'src/app/core/services/product-size.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
+import { OrderingService } from 'src/app/core/services/ordering.service';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
+import { Ordering } from 'src/app/core/models/ordering.model';
+import { DetailOrderService } from 'src/app/core/services/detail-order.service';
+import { error } from '@ant-design/icons-angular';
 
 @Component({
   selector: 'app-detail-product',
   templateUrl: './detail-product.component.html',
   styleUrls: ['./detail-product.component.scss'],
 })
-export class DetailProductComponent implements OnInit {
+export class DetailProductComponent implements OnInit, OnDestroy {
   public icons: Icon = icons;
-  public selected: {
-    productId: string;
-    quantity: number;
-  } = {
-    productId: '',
-    quantity: 0,
-  };
+  public productSizeQuantity: number = 1
   public product: Product = new Product();
   public productSize: ProductSize[] = []
   public relatedProducts: Product[] = [];
@@ -43,6 +42,8 @@ export class DetailProductComponent implements OnInit {
   public isLoadingAddToCartBuntton: boolean = false;
   public isLoadingBuyNowButton: boolean = false;
   public isLoading: boolean = false
+  public tempSubject: Subject<any> = new Subject<any>()
+  public ordering: Ordering = new Ordering 
   constructor(
     private activatedRoute: ActivatedRoute,
     private messageService: NzMessageService,
@@ -50,11 +51,18 @@ export class DetailProductComponent implements OnInit {
     private formatService: FormatService,
     private filterStore: FilterStore,
     @Optional() private dialogRef: NbDialogRef<any>,
+    private orderingService: OrderingService,
+    private detailOrderService: DetailOrderService,
+    private authenticationStore: AuthenticationStore,
     private dialogService: NbDialogService,
     private productService: ProductService,
     private productSizeService: ProductSizeService,
     private mappingService: MappingService
   ) {}
+
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -92,7 +100,31 @@ export class DetailProductComponent implements OnInit {
           this.router.navigate(['/main/product']);
         }
       })
+
+      this.fetchOrder()
     });
+  }
+
+  fetchOrder(): void {
+    this.tempSubject.subscribe({
+      next: res => {
+        if(res.account && res.account.phone) this.fetchCurrentOrderingCart(res.account.phone)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+
+    this.authenticationStore._select(state => state).subscribe(this.tempSubject)
+  }
+
+  fetchCurrentOrderingCart(accountPhone: string): void {
+    this.orderingService.getTheCurrentCart({ accountPhone: accountPhone }).subscribe({
+      next: res => {
+        if(res.status){
+          this.ordering = { ...this.mappingService.ordering(res.data) }
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message),
+    })
   }
 
   loadProductSize(): void {
@@ -141,7 +173,6 @@ export class DetailProductComponent implements OnInit {
       })
       .catch((error) => {
         this.messageService.success('Lỗi lấy đường dẫn');
-        console.log(error)
       });
   }
 
@@ -227,14 +258,38 @@ export class DetailProductComponent implements OnInit {
   }
 
   onClickAddToCart(): void {
+    if(!this.ordering.id){
+      this.router.navigateByUrl("/sign-in")
+      this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+      return
+    }
     this.isLoadingAddToCartBuntton = true;
-    setTimeout(() => {
-      this.messageService.success('Thêm sản phẩm vào giỏ hàng thành công');
-      this.isLoadingAddToCartBuntton = false;
-    }, 2000);
+    this.detailOrderService.post({
+      detailOrderId: {
+        orderingId: this.ordering.id,
+        productSizeId: this.productSize[this.choosingSize].id
+      },
+     detailOrderProductQuantity: this.productSizeQuantity
+    }).pipe(finalize(() => this.isLoadingAddToCartBuntton = false)).subscribe({
+      next: res => {
+        if(res.status){
+          this.messageService.success("Thêm sản phẩm vào giỏ hàng thành công, hãy ghé qua 'ĐƠN HÀNG' để xem chi tiết giỏ hàng của bạn")
+        }else{
+          this.messageService.error(res.message)
+        }
+      },
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
   }
 
   onClickBuyNow(): void {
+    if(!this.ordering.id){
+      this.router.navigateByUrl("/sign-in")
+      this.messageService.error("Bạn cần đăng nhập để tiếp tục")
+      return
+    }
     this.isLoadingBuyNowButton = true;
     setTimeout(() => {
       this.messageService.warning(

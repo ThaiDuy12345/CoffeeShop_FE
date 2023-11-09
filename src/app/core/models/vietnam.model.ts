@@ -12,7 +12,6 @@ export class District{
   code: number = 0
   codename: string = ""
   division_type: string = ""
-  phone_code: number = 0
   short_codename: string = ""
   wards: Ward[] = []
 }
@@ -22,6 +21,5 @@ export class Ward{
   code: number = 0
   codename: string = ""
   division_type: string = ""
-  phone_code: number = 0
   short_codename: string = ""
 }

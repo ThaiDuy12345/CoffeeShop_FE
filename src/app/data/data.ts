@@ -443,6 +443,9 @@ export const OrderingData: Ordering[] = [
     paymentStatus: false,
     price: 212000,
     note: "bruh",
+    cancelDescription: "",
+    approveDescription: "",
+    updatedByAccount: AccountData[1],
     totalPrice: 227000
   },
   {
@@ -455,6 +458,9 @@ export const OrderingData: Ordering[] = [
     paymentStatus: false,
     price: 216000,
     note: "bruh",
+    cancelDescription: "",
+    approveDescription: "",
+    updatedByAccount: AccountData[1],
     totalPrice: 231000
   }
 ]

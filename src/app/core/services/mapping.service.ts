@@ -44,9 +44,12 @@ export class MappingService {
       shippingFee: payload.orderingShippingFee,
       price: payload.orderingPrice,
       note: payload.orderingNote,
+      cancelDescription: payload.orderingCancelDescription,
+      approveDescription: payload.orderingApproveDescription,
       paymentStatus: payload.orderingPaymentStatus,
       totalPrice: payload.orderingTotalPrice,
       account: this.account(payload.accountEntity),
+      updatedByAccount: this.account(payload.updatedByAccountEntity),
       discount: this.discount(payload.discountEntity)
     } : new Ordering()
   }

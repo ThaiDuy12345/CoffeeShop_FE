@@ -9,6 +9,7 @@ import { AccountService } from 'src/app/core/services/account.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { VietnamService } from 'src/app/core/services/vietnam.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
+import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 
 @Component({
   selector: 'app-edit-user',
@@ -48,8 +49,11 @@ export class EditUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.vietnamService.getAll().subscribe((data: Province[]) => {
-      this.provinces = data
+    this.vietnamService.getAll().subscribe({
+      next: (data: Province[]) => this.provinces = data,
+      error: err => {
+        this.provinces = vietnamSelection
+      }
     })
   }
 

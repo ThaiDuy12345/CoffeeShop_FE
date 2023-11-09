@@ -1,7 +1,8 @@
+import { AuthenticationState, AuthenticationStore } from './../../../../core/stores/authentication.store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Optional, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { finalize } from 'rxjs';
+import { Subject, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { FormatService } from 'src/app/core/services/format.service';
@@ -11,23 +12,27 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 import { DetailOrderService } from 'src/app/core/services/detail-order.service';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { Account } from 'src/app/core/models/account.model';
 
 @Component({
   selector: 'app-detail-ordering-management',
   templateUrl: './detail-ordering-management.component.html',
   styleUrls: ['./detail-ordering-management.component.scss']
 })
-export class DetailOrderingManagementComponent {
+export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   public icons: Icon = icons
   public ordering: Ordering = new Ordering()
   public isLoading: boolean = false
+  public account: Account = new Account()
   public detailOrders: DetailOrder[] = []
   public detailOrderPaginates: DetailOrder[] = []
   public detailOrderPaginateSize: number = 3
   public disabledCoolDownCancelOrder: number = 0
   public isLoadingButton: boolean = false
   public failReason: string = ""
-  public control: any
+  public approveDescription: string = ""
+  public cancelDescription: string = ""
+  public tempSubject: Subject<any> = new Subject<any>()
 
   constructor(
     private messageService: NzMessageService,
@@ -38,8 +43,13 @@ export class DetailOrderingManagementComponent {
     private mappingService: MappingService,
     private activatedRoute: ActivatedRoute,
     private detailOrderService: DetailOrderService,
-    private router: Router
+    private router: Router,
+    private authenticationStore: AuthenticationStore
   ){}
+
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
 
   ngOnInit(): void {
     this.initData()
@@ -79,6 +89,12 @@ export class DetailOrderingManagementComponent {
           },
           error: (err) => this.messageService.error(err.error.message)
         })
+
+        this.tempSubject.subscribe({
+          next: res => this.account = res.account
+        })
+
+        this.authenticationStore._select(state => state).subscribe(this.tempSubject)
       },
       error: err => {
         this.router.navigateByUrl('/admin/ordering-management')
@@ -87,7 +103,28 @@ export class DetailOrderingManagementComponent {
     })
   }
 
+  checkIfDontNeedToApprove(): boolean {
+    return (
+      this.ordering.paymentStatus &&
+      (this.ordering.totalPrice >= 150000 || this.getProductLength() >= 5) &&
+      this.ordering.status === 1
+    )
+  }
+
+  checkIfNeedToApprove(): boolean {
+    return (
+      !this.ordering.paymentStatus &&
+      (this.ordering.totalPrice >= 150000 || this.getProductLength() >= 5) &&
+      this.ordering.status === 1
+    )
+  }
+
   onConfirmToApprove(): void {
+    if(this.checkIfNeedToApprove() && this.approveDescription.length === 0){
+      this.messageService.warning("Bạn cần gọi xác nhận với khách hàng trước")
+      return
+    }
+
     this.isLoadingButton = true
     this.orderingService.put({ orderingId: this.ordering.id, payload: {
       orderingStatus: this.ordering.status + 1,
@@ -95,7 +132,11 @@ export class DetailOrderingManagementComponent {
       discountEntity: this.ordering.discount.id ? {
         discountId: this.ordering.discount.id
       } : null,
-      orderingPaymentStatus: this.ordering.status + 1 === 4 ? true : this.ordering.paymentStatus
+      orderingPaymentStatus: this.ordering.status + 1 === 4 ? true : this.ordering.paymentStatus,
+      orderingApproveDescription: this.ordering.status === 1 ? this.approveDescription : null,
+      updatedByAccountEntity: {
+        accountPhone: this.account.phone
+      }
     }}).pipe(
       finalize(() => {
         this.isLoadingButton = false

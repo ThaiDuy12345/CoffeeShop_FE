@@ -9,7 +9,10 @@ export class Ordering {
   price: number = 0
   paymentStatus: boolean = false
   note: string = ""
+  cancelDescription: string = ""
+  approveDescription: string = ""
   totalPrice: number = 0
   account: Account = new Account()
+  updatedByAccount: Account = new Account()
   discount: Discount = new Discount()
 }

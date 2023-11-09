@@ -59,7 +59,6 @@ export class OrderingManagementComponent {
       next: res => {
         if(res.status){
           this.orderings = res.data.map((p: any) => this.mappingService.ordering(p))
-
           if(this.searchInput){
             this.orderings = this.orderings.filter(p => {
               return (

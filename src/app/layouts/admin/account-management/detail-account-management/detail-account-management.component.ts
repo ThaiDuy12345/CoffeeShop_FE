@@ -58,8 +58,11 @@ export class DetailAccountManagementComponent {
 
   ngOnInit(): void {
     this.initAccount()
-    this.vietnamService.getAll().subscribe((data: Province[]) => {
-      this.provinces = data
+    this.vietnamService.getAll().subscribe({
+      next: (data: Province[]) => this.provinces = data,
+      error: err => {
+        this.provinces = vietnamSelection
+      }
     })
   }
 

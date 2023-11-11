@@ -120,6 +120,9 @@ body {
     box-shadow: 0 4px 5px #f0f0f6 !important;
     border-radius: 10px !important;
   }
+  ng-template nb-card{
+    box-shadow: none !important;
+  }
   
   color: $main-text-color;
   .font-bold, .font-semibold, b, nb-card-header {

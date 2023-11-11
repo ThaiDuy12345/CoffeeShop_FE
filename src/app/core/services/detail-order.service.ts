@@ -32,7 +32,7 @@ export class DetailOrderService {
 
   delete(payload: any): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.get(this.apiService.detailOrderService().toString(), payload)
+      this.httpClient.post(this.apiService.detailOrderService().toString() + "/delete", payload)
     )
   }
 }

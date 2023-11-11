@@ -1,32 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { finalize } from 'rxjs';
+import { Subject, finalize } from 'rxjs';
+import { Account } from 'src/app/core/models/account.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-ordering-management',
   templateUrl: './ordering-management.component.html',
   styleUrls: ['./ordering-management.component.scss']
 })
-export class OrderingManagementComponent {
+export class OrderingManagementComponent implements OnInit, OnDestroy{
   public icons: Icon = icons
   public orderings: Ordering[] = []
   public choosingOrdering: Ordering = new Ordering()
   public isLoading: boolean = false
   public searchInput: string = ""
+  public tempSubject: Subject<any> = new Subject<any>()
+  public account: Account = new Account()
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
     private orderingService: OrderingService,
     private mappingService: MappingService,
+    private authenticationStore: AuthenticationStore
   ){}
+
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
 
   ngOnInit(): void {
     this.initData()
+
+    this.tempSubject.subscribe({
+      next: res => this.account = res.account,
+      error: err => {
+        this.messageService.error(err.error.message)
+      }
+    })
+
+    this.authenticationStore._select(state => state).subscribe(this.tempSubject)
   }
 
   // initCategoryData(): void {
@@ -112,11 +130,7 @@ export class OrderingManagementComponent {
     return a.status - b.status
   }
 
-  paymentStatusSort(a: Ordering, b: Ordering): number {
-    return a.paymentStatus ? 1 : -1
-  }
-
-  paymentStatusFilter(paymentStatusFilter: boolean, item: Ordering): boolean {
+  paymentStatusFilter(paymentStatusFilter: null | 1 | -1 | 2 | -2 | 0, item: Ordering): boolean {
     return item.paymentStatus === paymentStatusFilter
   }
 
@@ -127,7 +141,10 @@ export class OrderingManagementComponent {
       discountEntity: data.discount.id ? {
         discountId: data.discount.id
       } : null,
-      orderingPaymentStatus: data.status + 1 === 4 ? true : data.paymentStatus
+      orderingPaymentStatus: data.paymentStatus,
+      updatedByAccountEntity: {
+        accountPhone: this.account.phone
+      }
     }}).subscribe({
       next: res => {
         if(!res.status){
@@ -145,6 +162,17 @@ export class OrderingManagementComponent {
         this.messageService.error(err.error.message)
       }
     })
+  }
+
+  getPaymentStatus(status: null | 0 | 1 | -1 | 2 | -2){
+    switch(status){
+      case null: return "Chưa thanh toán"
+      case 0: return "Thanh toán COD"
+      case 1: return "Thanh toán MOMO"
+      case 2: return "Thanh toán ZaloPay"
+      case -1: return "Hoàn tiền thông qua Momo"
+      case -2: return "Hoàn tiền thông qua ZaloPay"
+    }
   }
 
   // activeSort(a: Ordering, b: Ordering): number {

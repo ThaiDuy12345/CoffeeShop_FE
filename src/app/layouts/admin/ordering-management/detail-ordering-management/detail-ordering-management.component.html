@@ -95,25 +95,10 @@
             </div>
             <div class="col-span-2">
               <fa-icon [icon]="icons['faCreditCard']" class="mr-3"></fa-icon
-              ><span>Đã thanh toán:</span>
+              ><span>Trạng thái thanh toán:</span>
             </div>
             <div class="col-span-3">
-              <span>
-                <fa-icon
-                  nz-tooltip
-                  *ngIf="!ordering.paymentStatus"
-                  nzTooltipTitle="Khách hàng vẫn chưa thanh toán cho đơn hàng này"
-                  [icon]="icons['faXmark']"
-                  class="text-red-400"
-                ></fa-icon>
-                <fa-icon
-                  nz-tooltip
-                  *ngIf="ordering.paymentStatus"
-                  nzTooltipTitle="Khách hàng đã thanh toán đơn hàng này"
-                  [icon]="icons['faCheck']"
-                  class="text-green-400"
-                ></fa-icon>
-              </span>
+              <span>{{ getPaymentStatus(ordering.paymentStatus) }}</span>
             </div>
             <div class="col-span-2">
               <fa-icon [icon]="icons['faNoteSticky']" class="mr-3"></fa-icon
@@ -425,7 +410,11 @@
 
         <ng-template #dialogConfirmCancel let-data let-ref="dialogRef">
           <nb-card>
-            <nb-card-body>Chắc chắn bạn muốn huỷ đơn hàng?</nb-card-body>
+            <nb-card-body>
+              <div>Xin hãy điền lý do huỷ đơn hàng bạn vừa gọi xác nhận?</div>
+              <br/>
+              <input nbInput [(ngModel)]="cancelDescription" type="text" class="w-full" placeholder="Ex: Khách hàng muốn đổi món"/>
+            </nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
               <button [nbSpinner]="isLoadingButton" [disabled]="disabledCoolDownCancelOrder !== 0" nbButton status="success" (click)="onConfirmToCancel()">

@@ -10,10 +10,11 @@ $nb-enable-css-custom-properties: true; // <-- enable css custom properties
 
 $nb-themes: nb-register-theme((
   color-success-500: unquote("#33425a"),
-  color-success-400: unquote("#59698b"),
+  color-success-400: unquote("#363062"),
   color-success-600: unquote("#1a263b"),
   font-family-primary: unquote("CustomFont"),
   font-family-secondary: font-family-primary,
   text-subtitle-font-size: unquote("14px"),
-  text-basic-color: unquote("#59698b")
+  text-basic-color: unquote("#435585"),
+  // background-basic-color-1: unquote("#F5E8C7")
 ),default, default);

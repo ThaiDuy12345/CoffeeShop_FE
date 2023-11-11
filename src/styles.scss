@@ -15,14 +15,13 @@
 @import "node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
 @import "node_modules/ng-zorro-antd/style/index.min.css";
 @import "node_modules/ng-zorro-antd/button/style/index.min.css";  /* Import one component's styles */
-
 $border-radius-base: 10px;
 $main-color: #43da89;
 $main-hover-color: #30b970;
 $second-main-color: #eeffd8;
-$main-text-color: #33425a;
-$second-text-color: #59698b;
-$error-text-color: #ee7070;
+$main-text-color: #363062;
+$second-text-color: #435585;
+$error-text-color: rgb(221, 78, 78);
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -107,7 +106,7 @@ body {
   }
 
   .ant-segmented{
-    background-color: #f7f9fc !important;
+    background-color: #dde2eb !important;
     .ant-segmented-group {
       height:40px !important;
     }
@@ -116,6 +115,10 @@ body {
       justify-content: center !important;
       align-items: center !important;
     }
+  }
+  nb-card{
+    box-shadow: 0 4px 5px #f0f0f6 !important;
+    border-radius: 10px !important;
   }
   
   color: $main-text-color;

@@ -105,38 +105,34 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
 
   checkIfDontNeedToApprove(): boolean {
     return (
-      this.ordering.paymentStatus &&
+      (this.ordering.paymentStatus === 1 ||  this.ordering.paymentStatus === 2 ) &&
       (this.ordering.totalPrice >= 150000 || this.getProductLength() >= 5) &&
       this.ordering.status === 1
     )
+  }
+
+  getPaymentStatus(status: null | 0 | 1 | -1 | 2 | -2){
+    switch(status){
+      case null: return "Chưa thanh toán"
+      case 0: return "Thanh toán COD"
+      case 1: return "Thanh toán MOMO"
+      case 2: return "Thanh toán ZaloPay"
+      case -1: return "Hoàn tiền thông qua Momo"
+      case -2: return "Hoàn tiền thông qua ZaloPay"
+    }
   }
 
   checkIfNeedToApprove(): boolean {
     return (
-      !this.ordering.paymentStatus &&
+      !(this.ordering.paymentStatus === 1 ||  this.ordering.paymentStatus === 2 ) &&
       (this.ordering.totalPrice >= 150000 || this.getProductLength() >= 5) &&
       this.ordering.status === 1
-    )
-  }
-
-  checkIfAllowToProcess(){
-    return(
-      (
-        this.ordering.status !== 0 &&
-        this.account.phone === this.ordering.updatedByAccount.phone
-      ) 
-      || this.account.role === 0
     )
   }
 
   onConfirmToApprove(): void {
     if(this.checkIfNeedToApprove() && this.approveDescription.length === 0){
       this.messageService.warning("Bạn cần gọi xác nhận với khách hàng trước")
-      return
-    }
-
-    if(!this.checkIfAllowToProcess()){
-      this.messageService.warning("Chỉ có admin hoặc nhân viên duyệt đơn mới được quyền thao tác")
       return
     }
 
@@ -147,7 +143,7 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
       discountEntity: this.ordering.discount.id ? {
         discountId: this.ordering.discount.id
       } : null,
-      orderingPaymentStatus: this.ordering.status + 1 === 4 ? true : this.ordering.paymentStatus,
+      orderingPaymentStatus: this.ordering.paymentStatus,
       orderingApproveDescription: this.ordering.status === 1 ? this.approveDescription : null,
       updatedByAccountEntity: {
         accountPhone: this.account.phone
@@ -221,12 +217,6 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   }
 
   onConfirmToCancel(): void {
-
-    if(!this.checkIfAllowToProcess()){
-      this.messageService.warning("Chỉ có admin hoặc nhân viên duyệt đơn mới được quyền thao tác")
-      return
-    }
-
     this.isLoadingButton = true
     this.orderingService.put({ orderingId: this.ordering.id, payload: {
       orderingStatus: -1,
@@ -234,7 +224,11 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
       discountEntity: this.ordering.discount.id ? {
         discountId: this.ordering.discount.id
       } : null,
-      orderingPaymentStatus: this.ordering.paymentStatus
+      orderingPaymentStatus: this.ordering.paymentStatus === 1 ? -1 : this.ordering.paymentStatus === 2 ? -2 : this.ordering.paymentStatus,
+      orderingCancelDescription: [1, 2].includes(this.ordering.status) ? this.cancelDescription : null,
+      updatedByAccountEntity: {
+        accountPhone: this.account.phone
+      }
     }}).pipe(
       finalize(() => {
         this.isLoadingButton = false
@@ -256,12 +250,6 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   }
 
   onConfirmToFail(): void {
-
-    if(!this.checkIfAllowToProcess()){
-      this.messageService.warning("Chỉ có admin hoặc nhân viên duyệt đơn mới được quyền thao tác")
-      return
-    }
-
     if(!this.failReason){
       this.messageService.error("Xin hãy điền lý do thất bại để tiếp tục")
       return
@@ -274,7 +262,10 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
       discount: this.ordering.discount ? {
         discountId: this.ordering.discount.id
       } : null,
-      orderingPaymentStatus: this.ordering.paymentStatus
+      orderingPaymentStatus: this.ordering.paymentStatus,
+      updatedByAccountEntity: {
+        accountPhone: this.account.phone
+      }
     }}).pipe(
       finalize(() => {
         this.isLoadingButton = false

@@ -84,7 +84,7 @@ export class PopularProductComponent implements OnInit{
         productImageUrl: this.products[index].imageUrl,
         productActive: this.products[index].active,
         productIsPopular: isPopular,
-        category: {
+        categoryEntity: {
           categoryId: this.products[index].category.id,
           categoryName: this.products[index].category.name
         }

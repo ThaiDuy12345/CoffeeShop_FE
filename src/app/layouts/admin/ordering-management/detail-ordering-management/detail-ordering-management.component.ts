@@ -119,9 +119,24 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
     )
   }
 
+  checkIfAllowToProcess(){
+    return(
+      (
+        this.ordering.status !== 0 &&
+        this.account.phone === this.ordering.updatedByAccount.phone
+      ) 
+      || this.account.role === 0
+    )
+  }
+
   onConfirmToApprove(): void {
     if(this.checkIfNeedToApprove() && this.approveDescription.length === 0){
       this.messageService.warning("Bạn cần gọi xác nhận với khách hàng trước")
+      return
+    }
+
+    if(!this.checkIfAllowToProcess()){
+      this.messageService.warning("Chỉ có admin hoặc nhân viên duyệt đơn mới được quyền thao tác")
       return
     }
 
@@ -206,6 +221,12 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   }
 
   onConfirmToCancel(): void {
+
+    if(!this.checkIfAllowToProcess()){
+      this.messageService.warning("Chỉ có admin hoặc nhân viên duyệt đơn mới được quyền thao tác")
+      return
+    }
+
     this.isLoadingButton = true
     this.orderingService.put({ orderingId: this.ordering.id, payload: {
       orderingStatus: -1,
@@ -235,6 +256,12 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   }
 
   onConfirmToFail(): void {
+
+    if(!this.checkIfAllowToProcess()){
+      this.messageService.warning("Chỉ có admin hoặc nhân viên duyệt đơn mới được quyền thao tác")
+      return
+    }
+
     if(!this.failReason){
       this.messageService.error("Xin hãy điền lý do thất bại để tiếp tục")
       return

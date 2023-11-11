@@ -128,7 +128,7 @@ export class DetailProductManagementComponent implements OnInit{
             productImageUrl: res.data.url,
             productActive: this.product.active,
             productIsPopular: this.product.isPopular,
-            category: {
+            categoryEntity: {
               categoryId: this.product.category.id,
               categoryName: this.product.category.name
             }
@@ -181,7 +181,7 @@ export class DetailProductManagementComponent implements OnInit{
         productImageUrl: "",
         productActive: false,
         productIsPopular: false,
-        category: {
+        categoryEntity: {
           categoryId: this.editProduct.category.id,
           categoryName: this.editProduct.category.name
         }
@@ -193,7 +193,7 @@ export class DetailProductManagementComponent implements OnInit{
         productImageUrl: this.product.imageUrl,
         productActive: this.product.active,
         productIsPopular: this.product.isPopular,
-        category: {
+        categoryEntity: {
           categoryId: this.editProduct.category.id,
           categoryName: this.editProduct.category.name
         }

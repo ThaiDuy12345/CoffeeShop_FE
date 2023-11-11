@@ -96,7 +96,7 @@ export class ProductManagementComponent implements OnInit {
         productImageUrl: this.products[index].imageUrl,
         productActive: active,
         productIsPopular: this.products[index].isPopular,
-        category: {
+        categoryEntity: {
           categoryId: this.products[index].category.id,
           categoryName: this.products[index].category.name
         }

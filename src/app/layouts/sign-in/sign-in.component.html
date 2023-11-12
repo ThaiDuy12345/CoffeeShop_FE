@@ -1,129 +1,131 @@
 <nb-layout>
   <nb-layout-column>
-    <div class="flex items-center min-h-screen bg-white">
-      <div class="container mx-auto">
-        <div class="max-w-xl mx-auto my-10">
-          <div class="text-center">
-            <h1 class="my-3 text-3xl font-semibold text-gray-700">Đăng nhập</h1>
-            <p class="text-gray-500">Đăng nhập để bắt đầu mua hàng!</p>
-          </div>
-          <div class="m-7">
-            <form>
-              <div class="mb-6">
-                <label class="my-2">Email</label>
-                <input
-                  [(ngModel)]="account.email"
-                  [ngClass]="{
-                    'error-input-color': account.email === '' && isSubmitted,
-                  }"
-                  nbInput
-                  name="email"
-                  #name="ngModel"
-                  autocomplete="off"
-                  type="email"
-                  class="block w-full px-3 py-2 text-base mt-2"
-                />
-                <small
-                  *ngIf="account.email === '' && isSubmitted"
-                  class="error-text-color"
-                  >Email không được để trống!!</small
-                >
-              </div>
-              <div class="mb-6">
-                <label class="my-2">Mật khẩu</label>
-                <nb-form-field class="min-w-0 mt-2">
+    <div class="container mx-auto">
+      <nb-card>
+        <nb-card-body>
+          <div class="max-w-xl mx-auto my-10">
+            <div class="text-center">
+              <h1 class="my-3 text-3xl font-semibold text-gray-700">Đăng nhập</h1>
+              <p class="text-gray-500">Đăng nhập để bắt đầu mua hàng!</p>
+            </div>
+            <div class="m-7">
+              <form>
+                <div class="mb-6">
+                  <label class="my-2">Email</label>
                   <input
-                    [(ngModel)]="account.password"
+                    [(ngModel)]="account.email"
                     [ngClass]="{
-                      'error-input-color':
-                        account.password === '' && isSubmitted
+                      'error-input-color': account.email === '' && isSubmitted,
                     }"
                     nbInput
-                    name="password"
-                    required
-                    #password="ngModel"
+                    name="email"
+                    #name="ngModel"
                     autocomplete="off"
-                    [type]="showPassword ? 'text' : 'password'"
-                    class="block w-full px-3 py-2 text-base"
+                    type="email"
+                    class="block w-full px-3 py-2 text-base mt-2"
                   />
-                  <button
-                    nbSuffix
-                    nbButton
-                    ghost
-                    (click)="showPassword = !showPassword"
+                  <small
+                    *ngIf="account.email === '' && isSubmitted"
+                    class="error-text-color"
+                    >Email không được để trống!!</small
                   >
-                    <nb-icon
-                      [icon]="
-                        showPassword ? 'eye-outline' : 'eye-off-2-outline'
-                      "
-                      pack="eva"
-                      [attr.aria-label]="
-                        showPassword ? 'hide password' : 'show password'
-                      "
-                    >
-                    </nb-icon>
-                  </button>
-                </nb-form-field>
-                <small
-                  *ngIf="account.password === '' && isSubmitted"
-                  class="error-text-color"
-                  >Mật khẩu không được để trống</small
-                >
-              </div>
-              <div class="mb-6">
-                <div class="grid grid-cols-1 mb-2 gap-5">
-                  <button
-                    type="button"
-                    nbButton
-                    status="success"
-                    [nbSpinner]="isLoading"
-                    [disabled]="isLoading"
-                    class="px-3 py-4 text-white"
-                    (click)="onClickSignIn()"
-                  >
-                    Đăng nhập
-                  </button>
-                  <span class="center-an-item"
-                    >Hoặc</span
-                  >
-                  <div class="center-an-item gap-5">
-                    <asl-google-signin-button
-                      ux_mode='popup'
-                      type="icon"
-                      text="signin_with"
-                      size="large"
-                    ></asl-google-signin-button>
-                    <fa-icon (click)="signinWithFacebook()" [icon]="icons['faSquareFacebook']" size="3x" class="text-[#1b74e4] hover:text-[#80b9ff] transition-colors cursor-pointer"></fa-icon>
-                  </div>
                 </div>
-                <small>
-                  <a
-                    (click)="openForgotPassword(dialog)"
-                    class="text-sm second-text-color focus:outline-none"
+                <div class="mb-6">
+                  <label class="my-2">Mật khẩu</label>
+                  <nb-form-field class="min-w-0 mt-2">
+                    <input
+                      [(ngModel)]="account.password"
+                      [ngClass]="{
+                        'error-input-color':
+                          account.password === '' && isSubmitted
+                      }"
+                      nbInput
+                      name="password"
+                      required
+                      #password="ngModel"
+                      autocomplete="off"
+                      [type]="showPassword ? 'text' : 'password'"
+                      class="block w-full px-3 py-2 text-base"
+                    />
+                    <button
+                      nbSuffix
+                      nbButton
+                      ghost
+                      (click)="showPassword = !showPassword"
+                    >
+                      <nb-icon
+                        [icon]="
+                          showPassword ? 'eye-outline' : 'eye-off-2-outline'
+                        "
+                        pack="eva"
+                        [attr.aria-label]="
+                          showPassword ? 'hide password' : 'show password'
+                        "
+                      >
+                      </nb-icon>
+                    </button>
+                  </nb-form-field>
+                  <small
+                    *ngIf="account.password === '' && isSubmitted"
+                    class="error-text-color"
+                    >Mật khẩu không được để trống</small
                   >
-                    Bạn quên mật khẩu?
-                  </a></small
-                >
-              </div>
-              <p class="text-sm text-center text-gray-400">
-                Chưa có tài khoản?
-                <a
-                  [routerLink]="'/sign-up'"
-                  class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500"
-                  >Đăng ký</a
-                >
-                ở đây.
-              </p>
-            </form>
+                </div>
+                <div class="mb-6">
+                  <div class="grid grid-cols-1 mb-2 gap-5">
+                    <button
+                      type="button"
+                      nbButton
+                      status="success"
+                      [nbSpinner]="isLoading"
+                      [disabled]="isLoading"
+                      class="px-3 py-4 text-white"
+                      (click)="onClickSignIn()"
+                    >
+                      Đăng nhập
+                    </button>
+                    <span class="center-an-item"
+                      >Hoặc</span
+                    >
+                    <div class="center-an-item gap-5">
+                      <asl-google-signin-button
+                        ux_mode='popup'
+                        type="icon"
+                        text="signin_with"
+                        size="large"
+                      ></asl-google-signin-button>
+                      <fa-icon (click)="signinWithFacebook()" [icon]="icons['faSquareFacebook']" size="3x" class="text-[#1b74e4] hover:text-[#80b9ff] transition-colors cursor-pointer"></fa-icon>
+                    </div>
+                  </div>
+                  <small>
+                    <a
+                      (click)="openForgotPassword(dialog)"
+                      class="text-sm second-text-color focus:outline-none"
+                    >
+                      Bạn quên mật khẩu?
+                    </a></small
+                  >
+                </div>
+                <p class="text-sm text-center text-gray-400">
+                  Chưa có tài khoản?
+                  <a
+                    [routerLink]="'/sign-up'"
+                    class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500"
+                    >Đăng ký</a
+                  >
+                  ở đây.
+                </p>
+              </form>
+            </div>
           </div>
-        </div>
-      </div>
+        </nb-card-body>
+      </nb-card>
     </div>
   </nb-layout-column>
 </nb-layout>
 <ng-template #dialog let-data let-ref="dialogRef">
   <div class="center-an-item">
-    <nb-card class="rounded-lg w-[600px] h-[500px]">
+    <nb-card class="rounded-lg w-[600px] h-[500px] nosd">
       <ng-container *ngIf="forgotPasswordStep === 1">
         <nb-card-header>Lấy lại mật khẩu</nb-card-header>
         <nb-card-body class="grid grid-cols-1 p-10">

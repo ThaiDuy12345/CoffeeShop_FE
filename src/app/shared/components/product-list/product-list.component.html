@@ -2,12 +2,12 @@
   <nb-card
     [routerLink]="['/main/product', item.id]"
     *ngFor="let item of products; let i = index"
-    class="border-none nosd"
+    class="border-none nosd cursor-pointer"
   >
     <nb-card-body class="border-none">
       <app-image
         [classes]="
-          'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'
+          'rounded-xl transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'
         "
         [lazyClasses]="'min-h-[300px]'"
         [src]="item.imageUrl"
@@ -23,13 +23,13 @@
   <nb-card
     [routerLink]="['/main/product', item.id]"
     *ngFor="let item of products; let i = index"
-    class="border-none nosd"
+    class="border-none nosd cursor-pointer"
   >
     <nb-card-body class="border-none grid grid-cols-4 gap-5">
       <div class="lg:col-span-1 col-span-2">
         <app-image
           [classes]="
-            'rounded-xl cursor-pointer transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'
+            'rounded-xl transition-shadow shadow-sm hover:shadow-md no-background rounded-xl'
           "
           [lazyClasses]="'min-h-[300px]'"
           [src]="item.imageUrl"

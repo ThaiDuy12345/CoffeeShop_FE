@@ -329,7 +329,7 @@
         </div>
 
         <ng-template #dialogToComplete let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>Xác nhận đơn hàng giao thành công?</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
@@ -341,7 +341,7 @@
         </ng-template>
 
         <ng-template #dialogToFailTransfer let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>
               <div>Xác nhận đơn hàng giao thất bại? Hãy xem xét thật kỹ và điền lý do trước khi tiếp tục<br/>Lưu ý: Chúng tôi sẽ đặt lý do vào ghi chú của đơn hàng!!</div>
               <br/>
@@ -357,7 +357,7 @@
         </ng-template>
 
         <ng-template #dialogToTransfer let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>Xác nhận chuyển tiếp đơn hàng? Hãy chuẩn bị hàng thật kỹ trước khi tiếp tục <br/>Lưu ý: không thể huỷ đơn hàng sau bước này!!</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
@@ -369,7 +369,7 @@
         </ng-template>
 
         <ng-template #dialogToApprove let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>Xác nhận duyệt đơn hàng? Hãy kiểm tra thông tin thật kỹ vì không thể quay lại trạng thái ban đầu</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
@@ -381,7 +381,7 @@
         </ng-template>
 
         <ng-template #dialogToApproveWithConfirm let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>
               <div>Bạn cần gọi điện xác nhận trước khi duyệt đơn hàng? Hãy kiểm tra thông tin thật kỹ vì không thể quay lại trạng thái ban đầu</div>
               <br/>
@@ -397,7 +397,7 @@
         </ng-template>
 
         <ng-template #dialogToCancel let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>Bạn cần gọi điện xác nhận với khách hàng trước khi huỷ.</nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
@@ -409,7 +409,7 @@
         </ng-template>
 
         <ng-template #dialogConfirmCancel let-data let-ref="dialogRef">
-          <nb-card>
+          <nb-card class="nosd">
             <nb-card-body>
               <div>Xin hãy điền lý do huỷ đơn hàng bạn vừa gọi xác nhận?</div>
               <br/>
@@ -417,7 +417,7 @@
             </nb-card-body>
             <nb-card-footer class="space-x-3">
               <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-              <button [nbSpinner]="isLoadingButton" [disabled]="disabledCoolDownCancelOrder !== 0" nbButton status="success" (click)="onConfirmToCancel()">
+              <button [nbSpinner]="isLoadingButton" [disabled]="disabledCoolDownCancelOrder !== 0 && cancelDescription.length === 0" nbButton status="success" (click)="onConfirmToCancel()">
                 {{
                   disabledCoolDownCancelOrder !== 0 ? 
                     'Có thể huỷ đơn hàng sau ' + disabledCoolDownCancelOrder + " giây"

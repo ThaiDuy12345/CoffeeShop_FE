@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
@@ -9,6 +9,7 @@ import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
 import { DetailOrderData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
+import { Account } from 'src/app/core/models/account.model';
 
 @Component({
   selector: 'app-history-ordering',
@@ -21,6 +22,7 @@ export class HistoryOrderingComponent implements OnInit{
   public selectedStepIndex: number = 1
   public mostPopularProducts: Product[] = ProductData
   public priceFilter: [number, number] = [0, 100]
+  @Input() account: Account = new Account()
   constructor(
     private formatService: FormatService,
     private router: Router,
@@ -31,10 +33,7 @@ export class HistoryOrderingComponent implements OnInit{
   }
 
   loadOrdering(): void {
-    const user = Cookies.get('id')
-    if(!user) return
-
-    this.ordering = OrderingData.filter(ordering => ordering.account.phone === user)
+    
   }
 
   getStatus(status: number): string {

@@ -1,18 +1,18 @@
 <div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
-  <nz-tabset nzCentered [nzSelectedIndex]="selectedTab">
+  <nz-tabset *ngIf="!isLoading" nzCentered [nzSelectedIndex]="selectedTab">
     <nz-tab [nzTitle]="template1">
       <ng-template #template1>
         <fa-icon [icon]="icons['faCartShopping']"></fa-icon>
         <span class="ml-3">Giỏ hàng của bạn</span>
       </ng-template>
-      <app-shopping-cart></app-shopping-cart>
+      <app-shopping-cart [account]="account"></app-shopping-cart>
     </nz-tab>
     <nz-tab [nzTitle]="template2">
       <ng-template #template2>
         <fa-icon [icon]="icons['faCartFlatbed']"></fa-icon>
         <span class="ml-3">Lịch sử mua hàng</span>
       </ng-template>
-      <app-history-ordering></app-history-ordering>
+      <app-history-ordering [account]="account"></app-history-ordering>
     </nz-tab>
   </nz-tabset> 
 </div>

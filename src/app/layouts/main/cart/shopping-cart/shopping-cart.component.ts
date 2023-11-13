@@ -27,6 +27,7 @@ export class ShoppingCartComponent implements OnInit {
   @Input() public account: Account = new Account()
   public currentIndexItem: number = -1
   public currentQuantityItem: number = 0
+  public isLoadingButton: boolean = false
   constructor(
     private filterStore: FilterStore,
     private formatService: FormatService,
@@ -46,16 +47,18 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onClickSaveEditQuantity(item: DetailOrder): void {
+    this.isLoadingButton = true
     this.detailOrderService.put({
       detailOrderId: {
         orderingId: this.ordering.id,
         productSizeId: item.productSize.id
       },
       detailOrderProductQuantity: this.currentQuantityItem
-    }).pipe(finalize(() => this.onClickCancelEditQuantity())).subscribe({
+    }).pipe(finalize(() => this.isLoadingButton = false)).subscribe({
       next: res => {
         if(res.status) {
           this.messageService.success("Thao tác thành công")
+          this.onClickCancelEditQuantity()
           this.fetchCurrentOrderingCart(this.account.phone)
         }
         else this.messageService.error(res.message)

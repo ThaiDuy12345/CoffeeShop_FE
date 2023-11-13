@@ -41,4 +41,10 @@ export class OrderingService {
       this.httpClient.get(this.apiService.orderingService().toString() + `/${params.orderingId}`)
     )
   }
+
+  getAllByAccount(params: { accountPhone: string }): Observable<any>{
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.orderingService().toString() + `/getAllByAccount/${params.accountPhone}`)
+    )
+  }
 }

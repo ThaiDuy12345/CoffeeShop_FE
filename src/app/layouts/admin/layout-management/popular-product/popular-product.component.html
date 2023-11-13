@@ -14,7 +14,7 @@
           <input nbInput [(ngModel)]="searchInput" (change)="onSearchInput()" placeholder="Tìm kiếm sản phẩm"/>
         </div>
       </div>
-      <nz-table #table [nzData]="products" nzShowPagination="false" [nzLoading]="isLoading">
+      <nz-table #table [nzPageSize]="4" [nzData]="products" [nzPaginationType]="'small'" [nzLoading]="isLoading">
         <thead>
           <tr>
             <th>#</th>

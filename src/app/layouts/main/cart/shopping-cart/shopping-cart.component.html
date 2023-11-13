@@ -28,8 +28,9 @@
             <div class="grid grid-cols-5 my-6 gap-5">
               <div class="col-span-5 sm:col-span-1">
                 <app-image
+                  [routerLink]="'/main/product/' + item.productSize.product.id"
                   [src]="item.productSize.product.imageUrl"
-                  [classes]="'rounded-lg'"s
+                  [classes]="'rounded-lg cursor-pointer'"
                 ></app-image>
               </div>
               <div class="col-span-5 sm:col-span-4 grid grid-rows-3 mt-0 gap-3">
@@ -104,7 +105,7 @@
                       <fa-icon [icon]="icons['faTrash']" class="mr-2"></fa-icon
                       >Xoá
                     </button>
-                    <button *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" status="primary" (click)="onClickSaveEditQuantity(item)">
+                    <button [nbSpinner]="isLoadingButton" *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" status="primary" (click)="onClickSaveEditQuantity(item)">
                       <fa-icon [icon]="icons['faCheck']" class="mr-2"></fa-icon
                       >Lưu
                     </button>
@@ -150,7 +151,7 @@
           <span class="font-bold text-left">Tổng giá tạm tính</span>
           <span class="font-bold text-right">{{ formatPrice(ordering.totalPrice) }}</span>
         </div>
-      </nb-card-body>
+    </nb-card-body>
     </nb-card>
     <div class="grid grid-cols-1 gap-5">
       <button nbButton class="w-full" status="warning" (click)="navigate()">
@@ -161,10 +162,11 @@
         >Thêm món
       </button>
       <button
+        [disabled]="detailOrders.length === 0"
         nbButton
         class="w-full"
         status="primary"
-        [routerLink]="'/main/ordering/VN2308685190140'"
+        [routerLink]="'/main/ordering/' + ordering.id"
       >
         <fa-icon [icon]="icons['faBagShopping']" class="me-2"></fa-icon>Thanh
         toán

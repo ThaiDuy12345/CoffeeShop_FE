@@ -17,7 +17,7 @@
           <button nbButton status="info" [routerLink]="'/admin/product-management/new'">Thêm</button>
         </div>
       </div>
-      <nz-table #table [nzData]="products" [nzLoading]="isLoading" [nzPageSize]="4">
+      <nz-table [nzPaginationType]="'small'" #table [nzData]="products" [nzLoading]="isLoading" [nzPageSize]="4">
         <thead>
           <tr>
             <th>#</th>

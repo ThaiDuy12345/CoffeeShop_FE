@@ -315,7 +315,7 @@
                 </nz-result>
               </ng-container>
             </div>
-            <nz-pagination [nzPageSize]="detailOrderPaginateSize" (nzPageIndexChange)="geDetailOrdersByPage($event)" [nzPageIndex]="1" [nzTotal]="detailOrders.length"></nz-pagination>
+            <nz-pagination [nzSize]="'small'" [nzPageSize]="detailOrderPaginateSize" (nzPageIndexChange)="getDetailOrdersByPage($event)" [nzPageIndex]="1" [nzTotal]="detailOrders.length"></nz-pagination>
             <div class="col-span-4 grid grid-col-1">
               <div class="flex justify-end items-center">
                 <button *ngIf="ordering.status === 1" nbButton status="primary" (click)="openToApprove(checkIfNeedToApprove() ? dialogToApproveWithConfirm : dialogToApprove)">Duyệt đơn hàng</button>

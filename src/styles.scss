@@ -117,9 +117,19 @@ body {
     }
   }
   nb-card{
-    box-shadow: 0 4px 5px #f0f0f6 !important;
+    box-shadow: 0 4px 5px #ededf5 !important;
     border-radius: 10px !important;
   }
+
+  .ant-collapse-borderless>.ant-collapse-item, .ant-collapse>.ant-collapse-item{
+    border: none !important;
+  }
+
+  .coffee-box{
+    box-shadow: 0 4px 5px #ededf5 !important;
+    border-radius: 10px !important;
+  }
+  
   nb-card.nosd{
     box-shadow: none !important;
   }

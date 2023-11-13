@@ -79,7 +79,7 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
                 next: res => {
                   if(res.status) {
                     this.detailOrders = res.data.map((p: any) => this.mappingService.detailOrder(p))
-                    this.geDetailOrdersByPage(1)
+                    this.getDetailOrdersByPage(1)
                   }
                   else this.messageService.error(res.message)
                 },
@@ -168,7 +168,7 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
     })
   }
 
-  geDetailOrdersByPage(pageIndex: number): void {
+  getDetailOrdersByPage(pageIndex: number): void {
     const startIndex = (pageIndex - 1) *this.detailOrderPaginateSize;
     const endIndex = startIndex + this.detailOrderPaginateSize;
     this.detailOrderPaginates = this.detailOrders.slice(startIndex, endIndex);
@@ -258,7 +258,7 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
     this.orderingService.put({ orderingId: this.ordering.id, payload: {
       orderingStatus: -1,
       orderingShippingFee: this.ordering.shippingFee,
-      orderingNote: this.ordering.note + ` - (${this.failReason})`,
+      orderingNote: this.ordering.note ? this.ordering.note  + ` - (${this.failReason})` : `(${this.failReason})`,
       discount: this.ordering.discount ? {
         discountId: this.ordering.discount.id
       } : null,

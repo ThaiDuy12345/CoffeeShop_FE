@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import Cookies from 'js-cookie';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, finalize } from 'rxjs';
@@ -26,6 +27,7 @@ export class OrderingComponent implements OnInit{
   public isLoading: boolean = false
   public account: Account = new Account()
   public tempSubject: Subject<any> = new Subject<any>()
+  public isLoadingConfirmButton: boolean = false
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -33,7 +35,9 @@ export class OrderingComponent implements OnInit{
     private orderingService: OrderingService,
     private detailOrderService: DetailOrderService,
     private mappingService: MappingService,
-    private authenticationStore: AuthenticationStore
+    private authenticationStore: AuthenticationStore,
+    private dialogService: NbDialogService,
+    @Optional() private dialogRef: NbDialogRef<any>,
   ){}
 
   ngOnDestroy(): void {
@@ -41,12 +45,6 @@ export class OrderingComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // const userId = Cookies.get('id')
-    // const user = AccountData.find(item => item.phone === userId)
-    // this.user = user ? user : new Account()
-    
-    //   this.router.navigate(['/main/dashboard'])
-    // })
     this.activatedRoute.params.subscribe((params: any) => {
       if(params['id']) {
         this.tempSubject.subscribe({
@@ -75,6 +73,11 @@ export class OrderingComponent implements OnInit{
     this.orderingService.getById({ orderingId: orderingId }).subscribe({
       next: res => {
         if(res.status){
+          if(res.data.orderingStatus !== 0){
+            this.router.navigate(['/main/dashboard'])
+            this.messageService.error("Mã hóa đơn không tồn tại hoặc không hợp lệ")
+            return
+          }
           this.ordering = { ...this.mappingService.ordering(res.data) }
           this.fetchDetailOrders();
         }else this.messageService.error(res.message)
@@ -97,15 +100,41 @@ export class OrderingComponent implements OnInit{
   }
   
   onClickNextStep(newStep: number): void {
-    this.isLoading = true
-    setTimeout(() => {
+    if(newStep !== 2) {
       this.current = newStep
-      this.isLoading = false
-    }, 1500)
+      return
+    }
+    this.submitOrder()
+  }
+
+  submitOrder(): void {
+    this.isLoadingConfirmButton = true
+    this.orderingService.put({ orderingId: this.ordering.id, payload: {
+      orderingStatus: 1,
+      orderingShippingFee: this.ordering.shippingFee,
+      discountEntity: this.ordering.discount.id ? {
+        discountId: this.ordering.discount.id
+      } : null,
+      orderingPaymentStatus: this.ordering.paymentStatus,
+      updatedByAccountEntity: null
+    }}).pipe(finalize(() => {
+      this.isLoadingConfirmButton = false
+      this.dialogRef.close()
+    })).subscribe({
+      next: res => {
+        if(res.status) this.current = 2
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
   }
 
   getWidth(): number {
     return window.innerWidth
+  }
+
+  openModal(dialog: TemplateRef<any>): void {
+    this.dialogRef = this.dialogService.open(dialog);
   }
 
 }

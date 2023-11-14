@@ -64,10 +64,12 @@
         </div>
       </nb-card-body>
       <nb-card-footer class="border-none">
-        <h1 class="second-main-text-color" *ngIf="current === 1">
-          Nhấn "Đặt hàng" đồng nghĩa với việc bạn đã chấp thuận điều khoản dịch
-          vụ của chúng tôi.
-        </h1>
+        <div>
+          <h1 class="second-main-text-color" *ngIf="current === 1">
+            Nhấn "Đặt hàng" đồng nghĩa với việc bạn đã chấp thuận điều khoản dịch
+            vụ của chúng tôi.
+          </h1>
+        </div>
         <div class="space-x-5">
           <button
             nbButton
@@ -82,7 +84,7 @@
             nbButton
             status="danger"
             *ngIf="current === 1"
-            (click)="onClickNextStep(current + 1)"
+            (click)="openModal(dialogToApprove)"
           >
             Đặt hàng
           </button>
@@ -102,3 +104,15 @@
     </div>
   </nb-card>
 </div>
+
+<ng-template #dialogToApprove let-data let-ref="dialogRef">
+  <nb-card class="nosd">
+    <nb-card-body>Xác nhận đặt hàng? Hãy kiểm tra thông tin thật kỹ thông tin</nb-card-body>
+    <nb-card-footer class="space-x-3">
+      <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+      <button nbButton status="success" [nbSpinner]="isLoadingConfirmButton" (click)="onClickNextStep(current + 1)">
+        Xác nhận
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -22,6 +22,27 @@ export class FormatService {
     }
   }
 
+  timeFromNow(date: Date): string {
+    const now = new Date();
+    const futureDate = date;
+    const diff = Math.floor((futureDate.getTime() - now.getTime()) / 1000);
+  
+    if (diff < 60) {
+      return `trong ${diff} giây`;
+    } else if (diff < 3600) {
+      return `trong ${Math.floor(diff / 60)} phút`;
+    } else if (diff < 86400) {
+      return `trong ${Math.floor(diff / 3600)} giờ`;
+    } else if (diff < 2592000) {
+      return `trong ${Math.floor(diff / 86400)} ngày`;
+    } else if (diff < 31536000) {
+      return `trong ${Math.floor(diff / 2592000)} tháng`;
+    } else {
+      return `trong ${Math.floor(diff / 31536000)} năm`;
+    }
+  }
+  
+
   formatPrice(price: number): string {
     const formatter = new Intl.NumberFormat('vi-VN', {
       style: 'currency',

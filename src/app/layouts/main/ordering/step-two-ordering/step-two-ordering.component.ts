@@ -27,10 +27,10 @@ export class StepTwoOrderingComponent implements OnInit{
   public icons: Icon = icons
   public discountCode: string = ""
   public isLoadingDiscountCheckButton: boolean = false
-  public isLoadingDiscountModal: boolean = false
   public discounts: Discount[] = []
   public choosingDiscount: Discount = new Discount()
   public isLoadingConfirmButton: boolean = false
+  public isLoadingDiscountModal: boolean = false
   constructor(
     private router: Router,
     private formatService: FormatService,
@@ -46,6 +46,19 @@ export class StepTwoOrderingComponent implements OnInit{
     this.ordering.discount = new Discount()
   }
 
+  loadDiscountList(): void {
+    this.isLoadingDiscountModal = true
+    this.discountService.getAll().pipe(finalize(() => this.isLoadingDiscountModal = false)).subscribe({
+      next: res => {
+        if(res.status){
+          this.discounts = res.data.filter((d: any) => new Date(d.discountExpiredDate) > new Date())
+            .map((d: any) => this.mappingService.discount(d))
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+  }
+
   navigate(id: string): void {
     this.router.navigate([`/main/product/${id}`])
   }
@@ -59,8 +72,12 @@ export class StepTwoOrderingComponent implements OnInit{
     this.discountService.getByCode({ discountCode: this.discountCode }).pipe(finalize(() => this.isLoadingDiscountCheckButton = false)).subscribe({
       next: res => {
         if(res.status){
-          if(new Date(res.discountExpiredDate) <= new Date()){
-            this.messageService.success("Mã giảm giá đã hết hạn sử dụng")
+          if(new Date(res.data.discountExpiredDate) <= new Date()){
+            this.messageService.error("Mã giảm giá đã hết hạn sử dụng")
+            return
+          }
+          if(res.data.discountMinimumOrderPrice > this.ordering.price){
+            this.messageService.error("Bạn chưa đạt đủ điện kiện để sử dụng mã giảm giá")
             return
           }
           this.ordering.discount = { ...this.mappingService.discount(res.data) }
@@ -79,25 +96,12 @@ export class StepTwoOrderingComponent implements OnInit{
   cancelDiscountCode(): void {
     this.isEditingDiscount = true
     this.ordering.discount = new Discount()
-    this.choosingDiscount = this.ordering.discount.code ? this.choosingDiscount : new Discount()
   }
 
   openDiscountModal(dialog: TemplateRef<any>): void {
     this.dialogRef = this.dialogService.open(dialog);
+    this.choosingDiscount = this.ordering.discount.code ? this.choosingDiscount : new Discount()
     this.loadDiscountList()
-  }
-
-  loadDiscountList(): void {
-    this.isLoadingDiscountModal = true
-    this.discountService.getAll().pipe(finalize(() => this.isLoadingDiscountModal = false)).subscribe({
-      next: res => {
-        if(res.status){
-          this.discounts = res.data.filter((d: any) => new Date(d.discountExpiredDate) > new Date())
-            .map((d: any) => this.mappingService.discount(d))
-        }else this.messageService.error(res.message)
-      },
-      error: err => this.messageService.error(err.error.message)
-    })
   }
 
   formatNumber(number: number): string {

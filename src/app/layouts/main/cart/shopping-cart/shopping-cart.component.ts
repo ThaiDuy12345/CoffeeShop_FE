@@ -47,6 +47,10 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onClickSaveEditQuantity(item: DetailOrder): void {
+    if(this.currentQuantityItem < 1){
+      this.messageService.error("Số lượng sản phẩm không hợp lệ")
+      return
+    }
     this.isLoadingButton = true
     this.detailOrderService.put({
       detailOrderId: {

@@ -194,6 +194,15 @@ body {
     color: $second-text-color !important;
   }
 
+  .discountModal>.ant-radio{
+    margin-right: 10px !important;
+    top: 2.5em !important;
+  }
+
+  .ant-radio-group, .ant-radio-wrapper{
+    color: $second-text-color !important;
+  }
+
   .second-text-color {
     color: $second-text-color !important;
     transition: 0.5s;

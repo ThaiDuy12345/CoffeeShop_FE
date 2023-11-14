@@ -1,24 +1,27 @@
-<ng-container *ngIf="!isLoading">
+
   <div class="w-full grid grid-cols-4 mb-5 gap-5">
     <div class="col-span-2 sm:col-span-3"></div>
     <div class="col-span-2 sm:col-span-1">
       <nb-select
         class="w-full"
         multiple
-        placeholder="Tất cả"
         selectable="false"
+        [(selected)]="selectedType"
+        placeholder="Tất cả"
+        (selectedChange)="filterChange()"
       >
-        <nb-option><span class="text-[#557cef]">Chờ xét duyệt</span></nb-option>
-        <nb-option><span class="text-[#3d5cb9]">Đang chuẩn bị</span></nb-option>
-        <nb-option
+        <nb-option [value]="1"><span class="text-[#557cef]">Chờ xét duyệt</span></nb-option>
+        <nb-option [value]="2"><span class="text-[#3d5cb9]">Đang chuẩn bị</span></nb-option>
+        <nb-option [value]="3"
           ><span class="text-[#273b75]">Đang vận chuyển</span></nb-option
         >
-        <nb-option><span class="text-green-400">Đã hoàn thành</span></nb-option>
-        <nb-option><span class="text-red-400">Đã huỷ</span></nb-option>
+        <nb-option [value]="4"><span class="text-green-400">Đã hoàn thành</span></nb-option>
+        <nb-option [value]="-1"><span class="text-red-400">Đã huỷ</span></nb-option>
       </nb-select>
     </div>
   </div>
   <nz-collapse
+    *ngIf="!isLoading"
     nzAccordion
     [nzBordered]="false"
     [nzExpandIconPosition]="'right'"
@@ -26,7 +29,7 @@
   >
     <nz-collapse-panel
       (nzActiveChange)="onActiveOrderChange($event, or.id)"
-      *ngFor="let or of orderings"
+      *ngFor="let or of filterOrderings"
       class="coffee-box"
       [ngStyle]="{ 'margin-bottom': '20px', 'background-color': 'white' }"
       [nzHeader]="header"
@@ -230,13 +233,14 @@
   </nz-collapse>
 
   <nz-result
-    *ngIf="orderings.length === 0"
+    *ngIf="!isLoading && filterOrderings.length === 0"
     [nzIcon]="'smile-twotone'"
     nzTitle="Ối, chưa có đơn hàng nào cả!!"
   >
   </nz-result>
-</ng-container>
+  <div *ngIf="isLoading" class="h-[200px] center-an-item">
+    <nz-spin nzSimple></nz-spin>
+  </div>
 
-<div *ngIf="isLoading" class="h-[200px] center-an-item">
-  <nz-spin nzSimple></nz-spin>
-</div>
+
+

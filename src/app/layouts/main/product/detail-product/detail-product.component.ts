@@ -265,6 +265,12 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       this.messageService.error("Bạn cần đăng nhập để tiếp tục")
       return
     }
+
+    if(this.productSizeQuantity < 1){
+      this.messageService.error("Số lượng sản phẩm không hợp lệ")
+      return
+    }
+
     this.isLoadingAddToCartBuntton = true;
     this.detailOrderService.post({
       detailOrderId: {

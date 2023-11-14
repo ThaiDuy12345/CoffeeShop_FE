@@ -3,11 +3,9 @@ import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
-import { ProductData } from 'src/app/data/data';
 import { Ordering } from 'src/app/core/models/ordering.model';
-import { Product } from 'src/app/core/models/product.model';
 import { FormatService } from 'src/app/core/services/format.service';
-import { DetailOrderData, OrderingData } from 'src/app/data/data';
+import { DetailOrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { Account } from 'src/app/core/models/account.model';
 import { OrderingService } from 'src/app/core/services/ordering.service';
@@ -32,7 +30,8 @@ export class HistoryOrderingComponent implements OnInit{
   public isLoading: boolean = false
   public detailOrderPaginate: DetailOrder[] = []
   public detailOrderPaginateSize: number = 3
-
+  public filterOrderings: Ordering[] = []
+  public selectedType: number[] = []
   constructor(
     private formatService: FormatService,
     private router: Router,
@@ -54,6 +53,7 @@ export class HistoryOrderingComponent implements OnInit{
       next: res => {
         if(res.status) {
           this.orderings = res.data.filter((o: any) => o.orderingStatus !== 0).map((o: any) => this.mappingService.ordering(o))
+          this.filterOrdering()
           this.isLoading = false
         }
         else this.messageService.error(res.message)
@@ -62,6 +62,18 @@ export class HistoryOrderingComponent implements OnInit{
         this.messageService.error(err.error.message)
       }
     })
+  }
+
+  filterOrdering(): void {
+    if(this.selectedType.length === 0){
+      this.filterOrderings = [...this.orderings]
+    }else{
+      this.filterOrderings = this.orderings.filter(o => this.selectedType.includes(o.status))
+    }
+  }
+
+  filterChange(): void {
+    this.loadOrdering()
   }
 
   getStatus(status: number): string {

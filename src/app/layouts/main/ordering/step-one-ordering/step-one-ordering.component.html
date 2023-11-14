@@ -1,6 +1,16 @@
 <div class="grid grid-cols-3 gap-5">
   <div class="col-span-3">
-    <h1 class="text-red-400 italic">Xin vui lòng kiểm tra mọi thông tin trước khi đến bước kế tiếp</h1>
+    <h1 *ngIf="account.address" class="font-bold backdrop:italic">Xin vui lòng kiểm tra kỹ mọi thông tin trước khi đến bước kế tiếp</h1>
+    <h1 *ngIf="!account.address" class="text-red-400 italic">Hiện tại tài khoản của bạn vẫn chưa có địa chỉ, xin vui lòng thêm trước khi tiếp tục</h1>
+  </div>
+  <div class="col-span-3 flex justify-end">
+    <nz-pagination
+      [nzSize]="'small'"
+      [nzPageSize]="detailOrderPaginateSize"
+      (nzPageIndexChange)="getDetailOrdersByPage($event)"
+      [nzPageIndex]="1"
+      [nzTotal]="detailOrders.length"
+    ></nz-pagination>
   </div>
   <div class="col-span-3 md:col-span-1">
     <nb-card>
@@ -11,13 +21,13 @@
       </nb-card-header>
       <nb-card-body class="border-none grid grid-cols-1">
         <span class="mb-5 font-medium">
-          <fa-icon [icon]="icons['faUser']"></fa-icon>&ensp;{{ user.name }}
+          <fa-icon [icon]="icons['faUser']"></fa-icon>&ensp;{{ account.name }}
         </span>
         <span class="mb-5 font-medium">
-          <fa-icon [icon]="icons['faPhone']"></fa-icon>&ensp;{{ user.phone }}
+          <fa-icon [icon]="icons['faPhone']"></fa-icon>&ensp;{{ account.phone }}
         </span>
         <span class="mb-5 font-medium">
-          <fa-icon [icon]="icons['faLocationArrow']"></fa-icon>&ensp;{{ user.address }}
+          <fa-icon [icon]="icons['faLocationArrow']"></fa-icon>&ensp;{{ account.address ? account.address : "Chưa có" }}
         </span>
       </nb-card-body>
       <nb-card-footer class="border-none">
@@ -28,8 +38,7 @@
     </nb-card>
   </div>
   <div class="col-span-3 md:col-span-2">
-    <ng-container *ngFor="let item of detailOrders">
-      <nb-card class="mb-2">
+      <nb-card class="mb-2" *ngFor="let item of detailOrderPaginate">
         <nb-card-body>
           <div class="grid grid-cols-7 gap-5">
             <div class="col-span-7 sm:col-span-1">
@@ -58,6 +67,5 @@
           </div>
         </nb-card-body>
       </nb-card>
-    </ng-container>
   </div>
 </div>

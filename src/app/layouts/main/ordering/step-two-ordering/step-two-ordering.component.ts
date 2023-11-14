@@ -15,7 +15,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 export class StepTwoOrderingComponent {
   @Input() public ordering: Ordering = new Ordering()
   @Input() public detailOrders: DetailOrder[] = []
-  @Input() public user: Account = new Account()
+  @Input() public account: Account = new Account()
   public icons: Icon = icons
   public selectedMethod: "COD" | "ZaloPay" | "Momo" = "COD"
 

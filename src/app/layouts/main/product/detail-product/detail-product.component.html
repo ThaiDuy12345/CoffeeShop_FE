@@ -53,7 +53,7 @@
             {{ productSize.length > 0 ? formatPrice(getPrice(choosingSize)) : null }}
           </div>
           <div class="w-full mt-5 mb-5">
-            <nz-segmented (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>
+            <nz-segmented *ngIf="productSizeOption.length != 0" (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>
           </div>
           <div class="w-full mt-5">
             <span class="me-5"> Số lượng: </span>

@@ -1,70 +1,104 @@
 <div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
-  <nb-card class="col-span-2 mb-0 rounded-lg" [nbSpinner]="isLoading">
-    <nb-card-body class="grid grid-cols-1 py-10">
-      <h1 class="text-3xl text-center w-full font-bold mb-20">
-        <span class="text-center">Thanh toán</span>
-      </h1>
-      <div class="px-5 mb-20" *ngIf="current !== 2">
-        <ng-template #des1>
-          <i class="text-[13px] second-main-text-color">Vui lòng kiểm tra đầy đủ thông tin giao hàng</i>
-        </ng-template>
-        <ng-template #des2>
-          <i class="text-[13px] second-main-text-color">Chọn phương thức thanh toán và đặt hàng</i>
-        </ng-template>
-        <ng-template #icon1>
-          <fa-icon size='xl' [icon]="icons['faMapLocationDot']"></fa-icon>
-        </ng-template>
-        <ng-template #icon2>
-          <fa-icon size='xl' [icon]="icons['faIdCard']"></fa-icon>
-        </ng-template>
-        <ng-template #icon3>
-          <fa-icon size='xl' [icon]="icons['faCircleCheck']"></fa-icon>
-        </ng-template>
-        <nz-steps [nzDirection]="getWidth() <= 767 ? 'vertical' : 'horizontal'" [nzCurrent]="current">
-          <nz-step [nzIcon]="icon1" nzTitle="Xác nhận thông tin" [nzDescription]="current === 0 ? des1 : undefined"></nz-step>
-          <nz-step [nzIcon]="icon2" nzTitle="Xác nhận thanh toán" [nzDescription]="current === 1 ? des2 : undefined"></nz-step>
-          <nz-step [nzIcon]="icon3" nzTitle="Đặt hàng thành công"></nz-step>
-        </nz-steps>
-      </div>
-      <div class="px-5 grid grid-cols-1">
-        <ng-container *ngIf="current === 0">
-          <app-step-one-ordering
-            [ordering]="ordering"
-            [detailOrders]="detailOrders"
-            [user]="user"
-          ></app-step-one-ordering>
-        </ng-container>
-        <ng-container *ngIf="current === 1">
-          <app-step-two-ordering
-            [ordering]="ordering"
-            [detailOrders]="detailOrders"
-            [user]="user"
-          > </app-step-two-ordering>
-        </ng-container>
-        <ng-container *ngIf="current === 2">
-          <app-step-three-ordering> </app-step-three-ordering>
-        </ng-container>
-      </div>
-    </nb-card-body>
-    <nb-card-footer class="border-none">
-      <h1 class="second-main-text-color" *ngIf="current === 1">Nhấn "Đặt hàng" đồng nghĩa với việc bạn đã chấp thuận điều khoản dịch vụ của chúng tôi.</h1>
-      <div class="space-x-5">
-        <button nbButton status="primary" *ngIf="current === 0" (click)="onClickNextStep(current + 1)">
-          Tiếp tục
-        </button>
-        <button nbButton status="danger" *ngIf="current === 1" (click)="onClickNextStep(current + 1)">
-          Đặt hàng
-        </button>
-        <button
-          nbButton
-          status="basic"
-          *ngIf="current === 1"
-          (click)="onClickNextStep(current - 1)"
-        >
-          Quay lại
-        </button>
-      </div>
-      
-    </nb-card-footer>
+  <nb-card class="col-span-2 mb-0 rounded-lg">
+    <ng-container *ngIf="!isLoading">
+      <nb-card-body class="grid grid-cols-1 py-10">
+        <h1 class="text-3xl text-center w-full font-bold mb-20">
+          <span class="text-center">Thanh toán</span>
+        </h1>
+        <div class="px-5 mb-20" *ngIf="current !== 2">
+          <ng-template #des1>
+            <i class="text-[13px] second-main-text-color"
+              >Vui lòng kiểm tra đầy đủ thông tin giao hàng</i
+            >
+          </ng-template>
+          <ng-template #des2>
+            <i class="text-[13px] second-main-text-color"
+              >Chọn phương thức thanh toán và đặt hàng</i
+            >
+          </ng-template>
+          <ng-template #icon1>
+            <fa-icon size="xl" [icon]="icons['faMapLocationDot']"></fa-icon>
+          </ng-template>
+          <ng-template #icon2>
+            <fa-icon size="xl" [icon]="icons['faIdCard']"></fa-icon>
+          </ng-template>
+          <ng-template #icon3>
+            <fa-icon size="xl" [icon]="icons['faCircleCheck']"></fa-icon>
+          </ng-template>
+          <nz-steps
+            [nzDirection]="getWidth() <= 767 ? 'vertical' : 'horizontal'"
+            [nzCurrent]="current"
+          >
+            <nz-step
+              [nzIcon]="icon1"
+              nzTitle="Xác nhận thông tin"
+              [nzDescription]="current === 0 ? des1 : undefined"
+            ></nz-step>
+            <nz-step
+              [nzIcon]="icon2"
+              nzTitle="Xác nhận thanh toán"
+              [nzDescription]="current === 1 ? des2 : undefined"
+            ></nz-step>
+            <nz-step [nzIcon]="icon3" nzTitle="Đặt hàng thành công"></nz-step>
+          </nz-steps>
+        </div>
+        <div class="px-5 grid grid-cols-1">
+          <ng-container *ngIf="current === 0">
+            <app-step-one-ordering
+              [ordering]="ordering"
+              [detailOrders]="detailOrders"
+              [account]="account"
+            ></app-step-one-ordering>
+          </ng-container>
+          <ng-container *ngIf="current === 1">
+            <app-step-two-ordering
+              [ordering]="ordering"
+              [detailOrders]="detailOrders"
+              [account]="account"
+            >
+            </app-step-two-ordering>
+          </ng-container>
+          <ng-container *ngIf="current === 2">
+            <app-step-three-ordering> </app-step-three-ordering>
+          </ng-container>
+        </div>
+      </nb-card-body>
+      <nb-card-footer class="border-none">
+        <h1 class="second-main-text-color" *ngIf="current === 1">
+          Nhấn "Đặt hàng" đồng nghĩa với việc bạn đã chấp thuận điều khoản dịch
+          vụ của chúng tôi.
+        </h1>
+        <div class="space-x-5">
+          <button
+            nbButton
+            status="primary"
+            [disabled]="!account.address" 
+            *ngIf="current === 0"
+            (click)="onClickNextStep(current + 1)"
+          >
+            Tiếp tục
+          </button>
+          <button
+            nbButton
+            status="danger"
+            *ngIf="current === 1"
+            (click)="onClickNextStep(current + 1)"
+          >
+            Đặt hàng
+          </button>
+          <button
+            nbButton
+            status="basic"
+            *ngIf="current === 1"
+            (click)="onClickNextStep(current - 1)"
+          >
+            Quay lại
+          </button>
+        </div>
+      </nb-card-footer>
+    </ng-container>
+    <div *ngIf="isLoading" class="min-h-[400px] w-full center-an-item">
+      <nz-spin nzSimple></nz-spin>
+    </div>
   </nb-card>
 </div>

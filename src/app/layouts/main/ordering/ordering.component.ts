@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Cookies from 'js-cookie';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subject, finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
-import { AccountData, DetailOrderData, OrderingData } from 'src/app/data/data';
+import { DetailOrderService } from 'src/app/core/services/detail-order.service';
+import { MappingService } from 'src/app/core/services/mapping.service';
+import { OrderingService } from 'src/app/core/services/ordering.service';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -19,24 +24,76 @@ export class OrderingComponent implements OnInit{
   public ordering: Ordering = new Ordering()
   public detailOrders: DetailOrder[] = []
   public isLoading: boolean = false
-  public user: Account = new Account()
+  public account: Account = new Account()
+  public tempSubject: Subject<any> = new Subject<any>()
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private messageService: NzMessageService,
+    private orderingService: OrderingService,
+    private detailOrderService: DetailOrderService,
+    private mappingService: MappingService,
+    private authenticationStore: AuthenticationStore
+  ){}
+
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
 
   ngOnInit(): void {
-    const userId = Cookies.get('id')
-    const user = AccountData.find(item => item.phone === userId)
-    this.user = user ? user : new Account()
+    // const userId = Cookies.get('id')
+    // const user = AccountData.find(item => item.phone === userId)
+    // this.user = user ? user : new Account()
+    
+    //   this.router.navigate(['/main/dashboard'])
+    // })
     this.activatedRoute.params.subscribe((params: any) => {
       if(params['id']) {
-        const ordering = OrderingData.find(item => item.id === params['id'])
-        if(ordering){
-          this.ordering = ordering
-          this.detailOrders = DetailOrderData.filter(item => item.ordering.id === this.ordering.id)
-          return
-        }
+        this.tempSubject.subscribe({
+          next: res => {
+            if(res.account && res.account.phone){
+              this.isLoading = true
+              this.account = res.account
+              this.fetchCurrentOrderingCart(params['id'])
+            }else{
+              this.router.navigate(['/main/dashboard'])
+              this.messageService.error("Không thể lấy được thông tin người dùng")
+            }
+          },
+          error: err => this.messageService.error(err.error.message)
+        })
+
+        this.authenticationStore._select(state => state).subscribe(this.tempSubject)
+      }else {
+        this.router.navigate(['/main/dashboard'])
+        this.messageService.error("Mã hóa đơn không tồn tại hoặc không hợp lệ")
       }
-      this.router.navigate(['/main/dashboard'])
     })
-    
+  }
+
+  fetchCurrentOrderingCart(orderingId: string): void {
+    this.orderingService.getById({ orderingId: orderingId }).subscribe({
+      next: res => {
+        if(res.status){
+          this.ordering = { ...this.mappingService.ordering(res.data) }
+          this.fetchDetailOrders();
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message),
+    })
+  }
+
+  fetchDetailOrders(): void {
+    this.detailOrderService.getByOrderId({ orderingId: this.ordering.id }).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe({
+      next: res => {
+        if(res.status){
+          this.detailOrders = res.data.map((o: any) => this.mappingService.detailOrder(o)) 
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message),
+    })
   }
   
   onClickNextStep(newStep: number): void {
@@ -51,8 +108,4 @@ export class OrderingComponent implements OnInit{
     return window.innerWidth
   }
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ){}
 }

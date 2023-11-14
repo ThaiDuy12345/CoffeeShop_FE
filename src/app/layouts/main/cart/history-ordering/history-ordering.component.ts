@@ -95,6 +95,7 @@ export class HistoryOrderingComponent implements OnInit{
       error: err => this.messageService.error(err.error.message)
     })
   }
+  
 
   getDetailOrdersByPage(pageIndex: number): void {
     const startIndex = (pageIndex - 1) * this.detailOrderPaginateSize;

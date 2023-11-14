@@ -128,6 +128,8 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   }
 
   loadProductSize(): void {
+    this.productSizeOption = []
+    this.choosingSize = 0
     this.productSizeService.getByProductId({ productId: this.product.id }).subscribe({
       next: res => {
         if(res.status) {

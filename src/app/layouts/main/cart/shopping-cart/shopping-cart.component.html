@@ -64,6 +64,7 @@
                           name="quantityInput"
                           #quantityInput="ngModel"
                           nbInput
+                          (input)="preventNegativeInput()"
                           type="number"
                           class="w-[50px] h-[25px]"
                         />
@@ -102,9 +103,19 @@
                       <fa-icon [icon]="icons['faPencil']" class="mr-2"></fa-icon
                       >Chỉnh sửa số lượng
                     </button>
-                    <button *ngIf="currentIndexItem === -1" nbButton class="text-base ml-2" (click)="onClickDeleteProductSize(item)">
-                      <fa-icon [icon]="icons['faTrash']" class="mr-2"></fa-icon
-                      >Xoá
+                    <button 
+                      *ngIf="currentIndexItem === -1" 
+                      nbButton class="text-base ml-2" 
+                      nzPopconfirmPlacement="bottom"
+                      (nzOnCancel)="(null)"
+                      nzPopconfirmTitle="Xác nhận xoá sản phẩm khỏi đơn hàng, bạn luôn có thể điều chỉnh số lượng sản phẩm?"
+                      nz-popconfirm
+                      nzOkText="Xác nhận"
+                      nzCancelText="Huỷ"
+                      (nzOnConfirm)="onClickDeleteProductSize(item)"
+                      >
+                        <fa-icon [icon]="icons['faTrash']" class="mr-2"></fa-icon
+                        >Xoá
                     </button>
                     <button [nbSpinner]="isLoadingButton" *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" status="primary" (click)="onClickSaveEditQuantity(item)">
                       <fa-icon [icon]="icons['faCheck']" class="mr-2"></fa-icon

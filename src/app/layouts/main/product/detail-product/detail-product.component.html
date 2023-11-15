@@ -73,6 +73,7 @@
                   [(ngModel)]="productSizeQuantity"
                   name="quantityInput"
                   #quantityInput="ngModel"
+                  (input)="preventNegativeInput()"
                   nbInput
                   type="number"
                   class="w-[50px]"

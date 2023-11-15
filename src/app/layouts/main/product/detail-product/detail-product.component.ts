@@ -292,6 +292,10 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     })
   }
 
+  preventNegativeInput(): void {
+    this.productSizeQuantity = this.productSizeQuantity ? Math.abs(this.productSizeQuantity) : 1
+  }
+
   onClickBuyNow(): void {
     if(!this.ordering.id){
       this.router.navigateByUrl("/sign-in")

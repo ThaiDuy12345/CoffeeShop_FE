@@ -7,7 +7,7 @@ export class Ordering {
   date: number = new Date().getTime()
   shippingFee: number = 0
   price: number = 0
-  paymentStatus: null | 0 | 1 | -1 | 2 | -2 = null
+  paymentStatus: null | 0 | 1 | -1 = null
   note: string = ""
   cancelDescription: string = ""
   approveDescription: string = ""

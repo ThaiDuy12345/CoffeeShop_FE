@@ -1,1 +1,221 @@
-<p>support-management works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>
+    <nb-card-header class="border-none">
+      Danh sách đơn hỗ trợ
+    </nb-card-header>
+    <nb-card-body class="border-none">
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        Đơn hỗ trợ là 1 tính năng giúp truyền đạt các phản hồi, khiếu nại và các nguyên nhân khác từ khách hàng tới hệ thông của COFFEE
+      </div>
+      <div class="mb-5 grid grid-cols-2 gap-5">
+        <div class="flex justify-start items-center"><input [(ngModel)]="searchInput" (change)="filterBySearch()" nbInput placeholder="Tìm kiếm danh mục"></div>
+        <div class="flex justify-end items-center">
+        </div>
+      </div>
+      <nz-table #table [nzLoading]="isLoading" [nzData]="supports" nzShowPagination="false">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tiêu đề hỗ trợ</th>
+            <th>Lý do tạo</th>
+            <th>Ngày tạo</th>
+            <th>Tạo bởi</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data;let i = index">
+            <td>{{data.id}}</td>
+            <td>{{data.title}}</td>
+            <td>{{data.reason}}</td>
+            <td>{{formatDate(data.creationDate)}}
+            <td>{{data.account.name}}</td>
+            <td>
+              <fa-icon
+                nzPopconfirmPlacement="bottom"
+                (nzOnCancel)="null"
+                nzPopconfirmTitle="Xác nhận xóa danh mục này?"
+                nz-popconfirm
+                nzOkText="Xác nhận"
+                nzCancelText="Huỷ"
+                (nzOnConfirm)="onClickSubmitDeleteSupport(data)"
+                [icon]="icons['faTrash']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Xóa">
+              </fa-icon>
+              <fa-icon
+                [icon]="icons['faChartSimple']"
+                (click)="detailVisible = true; viewASupport(data);"
+                class="mx-2 cursor-pointer"
+                nz-tooltip
+                nzTooltipTitle="Chi tiết"
+              ></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+
+
+<!-- <nz-drawer
+  [nzWidth]="'100%'"
+  [nzClosable]="false"
+  [nzVisible]="detailVisible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="detailVisible = false"
+>
+<ng-container *nzDrawerContent>
+  <div class="grid grid-cols-1 gap-5">
+    <div class="flex">
+      <div class="inline-block mr-3">
+        <fa-icon
+          [icon]="icons['faTags']"
+          size="3x"
+          class="center-an-item"
+        ></fa-icon>
+      </div>
+      <div class="inline-block mr-3">
+        <span class="font-bold">Id danh mục: {{ choosingCategory.id }}</span
+        ><br />
+        <span class="font-bold">Tên danh mục: {{ choosingCategory.name }}</span>
+      </div>
+    </div>
+    <div>
+      <nb-card>
+        <nb-card-header class="border-none"> Các sản phẩm của danh mục </nb-card-header>
+        <nb-card-body>
+          <nz-table #table2 [nzData]="choosingCategoryProduct" [nzLoading]="isDetailLoading" nzShowPagination="false">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tên sản phẩm</th>
+                <th>Ngày tạo</th>
+                <th [nzAlign]="'center'">Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of table2.data">
+                <td class="second-text-color cursor-pointer">
+                  {{ data.id }}
+                </td>
+                <td>{{ data.name }}</td>
+                <td>{{ formatDate(data.creationDate) }}</td>
+                <td>
+                  <span class="center-an-item">
+                    <nz-tag class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]">{{ data.active ? "Hoạt động" : "Ẩn" }}</nz-tag>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-container>
+</nz-drawer>  -->
+
+
+<ng-template #title1>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Chi tiết danh mục
+    </div>
+  </div>
+</ng-template>
+<!-- 
+<nz-drawer
+  [nzWidth]="'600px'"
+  [nzClosable]="false"
+  [nzVisible]="inforVisible"
+  nzPlacement="right"
+  [nzTitle]="title2"
+  (nzOnClose)="inforVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-3">
+      <div>
+        <div class="inline-block mr-3">
+          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Tên: {{ choosingAccount.name }}</span><br/>
+          <span class="second-main-text-color">Email: {{ choosingAccount.email }}</span>
+        </div> 
+      </div>
+      <div>
+        <nz-divider class="my-2"></nz-divider>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faIdCard']" class="mr-3"></fa-icon><span>#{{ choosingAccount.id }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faPhone']" class="mr-3"></fa-icon><span>{{ choosingAccount.phone }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faUserTie']" class="mr-3"></fa-icon>
+          <span>
+            <nz-tag 
+              class="main-bg-text-color mr-0 py-1 rounded text-white"
+              >
+                <span>{{ choosingAccount.role === "1" ? 'Khách hàng' : 'Quản trị viên'}}</span>
+            </nz-tag>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faEye']" class="mr-3"></fa-icon>
+          <span>
+            <nz-tag 
+                *ngIf="choosingAccount.status" class="main-bg-text-color mr-0 py-1 rounded text-white"
+              >
+                <span>Hoạt động</span>
+            </nz-tag>
+            <nz-tag 
+              *ngIf="!choosingAccount.status" class="mr-0 py-1 rounded main-text-color"
+            >
+              <span>Ẩn</span>
+            </nz-tag>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faCalendar']" class="mr-3"></fa-icon><span>{{ formatDate(choosingAccount.created_date) }}</span>
+        </div>
+      </div>
+      <div class="justify-end items-center flex">
+        <button nbButton status="primary" [routerLink]="['/admin/account-management', choosingAccount.id]">Sửa thông tin tài khoản</button>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title2>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="inforVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Thông tin tài khoản
+    </div>
+  </div>
+</ng-template> -->

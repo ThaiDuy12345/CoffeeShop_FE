@@ -20,7 +20,7 @@
             <th>#</th>
             <th
               [nzSortFn]="dateSort"
-              [nzSortOrder]="'ascend'"
+              [nzSortOrder]="'descend'"
               [nzSortDirections]="['descend', 'ascend', null]"
             >Ngày tạo</th>
             <th
@@ -50,10 +50,8 @@
               [nzFilters]="[
                 { text: 'Chưa thanh toán', value: null },
                 { text: 'Thanh toán COD', value: 0 },
-                { text: 'Thanh toán MOMO', value: 1 },
-                { text: 'Thanh Toán ZaloPay', value: 2 },
-                { text: 'Hoàn tiền MOMO', value: -1 },
-                { text: 'Hoàn tiền ZaloPay', value: -2 },
+                { text: 'Thanh toán VNPay', value: 1 },
+                { text: 'Hoàn tiền VNPay', value: -1 },
               ]"
               [nzFilterFn]="paymentStatusFilter"
             >Trạng thái thanh toán</th>

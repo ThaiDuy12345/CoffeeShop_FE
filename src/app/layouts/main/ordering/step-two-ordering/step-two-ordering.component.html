@@ -26,14 +26,8 @@
             <div class="block m-0" nz-radio [nzValue]="1">
               <img
                 class="w-[25px] inline"
-                src="assets/brand-icons/paymentMethods/momo.png"
-              />&ensp;Thanh toán Momo
-            </div>
-            <div class="block m-0" nz-radio [nzValue]="2">
-              <img
-                class="w-[25px] inline"
-                src="assets/brand-icons/paymentMethods/zalopay.png"
-              />&ensp;Thanh toán ZaloPay
+                src="assets/brand-icons/paymentMethods/vnpay.png"
+              />&ensp;Thanh toán VNPay
             </div>
           </nz-radio-group>
         </nb-card-body>
@@ -56,41 +50,41 @@
                 )</span
               ></label
             >
-            <nb-button-group
-              class="w-full mt-2"
-              [status]="isEditingDiscount ? 'danger' : 'warning'"
-            >
+            <div class="grid grid-cols-3 mt-2">
               <input
                 [disabled]="!isEditingDiscount"
                 [(ngModel)]="discountCode"
                 nbInput
                 placeholder="Mã giảm giá"
-                class="w-full"
+                class="col-span-2"
               />
               <button
+                [status]="'danger'"
+                class="col-span-1 min-w-[69px]"
                 nbButton
                 [nbSpinner]="isLoadingDiscountCheckButton"
                 (click)="checkDiscountCode()"
                 *ngIf="isEditingDiscount"
-                [disabled]="discountCode.length === 0"
               >
                 Nhập mã
               </button>
               <button
+                class="col-span-1 min-w-[69px]"
+                [status]="'warning'"
                 nbButton
                 (click)="cancelDiscountCode()"
                 *ngIf="!isEditingDiscount"
               >
                 Sửa mã
               </button>
-            </nb-button-group>
+            </div>
           </div>
           <div class="grid grid-cols-2 mb-3">
             <span class="text-left">Giá trị hoá đơn</span>
             <span class="text-right">{{ formatPrice(ordering.price) }}</span>
           </div>
           <div class="grid grid-cols-2 mb-3">
-            <span class="text-left">Phí ship(tối thiểu)</span>
+            <span class="text-left">Phí ship</span>
             <span class="text-right">{{
               formatPrice(ordering.shippingFee)
             }}</span>
@@ -103,7 +97,7 @@
         <nb-card-footer
           class="grid grid-cols-2 border-none font-medium bg-[#33425a] text-lg text-white"
         >
-          <span class="text-left">Tổng giá tạm tính</span>
+          <span class="text-left">Tổng giá</span>
           <span *ngIf="isEditingDiscount" class="text-right">{{
             formatPrice(ordering.totalPrice)
           }}</span>
@@ -120,6 +114,21 @@
     </div>
   </div>
   <div class="col-span-4 md:col-span-2">
+    <nb-card>
+      <nb-card-header class="border-none grid grid-cols-1">
+        <span class="font-bold text-lg">
+          <fa-icon [icon]="icons['faPencil']"></fa-icon>&ensp; Ghi chú đơn hàng
+        </span>
+      </nb-card-header>
+      <nb-card-body class="grid grid-cols-1">
+        <textarea
+          [(ngModel)]="ordering.note"
+          class="min-h-[85px]"
+          nbInput
+          placeholder="Ghi chú cho đơn hàng"
+        ></textarea>
+      </nb-card-body>
+    </nb-card>
     <nb-card>
       <nb-card-header class="text-lg font-bold border-none">
         Hoá đơn
@@ -184,22 +193,35 @@
             [nzValue]="item"
             [nzDisabled]="item.minimumOrderPrice > ordering.price"
           >
-            <div *ngIf="!(item.minimumOrderPrice > ordering.price)" class="inline-grid">
+            <div
+              *ngIf="!(item.minimumOrderPrice > ordering.price)"
+              class="inline-grid"
+            >
               <div class="error-text-color">{{ item.code }}</div>
               <div>
-                Giảm <span class="font-semibold">{{ formatNumber(item.amount) }}</span>
+                Giảm
+                <span class="font-semibold">{{
+                  formatNumber(item.amount)
+                }}</span>
               </div>
               <div>
                 Yêu cầu đơn tối thiểu từ
-                <span class="font-semibold">{{ formatNumber(item.minimumOrderPrice) }}</span>
+                <span class="font-semibold">{{
+                  formatNumber(item.minimumOrderPrice)
+                }}</span>
               </div>
               <div>
-                Hạn sử dụng: <span class="error-text-color">
-                  {{ formatDate(item.expiredDate) }} - {{ timeSince(item.expiredDate) }}
+                Hạn sử dụng:
+                <span class="error-text-color">
+                  {{ formatDate(item.expiredDate) }} -
+                  {{ timeSince(item.expiredDate) }}
                 </span>
               </div>
             </div>
-            <div *ngIf="item.minimumOrderPrice > ordering.price" class="inline-grid">
+            <div
+              *ngIf="item.minimumOrderPrice > ordering.price"
+              class="inline-grid"
+            >
               <div>{{ item.code }}</div>
               <div>
                 Giảm <span>{{ formatNumber(item.amount) }}</span>
@@ -208,9 +230,16 @@
                 Yêu cầu đơn tối thiểu từ
                 <span>{{ formatNumber(item.minimumOrderPrice) }}</span>
               </div>
+              <div class="error-text-color">
+                Bạn cần mua thêm
+                {{ formatNumber(item.minimumOrderPrice - ordering.price) }}
+                <span> để có thể áp dụng voucher này </span>
+              </div>
               <div>
-                Hạn sử dụng: <span>
-                  {{ formatDate(item.expiredDate) }} - {{ timeSince(item.expiredDate) }}
+                Hạn sử dụng:
+                <span>
+                  {{ formatDate(item.expiredDate) }} -
+                  {{ timeSince(item.expiredDate) }}
                 </span>
               </div>
             </div>
@@ -232,7 +261,7 @@
     </nb-card-body>
     <nb-card-footer class="space-x-3">
       <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-      <button nbButton status="success" (click)="onClickSubmitNewDiscount()">
+      <button nbButton status="success" [disabled]="!(choosingDiscount && choosingDiscount.code)" (click)="onClickSubmitNewDiscount()">
         Sử dụng mã giảm giá
       </button>
     </nb-card-footer>

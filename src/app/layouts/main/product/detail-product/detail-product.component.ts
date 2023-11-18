@@ -293,7 +293,8 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   }
 
   preventNegativeInput(): void {
-    this.productSizeQuantity = this.productSizeQuantity ? Math.abs(this.productSizeQuantity) : 1
+    this.productSizeQuantity = this.productSizeQuantity === null ? 1 : Math.abs(this.productSizeQuantity)
+    console.log(this.productSizeQuantity)
   }
 
   onClickBuyNow(): void {

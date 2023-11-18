@@ -105,26 +105,24 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
 
   checkIfDontNeedToApprove(): boolean {
     return (
-      (this.ordering.paymentStatus === 1 ||  this.ordering.paymentStatus === 2 ) &&
+      (this.ordering.paymentStatus === 1)  &&
       (this.ordering.totalPrice >= 150000 || this.getProductLength() >= 5) &&
       this.ordering.status === 1
     )
   }
 
-  getPaymentStatus(status: null | 0 | 1 | -1 | 2 | -2){
+  getPaymentStatus(status: null | 0 | 1 | -1){
     switch(status){
       case null: return "Chưa thanh toán"
       case 0: return "Thanh toán COD"
-      case 1: return "Thanh toán MOMO"
-      case 2: return "Thanh toán ZaloPay"
-      case -1: return "Hoàn tiền thông qua Momo"
-      case -2: return "Hoàn tiền thông qua ZaloPay"
+      case 1: return "Thanh toán VNPay"
+      case -1: return "Hoàn tiền thông qua VNPay"
     }
   }
 
   checkIfNeedToApprove(): boolean {
     return (
-      !(this.ordering.paymentStatus === 1 ||  this.ordering.paymentStatus === 2 ) &&
+      !(this.ordering.paymentStatus === 1)  &&
       (this.ordering.totalPrice >= 150000 || this.getProductLength() >= 5) &&
       this.ordering.status === 1
     )
@@ -224,7 +222,7 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
       discountEntity: this.ordering.discount.id ? {
         discountId: this.ordering.discount.id
       } : null,
-      orderingPaymentStatus: this.ordering.paymentStatus === 1 ? -1 : this.ordering.paymentStatus === 2 ? -2 : this.ordering.paymentStatus,
+      orderingPaymentStatus: this.ordering.paymentStatus === 1 ? -1 : this.ordering.paymentStatus,
       orderingCancelDescription: [1, 2].includes(this.ordering.status) ? this.cancelDescription : null,
       updatedByAccountEntity: {
         accountPhone: this.account.phone

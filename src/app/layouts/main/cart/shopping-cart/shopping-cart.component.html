@@ -4,7 +4,7 @@
   >
     <div class="grid grid-cols-1">
       <div>
-        <nb-card class="mb-3 py-2">
+        <nb-card class="mb-5 py-2">
           <nb-card-body class="grid grid-cols-5 gap-5">
             <div class="col-span-1"></div>
             <div class="col-span-4 grid grid-cols-6 gap-5 font-semibold">
@@ -15,128 +15,136 @@
             </div>
           </nb-card-body>
         </nb-card>
-      </div>
-      <nz-result
-        *ngIf="detailOrders.length === 0"
-        [nzIcon]="'smile-twotone'"
-        nzTitle="Ối, chưa có sản phẩm nào cả!!"
-      >
-      </nz-result>
-      <ng-container *ngFor="let item of detailOrders; let i = index">
-        <nb-card>
-          <nb-card-body>
-            <div class="grid grid-cols-5 my-6 gap-5">
-              <div class="col-span-5 sm:col-span-1">
-                <app-image
-                  [routerLink]="'/main/product/' + item.productSize.product.id"
-                  [src]="item.productSize.product.imageUrl"
-                  [classes]="'rounded-lg cursor-pointer'"
-                ></app-image>
-              </div>
-              <div class="col-span-5 sm:col-span-4 grid grid-rows-3 mt-0 gap-3">
-                <div class="row-span-1 grid grid-cols-6 gap-5 mb-5 sm:mb-0">
-                  <div class="col-span-6 sm:col-span-2">
-                    <div class="h-auto w-full">
-                      <b class="break-words">{{ item.productSize.product.name }}</b>
+        <nz-result
+          *ngIf="detailOrders.length === 0"
+          [nzIcon]="'smile-twotone'"
+          nzTitle="Ối, chưa có sản phẩm nào cả!!"
+        >
+        </nz-result>
+        <ng-container *ngFor="let item of detailOrders; let i = index">
+          <nb-card class="mb-5">
+            <nb-card-body>
+              <div class="grid grid-cols-5 my-6 gap-5">
+                <div class="col-span-5 sm:col-span-1">
+                  <app-image
+                    [routerLink]="'/main/product/' + item.productSize.product.id"
+                    [src]="item.productSize.product.imageUrl"
+                    [classes]="'rounded-lg cursor-pointer'"
+                  ></app-image>
+                </div>
+                <div class="col-span-5 sm:col-span-4 grid grid-rows-3 mt-0 gap-3">
+                  <div class="row-span-1 grid grid-cols-6 gap-5 mb-5 sm:mb-0">
+                    <div class="col-span-6 sm:col-span-2">
+                      <div class="h-auto w-full">
+                        <b class="break-words">{{ item.productSize.product.name }}</b>
+                      </div>
                     </div>
-                  </div>
-                  <div class="sm:col-span-1 col-span-2">
-                    <div class="h-auto w-full">
-                      <span>{{ formatPrice(item.productSize.price) }}</span>
+                    <div class="sm:col-span-1 col-span-2">
+                      <div class="h-auto w-full">
+                        <span>{{ formatPrice(item.productSize.price) }}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-span-2">
-                    <div class="h-auto w-full flex justify-center">
-                      <nb-button-group *ngIf="currentIndexItem === i">
-                        <button
-                          nbButton
-                          (click)="
-                            currentQuantityItem > 1
-                              ? (currentQuantityItem = currentQuantityItem - 1)
-                              : null
-                          "
-                          class="w-[20px] h-[25px]"
-                        >
-                          -
-                        </button>
-                        <input
-                          [(ngModel)]="currentQuantityItem"
-                          name="quantityInput"
-                          #quantityInput="ngModel"
-                          nbInput
-                          (input)="preventNegativeInput()"
-                          type="number"
-                          class="w-[50px] h-[25px]"
-                        />
-                        <button
-                          nbButton
-                          (click)="currentQuantityItem = currentQuantityItem + 1"
-                          class="w-[20px] h-[25px]"
-                        >
-                          +
-                        </button>
-                      </nb-button-group>
-                      <div *ngIf="currentIndexItem !== i">{{ item.quantity }}</div>
+                    <div class="col-span-2">
+                      <div class="h-auto w-full flex justify-center">
+                        <nb-button-group *ngIf="currentIndexItem === i">
+                          <button
+                            nbButton
+                            (click)="
+                              currentQuantityItem > 1
+                                ? (currentQuantityItem = currentQuantityItem - 1)
+                                : null
+                            "
+                            class="w-[20px] h-[25px]"
+                          >
+                            -
+                          </button>
+                          <input
+                            [(ngModel)]="currentQuantityItem"
+                            name="quantityInput"
+                            #quantityInput="ngModel"
+                            nbInput
+                            (input)="preventNegativeInput()"
+                            type="number"
+                            class="w-[50px] h-[25px]"
+                          />
+                          <button
+                            nbButton
+                            (click)="currentQuantityItem = currentQuantityItem + 1"
+                            class="w-[20px] h-[25px]"
+                          >
+                            +
+                          </button>
+                        </nb-button-group>
+                        <div *ngIf="currentIndexItem !== i">{{ item.quantity }}</div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="sm:col-span-1 col-span-2">
-                    <div class="h-auto w-full text-center sm:text-left">
-                      <span class="font-semibold">{{
-                        formatPrice(item.subTotal)
+                    <div class="sm:col-span-1 col-span-2">
+                      <div class="h-auto w-full text-center sm:text-left">
+                        <span class="font-semibold">{{
+                          formatPrice(item.subTotal)
+                        }}</span>
+                      </div>
+                    </div>
+                    <div class="col-span-6">
+                      <span class="second-main-text-color line-clamp-3">Size {{
+                        item.productSize.size.toUpperCase()
                       }}</span>
                     </div>
                   </div>
-                  <div class="col-span-6">
-                    <span class="second-main-text-color line-clamp-3">Size {{
-                      item.productSize.size.toUpperCase()
+                  <div class="row-span-1">
+                    <span class="italic second-main-text-color line-clamp-3">{{
+                      item.productSize.product.description
                     }}</span>
                   </div>
-                </div>
-                <div class="row-span-1">
-                  <span class="italic second-main-text-color line-clamp-3">{{
-                    item.productSize.product.description
-                  }}</span>
-                </div>
-                <div class="row-span-1 flex justify-end">
-                  <div class="flex items-end">
-                    <button *ngIf="currentIndexItem === -1" nbButton class="text-base ml-2" (click)="onClickEditQuantity(item, i)">
-                      <fa-icon [icon]="icons['faPencil']" class="mr-2"></fa-icon
-                      >Chỉnh sửa số lượng
-                    </button>
-                    <button 
-                      *ngIf="currentIndexItem === -1" 
-                      nbButton class="text-base ml-2" 
-                      nzPopconfirmPlacement="bottom"
-                      (nzOnCancel)="(null)"
-                      nzPopconfirmTitle="Xác nhận xoá sản phẩm khỏi đơn hàng, bạn luôn có thể điều chỉnh số lượng sản phẩm?"
-                      nz-popconfirm
-                      nzOkText="Xác nhận"
-                      nzCancelText="Huỷ"
-                      (nzOnConfirm)="onClickDeleteProductSize(item)"
-                      >
-                        <fa-icon [icon]="icons['faTrash']" class="mr-2"></fa-icon
-                        >Xoá
-                    </button>
-                    <button [nbSpinner]="isLoadingButton" *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" status="primary" (click)="onClickSaveEditQuantity(item)">
-                      <fa-icon [icon]="icons['faCheck']" class="mr-2"></fa-icon
-                      >Lưu
-                    </button>
-                    <button *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" (click)="onClickCancelEditQuantity()" status="danger" (click)="null">
-                      <fa-icon [icon]="icons['faXmark']" class="mr-2"></fa-icon
-                      >Huỷ
-                    </button>
+                  <div class="row-span-1 flex justify-end">
+                    <div class="flex items-end">
+                      <button *ngIf="currentIndexItem === -1" nbButton class="text-base ml-2" (click)="onClickEditQuantity(item, i)">
+                        <fa-icon [icon]="icons['faPencil']" class="mr-2"></fa-icon
+                        >Chỉnh sửa số lượng
+                      </button>
+                      <button 
+                        *ngIf="currentIndexItem === -1" 
+                        nbButton class="text-base ml-2" 
+                        nzPopconfirmPlacement="bottom"
+                        (nzOnCancel)="(null)"
+                        nzPopconfirmTitle="Xác nhận xoá sản phẩm khỏi đơn hàng, bạn luôn có thể điều chỉnh số lượng sản phẩm?"
+                        nz-popconfirm
+                        nzOkText="Xác nhận"
+                        nzCancelText="Huỷ"
+                        (nzOnConfirm)="onClickDeleteProductSize(item)"
+                        >
+                          <fa-icon [icon]="icons['faTrash']" class="mr-2"></fa-icon
+                          >Xoá
+                      </button>
+                      <button [nbSpinner]="isLoadingButton" *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" status="primary" (click)="onClickSaveEditQuantity(item)">
+                        <fa-icon [icon]="icons['faCheck']" class="mr-2"></fa-icon
+                        >Lưu
+                      </button>
+                      <button *ngIf="currentIndexItem === i" nbButton class="text-base ml-2" (click)="onClickCancelEditQuantity()" status="danger" (click)="null">
+                        <fa-icon [icon]="icons['faXmark']" class="mr-2"></fa-icon
+                        >Huỷ
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </ng-container>
+            </nb-card-body>
+          </nb-card>
+        </ng-container>
+      </div>
     </div>
   </div>
   <div class="col-span-10 xl:col-span-3">
-    <nb-card class="w-full">
+    <nb-card class="w-full mb-5">
       <nb-card-body class="grid grid-cols-1">
+        <div *ngIf="discountNotification" class="my-2 gap-3 flex">
+          <div class="center-an-item">
+            <fa-icon [icon]="icons['faChampagneGlasses']" size="2x" class="mr-2"></fa-icon>
+          </div>
+          <div class="font-bold">
+            {{ discountNotification }}
+          </div>
+        </div>
         <div class="mb-2">
           <nz-divider [nzText]="text"></nz-divider>
           <ng-template #text>
@@ -163,7 +171,14 @@
           <span class="font-bold text-left">Tổng giá tạm tính</span>
           <span class="font-bold text-right">{{ formatPrice(ordering.totalPrice) }}</span>
         </div>
-    </nb-card-body>
+      </nb-card-body>
+    </nb-card>
+    <nb-card class="mb-5">
+      <nb-card-body>
+        <div class="second-text-color cursor-pointer" (click)="openDiscountModal(dialogToOpenDiscount)">
+          <fa-icon class="mr-2" [icon]="icons['faGift']"></fa-icon>Chúng tôi đang có mã giảm giá nào?
+        </div>
+      </nb-card-body>
     </nb-card>
     <div class="grid grid-cols-1 gap-5">
       <button nbButton class="w-full" status="warning" (click)="navigate()">
@@ -187,8 +202,82 @@
   </div>
 </div>
 
+<ng-template #dialogToOpenDiscount let-data let-ref="dialogRef">
+  <nb-card class="nosd max-h-[85vh]">
+    <nb-card-header class="m-0"> Chọn mã giảm giá </nb-card-header>
+    <nb-card-body class="overflow-y-auto discountModal">
+      <nz-radio-group [(ngModel)]="choosingDiscount">
+        <div
+          *ngFor="let item of discounts"
+          class="border m-0 block coffee-box py-[20px] px-[25px] mb-[15px] discountModal"
+          nz-radio
+          [nzValue]="item"
+          [nzDisabled]="item.minimumOrderPrice > ordering.price"
+        >
+          <div *ngIf="!(item.minimumOrderPrice > ordering.price)" class="inline-grid">
+            <div class="error-text-color">{{ item.code }}</div>
+            <div>
+              Giảm <span class="font-semibold">{{ formatPrice(item.amount) }}</span>
+            </div>
+            <div>
+              Yêu cầu đơn tối thiểu từ
+              <span class="font-semibold">{{ formatPrice(item.minimumOrderPrice) }}</span>
+            </div>
+            <div>
+              Hạn sử dụng: <span class="error-text-color">
+                {{ formatDate(item.expiredDate) }} - {{ timeSince(item.expiredDate) }}
+              </span>
+            </div>
+          </div>
+          <div *ngIf="item.minimumOrderPrice > ordering.price" class="inline-grid">
+            <div>{{ item.code }}</div>
+            <div>
+              Giảm <span>{{ formatPrice(item.amount) }}</span>
+            </div>
+            <div>
+              Yêu cầu đơn tối thiểu từ
+              <span>{{ formatPrice(item.minimumOrderPrice) }}</span>
+            </div>
+            <div class="error-text-color">
+              Bạn cần mua thêm {{ formatPrice(item.minimumOrderPrice - ordering.price) }}
+              <span>
+                để có thể áp dụng voucher này
+              </span>
+            </div>
+            <div>
+              Hạn sử dụng: <span>
+                {{ formatDate(item.expiredDate) }} - {{ timeSince(item.expiredDate) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </nz-radio-group>
+      <nz-result
+        *ngIf="discounts.length === 0"
+        [nzIcon]="'smile-twotone'"
+        nzTitle="Ối, Không có mã giảm giá nào cả!!"
+      >
+      </nz-result>
+    </nb-card-body>
+    <nb-card-footer
+      class="grid grid-cols-2 border-none font-bold text-lg text-white"
+    >
+      <span class="text-left">Tổng giá tạm tính</span>
+      <span *ngIf="!choosingDiscount.code" class="text-right">{{
+        formatPrice(ordering.totalPrice)
+      }}</span>
+      <span *ngIf="choosingDiscount.code" class="text-right"
+        ><span class="line-through">{{
+          formatPrice(ordering.totalPrice)
+        }}</span
+        >&ensp;{{
+          formatPrice(ordering.totalPrice - choosingDiscount.amount)
+        }}</span
+      >
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <div *ngIf="isLoading" class="h-[200px] center-an-item">
   <nz-spin nzSimple></nz-spin>
 </div>
-
- 

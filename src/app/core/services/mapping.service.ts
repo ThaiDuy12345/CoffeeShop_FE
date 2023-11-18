@@ -79,7 +79,8 @@ export class MappingService {
       creationDate: payload.productCreationDate,
       isPopular: payload.productIsPopular,
       category: this.category(payload.categoryEntity),
-      active: payload.productActive
+      active: payload.productActive,
+      minPrice: payload.productMinPrice 
     } : new Product()
   }
 

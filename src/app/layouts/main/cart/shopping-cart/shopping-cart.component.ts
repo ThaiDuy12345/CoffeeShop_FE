@@ -1,12 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Optional, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
+import { Discount } from 'src/app/core/models/discount.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { DetailOrderService } from 'src/app/core/services/detail-order.service';
+import { DiscountService } from 'src/app/core/services/discount.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
@@ -21,6 +24,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 export class ShoppingCartComponent implements OnInit {
   public detailOrders: DetailOrder[] = []
   public ordering: Ordering = new Ordering()
+  public discounts: Discount[] = []
   public icons: Icon = icons
   public user: Account = new Account()
   public isLoading: boolean = false
@@ -28,14 +32,20 @@ export class ShoppingCartComponent implements OnInit {
   public currentIndexItem: number = -1
   public currentQuantityItem: number = 0
   public isLoadingButton: boolean = false
+  public discountNotification: String = ""
+  public choosingDiscount: Discount = new Discount()
+
   constructor(
     private filterStore: FilterStore,
     private formatService: FormatService,
     private orderingService: OrderingService,
     private detailOrderService: DetailOrderService,
     private mappingService: MappingService,
+    private dialogService: NbDialogService,
+    @Optional() private dialogRef: NbDialogRef<any>,
     private messageService: NzMessageService,
-    private router: Router
+    private router: Router,
+    private discountService: DiscountService,
   ){}
 
   ngOnInit(): void {
@@ -72,7 +82,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   preventNegativeInput(): void {
-    this.currentQuantityItem = this.currentQuantityItem ? Math.abs(this.currentQuantityItem) : 1
+    this.currentQuantityItem = !(this.currentQuantityItem === null || this.currentQuantityItem === undefined) ? Math.abs(this.currentQuantityItem) : 1
   }
 
   onClickEditQuantity(item: DetailOrder, index: number): void {
@@ -91,10 +101,37 @@ export class ShoppingCartComponent implements OnInit {
       next: res => {
         if(res.status){
           this.ordering = { ...this.mappingService.ordering(res.data) }
+          this.fetchDiscountNotification()
+          this.fetchDiscount()
           this.fetchDetailOrders();
         }else this.messageService.error(res.message)
       },
       error: err => this.messageService.error(err.error.message),
+    })
+  }
+
+  fetchDiscountNotification(): void {
+    if(!this.discounts) return
+
+    for(const discount of this.discounts){
+      if(discount.minimumOrderPrice > this.ordering.price) {
+        const price = discount.minimumOrderPrice - this.ordering.price
+        this.discountNotification = `Hãy mua thêm ${ this.formatPrice(price) } để có thể sử dụng mã giảm có giá trị ${this.formatPrice(discount.amount)} bạn nhé!!`
+        break
+      }
+    }
+  }
+
+  fetchDiscount(): void {
+    this.discountService.getAll().subscribe({
+      next: res => {
+        if(res.status){
+          this.discounts = res.data.filter((d: any) => new Date(d.discountExpiredDate) > new Date())
+            .map((d: any) => this.mappingService.discount(d))
+          this.fetchDiscountNotification()
+        }else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
     })
   }
 
@@ -113,6 +150,19 @@ export class ShoppingCartComponent implements OnInit {
 
   formatPrice(price: number = 0): string {
     return this.formatService.formatPrice(price)
+  }
+
+  formatDate(date: number): string {
+    return this.formatService.formatTimeStamp(date)
+  }
+
+  timeSince(date: number): string {
+    return this.formatService.timeFromNow(new Date(date))
+  }
+
+  openDiscountModal(dialog: TemplateRef<any>): void {
+    this.dialogRef = this.dialogService.open(dialog);
+    this.choosingDiscount = this.ordering.discount.code ? this.choosingDiscount : new Discount()
   }
 
   navigate(): void {

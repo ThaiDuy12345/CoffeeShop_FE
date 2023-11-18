@@ -43,6 +43,8 @@ export class StepTwoOrderingComponent implements OnInit{
 
   ngOnInit(): void {
     this.ordering.paymentStatus = 0
+    this.ordering.shippingFee = this.ordering.shippingFee + (2000 * this.getTotalQuantity()) 
+    this.ordering.totalPrice = this.ordering.price + this.ordering.shippingFee
     this.ordering.discount = new Discount()
   }
 
@@ -67,7 +69,19 @@ export class StepTwoOrderingComponent implements OnInit{
     return price === undefined ? this.formatService.formatPrice(0) : this.formatService.formatPrice(price)
   }
 
+  getTotalQuantity(): number {
+    let quantity = 0
+    this.detailOrders.forEach((item) => {
+      quantity = quantity + item.quantity
+    })
+    return quantity
+  }
+
   checkDiscountCode(): void {
+    if(!this.discountCode){
+      this.messageService.error("Cần phải có mã giảm giá để có thể áp dụng")
+      return
+    }
     this.isLoadingDiscountCheckButton = true
     this.discountService.getByCode({ discountCode: this.discountCode }).pipe(finalize(() => this.isLoadingDiscountCheckButton = false)).subscribe({
       next: res => {
@@ -113,6 +127,9 @@ export class StepTwoOrderingComponent implements OnInit{
   }
 
   onClickSubmitNewDiscount(): void {
+    if(!(this.choosingDiscount && this.choosingDiscount.code)){
+      return
+    }
     this.ordering.discount = {...this.choosingDiscount}
     this.discountCode = this.ordering.discount.code
     this.isEditingDiscount = false

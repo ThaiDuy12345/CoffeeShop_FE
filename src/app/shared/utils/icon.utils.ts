@@ -63,7 +63,9 @@ import {
   faCircleNotch,
   faNoteSticky,
   faClockRotateLeft,
-  faBarcode
+  faBarcode,
+  faLightbulb,
+  faChampagneGlasses
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -133,5 +135,7 @@ export const icons: Icon = {
   faShuffle: faShuffle,
   faNoteSticky: faNoteSticky,
   faClockRotateLeft: faClockRotateLeft,
-  faBarcode: faBarcode
+  faBarcode: faBarcode,
+  faLightbulb: faLightbulb,
+  faChampagneGlasses: faChampagneGlasses
 };

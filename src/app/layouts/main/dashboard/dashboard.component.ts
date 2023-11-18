@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
       })
       
       this.isLoading = true
-      this.productService.getAll().pipe(
+      this.productService.getAllWithPrice().pipe(
         finalize(() => {
           this.isLoading = false
         })

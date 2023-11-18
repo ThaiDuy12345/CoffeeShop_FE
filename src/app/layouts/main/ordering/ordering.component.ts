@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import Cookies from 'js-cookie';
@@ -19,7 +19,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
   templateUrl: './ordering.component.html',
   styleUrls: ['./ordering.component.scss']
 })
-export class OrderingComponent implements OnInit{
+export class OrderingComponent implements OnInit, OnDestroy{
   public icons: Icon = icons
   public current: number = 0 
   public ordering: Ordering = new Ordering()
@@ -116,6 +116,7 @@ export class OrderingComponent implements OnInit{
         discountId: this.ordering.discount.id
       } : null,
       orderingPaymentStatus: this.ordering.paymentStatus,
+      orderingNote: this.ordering.note,
       updatedByAccountEntity: null
     }}).pipe(finalize(() => {
       this.isLoadingConfirmButton = false

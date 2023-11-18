@@ -64,7 +64,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   getProductList(): void {
-    this.productService.getAll().pipe(
+    this.productService.getAllWithPrice().pipe(
       finalize(() => this.isLoading = false)
     ).subscribe({
       next: res => {

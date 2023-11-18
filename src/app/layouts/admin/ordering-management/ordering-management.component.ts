@@ -164,14 +164,12 @@ export class OrderingManagementComponent implements OnInit, OnDestroy{
     })
   }
 
-  getPaymentStatus(status: null | 0 | 1 | -1 | 2 | -2){
+  getPaymentStatus(status: null | 0 | 1 | -1){
     switch(status){
       case null: return "Chưa thanh toán"
       case 0: return "Thanh toán COD"
-      case 1: return "Thanh toán MOMO"
-      case 2: return "Thanh toán ZaloPay"
-      case -1: return "Hoàn tiền thông qua Momo"
-      case -2: return "Hoàn tiền thông qua ZaloPay"
+      case 1: return "Thanh toán VNPay"
+      case -1: return "Hoàn tiền thông qua VNPay"
     }
   }
 

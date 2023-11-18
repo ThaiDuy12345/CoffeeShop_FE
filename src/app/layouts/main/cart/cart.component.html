@@ -1,4 +1,10 @@
 <div class="mx-auto container grid grid-cols-1 gap-x-10 py-10 lg:px-20 px-3">
+  <div class="cursor-pointer second-text-color mb-5 text-end" [routerLink]="'/main/support'">
+    <fa-icon [icon]="icons['faLightbulb']" class="mr-2"></fa-icon>
+    <span>
+      Đã có lỗi xảy ra với đơn hàng của bạn ư? <br/> Hãy nhấn vào đây để được hỗ trợ!!
+    </span>
+  </div>
   <nz-tabset *ngIf="!isLoading" nzCentered [nzSelectedIndex]="selectedTab">
     <nz-tab [nzTitle]="template1">
       <ng-template #template1>

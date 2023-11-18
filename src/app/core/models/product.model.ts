@@ -10,4 +10,5 @@ export class Product{
   isPopular: boolean = false
   category: Category = new Category()
   active: boolean = false
+  minPrice?: number
 }

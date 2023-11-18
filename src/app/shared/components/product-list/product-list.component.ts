@@ -37,7 +37,8 @@ export class ProductListComponent implements OnInit, OnChanges {
     }
   }
 
-  formatPrice(price: number): string {
+  formatPrice(price: number | undefined): string {
+    if(!price) return ''
     return this.formatService.formatPrice(price)
   }
 }

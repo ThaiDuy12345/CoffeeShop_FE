@@ -8,6 +8,7 @@ import { Category } from "../models/category.model";
 import { Product } from "../models/product.model";
 import { ProductSize } from "../models/product-size.model";
 import { DetailOrder } from "../models/detail-order.model";
+import { Support } from "../models/support.model";
 
 @Injectable({
   providedIn: 'root'
@@ -91,5 +92,17 @@ export class MappingService {
       price: payload.productSizePrice,
       product: this.product(payload.productEntity)
     } : new ProductSize()
+  }
+
+  support(payload: any): Support {
+    return payload ? {
+      id: payload.supportID,
+      title: payload.supportTitle,
+      content: payload.supportContent,
+      reason: payload.supportReason,
+      creationDate: payload.supportCreationDate,
+      status: payload.supportStatus,
+      account: this.account(payload.accountEntity)
+    } : new Support()
   }
 }

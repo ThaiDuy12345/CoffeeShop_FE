@@ -25,6 +25,12 @@ export class ProductService {
     )
   }
 
+  getSoldQuantityById(params: { productId: string }): Observable<any>{
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.productService().toString() + `/soldQuantity/${params.productId}`)
+    )
+  }
+
   getAllWithPrice(): Observable<any>{
     return this.apiService.errorHandle(
       this.httpClient.get(this.apiService.productService().toString() + `/withPrice`)

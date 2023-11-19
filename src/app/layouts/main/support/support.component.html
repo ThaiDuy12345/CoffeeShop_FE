@@ -14,7 +14,7 @@
             status="infor"
             (click)="reset()"
           >
-            Gửi phản hồi khác 
+            Gửi hỗ trợ khác 
           </button>
           <button nbButton status="primary" [routerLink]="'/main/product'">
             Đi về trang sản phẩm
@@ -82,13 +82,9 @@
                   placeholder="Lý do gửi email"
                   [(selected)]="selectedItem"
                 >
-                  <nb-option value="0"
-                    >đề xuất để giúp COFFEE cải thiện dịch vụ</nb-option
+                  <nb-option *ngFor="let item of reasons" [value]="item.value"
+                    >{{item.text}}</nb-option
                   >
-                  <nb-option value="1"
-                    >báo lỗi trong quá trình sử dụng dịch vụ</nb-option
-                  >
-                  <nb-option value="2">khiến nại về 1 vấn đề</nb-option>
                 </nb-select>
               </span>
               <span>
@@ -96,6 +92,7 @@
                   [disabled]="isLoading"
                   nbInput
                   placeholder="nội dung chi tiết"
+                  [(ngModel)]="content"
                   class="w-full"
                 ></textarea>
               </span>

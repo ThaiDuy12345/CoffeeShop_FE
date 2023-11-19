@@ -82,7 +82,8 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   preventNegativeInput(): void {
-    this.currentQuantityItem = !(this.currentQuantityItem === null || this.currentQuantityItem === undefined) ? Math.abs(this.currentQuantityItem) : 1
+    this.currentQuantityItem = this.currentQuantityItem === null || this.currentQuantityItem <= 0 ? 1 : Math.round(Math.abs(this.currentQuantityItem))
+    this.currentQuantityItem = this.currentQuantityItem <= 0 ? 1 : this.currentQuantityItem
   }
 
   onClickEditQuantity(item: DetailOrder, index: number): void {

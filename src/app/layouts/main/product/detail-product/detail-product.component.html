@@ -22,7 +22,7 @@
     <nb-card-body class="grid grid-cols-5 gap-5">
       <app-image
         class="lg:col-span-2 col-span-5"
-        [classes]="'rounded-lg'"
+        [classes]="'rounded-lg w-full'"
         [src]="product.imageUrl"
       ></app-image>
       <div class="lg:col-span-3 col-span-5 grid grid-rows-3">
@@ -47,7 +47,7 @@
                   : "Chưa có phản hồi"
               }}
             </span>
-            <span class=""> 10 Lượt bán </span>
+            <span> {{ soldQuantity }} Lượt bán </span>
           </div>
           <div class="w-full text-3xl text-[#EE7070] font-bold">
             {{ productSize.length > 0 ? formatPrice(getPrice(choosingSize)) : null }}
@@ -73,7 +73,7 @@
                   [(ngModel)]="productSizeQuantity"
                   name="quantityInput"
                   #quantityInput="ngModel"
-                  (input)="preventNegativeInput()"
+                  (change)="preventNegativeInput()"
                   nbInput
                   type="number"
                   class="w-[50px]"

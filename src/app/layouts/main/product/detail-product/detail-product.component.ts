@@ -38,6 +38,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   public choosingSize: number = 0
   public avarageStar: number = 0;
   public feedBackPageIndex: number = 1;
+  public soldQuantity: number = 0
   public starRating: number = 0;
   public isLoadingAddToCartBuntton: boolean = false;
   public isLoadingBuyNowButton: boolean = false;
@@ -88,6 +89,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
 
             this.product = this.mappingService.product(res.data)
             this.loadProductSize();
+            this.loadProductSoldQuantity();
             this.loadRelatedProducts();
             // this.loadFeedBackProduct();
           }else{
@@ -103,6 +105,16 @@ export class DetailProductComponent implements OnInit, OnDestroy {
 
       this.fetchOrder()
     });
+  }
+
+  loadProductSoldQuantity(): void {
+    this.productService.getSoldQuantityById({ productId: this.product.id }).subscribe({
+      next: res => {
+        if(res.status) this.soldQuantity = res.data
+        else this.messageService.error(res.message);
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
   }
 
   fetchOrder(): void {
@@ -293,8 +305,8 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   }
 
   preventNegativeInput(): void {
-    this.productSizeQuantity = this.productSizeQuantity === null ? 1 : Math.abs(this.productSizeQuantity)
-    console.log(this.productSizeQuantity)
+    this.productSizeQuantity = this.productSizeQuantity === null || this.productSizeQuantity <= 0 ? 1 : Math.round(Math.abs(this.productSizeQuantity))
+    this.productSizeQuantity = this.productSizeQuantity <= 0 ? 1 : this.productSizeQuantity
   }
 
   onClickBuyNow(): void {

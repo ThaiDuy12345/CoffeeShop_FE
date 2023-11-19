@@ -6,6 +6,6 @@ export class Support {
   title: string = ""
   content: string = ""
   creationDate: number = new Date().getTime()
-  supportStatus: boolean = false
+  status: boolean = false
   account: Account = new Account()
 }

@@ -182,7 +182,7 @@
             Danh sách đơn hàng
           </nb-card-header>
           <nb-card-body class="border-none">
-            <nz-table #table2 [nzData]="accountOrderings" nzShowPagination="false">
+            <nz-table #table2 [nzData]="accountOrderings" [nzLoading]="isLoadingChoosingOrdering" nzShowPagination="false">
               <thead>
                 <tr>
                   <th>#</th>
@@ -192,11 +192,11 @@
               </thead>
               <tbody>
                 <tr *ngFor="let data of table2.data">
-                  <td class="second-text-color cursor-pointer">
+                  <td>
                     {{ data.id }}
                   </td>
                   <td>{{ formatDate(data.date) }}</td>
-                  <td>{{ data.totalPrice }}</td>
+                  <td>{{ formatPrice(data.totalPrice) }}</td>
                 </tr>
               </tbody>
             </nz-table>

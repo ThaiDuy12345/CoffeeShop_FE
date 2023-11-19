@@ -1,3 +1,4 @@
+import { error } from '@ant-design/icons-angular';
 import { Component, OnInit } from '@angular/core';
 import { faBedPulse } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -9,6 +10,7 @@ import { Ordering } from 'src/app/core/models/ordering.model';
 import { AccountService } from 'src/app/core/services/account.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
+import { OrderingService } from 'src/app/core/services/ordering.service';
 import { AccountData, FeedBackData, OrderingData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
@@ -26,12 +28,14 @@ export class AccountManagementComponent implements OnInit {
   public accountFeedbacks: FeedBack[] = []
   public accountOrderings: Ordering[] = []
   public searchInput: string = ""
+  public isLoadingChoosingOrdering: boolean = false
 
   constructor(
     private messageService: NzMessageService,
     private formatService: FormatService,
     private accountService: AccountService,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private orderingService: OrderingService
   ){}
 
   ngOnInit(): void {
@@ -106,6 +110,10 @@ export class AccountManagementComponent implements OnInit {
     return this.formatService.formatTimeStamp(date)
   }
 
+  formatPrice(price: number): string {
+    return this.formatService.formatPrice(price)
+  }
+
   renderStarColor(star: number): string {
     switch (true) {
       case star === 0:
@@ -117,17 +125,24 @@ export class AccountManagementComponent implements OnInit {
 
   viewAnAccount(data: Account): void {
     if(!data) return
-    this.choosingAccount = data
-    this.accountFeedbacks = this.getAccountFeedbacks()
-    this.accountOrderings = this.getAccountOrderings()
+    this.choosingAccount = {...data}
+    this.getAccountFeedbacks()
+    this.getAccountOrderings()
   }
 
   getAccountFeedbacks(): FeedBack[]{
     return FeedBackData.filter(fb => fb.account.phone === this.choosingAccount.phone)
   }
 
-  getAccountOrderings(): Ordering[]{
-    return OrderingData.filter(ordering => ordering.account.phone === this.choosingAccount.phone)
+  getAccountOrderings(): void{
+    this.isLoadingChoosingOrdering = true
+    this.orderingService.getAllByAccount({ accountPhone: this.choosingAccount.phone }).pipe(finalize(() => this.isLoadingChoosingOrdering = false)).subscribe({
+      next: res => {
+        if(res.status) this.accountOrderings = res.data.map((o: any) => this.mappingService.ordering(o))
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
   }
 
   activeSortOrdering(a: Account, b: Account): number {

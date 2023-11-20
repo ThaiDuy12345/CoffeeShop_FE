@@ -67,6 +67,12 @@ export class SupportComponent implements OnInit, OnDestroy {
   }
 
   send(): void {
+    if(
+      !this.title ||
+      !this.content
+    ){
+      this.messageService.error("Xin vui lòng điền hết tất cả chỗ trống để tiếp tục")
+    }
     this.isLoading = true
     this.supportService.post({
       accountEntity: {

@@ -42,7 +42,8 @@ export class ChangePasswordComponent {
       accountAddress: this.user.address,
       accountPassword: this.newPassword,
       accountRole: this.user.role,
-      accountActive: this.user.active
+      accountActive: this.user.active,
+      accountEmail: this.user.email
     }).pipe(finalize(() => {
       this.dialogRef.close();
       this.submitLoading = false

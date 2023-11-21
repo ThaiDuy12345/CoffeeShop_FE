@@ -1,3 +1,4 @@
+import { favoriteProductService } from './../../../../core/services/favorite-product.service';
 import { Component, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Cookies from 'js-cookie';
@@ -5,21 +6,21 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
-import { FeedBackData, ProductData, FavoriteProductData, ProductSizeData } from 'src/app/data/data';
+import { FeedBackData, FavoriteProductData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { FormatService } from 'src/app/core/services/format.service';
 import { ProductSize } from 'src/app/core/models/product-size.model';
 import { ProductService } from 'src/app/core/services/product.service';
-import { Subject, finalize, take } from 'rxjs';
+import { Subject, finalize } from 'rxjs';
 import { ProductSizeService } from 'src/app/core/services/product-size.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { DetailOrderService } from 'src/app/core/services/detail-order.service';
-import { error } from '@ant-design/icons-angular';
+import { Account } from 'src/app/core/models/account.model';
 
 @Component({
   selector: 'app-detail-product',
@@ -35,9 +36,11 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   public productSizeOption: string[] = []
   public feedBackProducts: FeedBack[] = [];
   public feedBackProductsPg: FeedBack[] = [];
+  public account: Account = new Account();
   public choosingSize: number = 0
   public avarageStar: number = 0;
   public feedBackPageIndex: number = 1;
+  public isUserLoveThisProduct: boolean = false;
   public soldQuantity: number = 0
   public starRating: number = 0;
   public isLoadingAddToCartBuntton: boolean = false;
@@ -45,6 +48,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false
   public tempSubject: Subject<any> = new Subject<any>()
   public ordering: Ordering = new Ordering 
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private messageService: NzMessageService,
@@ -53,6 +57,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     private filterStore: FilterStore,
     @Optional() private dialogRef: NbDialogRef<any>,
     private orderingService: OrderingService,
+    private favoriteProductService: favoriteProductService,
     private detailOrderService: DetailOrderService,
     private authenticationStore: AuthenticationStore,
     private dialogService: NbDialogService,
@@ -91,6 +96,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
             this.loadProductSize();
             this.loadProductSoldQuantity();
             this.loadRelatedProducts();
+            this.fetchOrder()
             // this.loadFeedBackProduct();
           }else{
             this.messageService.error(res.message);
@@ -102,8 +108,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
           this.router.navigate(['/main/product']);
         }
       })
-
-      this.fetchOrder()
     });
   }
 
@@ -120,7 +124,11 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   fetchOrder(): void {
     this.tempSubject.subscribe({
       next: res => {
-        if(res.account && res.account.phone) this.fetchCurrentOrderingCart(res.account.phone)
+        if(res.account && res.account.phone) {
+          this.account = {...res.account}
+          this.fetchCurrentOrderingCart()
+          this.loadIsFavorite()
+        }
       },
       error: err => this.messageService.error(err.error.message)
     })
@@ -128,8 +136,44 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     this.authenticationStore._select(state => state).subscribe(this.tempSubject)
   }
 
-  fetchCurrentOrderingCart(accountPhone: string): void {
-    this.orderingService.getTheCurrentCart({ accountPhone: accountPhone }).subscribe({
+  loadIsFavorite(): void {
+    this.favoriteProductService.isFavoriteByProductIdAndAccountPhone({ accountPhone: this.account.phone, productId: this.product.id }).subscribe({
+      next: res => {
+        if(res.status) this.isUserLoveThisProduct = res.data
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+  }
+
+  onClickUnFavorite(): void {
+    this.favoriteProductService.delete({ accountPhone: this.account.phone, productId: this.product.id }).subscribe({
+      next: res => {
+        if(res.status) {
+          this.messageService.success("Đã gỡ bỏ sản phẩm ra khỏi danh sách yêu thích")
+          this.isUserLoveThisProduct = false
+        }
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+  }
+
+  onClickFavorite(): void {
+    this.favoriteProductService.post({ accountPhone: this.account.phone, productId: this.product.id }).subscribe({
+      next: res => {
+        if(res.status) {
+          this.messageService.success("Đã thêm sản phẩm vào danh sách yêu thích")
+          this.isUserLoveThisProduct = true
+        }
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+  }
+
+  fetchCurrentOrderingCart(): void {
+    this.orderingService.getTheCurrentCart({ accountPhone: this.account.phone }).subscribe({
       next: res => {
         if(res.status){
           this.ordering = { ...this.mappingService.ordering(res.data) }
@@ -227,13 +271,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     })
 
     return sum * 100 / this.feedBackProducts.length
-  }
-
-  isUserLoveThisProduct(): boolean {
-    const user = Cookies.get('id')
-    if(!user) return false
-    const result = FavoriteProductData.find(p => p.account.phone === user && p.product.id === this.product.id)
-    return result ? true : false
   }
 
   navigateRelatedProduct(): void {

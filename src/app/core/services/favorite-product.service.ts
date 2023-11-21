@@ -12,27 +12,27 @@ export class favoriteProductService {
     private httpClient: HttpClient
   ){}
 
-  post(productId: string, params: any): Observable<any>{
+  post(params: { accountPhone: string, productId: string }): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.post(this.apiService.favoriteProductService().toString() + `/product/${productId}`, params)
+      this.httpClient.post(this.apiService.favoriteProductService().toString() + `/${params.productId}/${params.accountPhone}`, {})
     )
   }
 
-  put(favoriteProductId: string, params: any): Observable<any>{
+  delete(params: { accountPhone: string, productId: string }): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.put(this.apiService.favoriteProductService().toString() + `/${favoriteProductId}`, params)
+      this.httpClient.delete(this.apiService.favoriteProductService().toString() + `/${params.productId}/${params.accountPhone}`)
     )
   }
 
-  delete(params: { favoriteProductId: string }): Observable<any>{
+  isFavoriteByProductIdAndAccountPhone(params: { accountPhone: string, productId: string }): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.delete(this.apiService.favoriteProductService().toString() + `/${params.favoriteProductId}`)
+      this.httpClient.get(this.apiService.favoriteProductService().toString() + `/isFavorite/${params.productId}/${params.accountPhone}`)
     )
   }
 
-  getByProductId(params: { productId: string }): Observable<any>{
+  getAllByAccountPhone(params: { accountPhone: string }): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.get(this.apiService.favoriteProductService().toString() + `/product/${params.productId}`)
+      this.httpClient.get(this.apiService.favoriteProductService().toString() + `/account/${params.accountPhone}`)
     )
   }
 }

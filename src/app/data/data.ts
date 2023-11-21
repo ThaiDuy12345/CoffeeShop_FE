@@ -186,22 +186,18 @@ export const ProductSizeData: ProductSize[] = [
 
 export const FavoriteProductData: FavoriteProduct[] = [
   {
-    id: '0',
     account: AccountData[0],
     product: ProductData[0]
   },
   {
-    id: '0',
     account: AccountData[0],
     product: ProductData[1]
   },
   {
-    id: '0',
     account: AccountData[0],
     product: ProductData[3]
   },
   {
-    id: '0',
     account: AccountData[0],
     product: ProductData[5]
   }

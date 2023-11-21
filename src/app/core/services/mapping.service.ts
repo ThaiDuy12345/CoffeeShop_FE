@@ -9,6 +9,7 @@ import { Product } from "../models/product.model";
 import { ProductSize } from "../models/product-size.model";
 import { DetailOrder } from "../models/detail-order.model";
 import { Support } from "../models/support.model";
+import { FavoriteProduct } from "../models/favorite-product.model";
 
 @Injectable({
   providedIn: 'root'
@@ -104,5 +105,12 @@ export class MappingService {
       status: payload.supportStatus,
       account: this.account(payload.accountEntity)
     } : new Support()
+  }
+
+  favoriteProduct(payload: any): FavoriteProduct {
+    return payload ? {
+      account: this.account(payload.accountEntity),
+      product: this.product(payload.productEntity)
+    } : new FavoriteProduct()
   }
 }

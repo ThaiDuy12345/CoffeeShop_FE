@@ -23,7 +23,8 @@ export class ApiService{
     ORDERING: '/orderings',
     DETAIL_ORDER: '/detail-orders',
     SUPPORT: '/supports',
-    FEEDBACK: '/feedbacks'
+    FEEDBACK: '/feedbacks',
+    FAVORITE_PRODUCT: '/favoriteProducts'
   }
 
   private service_vietnam = this.vietnam_url
@@ -74,6 +75,10 @@ export class ApiService{
 
   feedbackService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.FEEDBACK
+  }
+
+  favoriteProductService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.FAVORITE_PRODUCT
   }
 
   vietnamService(): String {

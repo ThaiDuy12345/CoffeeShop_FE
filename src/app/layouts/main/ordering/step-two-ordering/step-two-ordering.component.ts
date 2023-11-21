@@ -78,7 +78,7 @@ export class StepTwoOrderingComponent implements OnInit{
   }
 
   checkDiscountCode(): void {
-    if(!this.discountCode){
+    if(!this.discountCode.trim()){
       this.messageService.error("Cần phải có mã giảm giá để có thể áp dụng")
       return
     }

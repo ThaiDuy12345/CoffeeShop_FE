@@ -13,6 +13,8 @@ export class SignUpComponent implements OnInit {
   public icons = icons
   public isLoading: boolean = false
   public isTrigger: boolean = false
+  public checkTermsAndServices: boolean = false
+  public checkPrivacyPolicy: boolean = false
   public account: {
     email: string,
     password: string,

@@ -139,7 +139,7 @@ body {
   }
   
   color: $main-text-color;
-  .font-bold, .font-semibold, b, nb-card-header {
+  .font-bold, .font-semibold, b, nb-card-header, h1, h2 {
     color: $main-text-color
   }
 
@@ -169,6 +169,7 @@ body {
 
   a {
     text-decoration: none !important;
+    color: rgb(0, 149, 255);
   }
 
   .main-color {
@@ -226,16 +227,18 @@ body {
   .error-input-color {
     border-color: $error-text-color !important;
   }
+
+  .center-an-item {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  span.tab-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
-.center-an-item {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
 
-span.tab-text{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

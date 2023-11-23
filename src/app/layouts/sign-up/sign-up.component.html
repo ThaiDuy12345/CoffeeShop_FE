@@ -65,7 +65,9 @@
                   </small>
                 </div>
                 <div class="mb-5">
-                  <label class="my-2">Số điện thoại</label>
+                  <label class="my-2">Số điện thoại <fa-icon [icon]="icons['faCircleInfo']" 
+                    nz-tooltip nzTooltipTitle="Bạn sẽ không thể đổi số điện thoại một khi đã tạo tài khoản"
+                    class="ml-1"></fa-icon></label>
                   <input
                     nbInput
                     name="phone"
@@ -81,11 +83,15 @@
                     Số điện thoại bắt buộc không được để trống và đúng định dạng
                   </small>
                 </div>
+                <div class="mb-5">
+                  <nb-checkbox [(checked)]="checkPrivacyPolicy">Tôi đồng ý <a [routerLink]="'/privacy-policy'">chính sách quyền riêng tư</a></nb-checkbox><br/>
+                  <nb-checkbox [(checked)]="checkTermsAndServices">Tôi đồng ý <a [routerLink]="'/terms-and-services'">khoản dịch vụ</a></nb-checkbox>
+                </div>
               </form>
-
               <div class="mb-5">
                 <button
                   type="button"
+                  [disabled]="!(checkPrivacyPolicy && checkTermsAndServices)"
                   nbButton
                   status="success"
                   [nbSpinner]="isLoading"

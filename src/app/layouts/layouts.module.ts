@@ -35,6 +35,7 @@ import {
   NbAccordionModule,
   NbDialogModule,
   NbSidebarModule,
+  NbCheckboxModule,
 } from '@nebular/theme';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -103,6 +104,8 @@ import { BasicFormComponent } from './admin/product-management/detail-product-ma
 import { SizeFormComponent } from './admin/product-management/detail-product-management/size-form/size-form.component';
 import { DetailDiscountManagementComponent } from './admin/discount-management/detail-discount-management/detail-discount-management.component';
 import { DetailOrderingManagementComponent } from './admin/ordering-management/detail-ordering-management/detail-ordering-management.component';
+import { PrivaryPolicyComponent } from './privary-policy/privary-policy.component';
+import { TermsAndServicesComponent } from './terms-and-services/terms-and-services.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -149,7 +152,9 @@ import { DetailOrderingManagementComponent } from './admin/ordering-management/d
     AdminHeaderComponent,
     BasicFormComponent,
     SizeFormComponent,
-    AdminSidebarComponent
+    AdminSidebarComponent,
+    PrivaryPolicyComponent,
+    TermsAndServicesComponent
   ],
   imports: [
     CommonModule,
@@ -162,6 +167,7 @@ import { DetailOrderingManagementComponent } from './admin/ordering-management/d
     FormsModule,
     NzCollapseModule,
     NzDatePickerModule,
+    NbCheckboxModule,
     NbRadioModule,
     NzTableModule,
     NzSegmentedModule,

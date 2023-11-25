@@ -6,6 +6,7 @@ import { Feedback } from 'src/app/core/models/feedback.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { AccountService } from 'src/app/core/services/account.service';
+import { FeedbackService } from 'src/app/core/services/feedback.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
@@ -29,12 +30,14 @@ export class AccountManagementComponent implements OnInit {
   public accountOrderings: Ordering[] = []
   public searchInput: string = ""
   public isLoadingChoosingOrdering: boolean = false
+  public isLoadingChoosingFeedback: boolean = false
 
   constructor(
     private messageService: NzMessageService,
     private accountService: AccountService,
     private mappingService: MappingService,
     private orderingService: OrderingService,
+    private feedbackService: FeedbackService,
     private formatService: FormatService
   ){}
 
@@ -156,11 +159,18 @@ export class AccountManagementComponent implements OnInit {
     this.getOrderingUpdatedByAccount()
   }
 
-  getAccountFeedbacks(): Feedback[]{
-    return FeedbackData.filter(fb => fb.account.phone === this.choosingAccount.phone)
+  getAccountFeedbacks(): void {
+    this.isLoadingChoosingFeedback = true
+    this.feedbackService.getByAccountPhone({ accountPhone: this.choosingAccount.phone }).pipe(finalize(() => this.isLoadingChoosingFeedback = false)).subscribe({
+      next: res => {
+        if(res.status) this.accountFeedbacks = res.data.map((o: any) => this.mappingService.feedback(o))
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
   }
 
-  getAccountOrderings(): void{
+  getAccountOrderings(): void {
     this.isLoadingChoosingOrdering = true
     this.orderingService.getAllByAccount({ accountPhone: this.choosingAccount.phone }).pipe(finalize(() => this.isLoadingChoosingOrdering = false)).subscribe({
       next: res => {

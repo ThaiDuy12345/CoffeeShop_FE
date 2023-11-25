@@ -237,7 +237,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       return fb.product.id === this.product.id;
     });
     this.feedbackProductsPg = this.changeFeedbackIndex();
-    const starRates = this.feedbackProducts.reduce((pv, fb) => pv + fb.star, 0);
+    const starRates = this.feedbackProducts.reduce((pv, fb) => pv + fb.rate, 0);
     this.avarageStar = Math.round(starRates / this.feedbackProducts.length);
   }
 
@@ -259,7 +259,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   getStarRatePercent(starRates: number): number {
     let sum = 0
     this.feedbackProducts.forEach(fb => {
-      if (fb.star === starRates){
+      if (fb.rate === starRates){
         sum++
       }
     })

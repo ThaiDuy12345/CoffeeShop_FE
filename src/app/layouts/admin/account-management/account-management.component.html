@@ -222,34 +222,31 @@
               #table3
               [nzData]="accountFeedbacks"
               nzShowPagination="false"
+              [nzLoading]="isLoadingChoosingFeedback"
             >
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Tên sản phẩm</th>
                   <th>Số sao</th>
                   <th>Ngày tạo</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let data of table3.data">
-                  <td>{{ data.product.name }}</td>
-                  <td>
-                    <ng-container
-                      *ngFor="
-                        let icon of [].constructor(data.star);
-                        let i = index
-                      "
-                    >
-                      <fa-icon
-                        [icon]="icons['faStar']"
-                        [style]="'color: ' + renderStarColor(data.star)"
-                        size="lg"
-                      ></fa-icon>
-                    </ng-container>
-                  </td>
-                  <td>{{ data.creationDate | dateFormat }}</td>
-                </tr>
+                @for (data of table3.data; track $index){
+                  <tr>
+                    <td>{{ data.product.name }}</td>
+                    <td>
+                      @for (icon of [].constructor(data.rate); track $index){
+                        <fa-icon
+                          [icon]="icons['faStar']"
+                          [style]="'color: ' + renderStarColor(data.rate)"
+                          size="lg"
+                        ></fa-icon>
+                      }
+                    </td>
+                    <td>{{ data.creationDate | dateFormat }}</td>
+                  </tr>
+                }
               </tbody>
             </nz-table>
           </nb-card-body>

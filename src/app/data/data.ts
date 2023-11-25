@@ -205,7 +205,7 @@ export const FavoriteProductData: FavoriteProduct[] = [
 
 export const FeedbackData: Feedback[] = [
   {
-    star: 4,
+    rate: 4,
     comment: 'Sản phẩm này cũng tạm được, tôi cảm thấy hài lòng với những gì nó mang lại. Mặc dù có một số điểm nhỏ cần cải thiện, nhưng tổng thể vẫn rất tốt!',
     product: ProductData[0],
     creationDate: new Date('07-04-2023').getTime(),
@@ -213,7 +213,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Món này thực sự ngon đấy, tôi thích cách hương vị kết hợp với nhau. Tuy nhiên, còn một chút điều gì đó chưa hoàn hảo, có lẽ cần một chút cải thiện.',
     product: ProductData[1],
     creationDate: new Date('01-04-2023').getTime(),
@@ -221,7 +221,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 5,
+    rate: 5,
     comment: 'Wow, quả thật là tuyệt vời! Mọi thứ đều hoàn hảo, từ hương vị cho đến chất lượng. Tôi hoàn toàn hài lòng và sẵn sàng trở lại lần sau.',
     product: ProductData[2],
     creationDate: new Date('05-04-2023').getTime(),
@@ -229,7 +229,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Thức ăn này thực sự phù hợp với khẩu vị của mình. Tôi thích cách nó làm thỏa mãn cảm giác đói và vị giác của mình.',
     product: ProductData[3],
     creationDate: new Date('04-04-2023').getTime(),
@@ -237,7 +237,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 3,
+    rate: 3,
     comment: 'Không phải là món ưa thích của tôi, nhưng nó vẫn còn khá tốt. Có một số điểm cần cải thiện, tôi hy vọng tương lai sẽ có sự cải tiến.',
     product: ProductData[4],
     creationDate: new Date('04-04-2023').getTime(),
@@ -245,7 +245,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 1,
+    rate: 1,
     comment: 'Gớm quá! Tôi cảm thấy thất vọng về sản phẩm này. Chất lượng kém và không đáp ứng được mong đợi của tôi.',
     product: ProductData[0],
     creationDate: new Date('03-04-2023').getTime(),
@@ -253,7 +253,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Tôi nghĩ rằng sản phẩm này cũng ổn thôi, không có gì đặc biệt nhưng cũng không tệ. Mình có thể xem xét thử lần nữa.',
     product: ProductData[1],
     creationDate: new Date('02-04-2023').getTime(),
@@ -261,7 +261,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 5,
+    rate: 5,
     comment: 'Sản phẩm chất lượng, thực sự đáng để đầu tư. Tôi cảm thấy vui mừng khi chọn sản phẩm này và không hối hận về quyết định của mình.',
     product: ProductData[2],
     creationDate: new Date('08-04-2023').getTime(),
@@ -269,7 +269,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Mặc dù sản phẩm hơi mắc một chút, nhưng tôi thấy nó đáng giá với chất lượng và trải nghiệm mà nó mang lại.',
     product: ProductData[3],
     creationDate: new Date('05-04-2023').getTime(),
@@ -277,7 +277,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 2,
+    rate: 2,
     comment: 'Tôi không cảm thấy hài lòng với sản phẩm này, có lẽ nó không phù hợp với sở thích của tôi. Tôi mong muốn có nhiều lựa chọn khác hơn.',
     product: ProductData[4],
     creationDate: new Date('07-04-2023').getTime(),
@@ -286,7 +286,7 @@ export const FeedbackData: Feedback[] = [
   },
   // Tiếp tục thêm các mục feedback khác
   {
-    star: 4,
+    rate: 4,
     comment: 'Sản phẩm này thực sự phải lòng tôi. Tôi rất thích cách nó được thiết kế và hương vị của nó.',
     product: ProductData[2],
     creationDate: new Date('06-04-2023').getTime(),
@@ -294,7 +294,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Món này hơi ngọt quá đối với khẩu vị của mình. Tuy nhiên, nếu bạn thích đồ ngọt thì đây có thể là một sự lựa chọn tốt. Mình cảm nhận được vị ngọt đậm đà, nhưng một chút quá mức mà mình mong muốn.',
     product: ProductData[3],
     creationDate: new Date('07-04-2023').getTime(),
@@ -302,7 +302,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 5,
+    rate: 5,
     comment: 'Mình thực sự thích hương vị của sản phẩm này. Nó có sự kết hợp hoàn hảo giữa các thành phần và tạo ra một trải nghiệm thú vị. Hương vị này thực sự đã nắm bắt được điểm yếu của mình.',
     product: ProductData[4],
     creationDate: new Date('05-04-2023').getTime(),
@@ -310,7 +310,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 2,
+    rate: 2,
     comment: 'Mình không cảm thấy hài lòng lắm với sản phẩm này. Dù đã hy vọng điều gì đó tốt hơn, nhưng nó không đáp ứng được mong đợi của mình. Có lẽ mình sẽ thử lựa chọn khác lần sau.',
     product: ProductData[0],
     creationDate: new Date('05-04-2023').getTime(),
@@ -318,7 +318,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Sản phẩm này thực sự đáng giá sự đánh giá tích cực từ phía mình. Mình đã thử và cảm nhận được sự tốt của nó. Mình có thể dễ dàng khuyên nó cho bạn bè và người thân.',
     product: ProductData[1],
     creationDate: new Date('03-04-2023').getTime(),
@@ -326,7 +326,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Sản phẩm này không tệ chút nào. Tôi đã có một trải nghiệm tích cực khi thử nó. Mặc dù không thể coi là hoàn hảo, nhưng tôi vẫn cảm thấy thoải mái khi tiếp tục sử dụng nó.',
     product: ProductData[0],
     creationDate: new Date('01-04-2023').getTime(),
@@ -334,7 +334,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 3,
+    rate: 3,
     comment: 'Mình nghĩ rằng sản phẩm này không đáng giá với giá tiền mình bỏ ra. Mình mong đợi nhiều hơn về chất lượng và trải nghiệm khi sử dụng nó.',
     product: ProductData[1],
     creationDate: new Date('07-04-2023').getTime(),
@@ -342,7 +342,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Mình thực sự thích sản phẩm này. Nó mang đến một trải nghiệm tuyệt vời và hợp với khẩu vị của mình. Mình cảm thấy mình đã đưa ra một quyết định đúng đắn.',
     product: ProductData[2],
     creationDate: new Date('08-04-2023').getTime(),
@@ -350,7 +350,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 3,
+    rate: 3,
     comment: 'Mình cảm thấy sản phẩm này vẫn chưa đủ tốt. Dù có một số điểm tích cực, nhưng còn nhiều điểm cần cải thiện để nâng cao trải nghiệm của khách hàng.',
     product: ProductData[3],
     creationDate: new Date('03-04-2023').getTime(),
@@ -358,7 +358,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 3,
+    rate: 3,
     comment: 'Mình không thực sự ưa thích sản phẩm này. Nó không hoàn toàn phù hợp với sở thích của mình và tôi cảm thấy không hài lòng với trải nghiệm.',
     product: ProductData[4],
     creationDate: new Date('03-04-2023').getTime(),
@@ -366,7 +366,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 5,
+    rate: 5,
     comment: 'Mình rất thích sản phẩm này! Nó thực sự đáp ứng tất cả những gì mình mong đợi. Từ hương vị đến chất lượng, đều tuyệt vời. Mình rất hài lòng với sự lựa chọn của mình.',
     product: ProductData[0],
     creationDate: new Date('04-04-2023').getTime(),
@@ -374,7 +374,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 3,
+    rate: 3,
     comment: 'Mình nghĩ sản phẩm này cũng khá ngon. Tuy không thể nói là hoàn hảo, nhưng nó vẫn đáp ứng được một phần mong đợi của mình.',
     product: ProductData[1],
     creationDate: new Date('03-04-2023').getTime(),
@@ -382,7 +382,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 5,
+    rate: 5,
     comment: 'Mình đã quyết định mua sản phẩm này lần nữa. Đây là một trải nghiệm tuyệt vời và mình không thể bỏ qua nó. Sản phẩm này đúng đáng để đầu tư.',
     product: ProductData[2],
     creationDate: new Date('03-04-2023').getTime(),
@@ -390,7 +390,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 3,
+    rate: 3,
     comment: 'Sản phẩm này tạm được với mình. Mình thấy nó không có gì đặc biệt và cũng không gây ấn tượng mạnh cho mình.',
     product: ProductData[3],
     creationDate: new Date('02-04-2023').getTime(),
@@ -398,7 +398,7 @@ export const FeedbackData: Feedback[] = [
     active: true,
   },
   {
-    star: 4,
+    rate: 4,
     comment: 'Sản phẩm này thực sự hợp với khẩu vị của mình. Mình thích cách hương vị được kết hợp và nó mang lại trải nghiệm tốt cho mình.',
     product: ProductData[4],
     creationDate: new Date('07-04-2023').getTime(),

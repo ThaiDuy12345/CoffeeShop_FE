@@ -68,7 +68,7 @@ export class MappingService {
 
   feedback(payload: any): Feedback {
     return payload ? {
-      star: payload.feedbackRate,
+      rate: payload.feedbackRate,
       comment: payload.feedbackComment,
       creationDate: payload.feedbackCreationDate,
       active: payload.feedbackActive,

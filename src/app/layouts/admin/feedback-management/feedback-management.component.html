@@ -1,1 +1,313 @@
-<p>feedback-management works!</p>
+<div
+  class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
+>
+  <nb-card>
+    <nb-card-header class="border-none"> Danh sách đánh giá sản phẩm</nb-card-header>
+    <nb-card-body class="border-none">
+      <div class="mb-5 grid grid-cols-1 gap-5">
+        <nz-alert nzType="info" nzMessage="Đánh giá sản phẩm là 1 tính năng giúp truyền đạt cảm nghĩ của khách hàng đối với sản phẩm của hệ thống COFFEE SHOP" nzShowIcon></nz-alert>
+      </div>
+      <div class="mb-5 grid grid-cols-2 gap-5">
+        <div class="flex justify-start items-center">
+          <input
+            [(ngModel)]="searchInput"
+            (change)="filterBySearch()"
+            nbInput
+            placeholder="Tìm kiếm thư hỗ trợ"
+          />
+        </div>
+        <div class="flex justify-end items-center"></div>
+      </div>
+      <nz-table
+        #table
+        [nzLoading]="isLoading"
+        [nzData]="feedbacks"
+        nzShowPagination="false"
+      >
+        <thead>
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th [nzAlign]="'center'">Tạo bởi</th>
+            <th nzWidth="150px" [nzAlign]="'center'">Số sao</th>
+            <th
+              [nzAlign]="'center'"
+              [nzFilterMultiple]="true"
+              [nzFilters]="[
+                { text: 'Kích hoạt', value: true },
+                { text: 'Ẩn', value: false}
+              ]"
+              [nzFilterFn]="activeFilter"
+            >
+              Trạng thái
+            </th>
+            <th
+              [nzSortFn]="dateSort"
+              [nzSortOrder]="'descend'"
+              [nzSortDirections]="['descend', 'ascend', null]"
+            >
+              Ngày tạo
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(data of table.data; track $index){
+            <tr>
+              <td>{{ data.product.name }}</td>
+              <td>
+                <div class="center-an-item">
+                  <div>
+                    {{ data.account.name }}<br/>{{ data.account.phone }}
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="center-an-item">
+                  <div>
+                    @for (star of [].constructor(data.star); track $index){
+                      <fa-icon
+                        [icon]="icons['faStar']"
+                        [style]="'color: ' + renderStarColor(data.star)"
+                      ></fa-icon>
+                    }
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="center-an-item">
+                  @if (data.active){
+                    <nz-tag
+                      class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+                      nz-tooltip
+                      nzTooltipTitle="Đánh giá này sẽ được hiển thị công khai, ai cũng có thể thấy"
+                    >
+                      Kích hoạt
+                    </nz-tag>
+                  } @else {
+                    <nz-tag
+                      nz-tooltip
+                      class="center-an-item mr-0 py-1 rounded main-text-color w-[100px]"
+                      nzTooltipTitle="Đánh giá này sẽ được hiển thị riêng tư, chỉ riêng khách hàng tạo sản phẩm mới có thể thấy nó"
+                    >
+                      Ẩn
+                    </nz-tag>
+                  }
+                </span>
+              </td>
+              <td>{{ data.creationDate | dateFormat }}</td>
+              <td>
+                <fa-icon
+                  [icon]="icons['faCircleInfo']"
+                  (click)="detailVisible = true; viewAFeedback(data)"
+                  class="mx-2 cursor-pointer"
+                  nz-tooltip
+                  nzTooltipTitle="Thông tin"
+                ></fa-icon>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<nz-drawer
+  [nzWidth]="'600px'"
+  [nzClosable]="false"
+  [nzVisible]="detailVisible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="detailVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-3">
+      <div class="flex">
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon
+              [icon]="icons['faEnvelope']"
+              size="3x"
+              class="center-an-item"
+            ></fa-icon>
+          </div>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Id sản phẩm: {{ choosingFeedback.product.id }}</span>
+          <br />
+          <span class="font-bold"
+            >Được tạo bởi: {{ choosingFeedback.account.name }}</span
+          >
+        </div>
+      </div>
+      <div>
+        <nz-divider class="my-2"></nz-divider>
+      </div>
+      <div class="grid grid-cols-4 gap-5 mb-5">
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faCalendarCheck']" class="mr-2"></fa-icon>Ngày
+          tạo:
+        </div>
+        <div class="col-span-2">
+          {{ choosingFeedback.creationDate | dateFormat }}
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faStar']" class="mr-2"></fa-icon
+          >Số sao
+        </div>
+        <div class="col-span-2 font-bold">
+          @for (star of [].constructor(choosingFeedback.star); track $index){
+            <fa-icon
+              [icon]="icons['faStar']"
+              [style]="'color: ' + renderStarColor(choosingFeedback.star)"
+            ></fa-icon>
+          }
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Trạng thái:
+        </div>
+        <div class="col-span-2">
+          @if (!choosingFeedback.active){
+            <nz-tag
+              nzPopconfirmPlacement="bottom"
+              (nzOnCancel)="(null)"
+              nzPopconfirmTitle="Xác nhận đặt trạng thái thư hỗ trợ này là đã xử lý? Khách hàng sẽ nhận email thông báo và một khi đã xác nhận thì sẽ không thể đổi lại và"
+              nz-popconfirm
+              nzOkText="Xác nhận"
+              nzCancelText="Huỷ"
+              (nzOnConfirm)="confirmChange()"
+              nz-tooltip
+              class="cursor-pointer center-an-item mr-0 py-1 rounded main-text-color w-[100px]"
+              nzTooltiptitle="Đánh giá này sẽ được hiển thị riêng tư, chỉ riêng khách hàng tạo sản phẩm mới có thể thấy nó"
+            >
+              Ẩn
+            </nz-tag>
+          } @else {
+            <nz-tag
+              nzPopconfirmPlacement="bottom"
+              (nzOnCancel)="(null)"
+              nzPopconfirmTitle="Xác nhận đặt trạng thái thư hỗ trợ này là đã xử lý? Khách hàng sẽ nhận email thông báo và một khi đã xác nhận thì sẽ không thể đổi lại và"
+              nz-popconfirm
+              nzOkText="Xác nhận"
+              nzCancelText="Huỷ"
+              (nzOnConfirm)="confirmChange()"
+              class="center-an-item cursor-pointer main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+              nz-tooltip
+              nzTooltipTitle="Đánh giá này sẽ được hiển thị công khai, ai cũng có thể thấy"
+            >
+              Kích hoạt
+            </nz-tag>
+          }
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faArrowsToCircle']" class="mr-2"></fa-icon>Nội
+          dung:
+        </div>
+        <div class="col-span-2">
+          {{ choosingFeedback.comment }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title1>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon
+        [icon]="icons['faXmark']"
+        (click)="detailVisible = false"
+      ></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">Chi tiết đánh giá</div>
+  </div>
+</ng-template>
+<!-- 
+<nz-drawer
+  [nzWidth]="'600px'"
+  [nzClosable]="false"
+  [nzVisible]="inforVisible"
+  nzPlacement="right"
+  [nzTitle]="title2"
+  (nzOnClose)="inforVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-3">
+      <div>
+        <div class="inline-block mr-3">
+          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Tên: {{ choosingAccount.name }}</span><br/>
+          <span class="second-main-text-color">Email: {{ choosingAccount.email }}</span>
+        </div> 
+      </div>
+      <div>
+        <nz-divider class="my-2"></nz-divider>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faIdCard']" class="mr-3"></fa-icon><span>#{{ choosingAccount.id }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faPhone']" class="mr-3"></fa-icon><span>{{ choosingAccount.phone }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faLocationDot']" class="mr-3"></fa-icon><span>{{ choosingAccount.address }}</span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faUserTie']" class="mr-3"></fa-icon>
+          <span>
+            <nz-tag 
+              class="main-bg-text-color mr-0 py-1 rounded text-white"
+              >
+                <span>{{ choosingAccount.role === "1" ? 'Khách hàng' : 'Quản trị viên'}}</span>
+            </nz-tag>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faEye']" class="mr-3"></fa-icon>
+          <span>
+            <nz-tag 
+                *ngIf="choosingAccount.status" class="main-bg-text-color mr-0 py-1 rounded text-white"
+              >
+                <span>Hoạt động</span>
+            </nz-tag>
+            <nz-tag 
+              *ngIf="!choosingAccount.status" class="mr-0 py-1 rounded main-text-color"
+            >
+              <span>Ẩn</span>
+            </nz-tag>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div>
+          <fa-icon [icon]="icons['faCalendar']" class="mr-3"></fa-icon><span>{{ formatDate(choosingAccount.created_date) }}</span>
+        </div>
+      </div>
+      <div class="justify-end items-center flex">
+        <button nbButton status="primary" [routerLink]="['/admin/account-management', choosingAccount.id]">Sửa thông tin tài khoản</button>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title2>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon [icon]="icons['faXmark']" (click)="inforVisible = false"></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Thông tin tài khoản
+    </div>
+  </div>
+</ng-template> -->

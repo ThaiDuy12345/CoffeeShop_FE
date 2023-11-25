@@ -1,20 +1,28 @@
-<app-layouts *ngIf="isReady"></app-layouts>
-
-<div *ngIf="!isReady" class="w-full h-full center-an-item bg-white">
-  <div>
-    <div class="center-an-item font-bold">
-      <div *ngIf="!failToLoad">
-        <div class="text-center">Đang tải web..</div>
-        <div class="text-center" *ngIf="isDelay">Lần đầu tải web cần khởi động server hơi lâu...Xin hãy kiên nhẫn!!</div>
+@defer (when isReady) {
+  <app-layouts></app-layouts>
+} @loading (minimum 500){
+  <div class="w-full h-full center-an-item bg-white">
+    <div>
+      <div class="center-an-item font-bold">
+        @if (failToLoad){
+          <div *ngIf="failToLoad">
+            <div class="text-center">Lỗi server 400</div>
+            <div class="text-center" *ngIf="isDelay">Xin hãy reload lại web hoặc thử lại sau!!</div>
+          </div>
+        } @else {
+          <div *ngIf="!failToLoad">
+            <div class="text-center">Đang tải web..</div>
+            <div class="text-center" *ngIf="isDelay">Lần đầu tải web cần khởi động server hơi lâu...Xin hãy kiên nhẫn!!</div>
+          </div>
+        }
       </div>
-      <div *ngIf="failToLoad">
-        <div class="text-center">Lỗi server 400</div>
-        <div class="text-center" *ngIf="isDelay">Xin hãy reload lại web hoặc thử lại sau!!</div>
+      <div class="center-an-item mt-3">
+        @if (failToLoad){
+          <span nz-icon nzType="disconnect" nzTheme="outline"></span>
+        } @else {
+          <span nz-icon nzType="loading" nzTheme="outline"></span>
+        }
       </div>
-    </div>
-    <div class="center-an-item mt-3">
-      <span *ngIf="failToLoad" nz-icon nzType="disconnect" nzTheme="outline"></span>
-      <span *ngIf="!failToLoad" nz-icon nzType="loading" nzTheme="outline"></span>
     </div>
   </div>
-</div>
+}

@@ -27,8 +27,6 @@ export class ProductListComponent implements OnInit, OnChanges {
     }else {
       this.classes = `w-full grid grid-cols-${this.cols} gap-5`
     }
-
-    console.log(this.products)
   }
 }
 

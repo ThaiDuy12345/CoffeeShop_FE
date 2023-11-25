@@ -39,20 +39,17 @@
         <div
           class="grid grid-col-1 col-span-3 md:col-span-2 gap-5 md:p-10 rounded-lg md:bordering md:bordering-[#b6bfce]"
         >
-          <div>
-            <div>
-              <span class="mr-2"> - Người gửi:</span>
-              <span class="font-semibold">{{ account.name }}</span>
-            </div>
-            <div><span> - Người nhận: COFFEE</span></div>
-          </div>
-          <div>
-            <nz-divider [nzText]="text"></nz-divider>
-            <ng-template #text>
-              <fa-icon size="2x" [icon]="icons['faEnvelope']"></fa-icon>
-            </ng-template>
-          </div>
-          <nb-card class="py-5">
+          <nb-card class="py-3 mb-2">
+            <nb-card-body>
+              <div>
+                <span class="mr-2">Người gửi:</span>
+                <span class="font-semibold">{{ account.name }}</span>
+              </div>
+              <div><span>Người nhận: COFFEE SHOP</span></div>
+                
+            </nb-card-body>
+          </nb-card>
+          <nb-card class="py-3">
             <nb-card-header>
               Tiêu đề:
               <input

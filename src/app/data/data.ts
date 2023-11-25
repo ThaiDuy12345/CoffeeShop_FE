@@ -2,7 +2,7 @@ import { DetailOrder } from './../core/models/detail-order.model';
 import { Account } from "../core/models/account.model"
 import { Category } from "../core/models/category.model"
 import { Product } from "../core/models/product.model"
-import { FeedBack } from "../core/models/feedback.model"
+import { Feedback } from "../core/models/feedback.model"
 import { Ordering } from "../core/models/ordering.model"
 import { FavoriteProduct } from '../core/models/favorite-product.model';
 import { Notification } from '../core/models/notification.model';
@@ -203,13 +203,14 @@ export const FavoriteProductData: FavoriteProduct[] = [
   }
 ]
 
-export const FeedBackData: FeedBack[] = [
+export const FeedbackData: Feedback[] = [
   {
     star: 4,
     comment: 'Sản phẩm này cũng tạm được, tôi cảm thấy hài lòng với những gì nó mang lại. Mặc dù có một số điểm nhỏ cần cải thiện, nhưng tổng thể vẫn rất tốt!',
     product: ProductData[0],
     creationDate: new Date('07-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 4,
@@ -217,6 +218,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[1],
     creationDate: new Date('01-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 5,
@@ -224,6 +226,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[2],
     creationDate: new Date('05-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 4,
@@ -231,6 +234,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[3],
     creationDate: new Date('04-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 3,
@@ -238,6 +242,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[4],
     creationDate: new Date('04-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 1,
@@ -245,6 +250,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[0],
     creationDate: new Date('03-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 4,
@@ -252,6 +258,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[1],
     creationDate: new Date('02-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 5,
@@ -259,6 +266,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[2],
     creationDate: new Date('08-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 4,
@@ -266,6 +274,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[3],
     creationDate: new Date('05-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 2,
@@ -273,6 +282,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[4],
     creationDate: new Date('07-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   // Tiếp tục thêm các mục feedback khác
   {
@@ -281,6 +291,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[2],
     creationDate: new Date('06-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 4,
@@ -288,6 +299,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[3],
     creationDate: new Date('07-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 5,
@@ -295,6 +307,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[4],
     creationDate: new Date('05-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 2,
@@ -302,6 +315,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[0],
     creationDate: new Date('05-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 4,
@@ -309,6 +323,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[1],
     creationDate: new Date('03-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 4,
@@ -316,6 +331,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[0],
     creationDate: new Date('01-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 3,
@@ -323,6 +339,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[1],
     creationDate: new Date('07-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 4,
@@ -330,6 +347,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[2],
     creationDate: new Date('08-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 3,
@@ -337,6 +355,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[3],
     creationDate: new Date('03-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 3,
@@ -344,6 +363,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[4],
     creationDate: new Date('03-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 5,
@@ -351,6 +371,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[0],
     creationDate: new Date('04-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 3,
@@ -358,6 +379,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[1],
     creationDate: new Date('03-04-2023').getTime(),
     account: AccountData[1],
+    active: true,
   },
   {
     star: 5,
@@ -365,6 +387,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[2],
     creationDate: new Date('03-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 3,
@@ -372,6 +395,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[3],
     creationDate: new Date('02-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
   {
     star: 4,
@@ -379,6 +403,7 @@ export const FeedBackData: FeedBack[] = [
     product: ProductData[4],
     creationDate: new Date('07-04-2023').getTime(),
     account: AccountData[0],
+    active: true,
   },
 ]
 

@@ -7,7 +7,7 @@
     </nb-card-header>
     <nb-card-body class="border-none">
       <div class="mb-5 grid grid-cols-1 gap-5">
-        Danh mục sản phẩm là 1 chọn những chiếc chìa khoá giúp khách hàng nhận biết và tìm thấy được các sản phẩm cùng loại
+        <nz-alert nzType="info" nzMessage="Danh mục sản phẩm là 1 trong những chiếc chìa khoá giúp khách hàng nhận biết và tìm thấy được các sản phẩm cùng loại" nzShowIcon></nz-alert>
       </div>
       <div class="mb-5 grid grid-cols-2 gap-5">
         <div class="flex justify-start items-center"><input [(ngModel)]="searchInput" (change)="filterBySearch()" nbInput placeholder="Tìm kiếm danh mục"></div>

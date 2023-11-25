@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
-import { FeedBack } from 'src/app/core/models/feedback.model';
+import { Feedback } from 'src/app/core/models/feedback.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { AccountService } from 'src/app/core/services/account.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
-import { FeedBackData } from 'src/app/data/data';
+import { FeedbackData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-account-management',
@@ -25,7 +25,7 @@ export class AccountManagementComponent implements OnInit {
   public detailAdminVisible: boolean = false
   public detailVisible: boolean = false
   public choosingAccount: Account = new Account()
-  public accountFeedbacks: FeedBack[] = []
+  public accountFeedbacks: Feedback[] = []
   public accountOrderings: Ordering[] = []
   public searchInput: string = ""
   public isLoadingChoosingOrdering: boolean = false
@@ -156,8 +156,8 @@ export class AccountManagementComponent implements OnInit {
     this.getOrderingUpdatedByAccount()
   }
 
-  getAccountFeedbacks(): FeedBack[]{
-    return FeedBackData.filter(fb => fb.account.phone === this.choosingAccount.phone)
+  getAccountFeedbacks(): Feedback[]{
+    return FeedbackData.filter(fb => fb.account.phone === this.choosingAccount.phone)
   }
 
   getAccountOrderings(): void{

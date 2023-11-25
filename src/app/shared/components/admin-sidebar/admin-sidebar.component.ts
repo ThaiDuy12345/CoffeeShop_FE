@@ -59,7 +59,7 @@ export class AdminSidebarComponent implements OnInit, OnDestroy {
       required: true
     },
     {
-      label: 'Phản Hồi Sản Phẩm',
+      label: 'Đánh Giá Sản Phẩm',
       icon: 'notification',
       link: '/admin/feedback-management',
       required: true

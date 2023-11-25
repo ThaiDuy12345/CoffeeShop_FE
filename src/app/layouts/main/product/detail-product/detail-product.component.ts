@@ -5,8 +5,8 @@ import Cookies from 'js-cookie';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
-import { FeedBack } from 'src/app/core/models/feedback.model';
-import { FeedBackData } from 'src/app/data/data';
+import { Feedback } from 'src/app/core/models/feedback.model';
+import { FeedbackData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -33,12 +33,12 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   public productSize: ProductSize[] = []
   public relatedProducts: Product[] = [];
   public productSizeOption: string[] = []
-  public feedBackProducts: FeedBack[] = [];
-  public feedBackProductsPg: FeedBack[] = [];
+  public feedbackProducts: Feedback[] = [];
+  public feedbackProductsPg: Feedback[] = [];
   public account: Account = new Account();
   public choosingSize: number = 0
   public avarageStar: number = 0;
-  public feedBackPageIndex: number = 1;
+  public feedbackPageIndex: number = 1;
   public isUserLoveThisProduct: boolean = false;
   public soldQuantity: number = 0
   public starRating: number = 0;
@@ -95,7 +95,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
             this.loadProductSoldQuantity();
             this.loadRelatedProducts();
             this.fetchOrder()
-            // this.loadFeedBackProduct();
+            // this.loadFeedbackProduct();
           }else{
             this.messageService.error(res.message);
             this.router.navigate(['/main/product']);
@@ -232,19 +232,19 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       });
   }
 
-  loadFeedBackProduct(): void {
-    this.feedBackProducts = FeedBackData.filter((fb) => {
+  loadFeedbackProduct(): void {
+    this.feedbackProducts = FeedbackData.filter((fb) => {
       return fb.product.id === this.product.id;
     });
-    this.feedBackProductsPg = this.changeFeedBackIndex();
-    const starRates = this.feedBackProducts.reduce((pv, fb) => pv + fb.star, 0);
-    this.avarageStar = Math.round(starRates / this.feedBackProducts.length);
+    this.feedbackProductsPg = this.changeFeedbackIndex();
+    const starRates = this.feedbackProducts.reduce((pv, fb) => pv + fb.star, 0);
+    this.avarageStar = Math.round(starRates / this.feedbackProducts.length);
   }
 
-  changeFeedBackIndex(): FeedBack[] {
-    const last = 3 * this.feedBackPageIndex;
+  changeFeedbackIndex(): Feedback[] {
+    const last = 3 * this.feedbackPageIndex;
     const begin = last - 3;
-    return this.feedBackProducts.slice(begin, last);
+    return this.feedbackProducts.slice(begin, last);
   }
 
   renderStarColor(star: number): string {
@@ -258,13 +258,13 @@ export class DetailProductComponent implements OnInit, OnDestroy {
 
   getStarRatePercent(starRates: number): number {
     let sum = 0
-    this.feedBackProducts.forEach(fb => {
+    this.feedbackProducts.forEach(fb => {
       if (fb.star === starRates){
         sum++
       }
     })
 
-    return sum * 100 / this.feedBackProducts.length
+    return sum * 100 / this.feedbackProducts.length
   }
 
   navigateRelatedProduct(): void {
@@ -277,9 +277,9 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     this.router.navigate(['/main/product']);
   }
 
-  onFeedBackPageChange(index: number): void {
-    this.feedBackPageIndex = index;
-    this.feedBackProductsPg = this.changeFeedBackIndex();
+  onFeedbackPageChange(index: number): void {
+    this.feedbackPageIndex = index;
+    this.feedbackProductsPg = this.changeFeedbackIndex();
   }
 
   open(dialog: TemplateRef<any>): void {

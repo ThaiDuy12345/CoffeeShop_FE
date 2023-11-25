@@ -10,6 +10,7 @@ import { ProductSize } from "../models/product-size.model";
 import { DetailOrder } from "../models/detail-order.model";
 import { Support } from "../models/support.model";
 import { FavoriteProduct } from "../models/favorite-product.model";
+import { Feedback } from "../models/feedback.model";
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,17 @@ export class MappingService {
       quantity: payload.detailOrderProductQuantity,
       subTotal: payload.detailOrderSubTotal
     } : new DetailOrder()
+  }
+
+  feedback(payload: any): Feedback {
+    return payload ? {
+      star: payload.feedbackRate,
+      comment: payload.feedbackComment,
+      creationDate: payload.feedbackCreationDate,
+      active: payload.feedbackActive,
+      account: this.account(payload.accountEntity),
+      product: this.product(payload.productEntity)
+    } : new Feedback()
   }
 
   category(payload: any): Category {

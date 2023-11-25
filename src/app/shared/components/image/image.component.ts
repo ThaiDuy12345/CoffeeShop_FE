@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
-  styleUrls: ['./image.component.scss']
+  styleUrl: './image.component.scss'
 })
 export class ImageComponent{
   @Input() classes: string  = ''

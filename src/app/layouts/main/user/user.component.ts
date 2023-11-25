@@ -6,7 +6,7 @@ import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrl: './user.component.scss'
 })
 export class UserComponent implements OnInit, OnDestroy{
   public isEdit: Boolean = false

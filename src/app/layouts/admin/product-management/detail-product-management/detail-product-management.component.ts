@@ -14,7 +14,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-detail-product-management',
   templateUrl: './detail-product-management.component.html',
-  styleUrls: ['./detail-product-management.component.scss']
+  styleUrl: './detail-product-management.component.scss'
 })
 export class DetailProductManagementComponent implements OnInit{
   public product: Product = new Product()

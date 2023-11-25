@@ -12,7 +12,7 @@ import { MappingService } from 'src/app/core/services/mapping.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss'],
+  styleUrl: './product.component.scss',
 })
 export class ProductComponent implements OnInit, OnDestroy {
   public icons: Icon = icons;

@@ -12,7 +12,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-popular-product',
   templateUrl: './popular-product.component.html',
-  styleUrls: ['./popular-product.component.scss']
+  styleUrl: './popular-product.component.scss'
 })
 export class PopularProductComponent implements OnInit{
   public products: Product[] = []

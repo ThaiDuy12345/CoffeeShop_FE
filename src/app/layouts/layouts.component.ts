@@ -8,7 +8,7 @@ import { AuthService } from '../core/services/auth.service';
 @Component({
   selector: 'app-layouts',
   templateUrl: './layouts.component.html',
-  styleUrls: ['./layouts.component.scss'],
+  styleUrl: './layouts.component.scss',
 })
 export class LayoutsComponent implements OnInit, OnDestroy{
   private tempSubject: Subject<any> = new Subject<any>();

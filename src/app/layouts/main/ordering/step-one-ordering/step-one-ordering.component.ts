@@ -10,7 +10,7 @@ import { Account } from 'src/app/core/models/account.model';
 @Component({
   selector: 'app-step-one-ordering',
   templateUrl: './step-one-ordering.component.html',
-  styleUrls: ['./step-one-ordering.component.scss']
+  styleUrl: './step-one-ordering.component.scss'
 })
 export class StepOneOrderingComponent implements OnInit {
   @Input() public ordering: Ordering = new Ordering()

@@ -14,7 +14,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-discount-management',
   templateUrl: './discount-management.component.html',
-  styleUrls: ['./discount-management.component.scss']
+  styleUrl: './discount-management.component.scss'
 })
 export class DiscountManagementComponent implements OnInit{
   public icons: Icon = icons

@@ -14,7 +14,7 @@ import { MappingService } from 'src/app/core/services/mapping.service';
 @Component({
   selector: 'app-detail-discount-management',
   templateUrl: './detail-discount-management.component.html',
-  styleUrls: ['./detail-discount-management.component.scss']
+  styleUrl: './detail-discount-management.component.scss'
 })
 export class DetailDiscountManagementComponent implements OnInit{
   public icons: Icon = icons

@@ -16,7 +16,7 @@ import { Category } from 'src/app/core/models/category.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public visible: boolean = false

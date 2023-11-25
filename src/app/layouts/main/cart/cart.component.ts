@@ -10,7 +10,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrl: './cart.component.scss'
 })
 export class CartComponent implements OnInit, OnDestroy{
   public icons: Icon = icons

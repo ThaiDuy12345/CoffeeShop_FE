@@ -11,7 +11,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-support-management',
   templateUrl: './support-management.component.html',
-  styleUrls: ['./support-management.component.scss']
+  styleUrl: './support-management.component.scss'
 })
 export class SupportManagementComponent {
   public icons: Icon = icons

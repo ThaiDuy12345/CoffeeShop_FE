@@ -7,7 +7,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent implements OnInit {
   public icons = icons

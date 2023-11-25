@@ -5,7 +5,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.scss']
+  styleUrl: './admin-dashboard.component.scss'
 })
 export class AdminDashboardComponent {
   public icons: Icon = icons

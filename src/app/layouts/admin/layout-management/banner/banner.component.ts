@@ -8,7 +8,7 @@ import { Icon } from 'src/app/core/models/icon.model';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  styleUrl: './banner.component.scss'
 })
 export class BannerComponent implements OnInit{
   public icons: Icon = icons

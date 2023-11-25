@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-support',
   templateUrl: './support.component.html',
-  styleUrls: ['./support.component.scss']
+  styleUrl: './support.component.scss'
 })
 export class SupportComponent implements OnInit, OnDestroy {
   public selectedItem: 0 | 1 | 2 | 3 = 0

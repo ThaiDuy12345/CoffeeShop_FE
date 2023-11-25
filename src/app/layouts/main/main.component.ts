@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss'],
+  styleUrl: './main.component.scss',
 })
 export class MainComponent{
   private tempSubject: Subject<any> = new Subject<any>()

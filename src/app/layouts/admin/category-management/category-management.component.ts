@@ -12,7 +12,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-category-management',
   templateUrl: './category-management.component.html',
-  styleUrls: ['./category-management.component.scss']
+  styleUrl: './category-management.component.scss'
 })
 export class CategoryManagementComponent {
   public icons: Icon = icons

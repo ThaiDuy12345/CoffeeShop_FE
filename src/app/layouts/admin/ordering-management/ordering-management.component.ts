@@ -12,7 +12,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-ordering-management',
   templateUrl: './ordering-management.component.html',
-  styleUrls: ['./ordering-management.component.scss']
+  styleUrl: './ordering-management.component.scss'
 })
 export class OrderingManagementComponent implements OnInit, OnDestroy{
   public icons: Icon = icons

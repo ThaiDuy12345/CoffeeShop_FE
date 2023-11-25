@@ -17,7 +17,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-ordering',
   templateUrl: './ordering.component.html',
-  styleUrls: ['./ordering.component.scss']
+  styleUrl: './ordering.component.scss'
 })
 export class OrderingComponent implements OnInit, OnDestroy{
   public icons: Icon = icons

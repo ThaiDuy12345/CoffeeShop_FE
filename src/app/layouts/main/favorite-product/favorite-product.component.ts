@@ -9,7 +9,7 @@ import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 @Component({
   selector: 'app-favorite-product',
   templateUrl: './favorite-product.component.html',
-  styleUrls: ['./favorite-product.component.scss']
+  styleUrl: './favorite-product.component.scss'
 })
 export class FavoriteProductComponent implements OnInit{
   public allProduct: Product[] = []

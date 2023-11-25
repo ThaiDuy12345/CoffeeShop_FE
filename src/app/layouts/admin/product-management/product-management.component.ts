@@ -12,7 +12,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-product-management',
   templateUrl: './product-management.component.html',
-  styleUrls: ['./product-management.component.scss']
+  styleUrl: './product-management.component.scss'
 })
 export class ProductManagementComponent implements OnInit {
   public icons: Icon = icons

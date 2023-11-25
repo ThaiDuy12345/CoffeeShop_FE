@@ -5,7 +5,7 @@ import { AdminSidebarStore } from 'src/app/core/stores/admin-siderbar.store';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrl: './admin.component.scss'
 })
 export class AdminComponent implements OnInit, OnDestroy{
   public state: "expanded" | "collapsed" | "compacted" = "expanded"

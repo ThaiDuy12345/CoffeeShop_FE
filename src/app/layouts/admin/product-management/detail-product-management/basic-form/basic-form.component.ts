@@ -10,7 +10,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-basic-form',
   templateUrl: './basic-form.component.html',
-  styleUrls: ['./basic-form.component.scss']
+  styleUrl: './basic-form.component.scss'
 })
 export class BasicFormComponent implements OnInit{
   public icons: Icon = icons

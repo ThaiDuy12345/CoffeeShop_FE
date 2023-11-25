@@ -13,7 +13,7 @@ import { SocialAuthService } from '@abacritt/angularx-social-login';
 @Component({
   selector: 'app-admin-header',
   templateUrl: './admin-header.component.html',
-  styleUrls: ['./admin-header.component.scss'],
+  styleUrl: './admin-header.component.scss',
 })
 export class AdminHeaderComponent implements OnInit {
   private tempSubject: Subject<any> = new Subject();

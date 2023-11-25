@@ -16,7 +16,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-account-management',
   templateUrl: './account-management.component.html',
-  styleUrls: ['./account-management.component.scss']
+  styleUrl: './account-management.component.scss'
 })
 export class AccountManagementComponent implements OnInit {
   public accounts: Account[] = []

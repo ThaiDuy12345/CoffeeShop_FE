@@ -14,7 +14,7 @@ import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss'],
+  styleUrl: './edit-user.component.scss',
 })
 export class EditUserComponent implements OnInit {
   @Input() user: Account = new Account();

@@ -17,7 +17,7 @@ import { Account } from 'src/app/core/models/account.model';
 @Component({
   selector: 'app-detail-ordering-management',
   templateUrl: './detail-ordering-management.component.html',
-  styleUrls: ['./detail-ordering-management.component.scss']
+  styleUrl: './detail-ordering-management.component.scss'
 })
 export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   public icons: Icon = icons

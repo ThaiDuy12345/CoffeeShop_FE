@@ -25,7 +25,7 @@ import { Account } from 'src/app/core/models/account.model';
 @Component({
   selector: 'app-detail-product',
   templateUrl: './detail-product.component.html',
-  styleUrls: ['./detail-product.component.scss'],
+  styleUrl: './detail-product.component.scss',
 })
 export class DetailProductComponent implements OnInit, OnDestroy {
   public icons: Icon = icons;

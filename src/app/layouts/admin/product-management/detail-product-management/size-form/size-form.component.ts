@@ -11,7 +11,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-size-form',
   templateUrl: './size-form.component.html',
-  styleUrls: ['./size-form.component.scss']
+  styleUrl: './size-form.component.scss'
 })
 export class SizeFormComponent implements OnInit{
   @Input() product: Product = new Product();

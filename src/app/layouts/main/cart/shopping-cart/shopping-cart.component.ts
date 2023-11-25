@@ -19,7 +19,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
-  styleUrls: ['./shopping-cart.component.scss']
+  styleUrl: './shopping-cart.component.scss'
 })
 export class ShoppingCartComponent implements OnInit {
   public detailOrders: DetailOrder[] = []

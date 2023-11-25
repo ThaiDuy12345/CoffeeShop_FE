@@ -8,7 +8,7 @@ import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 @Component({
   selector: 'app-admin-sidebar',
   templateUrl: './admin-sidebar.component.html',
-  styleUrls: ['./admin-sidebar.component.scss']
+  styleUrl: './admin-sidebar.component.scss'
 })
 export class AdminSidebarComponent implements OnInit, OnDestroy {
   public icons: Icon = icons

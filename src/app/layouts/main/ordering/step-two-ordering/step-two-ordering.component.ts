@@ -17,7 +17,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-step-two-ordering',
   templateUrl: './step-two-ordering.component.html',
-  styleUrls: ['./step-two-ordering.component.scss']
+  styleUrl: './step-two-ordering.component.scss'
 })
 export class StepTwoOrderingComponent implements OnInit{
   @Input() public ordering: Ordering = new Ordering()

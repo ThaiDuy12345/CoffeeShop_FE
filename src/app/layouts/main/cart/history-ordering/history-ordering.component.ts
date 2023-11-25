@@ -17,7 +17,7 @@ import { DetailOrderService } from 'src/app/core/services/detail-order.service';
 @Component({
   selector: 'app-history-ordering',
   templateUrl: './history-ordering.component.html',
-  styleUrls: ['./history-ordering.component.scss']
+  styleUrl: './history-ordering.component.scss'
 })
 export class HistoryOrderingComponent implements OnInit{
   public orderings: Ordering[] = []

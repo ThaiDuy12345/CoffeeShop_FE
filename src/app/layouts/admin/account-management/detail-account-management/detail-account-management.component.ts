@@ -15,7 +15,7 @@ import { vietnamSelection } from 'src/app/shared/utils/vietnam.utils';
 @Component({
   selector: 'app-detail-account-management',
   templateUrl: './detail-account-management.component.html',
-  styleUrls: ['./detail-account-management.component.scss']
+  styleUrl: './detail-account-management.component.scss'
 })
 export class DetailAccountManagementComponent {
   public icons: Icon = icons

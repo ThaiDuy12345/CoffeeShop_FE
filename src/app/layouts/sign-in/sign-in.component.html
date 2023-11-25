@@ -65,11 +65,7 @@
                       </nb-icon>
                     </button>
                   </nb-form-field>
-                  <small
-                    *ngIf="account.password === '' && isSubmitted"
-                    class="error-text-color"
-                    >Mật khẩu không được để trống</small
-                  >
+                    <small *ngIf="account.password === '' && isSubmitted" class="error-text-color">Mật khẩu không được để trống</small>
                 </div>
                 <div class="mb-6">
                   <div class="grid grid-cols-1 mb-2 gap-5">

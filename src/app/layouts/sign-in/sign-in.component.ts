@@ -71,12 +71,11 @@ export class SignInComponent implements OnInit {
   }
 
   onClickSignIn(): void {
+    this.isSubmitted = true
     if(!this.account.email || !this.account.password){
-      this.message.warning('Email và mật khẩu không được để trống.')
       return
     }
     this.isLoading = true
-    this.isSubmitted = true
     this.signIn()
     
   }

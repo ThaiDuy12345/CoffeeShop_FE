@@ -53,8 +53,10 @@ export class StepTwoOrderingComponent implements OnInit{
     this.discountService.getAll().pipe(finalize(() => this.isLoadingDiscountModal = false)).subscribe({
       next: res => {
         if(res.status){
-          this.discounts = res.data.filter((d: any) => new Date(d.discountExpiredDate) > new Date())
-            .map((d: any) => this.mappingService.discount(d))
+          this.discounts = 
+            res.data.filter((d: any) => new Date(d.discountExpiredDate) > new Date())
+              .sort((a: any) => a.discountMinimumOrderPrice - this.ordering.price)
+              .map((d: any) => this.mappingService.discount(d))
         }else this.messageService.error(res.message)
       },
       error: err => this.messageService.error(err.error.message)
@@ -87,11 +89,11 @@ export class StepTwoOrderingComponent implements OnInit{
       next: res => {
         if(res.status){
           if(new Date(res.data.discountExpiredDate) <= new Date()){
-            this.messageService.error("Mã giảm giá đã hết hạn sử dụng")
+            this.messageService.error("Mã giảm giá đã hết hạn, xin vui lòng chọn mã giảm giá khác")
             return
           }
           if(res.data.discountMinimumOrderPrice > this.ordering.price){
-            this.messageService.error("Bạn chưa đạt đủ điện kiện để sử dụng mã giảm giá")
+            this.messageService.error("Đơn hàng của bạn không đạt đủ điều kiện để sử dụng mã giảm giá, xin vui lòng chọn mã giảm giá khác")
             return
           }
           this.ordering.discount = { ...this.mappingService.discount(res.data) }
@@ -118,6 +120,10 @@ export class StepTwoOrderingComponent implements OnInit{
     this.loadDiscountList()
   }
 
+  onClickChoosingDiscount(item: Discount): void {
+    this.choosingDiscount = { ...item }
+  }
+  
   formatNumber(number: number): string {
     return this.formatService.formatPrice(number)
   }
@@ -130,10 +136,8 @@ export class StepTwoOrderingComponent implements OnInit{
     if(!(this.choosingDiscount && this.choosingDiscount.code)){
       return
     }
-    this.ordering.discount = {...this.choosingDiscount}
-    this.discountCode = this.ordering.discount.code
-    this.isEditingDiscount = false
-    this.messageService.success("Đã áp dụng mã giảm giá")
+    this.discountCode = this.choosingDiscount.code
+    this.checkDiscountCode()
     this.dialogRef.close()
   }
 

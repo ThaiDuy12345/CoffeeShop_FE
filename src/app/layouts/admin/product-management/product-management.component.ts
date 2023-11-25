@@ -69,6 +69,7 @@ export class ProductManagementComponent implements OnInit {
           if(this.searchInput){
             this.products = this.products.filter(p => {
               return (
+                p.id.toString().includes(this.searchInput.trim().toLowerCase()) ||
                 p.category.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
                 p.name.toLowerCase().includes(this.searchInput.toLowerCase())  ||
                 this.formatDate(p.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) 

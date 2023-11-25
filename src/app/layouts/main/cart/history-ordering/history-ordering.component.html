@@ -229,6 +229,12 @@
           </div>
         </div>
       </div>
+      <div class="mt-3">
+        <a [routerLink]="['/main/support']" [queryParams]="{ title: 'Cần hỗ trợ đơn hàng: #' + or.id }">
+          <fa-icon  class="mr-1" [icon]="icons['faEnvelope']"></fa-icon>
+          Tôi cần hỗ trợ đơn này
+        </a> 
+      </div>
     </nz-collapse-panel>
   </nz-collapse>
 

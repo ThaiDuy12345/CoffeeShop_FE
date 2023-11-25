@@ -3,10 +3,6 @@
     width: 100%
   }
   .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left{
-    bordering-right: none !important;
-  }
-
-  svg{
-    vertical-align: middle !important;
+    border-right: none !important;
   }
 }

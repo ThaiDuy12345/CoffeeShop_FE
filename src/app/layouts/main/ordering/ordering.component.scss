@@ -1,9 +1,6 @@
 $main-text-color: #33425a;
 :host ::ng-deep{
   nz-step{
-    svg{
-      vertical-align: middle !important;
-    }
     .ant-steps-item-icon{
       height: 40px !important;
     }
@@ -21,7 +18,7 @@ $main-text-color: #33425a;
   }
   nz-step.ant-steps-item-finish{
     .ant-steps-item-icon{
-      bordering-color: $main-text-color !important;
+      border-color: $main-text-color !important;
       svg{
         color: $main-text-color !important;
       }

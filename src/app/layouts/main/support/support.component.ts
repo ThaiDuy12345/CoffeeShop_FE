@@ -7,6 +7,7 @@ import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { Subject, finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
 import { SupportService } from 'src/app/core/services/support.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-support',
   templateUrl: './support.component.html',
@@ -45,8 +46,14 @@ export class SupportComponent implements OnInit, OnDestroy {
     private formatService: FormatService,
     private authenticationStore: AuthenticationStore,
     private supportService: SupportService,
-    private messageService: NzMessageService
-  ){}
+    private messageService: NzMessageService,
+    private activatedRoute: ActivatedRoute,
+  ){
+    this.activatedRoute.queryParams.subscribe(params => {
+      if(!params['title']) return
+      this.title = params['title']
+    })
+  }
 
   ngOnDestroy(): void {
     this.tempSubject.complete()

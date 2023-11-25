@@ -143,5 +143,5 @@ export const icons: Icon = {
   faChampagneGlasses: faChampagneGlasses,
   faBookOpenReader: faBookOpenReader,
   faPaperPlane: faPaperPlane,
-  faArrowsToCircle: faArrowsToCircle
+  faArrowsToCircle: faArrowsToCircle,
 };

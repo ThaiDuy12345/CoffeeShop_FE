@@ -138,6 +138,14 @@
                 nz-tooltip
                 nzTooltipTitle="Chi tiết"
               ></fa-icon>
+              <fa-icon
+                *ngIf="[0, 1].includes(data.role)"
+                [icon]="icons['faClockRotateLeft']"
+                (click)="detailAdminVisible = true; viewAnAccount(data)"
+                class="mx-2 cursor-pointer"
+                nz-tooltip
+                nzTooltipTitle="Lịch sử duyệt đơn"
+              ></fa-icon>
             </td>
           </tr>
         </tbody>
@@ -157,8 +165,10 @@
   <ng-container *nzDrawerContent>
     <div class="grid grid-cols-5 gap-5">
       <div class="col-span-5 mb-0">
-        <div class="inline-block mr-3">
-          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon [icon]="icons['faUser']" size="3x"></fa-icon>
+          </div>
         </div>
         <div class="inline-block mr-3">
           <span class="font-bold">Tên: {{ choosingAccount.name }}</span
@@ -251,6 +261,145 @@
 </nz-drawer>
 
 <nz-drawer
+  [nzWidth]="'100%'"
+  [nzClosable]="false"
+  [nzVisible]="detailAdminVisible"
+  nzPlacement="right"
+  [nzTitle]="title1"
+  (nzOnClose)="detailAdminVisible = false"
+>
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-5">
+      <div class="mb-0">
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon [icon]="icons['faUser']" size="3x"></fa-icon>
+          </div>
+        </div>
+        <div class="mr-3">
+          <span class="font-bold">Tên: {{ choosingAccount.name }}</span
+          ><br />
+          <span class="font-bold">Email: {{ choosingAccount.email }}</span
+          ><br />
+          <span class="second-main-text-color"
+            >Số lượng đơn hàng đã duyệt: <b>{{ accountOrderings.length }}</b></span
+          >
+        </div>
+      </div>
+      <div>
+        <nb-card class="mb-0">
+          <nb-card-header class="border-none">
+            Danh sách đơn hàng
+          </nb-card-header>
+          <nb-card-body class="border-none">
+            <div class="mb-5 grid grid-cols-2 gap-5">
+              <div class="flex justify-start items-center">
+                <input
+                  nbInput
+                  placeholder="Tìm kiếm"
+                  [(ngModel)]="searchInputDetailAdminVisible"
+                  (change)="filterByDetailAdminVisibleInputSearch()"
+                />
+              </div>
+              <div class="flex justify-end items-center">
+              </div>
+            </div>
+            <nz-table #table4 [nzData]="accountOrderings" [nzLoading]="isLoadingChoosingOrdering" nzShowPagination="false">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Ngày đặt</th>
+                  <th>Tổng giá</th>
+                  <th>Trạng thái</th>
+                  <th>Nội dung xác nhận đơn</th>
+                  <th>Nội dung hủy đơn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of table4.data">
+                  <td>
+                    {{ data.id }}
+                  </td>
+                  <td>{{ formatDate(data.date) }}</td>
+                  <td>{{ formatPrice(data.totalPrice) }}</td>
+                  <td>
+                    <nz-tag
+                      nz-tooltip
+                      nzTooltipTitle="Khách hàng vẫn chưa đặt hàng"
+                      *ngIf="data.status === 0"
+                      class="center-an-item bg-[#F5F5F5] mr-0 py-1 rounded text-[#293147] w-[70px]"
+                    >
+                      Chưa đặt
+                    </nz-tag>
+                    <nz-tag
+                      nz-tooltip
+                      nzTooltipTitle="Khách hàng đã đặt hàng, đợi xét duyệt từ nhân viên hoặc admin"
+                      *ngIf="data.status === 1"
+                      class="center-an-item bg-[#557cef] mr-0 py-1 rounded text-white w-[70px]"
+                    >
+                      Đợi duyệt
+                    </nz-tag>
+                    <nz-tag
+                      nz-tooltip
+                      nzTooltipTitle="Đơn hàng đã được duyệt, đang chuẩn bị hàng"
+                      *ngIf="data.status === 2"
+                      class="cursor-pointer center-an-item bg-[#3d5cb9] mr-0 py-1 rounded text-white w-[70px]"
+                    >
+                      Chuẩn bị
+                    </nz-tag>
+                    <nz-tag
+                      nz-tooltip
+                      nzTooltipTitle="Đơn hàng đã được bàn giao cho shipper và đang trên đường giao"
+                      *ngIf="data.status === 3"
+                      class="cursor-pointer center-an-item bg-[#273b75] mr-0 py-1 rounded text-white w-[70px]"
+                    >
+                      Đang giao
+                    </nz-tag>
+                    <nz-tag
+                      nz-tooltip
+                      nzTooltipTitle="Đơn hàng đã được giao thành công"
+                      *ngIf="data.status === 4"
+                      class="center-an-item bg-green-400 mr-0 py-1 rounded text-white w-[70px]"
+                    >
+                      Đã giao
+                    </nz-tag>
+                    <nz-tag
+                      nz-tooltip
+                      nzTooltipTitle="Đơn hàng đã bị huỷ (Người đặt từ chối nhận hàng, bùng đơn, giao thất bại,...)"
+                      *ngIf="data.status === -1"
+                      class="center-an-item bg-red-400 mr-0 py-1 rounded text-white w-[70px]"
+                    >
+                      Đã huỷ
+                    </nz-tag>
+                  </td>
+                  <td>
+                    <span *ngIf="data.approveDescription" nz-tooltip [nzTooltipTitle]="data.approveDescription" class="truncate">
+                      {{ data.approveDescription }}
+                    </span>                    
+                    <span *ngIf="!data.approveDescription" class="error-text-color">
+                      Không có
+                    </span>
+                  </td>
+                  <td>
+                    <span *ngIf="data.cancelDescription" nz-tooltip [nzTooltipTitle]="data.cancelDescription"  class="truncate">
+                      {{ data.cancelDescription }}
+                    </span>                    
+                    <span *ngIf="!data.cancelDescription" class="error-text-color">
+                      Không có
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+
+<nz-drawer
   [nzWidth]="'600px'"
   [nzClosable]="false"
   [nzVisible]="inforVisible"
@@ -261,8 +410,10 @@
   <ng-container *nzDrawerContent>
     <div class="grid grid-cols-1 gap-3">
       <div>
-        <div class="inline-block mr-3">
-          <fa-icon [icon]="icons['faUser']" size="2x"></fa-icon>
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon [icon]="icons['faUser']" size="3x"></fa-icon>
+          </div>
         </div>
         <div class="inline-block mr-3">
           <span class="font-bold">Tên: {{ choosingAccount.name }}</span
@@ -325,6 +476,20 @@
     </div>
     <div class="font-bold flex justify-end items-center">
       Chi tiết tài khoản
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #title3>
+  <div class="grid grid-cols-2">
+    <div class="flex justify-start items-center">
+      <fa-icon
+        [icon]="icons['faXmark']"
+        (click)="detailAdminVisible = false"
+      ></fa-icon>
+    </div>
+    <div class="font-bold flex justify-end items-center">
+      Lịch sử duyệt đơn
     </div>
   </div>
 </ng-template>

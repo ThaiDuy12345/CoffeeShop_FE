@@ -80,6 +80,7 @@ export class OrderingManagementComponent implements OnInit, OnDestroy{
           if(this.searchInput){
             this.orderings = this.orderings.filter(p => {
               return (
+                p.id.toString().includes(this.searchInput.toLowerCase()) ||
                 p.account.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
                 this.formatPrice(p.totalPrice).includes(this.searchInput.toLowerCase())  ||
                 this.formatDate(p.date).toLowerCase().includes(this.searchInput.toLowerCase()) 

@@ -110,12 +110,14 @@
 <ng-container *nzDrawerContent>
   <div class="grid grid-cols-1 gap-5">
     <div class="flex">
-      <div class="inline-block mr-3">
-        <fa-icon
+      <div class="h-full float-left mr-3">
+        <div class="h-full center-an-item">
+          <fa-icon
           [icon]="icons['faTags']"
           size="3x"
           class="center-an-item"
         ></fa-icon>
+        </div>
       </div>
       <div class="inline-block mr-3">
         <span class="font-bold">Id danh mục: {{ choosingCategory.id }}</span

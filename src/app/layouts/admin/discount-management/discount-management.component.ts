@@ -52,6 +52,8 @@ export class DiscountManagementComponent implements OnInit{
 
           if(this.searchInput) this.discounts = this.discounts.filter(d => {
             return (
+              d.id.toString().includes(this.searchInput.toLowerCase()) 
+              ||
               d.code.toLowerCase().includes(this.searchInput.toLowerCase())
               ||
               this.formatDate(d.creationDate).includes(this.searchInput.toLowerCase())

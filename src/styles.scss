@@ -22,6 +22,13 @@ $second-main-color: #eeffd8;
 $main-text-color: #363062;
 $second-text-color: #435585;
 $error-text-color: rgb(221, 78, 78);
+@mixin link() {
+  color: rgb(44, 137, 251);
+  transition: 0.5s;
+  &:hover{
+    color: rgb(29 78 216 / 1)
+  }
+}
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -33,18 +40,18 @@ $error-text-color: rgb(221, 78, 78);
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $main-text-color; 
-  transition: 0.5s;
+  background: $main-text-color !important; 
+  transition: 0.5s !important;
   &:hover{
-    background: $second-text-color; 
+    background: $second-text-color !important; 
   }
 }
 
-@layer base{
-  svg {
-    vertical-align: baseline !important;
-  }
-}
+// @layer base{
+//   svg {
+//     vertical-align: baseline !important;
+//   }
+// }
 
 body {
   .ant-message-notice-content{
@@ -143,6 +150,10 @@ body {
     color: $main-text-color
   }
 
+  nb-card-header, nb-card-footer{
+    border: none !important;
+  }
+
   [nbSpinner] {
     z-index: auto !important;
   }
@@ -169,7 +180,11 @@ body {
 
   a {
     text-decoration: none !important;
-    color: rgb(0, 149, 255);
+    @include link()
+  }
+
+  .coffee-link{
+    @include link() 
   }
 
   .main-color {
@@ -199,13 +214,12 @@ body {
     color: $second-text-color !important;
   }
 
-  .discountModal>.ant-radio{
-    margin-right: 10px !important;
-    top: 2.5em !important;
-  }
-
   .ant-radio-group, .ant-radio-wrapper{
     color: $second-text-color !important;
+  }
+
+  input[type='radio'] {
+    @include link()
   }
 
   .second-text-color {

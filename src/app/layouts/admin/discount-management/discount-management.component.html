@@ -12,9 +12,12 @@
       </div>
       <div class="mb-5 grid grid-cols-2 gap-5">
         <div class="flex justify-start items-center">
-          <input nbInput placeholder="Tìm kiếm mã giảm giá" 
-          [(ngModel)]="searchInput"
-          (change)="filterBySearch()"/>
+          <input
+            nbInput
+            placeholder="Tìm kiếm mã giảm giá"
+            [(ngModel)]="searchInput"
+            (change)="filterBySearch()"
+          />
         </div>
         <div class="flex justify-end items-center">
           <button
@@ -41,16 +44,17 @@
               [nzSortFn]="creationDateDiscountSort"
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
-            >Ngày tạo</th>
+            >
+              Ngày tạo
+            </th>
             <th
               [nzSortFn]="expiredDateDiscountSort"
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
-            >Ngày hết hạn
+            >
+              Ngày hết hạn
             </th>
-            <th 
-            [nzAlign]="'center'"
-            >Trạng thái</th>
+            <th [nzAlign]="'center'">Trạng thái</th>
             <th></th>
           </tr>
         </thead>
@@ -125,12 +129,14 @@
   <ng-container *nzDrawerContent>
     <div class="grid grid-cols-1 gap-5">
       <div class="flex">
-        <div class="inline-block mr-3">
-          <fa-icon
-            [icon]="icons['faQrcode']"
-            size="3x"
-            class="center-an-item"
-          ></fa-icon>
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon
+              [icon]="icons['faQrcode']"
+              size="3x"
+              class="center-an-item"
+            ></fa-icon>
+          </div>
         </div>
         <div class="inline-block mr-3">
           <span class="font-bold">Mã code: {{ choosingDiscount.code }}</span
@@ -140,9 +146,16 @@
       </div>
       <div>
         <nb-card>
-          <nb-card-header class="border-none"> Các đơn hàng đã sử dụng mã giảm giá </nb-card-header>
+          <nb-card-header class="border-none">
+            Các đơn hàng đã sử dụng mã giảm giá
+          </nb-card-header>
           <nb-card-body>
-            <nz-table #table2 [nzData]="detailOrderings" [nzLoading]="isLoadingDetailOrdering" nzShowPagination="false">
+            <nz-table
+              #table2
+              [nzData]="detailOrderings"
+              [nzLoading]="isLoadingDetailOrdering"
+              nzShowPagination="false"
+            >
               <thead>
                 <tr>
                   <th>#</th>
@@ -162,7 +175,16 @@
                   <td>{{ data.totalPrice }}</td>
                   <td>
                     <span>
-                      <fa-icon [icon]="icons['faArrowDown']" class="mr-2"></fa-icon>{{ comparePercent(data.totalPrice, data.price + data.shippingFee) }}%
+                      <fa-icon
+                        [icon]="icons['faArrowDown']"
+                        class="mr-2"
+                      ></fa-icon
+                      >{{
+                        comparePercent(
+                          data.totalPrice,
+                          data.price + data.shippingFee
+                        )
+                      }}%
                     </span>
                   </td>
                 </tr>
@@ -198,12 +220,14 @@
   <ng-container *nzDrawerContent>
     <div class="grid grid-cols-1 gap-3">
       <div class="flex">
-        <div class="inline-block mr-3">
-          <fa-icon
-            [icon]="icons['faQrcode']"
-            size="3x"
-            class="center-an-item"
-          ></fa-icon>
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon
+              [icon]="icons['faQrcode']"
+              size="3x"
+              class="center-an-item"
+            ></fa-icon>
+          </div>
         </div>
         <div class="inline-block mr-3">
           <span class="font-bold">Mã code: {{ choosingDiscount.code }}</span
@@ -248,9 +272,7 @@
         </div>
         <div class="col-span-2">
           {{
-            compareDate(
-              choosingDiscount.expiredDate
-            )
+            compareDate(choosingDiscount.expiredDate)
               ? "Hoạt động"
               : "Hết hiệu lực"
           }}

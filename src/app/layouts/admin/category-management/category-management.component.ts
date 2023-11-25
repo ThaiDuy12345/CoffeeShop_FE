@@ -51,7 +51,7 @@ export class CategoryManagementComponent {
         if(res.status){
           this.categories = res.data.map((acc: any) => this.mappingService.category(acc))
   
-          if(this.searchInput) this.categories =  this.categories.filter(d => d.name.toLowerCase().includes(this.searchInput.toLowerCase()))
+          if(this.searchInput) this.categories =  this.categories.filter(d => d.id.toString().includes(this.searchInput.toLowerCase()) || d.name.toLowerCase().includes(this.searchInput.toLowerCase()))
         }else{
           this.messageService.error(res.message)
         }

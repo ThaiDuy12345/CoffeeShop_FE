@@ -46,6 +46,7 @@ export class SupportManagementComponent {
         this.supports = res.data.map((s: any) => this.mappingService.support(s))
         if(this.searchInput) this.supports = this.supports.filter(s => {
           return (
+            s.id.toString().includes(this.searchInput.toLowerCase()) ||
             s.account.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
             this.formatService.formatTimeStamp(s.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) ||
             s.reason.toLowerCase().includes(this.searchInput.toLowerCase()) ||

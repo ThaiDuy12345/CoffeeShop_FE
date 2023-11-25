@@ -2,25 +2,35 @@
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
   <nb-card>
-    <nb-card-header class="border-none">
-      Danh sách đơn hỗ trợ
-    </nb-card-header>
+    <nb-card-header class="border-none"> Danh sách đơn hỗ trợ </nb-card-header>
     <nb-card-body class="border-none">
       <div class="mb-5 grid grid-cols-1 gap-5">
-        Đơn hỗ trợ là 1 tính năng giúp truyền đạt các phản hồi, khiếu nại và các nguyên nhân khác từ khách hàng tới hệ thống của COFFEE
+        Đơn hỗ trợ là 1 tính năng giúp truyền đạt các phản hồi, khiếu nại và các
+        nguyên nhân khác từ khách hàng tới hệ thống của COFFEE
       </div>
       <div class="mb-5 grid grid-cols-2 gap-5">
-        <div class="flex justify-start items-center"><input [(ngModel)]="searchInput" (change)="filterBySearch()" nbInput placeholder="Tìm kiếm thư hỗ trợ"></div>
-        <div class="flex justify-end items-center">
+        <div class="flex justify-start items-center">
+          <input
+            [(ngModel)]="searchInput"
+            (change)="filterBySearch()"
+            nbInput
+            placeholder="Tìm kiếm thư hỗ trợ"
+          />
         </div>
+        <div class="flex justify-end items-center"></div>
       </div>
-      <nz-table #table [nzLoading]="isLoading" [nzData]="supports" nzShowPagination="false">
+      <nz-table
+        #table
+        [nzLoading]="isLoading"
+        [nzData]="supports"
+        nzShowPagination="false"
+      >
         <thead>
           <tr>
             <th>#</th>
             <th>Tiêu đề hỗ trợ</th>
             <th>Lý do tạo</th>
-            <th 
+            <th
               [nzAlign]="'center'"
               [nzFilterMultiple]="true"
               [nzFilters]="[
@@ -28,21 +38,25 @@
                 { text: 'Đợi xử lý', value: false, byDefault: true }
               ]"
               [nzFilterFn]="statusFilter"
-            >Trạng thái</th>
+            >
+              Trạng thái
+            </th>
             <th
               [nzSortFn]="dateSort"
               [nzSortOrder]="'descend'"
               [nzSortDirections]="['descend', 'ascend', null]"
-            >Ngày tạo</th>
+            >
+              Ngày tạo
+            </th>
             <th>Tạo bởi</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of table.data;let i = index">
-            <td>{{data.id}}</td>
-            <td>{{data.title}}</td>
-            <td>{{data.reason}}</td>
+          <tr *ngFor="let data of table.data; let i = index">
+            <td>{{ data.id }}</td>
+            <td>{{ data.title }}</td>
+            <td>{{ data.reason }}</td>
             <td>
               <span class="center-an-item">
                 <nz-tag
@@ -50,7 +64,7 @@
                   class="center-an-item mr-0 py-1 rounded main-text-color w-[100px]"
                   nzTooltipTitle="Thư hỗ trợ đang trong trạng thái chưa xử lý"
                   *ngIf="!data.status"
-                  >
+                >
                   Chưa xử lý
                 </nz-tag>
                 <nz-tag
@@ -63,26 +77,30 @@
                 </nz-tag>
               </span>
             </td>
-            <td>{{formatDate(data.creationDate)}}
-            <td>{{data.account.name}}</td>
+            <td>{{ formatDate(data.creationDate) }}</td>
+            <td>{{ data.account.name }}</td>
             <td>
               <fa-icon
                 [icon]="icons['faCircleInfo']"
-                (click)="detailVisible = true; viewASupport(data);"
+                (click)="detailVisible = true; viewASupport(data)"
                 class="mx-2 cursor-pointer"
                 nz-tooltip
                 nzTooltipTitle="Thông tin"
               ></fa-icon>
               <fa-icon
                 nzPopconfirmPlacement="bottom"
-                (nzOnCancel)="null"
+                (nzOnCancel)="(null)"
                 *ngIf="!data.status"
                 nzPopconfirmTitle="Xác nhận xóa danh mục này?"
                 nz-popconfirm
                 nzOkText="Xác nhận"
                 nzCancelText="Huỷ"
                 (nzOnConfirm)="onClickSubmitDeleteSupport(data.id)"
-                [icon]="icons['faTrash']" class="mx-2 cursor-pointer" nz-tooltip nzTooltipTitle="Xóa">
+                [icon]="icons['faTrash']"
+                class="mx-2 cursor-pointer"
+                nz-tooltip
+                nzTooltipTitle="Xóa"
+              >
               </fa-icon>
             </td>
           </tr>
@@ -100,95 +118,100 @@
   [nzTitle]="title1"
   (nzOnClose)="detailVisible = false"
 >
-<ng-container *nzDrawerContent>
-  <div class="grid grid-cols-1 gap-3">
-    <div class="flex">
-      <div class="inline-block mr-3">
-        <fa-icon
-          [icon]="icons['faQrcode']"
-          size="3x"
-          class="center-an-item"
-        ></fa-icon>
-      </div>
-      <div class="inline-block mr-3">
-        <span class="font-bold">Id Thư hỗ trợ: {{ choosingSupport.id }}</span>
-        <br />
-        <span class="font-bold">Được tạo bởi: {{ choosingSupport.account.name }}</span>
-      </div>
-    </div>
-    <div>
-      <nz-divider class="my-2"></nz-divider>
-    </div>
-    <div class="grid grid-cols-4 gap-5 mb-5">
-      <div class="col-span-2">
-        <fa-icon [icon]="icons['faCalendarCheck']" class="mr-2"></fa-icon>Ngày
-        tạo:
-      </div>
-      <div class="col-span-2">
-        {{ formatDate(choosingSupport.creationDate) }}
-      </div>
-      <div class="col-span-2">
-        <fa-icon [icon]="icons['faBookOpenReader']" class="mr-2"></fa-icon>Tiêu đề:
-      </div>
-      <div class="col-span-2 font-bold">
-        {{ choosingSupport.title }}
-      </div>
-      <div class="col-span-2">
-        <fa-icon [icon]="icons['faPaperPlane']" class="mr-2"></fa-icon>Lý do tạo thư:
-      </div>
-      <div class="col-span-2">
-        {{ choosingSupport.reason }}
-      </div>
-      <div class="col-span-2">
-        <fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Trạng thái:
-      </div>
-      <div class="col-span-2">
-        <nz-tag
-          nzPopconfirmPlacement="bottom"
-          (nzOnCancel)="(null)"
-          nzPopconfirmTitle="Xác nhận đặt trạng thái thư hỗ trợ này là đã xử lý? Khách hàng sẽ nhận email thông báo và một khi đã xác nhận thì sẽ không thể đổi lại và"
-          nz-popconfirm
-          nzOkText="Xác nhận"
-          nzCancelText="Huỷ"
-          (nzOnConfirm)="confirmChange()"
-          nz-tooltip
-          class="cursor-pointer center-an-item mr-0 py-1 rounded main-text-color w-[100px]"
-          nzTooltipTitle="Thư hỗ trợ đang trong trạng thái chưa xử lý"
-          *ngIf="!choosingSupport.status"
+  <ng-container *nzDrawerContent>
+    <div class="grid grid-cols-1 gap-3">
+      <div class="flex">
+        <div class="h-full float-left mr-3">
+          <div class="h-full center-an-item">
+            <fa-icon
+              [icon]="icons['faEnvelope']"
+              size="3x"
+              class="center-an-item"
+            ></fa-icon>
+          </div>
+        </div>
+        <div class="inline-block mr-3">
+          <span class="font-bold">Id Thư hỗ trợ: {{ choosingSupport.id }}</span>
+          <br />
+          <span class="font-bold"
+            >Được tạo bởi: {{ choosingSupport.account.name }}</span
           >
-          Chưa xử lý
-        </nz-tag>
-        <nz-tag
-          *ngIf="choosingSupport.status"
-          class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
-          nz-tooltip
-          nzTooltipTitle="Thư hỗ trợ đã được Admin đánh dấu là đã xử lý, khách hàng sẽ nhận được thông báo về thư hỗ trợ"
-        >
-          Đã xử lý
-        </nz-tag>
+        </div>
       </div>
-      <div class="col-span-2">
-        <fa-icon [icon]="icons['faArrowsToCircle']" class="mr-2"></fa-icon>Nội dung:
+      <div>
+        <nz-divider class="my-2"></nz-divider>
       </div>
-      <div class="col-span-2">
-        {{
-          choosingSupport.content
-        }}
+      <div class="grid grid-cols-4 gap-5 mb-5">
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faCalendarCheck']" class="mr-2"></fa-icon>Ngày
+          tạo:
+        </div>
+        <div class="col-span-2">
+          {{ formatDate(choosingSupport.creationDate) }}
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faBookOpenReader']" class="mr-2"></fa-icon
+          >Tiêu đề:
+        </div>
+        <div class="col-span-2 font-bold">
+          {{ choosingSupport.title }}
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faPaperPlane']" class="mr-2"></fa-icon>Lý do
+          tạo thư:
+        </div>
+        <div class="col-span-2">
+          {{ choosingSupport.reason }}
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Trạng thái:
+        </div>
+        <div class="col-span-2">
+          <nz-tag
+            nzPopconfirmPlacement="bottom"
+            (nzOnCancel)="(null)"
+            nzPopconfirmTitle="Xác nhận đặt trạng thái thư hỗ trợ này là đã xử lý? Khách hàng sẽ nhận email thông báo và một khi đã xác nhận thì sẽ không thể đổi lại và"
+            nz-popconfirm
+            nzOkText="Xác nhận"
+            nzCancelText="Huỷ"
+            (nzOnConfirm)="confirmChange()"
+            nz-tooltip
+            class="cursor-pointer center-an-item mr-0 py-1 rounded main-text-color w-[100px]"
+            nzTooltipTitle="Thư hỗ trợ đang trong trạng thái chưa xử lý"
+            *ngIf="!choosingSupport.status"
+          >
+            Chưa xử lý
+          </nz-tag>
+          <nz-tag
+            *ngIf="choosingSupport.status"
+            class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[100px]"
+            nz-tooltip
+            nzTooltipTitle="Thư hỗ trợ đã được Admin đánh dấu là đã xử lý, khách hàng sẽ nhận được thông báo về thư hỗ trợ"
+          >
+            Đã xử lý
+          </nz-tag>
+        </div>
+        <div class="col-span-2">
+          <fa-icon [icon]="icons['faArrowsToCircle']" class="mr-2"></fa-icon>Nội
+          dung:
+        </div>
+        <div class="col-span-2">
+          {{ choosingSupport.content }}
+        </div>
       </div>
     </div>
-  </div>
-</ng-container>
-</nz-drawer> 
-
+  </ng-container>
+</nz-drawer>
 
 <ng-template #title1>
   <div class="grid grid-cols-2">
     <div class="flex justify-start items-center">
-      <fa-icon [icon]="icons['faXmark']" (click)="detailVisible = false"></fa-icon>
+      <fa-icon
+        [icon]="icons['faXmark']"
+        (click)="detailVisible = false"
+      ></fa-icon>
     </div>
-    <div class="font-bold flex justify-end items-center">
-      Chi tiết danh mục
-    </div>
+    <div class="font-bold flex justify-end items-center">Chi tiết danh mục</div>
   </div>
 </ng-template>
 <!-- 

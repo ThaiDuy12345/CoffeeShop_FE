@@ -11,7 +11,7 @@ import { AccountService } from 'src/app/core/services/account.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
-import { AccountData, FeedBackData, OrderingData } from 'src/app/data/data';
+import { FeedBackData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-account-management',
@@ -22,7 +22,9 @@ export class AccountManagementComponent implements OnInit {
   public accounts: Account[] = []
   public isLoading: boolean = false
   public icons: Icon = icons
+  public searchInputDetailAdminVisible: string = ""
   public inforVisible: boolean = false
+  public detailAdminVisible: boolean = false
   public detailVisible: boolean = false
   public choosingAccount: Account = new Account()
   public accountFeedbacks: FeedBack[] = []
@@ -51,7 +53,8 @@ export class AccountManagementComponent implements OnInit {
 
           if(this.searchInput){
             this.accounts = this.accounts.filter((a) => {
-              if(   a.email.includes(this.searchInput)
+              if(   
+                  a.email.includes(this.searchInput)
                  || a.name.includes(this.searchInput)
                  || a.phone.includes(this.searchInput)
                 ) return true
@@ -126,8 +129,41 @@ export class AccountManagementComponent implements OnInit {
   viewAnAccount(data: Account): void {
     if(!data) return
     this.choosingAccount = {...data}
-    this.getAccountFeedbacks()
-    this.getAccountOrderings()
+    if(this.detailAdminVisible){
+      this.searchInputDetailAdminVisible = ''
+      this.getOrderingUpdatedByAccount()
+    }else{
+      this.getAccountFeedbacks()
+      this.getAccountOrderings()
+    }
+  }
+
+  getOrderingUpdatedByAccount(): void {
+    this.isLoadingChoosingOrdering = true
+    this.orderingService.getAllByUpdatedByAccount({ accountPhone: this.choosingAccount.phone }).pipe(finalize(() => this.isLoadingChoosingOrdering = false)).subscribe({
+      next: res => {
+        if(res.status) {
+          this.accountOrderings = res.data.map((o: any) => this.mappingService.ordering(o))
+          if(this.searchInputDetailAdminVisible.trim()){
+            this.accountOrderings = this.accountOrderings.filter(a => {
+              return(
+                a.id.toString().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
+                this.formatDate(a.date).toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
+                this.formatPrice(a.totalPrice).toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
+                (a.approveDescription && a.approveDescription.toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase())) ||
+                (a.cancelDescription && a.cancelDescription.toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()))
+              )
+            })
+          }
+        }
+        else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })    
+  }
+
+  filterByDetailAdminVisibleInputSearch(): void {
+    this.getOrderingUpdatedByAccount()
   }
 
   getAccountFeedbacks(): FeedBack[]{

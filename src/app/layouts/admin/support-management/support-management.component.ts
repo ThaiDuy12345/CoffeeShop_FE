@@ -57,10 +57,6 @@ export class SupportManagementComponent {
       error: err => this.messageService.error(err.error.message)
     })
   }
-  
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
 
   onClickSubmitDeleteSupport(supportId: string): void {
     this.supportService.delete({ supportId: supportId }).subscribe({

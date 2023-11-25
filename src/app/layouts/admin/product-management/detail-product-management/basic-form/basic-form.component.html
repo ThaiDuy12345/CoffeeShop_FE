@@ -21,7 +21,7 @@
     Ngày tạo sản phẩm: 
   </div>
   <div class="col-span-5">
-    {{ formatDate(product.creationDate) }} ({{ timeSince(product.creationDate) }})
+    {{ product.creationDate | dateFormat }} ({{ product.creationDate | timeAgoSinceFormat }})
   </div>
   <div class="col-span-2 second-main-text-color">
     Thuộc về danh mục: 
@@ -66,7 +66,7 @@
     Ngày tạo sản phẩm: 
   </div>
   <div class="col-span-5">
-    {{ formatDate(editProduct.creationDate) }} ({{ timeSince(editProduct.creationDate) }})
+    {{ editProduct.creationDate | dateFormat }} ({{ editProduct.creationDate | timeAgoSinceFormat }})
   </div>
   <div class="col-span-2 second-main-text-color">
     Thuộc về danh mục: 

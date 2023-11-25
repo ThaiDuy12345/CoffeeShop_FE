@@ -47,7 +47,7 @@ export class PopularProductComponent implements OnInit{
               return (
                 p.category.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
                 p.name.toLowerCase().includes(this.searchInput.toLowerCase())  ||
-                this.formatDate(p.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) 
+                this.formatService.formatTimeStamp(p.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) 
               )
             })
           }
@@ -63,10 +63,6 @@ export class PopularProductComponent implements OnInit{
 
   onSearchInput(): void {
     this.initData()
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatDate(new Date(date))
   }
 
   getPopularProductLength(): number {

@@ -89,8 +89,8 @@
             </div>
             <div class="col-span-3">
               <span
-                >{{ formatDate(ordering.date) }} -
-                {{ timeSince(ordering.date) }}</span
+                >{{ ordering.date | dateFormat }} -
+                {{ ordering.date | timeAgoSinceFormat}}</span
               >
             </div>
             <div class="col-span-2">
@@ -211,13 +211,13 @@
                   <div class="grid grid-cols-2 mb-3">
                     <span class="text-left">Giá trị hoá đơn:</span>
                     <span class="text-right">{{
-                      formatPrice(ordering.price)
+                      ordering.price | priceFormat
                     }}</span>
                   </div>
                   <div class="grid grid-cols-2 mb-3">
                     <span class="text-left">Tiền ship:</span>
                     <span class="text-right">{{
-                      formatPrice(ordering.shippingFee)
+                      ordering.shippingFee | priceFormat
                     }}</span>
                   </div>
                   <div class="grid grid-cols-2 mb-3">
@@ -239,15 +239,15 @@
                     <span class="text-right">
                       -
                       {{
-                        formatPrice(
-                          ordering.discount ? ordering.discount.amount : 0
-                        )
+                        
+                        (ordering.discount ? ordering.discount.amount : 0)
+                        | priceFormat
                       }}</span
                     >
                   </div>
                   <div class="grid grid-cols-2 mb-3">
                     <span class="text-left">Thuế VAC:</span>
-                    <span class="text-right">{{ formatPrice(0) }}</span>
+                    <span class="text-right">{{ 0 | priceFormat }}</span>
                   </div>
                 </div>
               </nb-card-body>
@@ -256,7 +256,7 @@
               >
                 <span class="text-left">Tổng giá:</span>
                 <span class="text-right">{{
-                  formatPrice(ordering.totalPrice)
+                  ordering.totalPrice | priceFormat
                 }}</span>
               </nb-card-footer>
             </nb-card>
@@ -288,7 +288,7 @@
                           </div>
                           <div class="w-full h-auto second-main-text-color">
                             <span>{{
-                              formatPrice(item.productSize.price)
+                              item.productSize.price | priceFormat
                             }}</span>
                           </div>
                           <div class="w-full h-auto second-main-text-color">
@@ -299,7 +299,7 @@
                           class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center"
                         >
                           <span class="font-bold">{{
-                            formatPrice(item.subTotal)
+                            item.subTotal | priceFormat
                           }}</span>
                         </div>
                       </div>

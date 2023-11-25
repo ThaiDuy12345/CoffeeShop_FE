@@ -88,10 +88,6 @@ export class DetailDiscountManagementComponent implements OnInit{
     this.editDiscount.code = this.editDiscount.code.toUpperCase()
   }
 
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
-
   onChangeExpiredDate(s: any){
     if(this.expiredDate){
       this.editDiscount.expiredDate = this.expiredDate.getTime()
@@ -161,11 +157,6 @@ export class DetailDiscountManagementComponent implements OnInit{
         this.messageService.error(err.error.message);
       }
     })
-  }
-
-
-  formatNumber(number: number): string {
-    return this.formatService.formatPrice(number)
   }
 
   disabledDate(current: Date): boolean {

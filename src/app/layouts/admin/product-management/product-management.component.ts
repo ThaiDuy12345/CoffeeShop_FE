@@ -72,7 +72,7 @@ export class ProductManagementComponent implements OnInit {
                 p.id.toString().includes(this.searchInput.trim().toLowerCase()) ||
                 p.category.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
                 p.name.toLowerCase().includes(this.searchInput.toLowerCase())  ||
-                this.formatDate(p.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) 
+                this.formatService.formatTimeStamp(p.creationDate).toLowerCase().includes(this.searchInput.toLowerCase()) 
               )
             })
           }
@@ -123,10 +123,6 @@ export class ProductManagementComponent implements OnInit {
 
   onSearchInput(): void {
     this.initData()
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatDate(new Date(date))
   }
 
   viewAProduct(data: Product): void {

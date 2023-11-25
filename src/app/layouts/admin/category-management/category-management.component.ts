@@ -50,7 +50,6 @@ export class CategoryManagementComponent {
       next: (res) => {
         if(res.status){
           this.categories = res.data.map((acc: any) => this.mappingService.category(acc))
-  
           if(this.searchInput) this.categories =  this.categories.filter(d => d.id.toString().includes(this.searchInput.toLowerCase()) || d.name.toLowerCase().includes(this.searchInput.toLowerCase()))
         }else{
           this.messageService.error(res.message)
@@ -64,14 +63,6 @@ export class CategoryManagementComponent {
 
   filterBySearch(): void {
     this.initData()
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
-
-  formatNumber(data: number): string {
-    return this.formatService.formatPrice(data)
   }
 
   viewACategory(data: Category): void {

@@ -89,8 +89,8 @@
         <tbody>
           <tr *ngFor="let data of table.data">
             <td>{{data.id}}</td>
-            <td>{{formatDate(data.date)}}</td>
-            <td>{{formatPrice(data.totalPrice)}}</td>
+            <td>{{data.date | dateFormat}}</td>
+            <td>{{data.totalPrice | priceFormat}}</td>
             <td>
               <span class="center-an-item">
                 <nz-tag

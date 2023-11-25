@@ -62,8 +62,8 @@
           <tr *ngFor="let data of table.data">
             <td>{{ data.id }}</td>
             <td>{{ data.code }}</td>
-            <td>{{ formatDate(data.creationDate) }}</td>
-            <td>{{ formatDate(data.expiredDate) }}</td>
+            <td>{{ data.creationDate | dateFormat }}</td>
+            <td>{{ data.expiredDate | dateFormat }}</td>
             <td>
               <span class="center-an-item">
                 <nz-tag
@@ -170,9 +170,9 @@
                   <td class="second-text-color cursor-pointer">
                     {{ data.id }}
                   </td>
-                  <td>{{ formatDate(data.date) }}</td>
-                  <td>{{ data.price + data.shippingFee }}</td>
-                  <td>{{ data.totalPrice }}</td>
+                  <td>{{ data.date | dateFormat }}</td>
+                  <td>{{ (data.price + data.shippingFee) | priceFormat }}</td>
+                  <td>{{ data.totalPrice | priceFormat }}</td>
                   <td>
                     <span>
                       <fa-icon
@@ -244,27 +244,27 @@
           tạo:
         </div>
         <div class="col-span-2">
-          {{ formatDate(choosingDiscount.creationDate) }}
+          {{ choosingDiscount.creationDate | dateFormat }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faCalendarXmark']" class="mr-2"></fa-icon>Ngày
           hết hạn:
         </div>
         <div class="col-span-2">
-          {{ formatDate(choosingDiscount.expiredDate) }}
+          {{ choosingDiscount.expiredDate | dateFormat }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faPercent']" class="mr-2"></fa-icon>Giá tổi
           thiếu để áp dụng:
         </div>
         <div class="col-span-2">
-          {{ formatNumber(choosingDiscount.minimumOrderPrice) }}
+          {{ choosingDiscount.minimumOrderPrice | priceFormat }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faTag']" class="mr-2"></fa-icon>Mức giảm:
         </div>
         <div class="col-span-2">
-          {{ formatNumber(choosingDiscount.amount) }}
+          {{ choosingDiscount.amount | priceFormat }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faClock']" class="mr-2"></fa-icon>Trạng thái

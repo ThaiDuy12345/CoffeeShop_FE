@@ -1,11 +1,10 @@
-import { AuthenticationState, AuthenticationStore } from './../../../../core/stores/authentication.store';
+import { AuthenticationStore } from './../../../../core/stores/authentication.store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
-import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -36,7 +35,6 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
 
   constructor(
     private messageService: NzMessageService,
-    private formatService: FormatService,
     private orderingService: OrderingService,
     @Optional() private dialogRef: NbDialogRef<any>,
     private dialogService: NbDialogService,
@@ -173,18 +171,6 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
   }
 
   confirmChange(orderingId: string): void{
-  }
-
-  timeSince(date: number): string {
-    return this.formatService.timeAgoSince(new Date(date));
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
-
-  formatPrice(data: number): string {
-    return this.formatService.formatPrice(data)
   }
 
   getSelectedIndex(orderingStatus: number): number {

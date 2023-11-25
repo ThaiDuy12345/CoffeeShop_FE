@@ -82,8 +82,8 @@ export class OrderingManagementComponent implements OnInit, OnDestroy{
               return (
                 p.id.toString().includes(this.searchInput.toLowerCase()) ||
                 p.account.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
-                this.formatPrice(p.totalPrice).includes(this.searchInput.toLowerCase())  ||
-                this.formatDate(p.date).toLowerCase().includes(this.searchInput.toLowerCase()) 
+                this.formatService.formatPrice(p.totalPrice).includes(this.searchInput.toLowerCase())  ||
+                this.formatService.formatTimeStamp(p.date).toLowerCase().includes(this.searchInput.toLowerCase()) 
               )
             })
           }
@@ -100,14 +100,6 @@ export class OrderingManagementComponent implements OnInit, OnDestroy{
 
   onSearchInput(): void {
     this.initData()
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatDate(new Date(date))
-  }
-
-  formatPrice(price: number): string {
-    return this.formatService.formatPrice(price)
   }
 
   viewAOrdering(data: Ordering): void {

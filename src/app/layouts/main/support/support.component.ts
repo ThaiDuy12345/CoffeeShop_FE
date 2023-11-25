@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormatService } from 'src/app/core/services/format.service';
 import { icons } from '../../../shared/utils/icon.utils';
 import { Icon } from 'src/app/core/models/icon.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -43,7 +42,6 @@ export class SupportComponent implements OnInit, OnDestroy {
   ]
   
   constructor(
-    private formatService: FormatService,
     private authenticationStore: AuthenticationStore,
     private supportService: SupportService,
     private messageService: NzMessageService,
@@ -67,10 +65,6 @@ export class SupportComponent implements OnInit, OnDestroy {
     })
 
     this.authenticationStore._select(state => state).subscribe(this.tempSubject)
-  }
-
-  formatDate(date: Date = new Date()): string {
-    return this.formatService.formatDate(date)
   }
 
   send(): void {
@@ -102,5 +96,9 @@ export class SupportComponent implements OnInit, OnDestroy {
     this.title = "ĐƠN GÓP Ý TỚI COFFEE"
     this.content = ""
     this.isSent = false
+  }
+
+  currentDate(): number {
+    return new Date().getTime()
   }
 }

@@ -62,7 +62,7 @@
         <ng-template [ngIf]="currentEditItem !== i">
           <td class="second-text-color cursor-pointer">{{ data.id }}</td>
           <td>Size {{ data.size }}</td>
-          <td>{{ data.price }}</td>
+          <td>{{ data.price | priceFormat }}</td>
           <td>
             <fa-icon
               *ngIf="currentEditItem === -1"

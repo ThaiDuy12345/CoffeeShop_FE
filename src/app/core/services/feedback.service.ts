@@ -44,15 +44,15 @@ export class FeedbackService{
     )
   }
 
-  put(params: { supportId: string, payload: any }): Observable<any>{
+  put(payload : any ): Observable<any>{
     return this.apiService.errorHandle(
-      this.httpClient.put(this.apiService.feedbackService().toString() + `/${params.supportId}`, params.payload)
+      this.httpClient.put(this.apiService.feedbackService().toString(), payload)
     )
   }
 
-  delete(params: { supportId: string }): Observable<any> {
+  delete(params: { accountPhone: string, productId: string }): Observable<any> {
     return this.apiService.errorHandle(
-      this.httpClient.delete(this.apiService.feedbackService().toString() + `/${params.supportId}`)
+      this.httpClient.delete(this.apiService.feedbackService().toString() + `/${params.productId}/${params.accountPhone}`)
     )
   }
 }

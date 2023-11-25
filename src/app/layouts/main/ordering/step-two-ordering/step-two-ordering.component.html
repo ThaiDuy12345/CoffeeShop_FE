@@ -1,8 +1,6 @@
 <div class="grid grid-cols-4 gap-5">
   <div class="col-span-3">
-    <h1 class="font-bold">
-      Xin vui lòng kiểm tra mọi thông tin trước khi đến bước kế tiếp
-    </h1>
+    <nz-alert nzType="info" nzMessage="Xin vui lòng kiểm tra kỹ mọi thông tin trước khi đến bước kế tiếp" nzShowIcon></nz-alert>
   </div>
   <div
     class="ordering-last md:ordering-none col-span-4 md:col-span-2 grid grid-col-1"
@@ -81,17 +79,17 @@
           </div>
           <div class="grid grid-cols-2 mb-3">
             <span class="text-left">Giá trị hoá đơn</span>
-            <span class="text-right">{{ formatPrice(ordering.price) }}</span>
+            <span class="text-right">{{ ordering.price | priceFormat }}</span>
           </div>
           <div class="grid grid-cols-2 mb-3">
             <span class="text-left">Phí ship</span>
             <span class="text-right">{{
-              formatPrice(ordering.shippingFee)
+              ordering.shippingFee | priceFormat
             }}</span>
           </div>
           <div class="grid grid-cols-2 mb-3">
             <span class="text-left">Thuế VAC</span>
-            <span class="text-right"> - {{ formatPrice(0) }}</span>
+            <span class="text-right"> - {{ 0 | priceFormat }}</span>
           </div>
         </nb-card-body>
         <nb-card-footer
@@ -99,14 +97,14 @@
         >
           <span class="text-left">Tổng giá</span>
           <span *ngIf="isEditingDiscount" class="text-right">{{
-            formatPrice(ordering.totalPrice)
+            ordering.totalPrice | priceFormat
           }}</span>
           <span *ngIf="!isEditingDiscount" class="text-right"
             ><span class="line-through">{{
-              formatPrice(ordering.totalPrice)
+              ordering.totalPrice | priceFormat
             }}</span
             >&ensp;{{
-              formatPrice(ordering.totalPrice - choosingDiscount.amount)
+              ordering.totalPrice - choosingDiscount.amount | priceFormat
             }}</span
           >
         </nb-card-footer>
@@ -160,7 +158,7 @@
                     >
                   </div>
                   <div class="w-full h-auto second-main-text-color">
-                    <span>{{ formatPrice(item.productSize.price) }}</span>
+                    <span>{{ item.productSize.price | priceFormat }}</span>
                   </div>
                   <div class="w-full h-auto second-main-text-color">
                     <span>x{{ item.quantity }}</span>
@@ -168,7 +166,7 @@
                 </div>
                 <div class="flex justify-end items-center">
                   <span class="font-bold">{{
-                    formatPrice(item.subTotal)
+                    item.subTotal | priceFormat
                   }}</span>
                 </div>
               </div>
@@ -184,7 +182,7 @@
   <nb-card class="nosd max-h-[85vh] max-w-[500px]">
     <nb-card-header class="m-0 border-none"> Chọn mã giảm giá </nb-card-header>
     <nb-card-body class="overflow-y-auto discountModal">
-      <ng-container *ngIf="!isLoadingDiscountModal">
+      @defer ( when !isLoadingDiscountModal ){
         <div
           *ngFor="let item of discounts"
           class="border-2 m-0 block coffee-box py-[20px] px-[25px] mb-[15px] transition-colors discountModal"
@@ -202,19 +200,19 @@
             <div class="error-text-color">{{ item.code }}</div>
             <div>
               Giảm
-              <span class="font-semibold">{{ formatNumber(item.amount) }}</span>
+              <span class="font-semibold">{{ item.amount | priceFormat }}</span>
             </div>
             <div>
               Yêu cầu đơn tối thiểu từ
               <span class="font-semibold">{{
-                formatNumber(item.minimumOrderPrice)
+                item.minimumOrderPrice | priceFormat
               }}</span>
             </div>
             <div>
               Hạn sử dụng:
               <span class="error-text-color">
-                {{ formatDate(item.expiredDate) }} -
-                {{ timeSince(item.expiredDate) }}
+                {{ item.expiredDate | dateFormat }} -
+                {{ item.expiredDate | timeFromNowFormat }}
               </span>
             </div>
           </div>
@@ -224,22 +222,22 @@
           >
             <div class="text-gray-300">{{ item.code }}</div>
             <div class="text-gray-300">
-              Giảm <span>{{ formatNumber(item.amount) }}</span>
+              Giảm <span>{{ item.amount | priceFormat }}</span>
             </div>
             <div class="text-gray-300">
               Yêu cầu đơn tối thiểu từ
-              <span>{{ formatNumber(item.minimumOrderPrice) }}</span>
+              <span>{{ item.minimumOrderPrice | priceFormat }}</span>
             </div>
             <div class="error-text-color">
               Bạn cần mua thêm
-              {{ formatNumber(item.minimumOrderPrice - ordering.price) }}
+              {{ (item.minimumOrderPrice - ordering.price) | priceFormat }}
               <span> để có thể áp dụng voucher này </span>
             </div>
             <div class="text-gray-300">
               Hạn sử dụng:
               <span>
-                {{ formatDate(item.expiredDate) }} -
-                {{ timeSince(item.expiredDate) }}
+                {{ item.expiredDate | dateFormat }} -
+                {{ item.expiredDate | timeFromNowFormat }}
               </span>
             </div>
           </div>
@@ -250,13 +248,13 @@
           nzTitle="Ối, Không có mã giảm giá nào cả!!"
         >
         </nz-result>
-      </ng-container>
-      <div
-        *ngIf="isLoadingDiscountModal"
-        class="min-h-[400px] w-full center-an-item"
-      >
-        <nz-spin nzSimple></nz-spin>
-      </div>
+      } @loading (minimum 500) {
+        <div
+          class="min-h-[400px] w-full center-an-item"
+        >
+          <nz-spin nzSimple></nz-spin>
+        </div>
+      }
     </nb-card-body>
     <nb-card-footer class="border-none space-x-3">
       <button class="float-left" nbButton status="warning" (click)="ref.close()" [routerLink]="'/main/product'">Mua thêm</button>

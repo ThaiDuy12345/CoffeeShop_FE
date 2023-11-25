@@ -15,7 +15,7 @@
     ></nb-card-body>
     <nb-card-footer class="border-none py-0">
       <div class="font-bold text-lg truncate">{{ item.name }}</div>
-      <div class="text-lg truncate">{{ formatPrice(item.minPrice) }}</div>
+      <div *ngIf="item.minPrice !== null && item.minPrice !== undefined" class="text-lg truncate">{{ item.minPrice | priceFormat }}</div>
     </nb-card-footer>
   </nb-card>
 </div>
@@ -38,7 +38,7 @@
       </div>
       <div class="lg:col-span-3 col-span-2">
         <div class="font-bold text-xl truncate">{{ item.name }}</div>
-        <div class="text-lg truncate">{{ formatPrice(item.minPrice) }}</div>
+        <div *ngIf="item.minPrice !== null && item.minPrice !== undefined" class="text-lg truncate">{{ item.minPrice | priceFormat }}</div>
         <div
           class="second-main-text-color text-md italic line-clamp-2 sm:line-clamp-6"
         >

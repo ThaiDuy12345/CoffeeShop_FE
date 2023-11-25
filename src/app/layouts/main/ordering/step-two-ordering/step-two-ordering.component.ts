@@ -1,6 +1,5 @@
 import { Component, Input, Optional, TemplateRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
@@ -10,7 +9,6 @@ import { Discount } from 'src/app/core/models/discount.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { DiscountService } from 'src/app/core/services/discount.service';
-import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
@@ -33,7 +31,6 @@ export class StepTwoOrderingComponent implements OnInit{
   public isLoadingDiscountModal: boolean = false
   constructor(
     private router: Router,
-    private formatService: FormatService,
     private mappingService: MappingService,
     private discountService: DiscountService,
     private messageService: NzMessageService,
@@ -65,10 +62,6 @@ export class StepTwoOrderingComponent implements OnInit{
 
   navigate(id: string): void {
     this.router.navigate([`/main/product/${id}`])
-  }
-
-  formatPrice(price: number | undefined): string {
-    return price === undefined ? this.formatService.formatPrice(0) : this.formatService.formatPrice(price)
   }
 
   getTotalQuantity(): number {
@@ -123,14 +116,6 @@ export class StepTwoOrderingComponent implements OnInit{
   onClickChoosingDiscount(item: Discount): void {
     this.choosingDiscount = { ...item }
   }
-  
-  formatNumber(number: number): string {
-    return this.formatService.formatPrice(number)
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date);
-  }
 
   onClickSubmitNewDiscount(): void {
     if(!(this.choosingDiscount && this.choosingDiscount.code)){
@@ -139,9 +124,5 @@ export class StepTwoOrderingComponent implements OnInit{
     this.discountCode = this.choosingDiscount.code
     this.checkDiscountCode()
     this.dialogRef.close()
-  }
-
-  timeSince(date: number): string {
-    return this.formatService.timeFromNow(new Date(date));
   }
 }

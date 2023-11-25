@@ -61,6 +61,18 @@ body {
   nb-layout-header>nav{
     padding: 0 !important;
   }
+  nz-alert{
+    width: fit-content !important;
+    .ant-alert{
+      border-radius: 7px !important;
+      .ant-alert-message{
+        color: $main-text-color;
+      }
+      svg{
+        vertical-align: baseline !important;
+      }
+    }
+  }
 
   // .ant-message-notice-content{
 

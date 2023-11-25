@@ -1,252 +1,272 @@
-
-  <div class="w-full grid grid-cols-4 mb-5 gap-5">
-    <div class="col-span-2 sm:col-span-3"></div>
-    <div class="col-span-2 sm:col-span-1">
-      <nb-select
-        class="w-full"
-        multiple
-        selectable="false"
-        [(selected)]="selectedType"
-        placeholder="Tất cả"
-        (selectedChange)="filterChange()"
-      >
-        <nb-option [value]="1"><span class="text-[#557cef]">Chờ xét duyệt</span></nb-option>
-        <nb-option [value]="2"><span class="text-[#3d5cb9]">Đang chuẩn bị</span></nb-option>
-        <nb-option [value]="3"
-          ><span class="text-[#273b75]">Đang vận chuyển</span></nb-option
-        >
-        <nb-option [value]="4"><span class="text-green-400">Đã hoàn thành</span></nb-option>
-        <nb-option [value]="-1"><span class="text-red-400">Đã huỷ</span></nb-option>
-      </nb-select>
-    </div>
-  </div>
-  <nz-collapse
-    *ngIf="!isLoading"
-    nzAccordion
-    [nzBordered]="false"
-    [nzExpandIconPosition]="'right'"
-    class="mb-6 bg-transparent"
-  >
-    <nz-collapse-panel
-      (nzActiveChange)="onActiveOrderChange($event, or.id)"
-      *ngFor="let or of filterOrderings"
-      class="coffee-box"
-      [ngStyle]="{ 'margin-bottom': '20px', 'background-color': 'white' }"
-      [nzHeader]="header"
+<div class="w-full grid grid-cols-4 mb-5 gap-5">
+  <div class="col-span-2 sm:col-span-3"></div>
+  <div class="col-span-2 sm:col-span-1">
+    <nb-select
+      class="w-full"
+      multiple
+      selectable="false"
+      [(selected)]="selectedType"
+      placeholder="Tất cả"
+      (selectedChange)="filterChange()"
     >
-      <ng-template #header>
-        <div class="w-full grid grid-cols-2 gap-3">
-          <div class="grid grid-cols-1">
-            <div>
-              Mã hoá đơn:
-              <span class="error-text-color font-semibold">#{{ or.id }}</span>
-            </div>
-            <div>
-              <div *ngIf="or.status === 1" class="text-[#557cef] truncate">
-                Đơn hàng đã được đặt và đợi xác nhận thông tin
-              </div>
-              <div *ngIf="or.status === 2" class="text-[#3d5cb9] truncate">
-                Đơn hàng đã được xác nhận và đợi bàn giao cho đơn vị vận chuyển
-              </div>
-              <div *ngIf="or.status === 3" class="text-[#273b75] truncate">
-                Đơn hàng đã được bàn giao và đang trên đường tới chỗ bạn
-              </div>
-              <div *ngIf="or.status === 4" class="text-green-400 truncate">
-                Đơn hàng đã được giao thành công
-              </div>
-              <div *ngIf="or.status === -1" class="text-red-400 truncate">
-                Đơn hàng đã bị huỷ
-              </div>
-            </div>
+      <nb-option [value]="1"
+        ><span class="text-[#557cef]">Chờ xét duyệt</span></nb-option
+      >
+      <nb-option [value]="2"
+        ><span class="text-[#3d5cb9]">Đang chuẩn bị</span></nb-option
+      >
+      <nb-option [value]="3"
+        ><span class="text-[#273b75]">Đang vận chuyển</span></nb-option
+      >
+      <nb-option [value]="4"
+        ><span class="text-green-400">Đã hoàn thành</span></nb-option
+      >
+      <nb-option [value]="-1"
+        ><span class="text-red-400">Đã huỷ</span></nb-option
+      >
+    </nb-select>
+  </div>
+</div>
+@defer(when !isLoading){
+<nz-collapse
+  *ngIf="!isLoading"
+  nzAccordion
+  [nzBordered]="false"
+  [nzExpandIconPosition]="'right'"
+  class="mb-6 bg-transparent"
+>
+  <nz-collapse-panel
+    (nzActiveChange)="onActiveOrderChange($event, or.id)"
+    *ngFor="let or of filterOrderings"
+    class="coffee-box"
+    [ngStyle]="{ 'margin-bottom': '20px', 'padding-bottom': '10px', 'background-color': 'white' }"
+    [nzHeader]="header"
+  >
+    <ng-template #header>
+      <div class="w-full grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1">
+          <div>
+            Mã hoá đơn:
+            <span class="error-text-color font-semibold">#{{ or.id }}</span>
           </div>
-          <div class="grid grid-cols-2">
-            <div class="center-an-item">
-              {{ formatDate(or.date) }} - {{ timeSince(or.date) }}
-            </div>
-            <div class="center-an-item font-bold">
-              {{ formatPrice(or.totalPrice) }}
-            </div>
+          <div>
+            @switch (or.status) {
+              @case (1) {
+                <div class="text-[#557cef] truncate">
+                  Đơn hàng đã được đặt và đợi xác nhận thông tin
+                </div>
+              }
+              @case (2) {
+                <div class="text-[#3d5cb9] truncate">
+                  Đơn hàng đã được xác nhận và đợi bàn giao cho đơn vị vận chuyển
+                </div>
+              }
+              @case (3) {
+                <div class="text-[#273b75] truncate">
+                  Đơn hàng đã được bàn giao và đang trên đường tới chỗ bạn
+                </div>
+              }
+              @case (4) {
+                <div class="text-green-400 truncate">
+                  Đơn hàng đã được giao thành công
+                </div>
+              }
+              @case (-1) {
+                <div class="text-red-400 truncate">
+                  Đơn hàng đã bị huỷ
+                </div>
+              }
+            }
           </div>
         </div>
-      </ng-template>
-      <div class="my-16 px-10">
-        <nb-stepper
-          [orientation]="getWidth() <= 767 ? 'vertical' : 'horizontal'"
-          [selectedIndex]="getSelectedIndex(or.status)"
-          disableStepNavigation="true"
-        >
-          <nb-step
-            [completed]="or.status === -1 || or.status > 0"
-            label="Đợi xác nhận thông tin"
-          >
-          </nb-step>
-          <nb-step
-            [completed]="or.status === -1 || or.status > 1"
-            label="Đợi bàn giao cho đơn vị vận chuyển"
-          >
-          </nb-step>
-          <nb-step
-            [completed]="or.status === -1 || or.status > 2"
-            label="Đang vận chuyển"
-          >
-          </nb-step>
-          <nb-step
-            [completed]="or.status > 3"
-            *ngIf="or.status !== -1"
-            label="Giao hàng thành công"
-          >
-          </nb-step>
-          <nb-step
-            [completed]="or.status === -1"
-            *ngIf="or.status === -1"
-            label="Giao hàng thất bại"
-          >
-          </nb-step>
-        </nb-stepper>
+        <div class="grid grid-cols-2">
+          <div class="center-an-item">
+            {{ or.date | dateFormat }} - {{ or.date | timeAgoSinceFormat }}
+          </div>
+          <div class="center-an-item font-bold">
+            {{ or.totalPrice | priceFormat }}
+          </div>
+        </div>
       </div>
-      <div class="grid grid-cols-3 gap-8">
-        <div class="ordering-last md:ordering-none col-span-3 lg:col-span-1">
-          <div class="font-bold text-2xl">Thông tin chi tiết</div>
-          <nz-divider></nz-divider>
-          <div class="mb-1">
-            <span class="font-bold">{{ or.account.name }}</span>
+    </ng-template>
+    <div class="my-16 px-10">
+      <nb-stepper
+        [orientation]="getWidth() <= 767 ? 'vertical' : 'horizontal'"
+        [selectedIndex]="getSelectedIndex(or.status)"
+        disableStepNavigation="true"
+      >
+        <nb-step
+          [completed]="or.status === -1 || or.status > 0"
+          label="Đợi xác nhận thông tin"
+        >
+        </nb-step>
+        <nb-step
+          [completed]="or.status === -1 || or.status > 1"
+          label="Đợi bàn giao cho đơn vị vận chuyển"
+        >
+        </nb-step>
+        <nb-step
+          [completed]="or.status === -1 || or.status > 2"
+          label="Đang vận chuyển"
+        >
+        </nb-step>
+        <nb-step
+          [completed]="or.status > 3"
+          *ngIf="or.status !== -1"
+          label="Giao hàng thành công"
+        >
+        </nb-step>
+        <nb-step
+          [completed]="or.status === -1"
+          *ngIf="or.status === -1"
+          label="Giao hàng thất bại"
+        >
+        </nb-step>
+      </nb-stepper>
+    </div>
+    <div class="grid grid-cols-3 gap-8">
+      <div class="ordering-last md:ordering-none col-span-3 lg:col-span-1">
+        <div class="font-bold text-2xl">Thông tin chi tiết</div>
+        <nz-divider></nz-divider>
+        <div class="mb-1">
+          <span class="font-bold">{{ or.account.name }}</span>
+        </div>
+        <div class="mb-1">
+          <span class="second-main-text-color">{{ or.account.phone }}</span>
+        </div>
+        <div class="mb-1">
+          <span class="second-main-text-color">{{ or.account.address }}</span>
+        </div>
+        <nz-divider></nz-divider>
+        <div class="grid grid-cols-1">
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color">Ghi chú:</span>
+            <span class="text-right">{{ or.note }}</span>
           </div>
-          <div class="mb-1">
-            <span class="second-main-text-color">{{ or.account.phone }}</span>
-          </div>
-          <div class="mb-1">
-            <span class="second-main-text-color">{{ or.account.address }}</span>
-          </div>
-          <nz-divider></nz-divider>
-          <div class="grid grid-cols-1">
-            <div class="grid grid-cols-2 mb-1">
-              <span class="text-left second-main-text-color">Ghi chú:</span>
-              <span class="text-right">{{ or.note }}</span>
-            </div>
-            <div class="grid grid-cols-2 mb-1">
-              <span class="text-left second-main-text-color"
-                >Trạng thái thanh toán:</span
-              >
-              <span class="text-right">{{
-                getPaymentStatus(or.paymentStatus)
-              }}</span>
-            </div>
-          </div>
-          <nz-divider></nz-divider>
-          <div class="grid grid-cols-1">
-            <div class="grid grid-cols-2 mb-1">
-              <span class="text-left second-main-text-color"
-                >Giá trị hoá đơn:</span
-              >
-              <span class="text-right">{{ formatPrice(or.price) }}</span>
-            </div>
-            <div class="grid grid-cols-2 mb-1">
-              <span class="text-left second-main-text-color">Tiền ship:</span>
-              <span class="text-right">{{ formatPrice(or.shippingFee) }}</span>
-            </div>
-            <div class="grid grid-cols-2 mb-1">
-              <span class="text-left second-main-text-color">Mã giảm:</span>
-              <span
-                *ngIf="or.discount.code"
-                class="text-right text-blue-500"
-              >
-                {{ or.discount.code }}
-              </span>
-              <span *ngIf="!or.discount.code" class="text-right">
-                Không có
-              </span>
-            </div>
-            <div class="grid grid-cols-2 mb-1">
-              <span class="text-left second-main-text-color">Giảm giá:</span>
-              <span class="text-right">
-                -
-                {{ formatPrice(or.discount ? or.discount.amount : 0) }}</span
-              >
-            </div>
-            <div class="grid grid-cols-2 mb-3">
-              <span class="text-left second-main-text-color">Thuế VAC:</span>
-              <span class="text-right">0 đ</span>
-            </div>
-            <div class="grid grid-cols-2 text-lg mb-1">
-              <span class="font-bold text-left">Tổng giá:</span>
-              <span class="font-bold text-right">{{
-                formatPrice(or.totalPrice)
-              }}</span>
-            </div>
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color"
+              >Trạng thái thanh toán:</span
+            >
+            <span class="text-right">{{
+              getPaymentStatus(or.paymentStatus)
+            }}</span>
           </div>
         </div>
-        <div class="col-span-3 lg:col-span-2">
-          <ng-container *ngIf="!isLoadingDetailOrder">
-            <div class="mb-5 flex justify-end">
-              <nz-pagination
-                [nzSize]="'small'"
-                [nzPageSize]="detailOrderPaginateSize"
-                (nzPageIndexChange)="getDetailOrdersByPage($event)"
-                [nzPageIndex]="1"
-                [nzTotal]="detailOrders.length"
-              ></nz-pagination>
-            </div>
-            <nb-card *ngFor="let item of detailOrderPaginate" (click)="navigate(item.productSize.product.id)" class="cursor-pointer mb-2">
-              <nb-card-body>
-                <div class="grid grid-cols-7 gap-5">
-                  <div class="col-span-3 sm:col-span-1">
-                    <app-image
-                      [src]="item.productSize.product.imageUrl"
-                      [classes]="'rounded-lg cursor-pointer'"
-                    ></app-image>
+        <nz-divider></nz-divider>
+        <div class="grid grid-cols-1">
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color"
+              >Giá trị hoá đơn:</span
+            >
+            <span class="text-right">{{ or.price | priceFormat }}</span>
+          </div>
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color">Tiền ship:</span>
+            <span class="text-right">{{ or.shippingFee | priceFormat }}</span>
+          </div>
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color">Mã giảm:</span>
+            <span *ngIf="or.discount.code" class="text-right text-blue-500">
+              {{ or.discount.code }}
+            </span>
+            <span *ngIf="!or.discount.code" class="text-right"> Không có </span>
+          </div>
+          <div class="grid grid-cols-2 mb-1">
+            <span class="text-left second-main-text-color">Giảm giá:</span>
+            <span class="text-right">
+              -
+              {{ (or.discount ? or.discount.amount : 0) | priceFormat }}</span
+            >
+          </div>
+          <div class="grid grid-cols-2 mb-3">
+            <span class="text-left second-main-text-color">Thuế VAC:</span>
+            <span class="text-right">0 đ</span>
+          </div>
+          <div class="grid grid-cols-2 text-lg mb-1">
+            <span class="font-bold text-left">Tổng giá:</span>
+            <span class="font-bold text-right">{{
+              or.totalPrice | priceFormat
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-3 lg:col-span-2">
+        <ng-container *ngIf="!isLoadingDetailOrder">
+          <div class="mb-5 flex justify-end">
+            <nz-pagination
+              [nzSize]="'small'"
+              [nzPageSize]="detailOrderPaginateSize"
+              (nzPageIndexChange)="getDetailOrdersByPage($event)"
+              [nzPageIndex]="1"
+              [nzTotal]="detailOrders.length"
+            ></nz-pagination>
+          </div>
+          <nb-card
+            *ngFor="let item of detailOrderPaginate"
+            (click)="navigate(item.productSize.product.id)"
+            class="cursor-pointer mb-2"
+          >
+            <nb-card-body>
+              <div class="grid grid-cols-7 gap-5">
+                <div class="col-span-3 sm:col-span-1">
+                  <app-image
+                    [src]="item.productSize.product.imageUrl"
+                    [classes]="'rounded-lg cursor-pointer'"
+                  ></app-image>
+                </div>
+                <div class="col-span-4 sm:col-span-6 grid grid-cols-4 gap-5">
+                  <div class="col-span-4 sm:col-span-2">
+                    <div class="w-full h-auto mb-5">
+                      <b class="break-words"
+                        >{{ item.productSize.product.name }} - Size
+                        {{ item.productSize.size.toUpperCase() }}</b
+                      >
+                    </div>
+                    <div class="w-full h-auto second-main-text-color">
+                      <span>{{ item.productSize.price | priceFormat }}</span>
+                    </div>
+                    <div class="w-full h-auto second-main-text-color">
+                      <span>x{{ item.quantity }}</span>
+                    </div>
                   </div>
-                  <div class="col-span-4 sm:col-span-6 grid grid-cols-4 gap-5">
-                    <div class="col-span-4 sm:col-span-2">
-                      <div class="w-full h-auto mb-5">
-                        <b class="break-words">{{
-                          item.productSize.product.name
-                        }} - Size {{ item.productSize.size.toUpperCase() }}</b>
-                      </div>
-                      <div class="w-full h-auto second-main-text-color">
-                        <span>{{ formatPrice(item.productSize.price) }}</span>
-                      </div>
-                      <div class="w-full h-auto second-main-text-color">
-                        <span>x{{ item.quantity }}</span>
-                      </div>
-                    </div>
-                    <div
-                      class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center"
-                    >
-                      <span class="font-bold">{{
-                        formatPrice(item.subTotal)
-                      }}</span>
-                    </div>
+                  <div
+                    class="col-span-4 sm:col-span-2 flex justify-center sm:justify-end items-center"
+                  >
+                    <span class="font-bold">{{
+                      item.subTotal | priceFormat
+                    }}</span>
                   </div>
                 </div>
-              </nb-card-body>
-            </nb-card>
-          </ng-container>
-          <div
-            *ngIf="isLoadingDetailOrder"
-            class="h-full w-full center-an-item"
-          >
-            <nz-spin nzSimple></nz-spin>
-          </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </ng-container>
+        <div *ngIf="isLoadingDetailOrder" class="h-full w-full center-an-item">
+          <nz-spin nzSimple></nz-spin>
         </div>
       </div>
-      <div class="mt-3">
-        <a [routerLink]="['/main/support']" [queryParams]="{ title: 'Cần hỗ trợ đơn hàng: #' + or.id }">
-          <fa-icon  class="mr-1" [icon]="icons['faEnvelope']"></fa-icon>
-          Tôi cần hỗ trợ đơn này
-        </a> 
-      </div>
-    </nz-collapse-panel>
-  </nz-collapse>
+    </div>
+    <div class="mt-3">
+      <a
+        [routerLink]="['/main/support']"
+        [queryParams]="{ title: 'Cần hỗ trợ đơn hàng: #' + or.id }"
+        class="float-right"
+      >
+        <fa-icon class="mr-1" [icon]="icons['faEnvelope']"></fa-icon>
+        Tôi cần hỗ trợ đơn này
+      </a>
+    </div>
+  </nz-collapse-panel>
+</nz-collapse>
 
-  <nz-result
-    *ngIf="!isLoading && filterOrderings.length === 0"
-    [nzIcon]="'smile-twotone'"
-    nzTitle="Ối, chưa có đơn hàng nào cả!!"
-  >
-  </nz-result>
-  <div *ngIf="isLoading" class="h-[200px] center-an-item">
-    <nz-spin nzSimple></nz-spin>
-  </div>
-
-
-
+<nz-result
+  *ngIf="!isLoading && filterOrderings.length === 0"
+  [nzIcon]="'smile-twotone'"
+  nzTitle="Ối, chưa có đơn hàng nào cả!!"
+>
+</nz-result>
+} @loading {
+<div *ngIf="isLoading" class="h-[200px] center-an-item">
+  <nz-spin nzSimple></nz-spin>
+</div>
+}

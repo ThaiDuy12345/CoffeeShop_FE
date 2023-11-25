@@ -1,7 +1,10 @@
 <div class="grid grid-cols-3 gap-5">
   <div class="col-span-3">
-    <h1 *ngIf="account.address" class="font-bold backdrop:italic">Xin vui lòng kiểm tra kỹ mọi thông tin trước khi đến bước kế tiếp</h1>
-    <h1 *ngIf="!account.address" class="text-red-400 italic">Hiện tại tài khoản của bạn vẫn chưa có địa chỉ, xin vui lòng thêm trước khi tiếp tục</h1>
+    @if(!account.address){
+      <nz-alert nzType="error" nzMessage="Hiện tại tài khoản của bạn vẫn chưa có địa chỉ, xin vui lòng thêm trước khi tiếp tục" nzShowIcon></nz-alert>
+    }@else{
+      <nz-alert nzType="info" nzMessage="Xin vui lòng kiểm tra kỹ mọi thông tin trước khi đến bước kế tiếp" nzShowIcon></nz-alert>
+    }
   </div>
   <div class="col-span-3 flex justify-end">
     <nz-pagination
@@ -54,14 +57,14 @@
                   <b class="break-words">{{ item.productSize.product.name }}</b>
                 </div>
                 <div class="w-full h-auto second-main-text-color">
-                  <span>{{ formatPrice(item.productSize.price) }}</span>
+                  <span>{{ item.productSize.price | priceFormat }}</span>
                 </div>
                 <div class="w-full h-auto second-main-text-color">
                   <span>x{{ item.quantity }}</span>
                 </div>
               </div>
               <div class="flex justify-end items-center">
-                <span class="font-bold">{{ formatPrice(item.subTotal) }}</span>
+                <span class="font-bold">{{ item.subTotal | priceFormat }}</span>
               </div>
             </div>
           </div>

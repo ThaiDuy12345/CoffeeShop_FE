@@ -205,8 +205,8 @@
                   <td>
                     {{ data.id }}
                   </td>
-                  <td>{{ formatDate(data.date) }}</td>
-                  <td>{{ formatPrice(data.totalPrice) }}</td>
+                  <td>{{ data.date | dateFormat }}</td>
+                  <td>{{ data.totalPrice | priceFormat }}</td>
                 </tr>
               </tbody>
             </nz-table>
@@ -249,7 +249,7 @@
                       ></fa-icon>
                     </ng-container>
                   </td>
-                  <td>{{ formatDate(data.creationDate) }}</td>
+                  <td>{{ data.creationDate | dateFormat }}</td>
                 </tr>
               </tbody>
             </nz-table>
@@ -265,7 +265,7 @@
   [nzClosable]="false"
   [nzVisible]="detailAdminVisible"
   nzPlacement="right"
-  [nzTitle]="title1"
+  [nzTitle]="title3"
   (nzOnClose)="detailAdminVisible = false"
 >
   <ng-container *nzDrawerContent>
@@ -320,8 +320,8 @@
                   <td>
                     {{ data.id }}
                   </td>
-                  <td>{{ formatDate(data.date) }}</td>
-                  <td>{{ formatPrice(data.totalPrice) }}</td>
+                  <td>{{ data.date | dateFormat }}</td>
+                  <td>{{ data.totalPrice | priceFormat }}</td>
                   <td>
                     <nz-tag
                       nz-tooltip

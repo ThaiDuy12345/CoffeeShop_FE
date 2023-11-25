@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
-import { Account } from 'src/app/core/models/account.model';
 import { Discount } from 'src/app/core/models/discount.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { MappingService } from 'src/app/core/services/mapping.service';
@@ -56,9 +55,9 @@ export class DiscountManagementComponent implements OnInit{
               ||
               d.code.toLowerCase().includes(this.searchInput.toLowerCase())
               ||
-              this.formatDate(d.creationDate).includes(this.searchInput.toLowerCase())
+              this.formatService.formatTimeStamp(d.creationDate).includes(this.searchInput.toLowerCase())
               ||
-              this.formatDate(d.expiredDate).includes(this.searchInput.toLowerCase())
+              this.formatService.formatTimeStamp(d.expiredDate).includes(this.searchInput.toLowerCase())
             )
           })
         }else{
@@ -113,14 +112,6 @@ export class DiscountManagementComponent implements OnInit{
 
   compareDate(to: number): boolean{
     return new Date() <= new Date(to)
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
-
-  formatNumber(data: number): string {
-    return this.formatService.formatPrice(data)
   }
 
   viewADiscount(data: Discount): void {

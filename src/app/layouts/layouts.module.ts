@@ -65,7 +65,8 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { FooterComponent } from '../shared/components/footer/footer.component';
-import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ProductListComponent } from '../shared/components/product-list/product-list.component';
 import { UserComponent } from './main/user/user.component';
 import { EditUserComponent } from './main/user/edit-user/edit-user.component';
@@ -106,6 +107,10 @@ import { DetailDiscountManagementComponent } from './admin/discount-management/d
 import { DetailOrderingManagementComponent } from './admin/ordering-management/detail-ordering-management/detail-ordering-management.component';
 import { PrivaryPolicyComponent } from './privary-policy/privary-policy.component';
 import { TermsAndServicesComponent } from './terms-and-services/terms-and-services.component';
+import { PriceFormatPipe } from '../shared/pipes/price-format/price-format.pipe';
+import { DateFormatPipe } from '../shared/pipes/date-format/date-format.pipe';
+import { TimeAgoSinceFormatPipe } from '../shared/pipes/time-ago-since-format/time-ago-since-format.pipe';
+import { TimeFromNowFormatPipe } from '../shared/pipes/time-from-now-format/time-from-now-format.pipe';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -188,10 +193,15 @@ import { TermsAndServicesComponent } from './terms-and-services/terms-and-servic
     NzTimelineModule,
     NzRadioModule,
     NzDrawerModule,
+    PriceFormatPipe,
+    DateFormatPipe,
+    TimeAgoSinceFormatPipe,
+    TimeFromNowFormatPipe,
     GoogleSigninButtonModule,
     NzSkeletonModule,
     NbSelectModule,
     NbSearchModule,
+    NzAlertModule,
     NbInputModule,
     NbDialogModule.forChild(),
     FontAwesomeModule,

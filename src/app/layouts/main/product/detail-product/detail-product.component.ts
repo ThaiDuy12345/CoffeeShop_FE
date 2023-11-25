@@ -6,11 +6,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { FeedBack } from 'src/app/core/models/feedback.model';
-import { FeedBackData, FavoriteProductData } from 'src/app/data/data';
+import { FeedBackData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
-import { FormatService } from 'src/app/core/services/format.service';
 import { ProductSize } from 'src/app/core/models/product-size.model';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Subject, finalize } from 'rxjs';
@@ -53,7 +52,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private messageService: NzMessageService,
     private router: Router,
-    private formatService: FormatService,
     private filterStore: FilterStore,
     @Optional() private dialogRef: NbDialogRef<any>,
     private orderingService: OrderingService,
@@ -210,10 +208,10 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   }
 
   loadRelatedProducts(): void {
-    this.productService.getByCategory({ categoryId: this.product.category.id }).subscribe({
+    this.productService.getAllWithPrice().subscribe({
       next: res => {
         if(res.status){
-          const result = res.data.map((p: any) => this.mappingService.product(p))
+          const result = res.data.filter((p: any) => p.categoryEntity.categoryId === this.product.category.id).map((p: any) => this.mappingService.product(p))
           this.relatedProducts = this.productService.filterActiveProducts(result).slice(0, 5)
         }else this.messageService.error(res.message);
       },
@@ -247,10 +245,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     const last = 3 * this.feedBackPageIndex;
     const begin = last - 3;
     return this.feedBackProducts.slice(begin, last);
-  }
-
-  timeSince(date: number): string {
-    return this.formatService.timeAgoSince(new Date(date));
   }
 
   renderStarColor(star: number): string {
@@ -295,10 +289,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       return;
     }
     this.dialogRef = this.dialogService.open(dialog);
-  }
-
-  formatPrice(price: number): string {
-    return this.formatService.formatPrice(price)
   }
 
   onClickSubmit(): void {

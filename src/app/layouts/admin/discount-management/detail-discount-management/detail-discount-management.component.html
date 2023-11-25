@@ -14,7 +14,7 @@
           <form autocomplete="off">
             <div class="mb-5">
               <label for="lName" class="mb-3 block font-medium">
-                Ngày tạo: <b>{{ formatDate(choosingDiscount.creationDate) }}</b>
+                Ngày tạo: <b>{{ choosingDiscount.creationDate | dateFormat }}</b>
               </label>
             </div>
             <div class="mb-5">
@@ -55,13 +55,13 @@
             </div>
             <div class="mb-5">
               <label for="guest" class="mb-3 block font-medium">
-                Ngày hết hiệu lực: <b>{{ formatDate(choosingDiscount.expiredDate) }}</b>
+                Ngày hết hiệu lực: <b>{{ choosingDiscount.expiredDate | dateFormat }}</b>
               </label>
               <nz-date-picker [nzDisabledDate]="disabledDate" name="expiredDateInput" #expiredDateInput="ngModel" class="w-full h-[40px]" [(ngModel)]="expiredDate" (ngModelChange)="onChangeExpiredDate($event)"></nz-date-picker>
             </div>
             <div class="mb-5">
               <label for="guest" class="mb-3 block font-medium">
-                Giá tối thiểu để áp dụng: <b>{{ formatNumber(choosingDiscount.minimumOrderPrice) }}</b>
+                Giá tối thiểu để áp dụng: <b>{{ choosingDiscount.minimumOrderPrice | priceFormat }}</b>
               </label>
               <input
                 type="number"
@@ -79,7 +79,7 @@
             </div>
             <div class="mb-5">
               <label for="guest" class="mb-3 block font-medium">
-                Mức giá sẽ giảm: <b>{{ formatNumber(choosingDiscount.amount) }}</b>
+                Mức giá sẽ giảm: <b>{{ choosingDiscount.amount | priceFormat }}</b>
               </label>
               <input
                 [disabled]="!isEditable" 

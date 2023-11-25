@@ -77,7 +77,7 @@
                 </nz-tag>
               </span>
             </td>
-            <td>{{ formatDate(data.creationDate) }}</td>
+            <td>{{ data.creationDate | dateFormat }}</td>
             <td>{{ data.account.name }}</td>
             <td>
               <fa-icon
@@ -147,7 +147,7 @@
           tạo:
         </div>
         <div class="col-span-2">
-          {{ formatDate(choosingSupport.creationDate) }}
+          {{ choosingSupport.creationDate | dateFormat }}
         </div>
         <div class="col-span-2">
           <fa-icon [icon]="icons['faBookOpenReader']" class="mr-2"></fa-icon

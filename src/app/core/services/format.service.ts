@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class FormatService {
-  timeAgoSince(date: Date): string {
+  timeAgoSince(date: number): string {
     const now = new Date();
-    const diff = Math.floor((now.getTime() - date.getTime()) / 1000);
+    const diff = Math.floor((now.getTime() -date) / 1000);
 
     if (diff < 60) {
       return `${diff} giây trước`;
@@ -22,10 +22,10 @@ export class FormatService {
     }
   }
 
-  timeFromNow(date: Date): string {
+  timeFromNow(date: number): string {
     const now = new Date();
     const futureDate = date;
-    const diff = Math.floor((futureDate.getTime() - now.getTime()) / 1000);
+    const diff = Math.floor((futureDate - now.getTime()) / 1000);
   
     if (diff < 60) {
       return `trong ${diff} giây`;
@@ -54,7 +54,7 @@ export class FormatService {
     return formatter.format(price);
   }
 
-  formatDate(date: Date): string {
+  private formatDate(date: Date): string {
     return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
   }
 

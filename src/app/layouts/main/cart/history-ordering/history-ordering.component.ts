@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Cookies from 'js-cookie';
 import { DetailOrder } from 'src/app/core/models/detail-order.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
-import { FormatService } from 'src/app/core/services/format.service';
 import { DetailOrderData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { Account } from 'src/app/core/models/account.model';
@@ -33,7 +31,6 @@ export class HistoryOrderingComponent implements OnInit{
   public filterOrderings: Ordering[] = []
   public selectedType: number[] = []
   constructor(
-    private formatService: FormatService,
     private router: Router,
     private orderingService: OrderingService,
     private messageService: NzMessageService,
@@ -113,18 +110,6 @@ export class HistoryOrderingComponent implements OnInit{
     const startIndex = (pageIndex - 1) * this.detailOrderPaginateSize;
     const endIndex = startIndex + this.detailOrderPaginateSize;
     this.detailOrderPaginate = this.detailOrders.slice(startIndex, endIndex);
-  }
-
-  timeSince(date: number): string {
-    return this.formatService.timeAgoSince(new Date(date));
-  }
-
-  formatPrice(price: number | undefined): string {
-    if (price === undefined) return ''
-    return this.formatService.formatPrice(price);
-  }
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date);
   }
 
   getDetailOrder(ordering: Ordering): DetailOrder[]{

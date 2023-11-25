@@ -14,9 +14,6 @@
                   <label class="my-2">Email</label>
                   <input
                     [(ngModel)]="account.email"
-                    [ngClass]="{
-                      'error-input-color': account.email === '' && isSubmitted,
-                    }"
                     nbInput
                     name="email"
                     #name="ngModel"
@@ -35,10 +32,6 @@
                   <nb-form-field class="min-w-0 mt-2">
                     <input
                       [(ngModel)]="account.password"
-                      [ngClass]="{
-                        'error-input-color':
-                          account.password === '' && isSubmitted
-                      }"
                       nbInput
                       name="password"
                       required

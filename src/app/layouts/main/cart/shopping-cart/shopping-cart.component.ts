@@ -37,11 +37,11 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(
     private filterStore: FilterStore,
-    private formatService: FormatService,
     private orderingService: OrderingService,
     private detailOrderService: DetailOrderService,
     private mappingService: MappingService,
     private dialogService: NbDialogService,
+    private formatService: FormatService,
     @Optional() private dialogRef: NbDialogRef<any>,
     private messageService: NzMessageService,
     private router: Router,
@@ -117,7 +117,7 @@ export class ShoppingCartComponent implements OnInit {
     for(const discount of this.discounts){
       if(discount.minimumOrderPrice > this.ordering.price) {
         const price = discount.minimumOrderPrice - this.ordering.price
-        this.discountNotification = `Hãy mua thêm ${ this.formatPrice(price) } để có thể sử dụng mã giảm có giá trị ${this.formatPrice(discount.amount)} bạn nhé!!`
+        this.discountNotification = `Hãy mua thêm ${ this.formatService.formatPrice(price) } để có thể sử dụng mã giảm có giá trị ${this.formatService.formatPrice(discount.amount)} bạn nhé!!`
         break
       }
     }
@@ -147,18 +147,6 @@ export class ShoppingCartComponent implements OnInit {
       },
       error: err => this.messageService.error(err.error.message),
     })
-  }
-
-  formatPrice(price: number = 0): string {
-    return this.formatService.formatPrice(price)
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
-
-  timeSince(date: number): string {
-    return this.formatService.timeFromNow(new Date(date))
   }
 
   openDiscountModal(dialog: TemplateRef<any>): void {

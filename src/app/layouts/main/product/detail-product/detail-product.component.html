@@ -50,7 +50,7 @@
             <span> {{ soldQuantity }} Lượt bán </span>
           </div>
           <div class="w-full text-3xl text-[#EE7070] font-bold">
-            {{ productSize.length > 0 ? formatPrice(getPrice(choosingSize)) : null }}
+            {{ (productSize.length > 0 ? getPrice(choosingSize) : 0) | priceFormat  }}
           </div>
           <div class="w-full mt-5 mb-5">
             <nz-segmented *ngIf="productSizeOption.length != 0" (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>
@@ -222,7 +222,7 @@
               {{ fb.comment }}
             </div>
             <small class="second-main-text-color"
-              >Đánh giá {{ timeSince(fb.creationDate) }}</small
+              >Đánh giá {{ fb.creationDate | timeAgoSinceFormat }}</small
             >
           </div>
         </div>

@@ -1,9 +1,5 @@
-import { Observable, finalize } from 'rxjs';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { Product } from 'src/app/core/models/product.model';
-import { FormatService } from 'src/app/core/services/format.service';
-import { ImageService } from 'src/app/core/services/image.service';
 
 @Component({
   selector: 'app-product-list',
@@ -18,10 +14,6 @@ export class ProductListComponent implements OnInit, OnChanges {
   public images: string[] = []
   public classes: string = ''
 
-  constructor(
-    private formatService: FormatService,
-  ){}
-
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['cols']){
       if(this.isRelatedProductList) return
@@ -35,11 +27,8 @@ export class ProductListComponent implements OnInit, OnChanges {
     }else {
       this.classes = `w-full grid grid-cols-${this.cols} gap-5`
     }
-  }
 
-  formatPrice(price: number | undefined): string {
-    if(!price) return ''
-    return this.formatService.formatPrice(price)
+    console.log(this.products)
   }
 }
 

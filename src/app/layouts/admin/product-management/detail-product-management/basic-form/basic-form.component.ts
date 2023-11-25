@@ -4,7 +4,6 @@ import { Category } from 'src/app/core/models/category.model';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
-import { FormatService } from 'src/app/core/services/format.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -21,7 +20,6 @@ export class BasicFormComponent implements OnInit{
   public selectedCategory: string = ""
   public categoryOptions: Category[] = []
   constructor(
-    private formatService: FormatService,
     private categoryService: CategoryService,
     private messageService: NzMessageService
   ){}
@@ -48,14 +46,6 @@ export class BasicFormComponent implements OnInit{
         this.messageService.error(err.error.message)
       }
     })
-  }
-
-  formatDate(date: number): string {
-    return this.formatService.formatDate(new Date(date))
-  }
-
-  timeSince(date: number): string {
-    return this.formatService.timeAgoSince(new Date(date))
   }
 
   onChangeCategory(value: string): void {

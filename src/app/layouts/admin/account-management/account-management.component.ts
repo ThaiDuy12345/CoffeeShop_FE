@@ -1,6 +1,4 @@
-import { error } from '@ant-design/icons-angular';
 import { Component, OnInit } from '@angular/core';
-import { faBedPulse } from '@fortawesome/free-solid-svg-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { Account } from 'src/app/core/models/account.model';
@@ -34,10 +32,10 @@ export class AccountManagementComponent implements OnInit {
 
   constructor(
     private messageService: NzMessageService,
-    private formatService: FormatService,
     private accountService: AccountService,
     private mappingService: MappingService,
-    private orderingService: OrderingService
+    private orderingService: OrderingService,
+    private formatService: FormatService
   ){}
 
   ngOnInit(): void {
@@ -108,14 +106,6 @@ export class AccountManagementComponent implements OnInit {
       this.messageService.error("Thay đổi trạng thái thất bại")
     }
   }
-  
-  formatDate(date: number): string {
-    return this.formatService.formatTimeStamp(date)
-  }
-
-  formatPrice(price: number): string {
-    return this.formatService.formatPrice(price)
-  }
 
   renderStarColor(star: number): string {
     switch (true) {
@@ -148,8 +138,8 @@ export class AccountManagementComponent implements OnInit {
             this.accountOrderings = this.accountOrderings.filter(a => {
               return(
                 a.id.toString().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
-                this.formatDate(a.date).toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
-                this.formatPrice(a.totalPrice).toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
+                this.formatService.formatTimeStamp(a.date).toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
+                this.formatService.formatPrice(a.totalPrice).toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()) ||
                 (a.approveDescription && a.approveDescription.toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase())) ||
                 (a.cancelDescription && a.cancelDescription.toLowerCase().includes(this.searchInputDetailAdminVisible.trim().toLowerCase()))
               )

@@ -61,6 +61,7 @@ body {
   nb-layout-header>nav{
     padding: 0 !important;
   }
+
   nz-alert{
     width: fit-content !important;
     .ant-alert{
@@ -71,6 +72,12 @@ body {
       svg{
         vertical-align: baseline !important;
       }
+    }
+  }
+
+  [nz-pagination-item]{
+    svg{
+      vertical-align: baseline !important;
     }
   }
 

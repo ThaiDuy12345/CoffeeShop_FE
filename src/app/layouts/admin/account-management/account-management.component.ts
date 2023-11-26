@@ -174,7 +174,7 @@ export class AccountManagementComponent implements OnInit {
     this.isLoadingChoosingOrdering = true
     this.orderingService.getAllByAccount({ accountPhone: this.choosingAccount.phone }).pipe(finalize(() => this.isLoadingChoosingOrdering = false)).subscribe({
       next: res => {
-        if(res.status) this.accountOrderings = res.data.map((o: any) => this.mappingService.ordering(o))
+        if(res.status) this.accountOrderings = res.data.filter((o: any) => o.orderingStatus !== 0).map((o: any) => this.mappingService.ordering(o))
         else this.messageService.error(res.message)
       },
       error: err => this.messageService.error(err.error.message)

@@ -182,7 +182,7 @@
   <nb-card class="nosd max-h-[85vh] max-w-[500px]">
     <nb-card-header class="m-0 border-none"> Chọn mã giảm giá </nb-card-header>
     <nb-card-body class="overflow-y-auto discountModal">
-      @defer ( when !isLoadingDiscountModal ){
+      @if ( !isLoadingDiscountModal ){
         <div
           *ngFor="let item of discounts"
           class="border-2 m-0 block coffee-box py-[20px] px-[25px] mb-[15px] transition-colors discountModal"
@@ -248,7 +248,7 @@
           nzTitle="Ối, Không có mã giảm giá nào cả!!"
         >
         </nz-result>
-      } @loading (minimum 500) {
+      } @else {
         <div
           class="min-h-[400px] w-full center-an-item"
         >

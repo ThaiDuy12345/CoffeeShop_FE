@@ -27,7 +27,7 @@
     </nb-select>
   </div>
 </div>
-@defer(when !isLoading){
+@if(!isLoading){
 <nz-collapse
   *ngIf="!isLoading"
   nzAccordion
@@ -265,7 +265,7 @@
   nzTitle="Ối, chưa có đơn hàng nào cả!!"
 >
 </nz-result>
-} @loading {
+} @else {
 <div *ngIf="isLoading" class="h-[200px] center-an-item">
   <nz-spin nzSimple></nz-spin>
 </div>

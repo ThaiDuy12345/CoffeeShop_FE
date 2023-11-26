@@ -36,7 +36,7 @@ export class FeedbackService{
     )
   }
 
-  getIsAllowedToCreateFeedback(params: { accountPhone: string, productId: string }): Observable<boolean> {
+  getIsAllowedToCreateFeedback(params: { accountPhone: string, productId: string }): Observable<any> {
     return this.apiService.errorHandle(
       this.httpClient.get(this.apiService.feedbackService().toString() + `/isAllowedToCreateFeedback/${params.productId}/${params.accountPhone}`)
     )

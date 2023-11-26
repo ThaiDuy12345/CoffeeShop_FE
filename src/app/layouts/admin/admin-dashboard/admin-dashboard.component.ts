@@ -1,8 +1,9 @@
 import { StatisticService } from './../../../core/services/statistic.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { finalize } from 'rxjs';
+import { Subject, finalize } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
+import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -10,12 +11,13 @@ import { icons } from 'src/app/shared/utils/icon.utils';
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
-export class AdminDashboardComponent implements OnInit{
+export class AdminDashboardComponent implements OnInit, OnDestroy{
   public icons: Icon = icons
   public time: string = 'Tuần vừa qua'
   public type: string = 'Tài khoản được tạo'
   public timeOptions: string[] = ['Tuần vừa qua', 'Tháng vừa qua', '6 tháng vừa qua', 'Năm vừa qua'];
   public typeOptions: string[] = ['Tài khoản được tạo', 'Sản phẩm bán ra', 'Hoá đơn', 'Phản hồi', 'Thư hỗ trợ'];
+  public isStaff: boolean = false
   public isLoading: boolean = false
   public statistic: {
     accountStatistic: number,
@@ -28,13 +30,34 @@ export class AdminDashboardComponent implements OnInit{
     productStatistic: 0,
     supportStatistic: 0
   }
+  private tempSubject: Subject<any> = new Subject()
   constructor(
     private messageService: NzMessageService,
-    private statisticService: StatisticService
+    private statisticService: StatisticService,
+    private authenticationStore: AuthenticationStore
   ) {}
 
+  ngOnDestroy(): void {
+    this.tempSubject.complete()
+  }
+  
   ngOnInit(): void {
+    this.initAccount()
     this.initData()
+  }
+
+  initAccount(): void {
+    this.tempSubject.subscribe({
+      next: res => {
+        this.isStaff = res.account && res.account.role === 1  
+      },
+      error: err => {
+        this.messageService.error("Đã có lỗi xảy ra trong quá trình lấy dữ liệu")
+        this.isStaff = true
+      }
+    })
+
+    this.authenticationStore._select(state => state).subscribe(this.tempSubject)
   }
 
   initData(): void {

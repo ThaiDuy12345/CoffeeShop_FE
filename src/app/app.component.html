@@ -1,6 +1,6 @@
-@defer (when isReady) {
+@if (isReady) {
   <app-layouts></app-layouts>
-} @loading (minimum 500){
+} @else {
   <div class="w-full h-full center-an-item bg-white">
     <div>
       <div class="center-an-item font-bold">

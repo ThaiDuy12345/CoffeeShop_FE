@@ -15,7 +15,8 @@
       [routerLink]="'/main/product'"
       class="text-sm text-left second-text-color mb-3"
     >
-      <fa-icon [icon]="icons['faArrowLeft']" class='mr-2'></fa-icon> Danh sách sản phẩm
+      <fa-icon [icon]="icons['faArrowLeft']" class="mr-2"></fa-icon> Danh sách
+      sản phẩm
     </button>
   </div>
   <nb-card class="rounded-lg p-5">
@@ -42,18 +43,25 @@
             </span>
             <span class="me-5">
               {{
-                feedbackProducts.length > 0
-                  ? feedbackProducts.length + " Phản hồi"
+                originalFeedbackProducts.length > 0
+                  ? originalFeedbackProducts.length + " Phản hồi"
                   : "Chưa có phản hồi"
               }}
             </span>
             <span> {{ soldQuantity }} Lượt bán </span>
           </div>
           <div class="w-full text-3xl text-[#EE7070] font-bold">
-            {{ (productSize.length > 0 ? getPrice(choosingSize) : 0) | priceFormat  }}
+            {{
+              (productSize.length > 0 ? getPrice(choosingSize) : 0)
+                | priceFormat
+            }}
           </div>
           <div class="w-full mt-5 mb-5">
-            <nz-segmented *ngIf="productSizeOption.length != 0" (nzValueChange)="handleProductSizeChange($event)" [nzOptions]="productSizeOption"></nz-segmented>
+            <nz-segmented
+              *ngIf="productSizeOption.length != 0"
+              (nzValueChange)="handleProductSizeChange($event)"
+              [nzOptions]="productSizeOption"
+            ></nz-segmented>
           </div>
           <div class="w-full mt-5">
             <span class="me-5"> Số lượng: </span>
@@ -98,7 +106,11 @@
               <fa-icon
                 [icon]="icons['faHeart']"
                 class="cursor-pointer"
-                (click)="isUserLoveThisProduct ? onClickUnFavorite() : onClickFavorite() "
+                (click)="
+                  isUserLoveThisProduct
+                    ? onClickUnFavorite()
+                    : onClickFavorite()
+                "
                 [ngClass]="{
                   'text-[#ee7070]': isUserLoveThisProduct
                 }"
@@ -134,33 +146,53 @@
       <br />
       <b class="text-lg">Mô tả sản phẩm</b>
       <br /><br />
-      <span class="italic second-main-text-color">{{ product.description }}</span>
+      <span class="italic second-main-text-color">{{
+        product.description
+      }}</span>
     </nb-card-footer>
   </nb-card>
   <nb-card class="rounded-lg p-5">
+    @if (!isLoadingFeedbackProduct){
     <nb-card-header class="border-none grid grid-cols-2">
       <div class="text-start text-lg font-bold">Các lượt phản hồi</div>
-      <div class="text-end second-text-color text-lg">
-        <span (click)="open(dialog)" class="cursor-pointer">
+      <div class="text-end text-lg">
+        @if (isAllowedToCreateFeedback) {
+          @if (accountFeedback.account.phone.length > 0){
+            <span (click)="openEdit(dialog2)" class="cursor-pointer second-text-color">
+              Chỉnh sửa review sản phẩm <fa-icon [icon]="icons['faPencil']"></fa-icon>
+            </span>    
+          } @else {
+            <span (click)="open(dialog)" class="cursor-pointer second-text-color">
+              Review sản phẩm <fa-icon [icon]="icons['faPencil']"></fa-icon>
+            </span>
+          }
+        } @else {
+        <span
+          class="cursor-not-allowed text-gray-300"
+          nz-tooltip
+          nzTooltipTitle="Bạn cần phải mua sản phẩm này trước mới có thể tiến hành đánh giá sản phẩm!!"
+        >
           Review sản phẩm <fa-icon [icon]="icons['faPencil']"></fa-icon>
         </span>
+        }
       </div>
     </nb-card-header>
     <nb-card-body class="grid grid-cols-1">
       <div class="grid grid-cols-6 gap-5 my-10">
         <div class="col-span-6 lg:col-span-3 xl:col-span-2 2xl:col-span-1">
           <div class="">
-            <span class="text-6xl"><b>{{ avarageStar ? avarageStar : 0 }}.0</b>/5</span><br/><br/>
+            <span class="text-6xl"
+              ><b>{{ avarageStarNumber ? avarageStarNumber : '0' }}</b>/5</span
+            ><br /><br />
             <span>
               <fa-icon
                 [icon]="icons['faStar']"
                 [style]="'color: ' + renderStarColor(5)"
                 *ngFor="let i of [].constructor(5)"
                 size="2x"
-                class=""
-              ></fa-icon>
-            </span><br/><br/>
-            <span>{{ feedbackProducts.length }} lượt đánh giá</span>
+              ></fa-icon> </span
+            ><br /><br />
+            <span>{{ originalFeedbackProducts.length }} lượt đánh giá</span>
           </div>
         </div>
         <div class="col-span-6 lg:col-span-3 xl:col-span-4 2xl:col-span-5">
@@ -187,68 +219,130 @@
         </div>
       </div>
       <nz-divider></nz-divider>
-      <ng-container *ngIf="feedbackProducts.length > 0">
-        <div
-          class="grid grid-cols-6 gap-5 my-10"
-          *ngFor="let fb of feedbackProductsPg"
-        >
-          <div class="col-span-6 md:col-span-1 grid">
-            <div class="h-full center-an-item">
-              <nz-avatar
-                nz-comment-avatar
-                [nzText]="fb.account.name[0].toUpperCase()"
-                class="center-an-item"
-                style="
-                  color: rgb(55 65 81);
-                  background-color: #a2a2a2;
-                  width: 50px;
-                  height: 50px;
-                "
-              ></nz-avatar>
-            </div>
-            <div class="font-weight h-full center-an-item">
-              {{ fb.account.name }}
-            </div>
+      @if (accountFeedback.account.phone){
+      <div class="font-semibold">Đánh giá của bạn</div>
+      <div class="grid grid-cols-6 gap-4 my-10">
+        <div class="col-span-6 lg:col-span-1">
+          <div class="mb-2 center-an-item">
+            <nz-avatar
+              nz-comment-avatar
+              [nzText]="accountFeedback.account.name[0].toUpperCase()"
+              class="center-an-item"
+              style="
+                color: rgb(255, 255, 255);
+                background-color: #363062;
+                width: 40px;
+                height: 40px;
+              "
+            ></nz-avatar>
           </div>
-          <div class="col-span-6 md:col-span-5 grid grid-cols-1">
-            <span>
-              @for (i of [].constructor(fb.rate); track $index){
-                <fa-icon
-                  [icon]="icons['faStar']"
-                  [style]="'color: ' + renderStarColor(fb.rate)"
-                ></fa-icon>
+          <div class="font-weight center-an-item">
+            {{ accountFeedback.account.name }}
+          </div>
+        </div>
+        <div
+          [ngClass]="{
+            'center-an-item': getWidth() < 1024
+          }"
+          class="col-span-6 lg:col-span-5 grid grid-cols-1"
+        >
+          <div>
+            <div
+              [ngClass]="{
+                'text-center': getWidth() < 1024
+              }"
+              class="mb-1"
+            >
+              @for (i of [].constructor(accountFeedback.rate); track $index){
+              <fa-icon
+                [icon]="icons['faStar']"
+                [style]="'color: ' + renderStarColor(accountFeedback.rate)"
+              ></fa-icon>
               }
-            </span>
-            <div>
+            </div>
+            <div
+              [ngClass]="{
+                'text-center': getWidth() < 1024
+              }"
+              class="mb-1"
+            >
+              {{ accountFeedback.comment }}
+            </div>
+            <small
+              [ngClass]="{
+                'text-center': getWidth() < 1024
+              }"
+              class="second-main-text-color"
+              >Đánh giá
+              {{ accountFeedback.creationDate | timeAgoSinceFormat }}</small
+            >
+          </div>
+        </div>
+      </div>
+      <nz-divider></nz-divider>
+      }
+      
+      <div class="font-semibold">Các đánh giá khác</div>
+
+      @for (fb of feedbackProductsPg; track $index){
+      <div class="grid grid-cols-6 gap-4 my-10">
+        <div class="col-span-6 lg:col-span-1">
+          <div class="mb-2 center-an-item">
+            <nz-avatar
+              nz-comment-avatar
+              [nzText]="fb.account.name[0].toUpperCase()"
+              class="center-an-item"
+              style="
+                color: rgb(255, 255, 255);
+                background-color: #363062;
+                width: 40px;
+                height: 40px;
+              "
+            ></nz-avatar>
+          </div>
+          <div class="font-weight center-an-item">
+            {{ fb.account.name }}
+          </div>
+        </div>
+        <div
+          [ngClass]="{
+            'center-an-item': getWidth() < 1024
+          }"
+          class="col-span-6 lg:col-span-5 grid grid-cols-1"
+        >
+          <div>
+            <div
+              [ngClass]="{
+                'text-center': getWidth() < 1024
+              }"
+              class="mb-1"
+            >
+              @for (i of [].constructor(fb.rate); track $index){
+              <fa-icon
+                [icon]="icons['faStar']"
+                [style]="'color: ' + renderStarColor(fb.rate)"
+              ></fa-icon>
+              }
+            </div>
+            <div
+              [ngClass]="{
+                'text-center': getWidth() < 1024
+              }"
+              class="mb-1"
+            >
               {{ fb.comment }}
             </div>
-            <small class="second-main-text-color"
+            <small
+              [ngClass]="{
+                'text-center': getWidth() < 1024
+              }"
+              class="second-main-text-color"
               >Đánh giá {{ fb.creationDate | timeAgoSinceFormat }}</small
             >
           </div>
         </div>
-        <!-- <nz-comment
-          [nzAuthor]="fb.account.name"
-          [nzDatetime]="timeSince(fb.creationDate)"
-          *ngFor="let fb of feedbackProductsPg"
-        >
-          <nz-avatar
-            nz-comment-avatar
-            [nzText]="fb.account.name[0].toUpperCase()"
-            class="center-an-item"
-            style="color: rgb(55 65 81); background-color: #30b970; width: 50px; height: 50px"
-          ></nz-avatar>
-          <nz-comment-content>
-            <fa-icon
-              [icon]="icons['faStar']"
-              [style]="'color: ' + renderStarColor(fb.star)"
-              *ngFor="let i of [].constructor(fb.star)"
-            ></fa-icon>
-            <br />
-            {{ fb.comment }}
-          </nz-comment-content>
-        </nz-comment> -->
-      </ng-container>
+      </div>
+      }
       <nz-result
         *ngIf="feedbackProducts.length === 0"
         [nzIcon]="'smile-twotone'"
@@ -264,9 +358,16 @@
         [nzTotal]="feedbackProducts.length"
       ></nz-pagination>
     </nb-card-footer>
+    } @else {
+    <div class="h-[200px] center-an-item">
+      <nz-spin nzSimple></nz-spin>
+    </div>
+    }
   </nb-card>
   <nb-card class="rounded-lg p-5">
-    <nb-card-header class="border-none font-bold text-lg"> Sản phẩm liên quan </nb-card-header>
+    <nb-card-header class="border-none font-bold text-lg">
+      Sản phẩm liên quan
+    </nb-card-header>
     <nb-card-body>
       <app-product-list
         [products]="relatedProducts"
@@ -274,7 +375,11 @@
       ></app-product-list>
     </nb-card-body>
     <nb-card-footer class="border-none center-an-item">
-      <a nbButton status="info" class="text-center block" (click)="navigateRelatedProduct()"
+      <a
+        nbButton
+        status="info"
+        class="text-center block"
+        (click)="navigateRelatedProduct()"
         ><fa-icon [icon]="icons['faBars']" class="mr-2"></fa-icon>Xem thêm</a
       >
     </nb-card-footer>
@@ -297,9 +402,9 @@
               [icon]="icons['faStar']"
               [style]="
                 'color: ' +
-                renderStarColor(i <= starRating - 1 ? starRating : 0)
+                renderStarColor(i <= feedback.rate - 1 ? feedback.rate : 0)
               "
-              (click)="starRating = i + 1"
+              (click)="feedback.rate = i + 1"
               size="2x"
               class="me-3 cursor-pointer"
             ></fa-icon>
@@ -311,14 +416,72 @@
             nbInput
             fullWidth
             placeholder="Cảm nhận của bạn về sản phẩm này"
-            class='mt-3'
+            class="mt-3"
+            [(ngModel)]="feedback.comment"
           ></textarea>
         </div>
       </div>
     </nb-card-body>
     <nb-card-footer class="space-x-3">
       <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
-      <button nbButton status="success" (click)="onClickSubmit()">
+      <button
+        [nbSpinner]="isLoadingFeedbackSubmitButton"
+        [disabled]="feedback.rate === 0"
+        nbButton
+        status="success"
+        (click)="onClickSubmit()"
+      >
+        Xác nhận
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialog2 let-data let-ref="dialogRef">
+  <nb-card class="rounded-lg nosd">
+    <nb-card-header
+      >Chỉnh sửa review cho sản phẩm "{{ product.name }}"</nb-card-header
+    >
+    <nb-card-body class="grid grid-cols-1 p-10">
+      <div class="w-full grid-cols-1 grid">
+        <div class="font-bold text-2xl text-center mb-5">
+          Bản cảm thấy sản phẩm này như nào?
+        </div>
+        <div class="center-an-item mb-10">
+          <ng-container *ngFor="let icon of [].constructor(5); let i = index">
+            <fa-icon
+              [icon]="icons['faStar']"
+              [style]="
+                'color: ' +
+                renderStarColor(i <= feedback.rate - 1 ? feedback.rate : 0)
+              "
+              (click)="feedback.rate = i + 1"
+              size="2x"
+              class="me-3 cursor-pointer"
+            ></fa-icon>
+          </ng-container>
+        </div>
+        <div>
+          <label>Viết cảm nhận</label>
+          <textarea
+            nbInput
+            fullWidth
+            placeholder="Cảm nhận của bạn về sản phẩm này"
+            class="mt-3"
+            [(ngModel)]="feedback.comment"
+          ></textarea>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="space-x-3">
+      <button nbButton status="infor" (click)="ref.close()">Huỷ</button>
+      <button
+        [nbSpinner]="isLoadingFeedbackSubmitButton"
+        nbButton
+        [disabled]="feedback.rate === 0"
+        status="success"
+        (click)="onClickEditSubmit()"
+      >
         Xác nhận
       </button>
     </nb-card-footer>

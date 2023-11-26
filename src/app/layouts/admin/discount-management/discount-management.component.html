@@ -168,7 +168,7 @@
               <tbody>
                 <tr *ngFor="let data of table2.data">
                   <td class="second-text-color cursor-pointer">
-                    {{ data.id }}
+                    <span class="cursor-pointer coffee-link" [routerLink]="['/admin/ordering-management', data.id]">{{ data.id }}</span>
                   </td>
                   <td>{{ data.date | dateFormat }}</td>
                   <td>{{ (data.price + data.shippingFee) | priceFormat }}</td>

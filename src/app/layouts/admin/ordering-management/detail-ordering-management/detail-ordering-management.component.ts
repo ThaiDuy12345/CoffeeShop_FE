@@ -278,10 +278,6 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
     return window.innerWidth
   }
 
-  navigate(productId: string): void {
-    this.router.navigateByUrl(`/main/product/${productId}`)
-  }
-
   getProductLength(): number {
     let sum = 0
     this.detailOrders.forEach((item) => sum += item.quantity)

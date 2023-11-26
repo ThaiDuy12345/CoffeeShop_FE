@@ -271,14 +271,13 @@
             </div>
             <div class="col-span-4">
               <ng-container *ngFor="let item of detailOrderPaginates">
-                <nb-card class="mb-2">
+                <nb-card class="mb-2 cursor-pointer" [routerLink]="['/main/product', item.productSize.product.id]">
                   <nb-card-body>
                     <div class="grid grid-cols-7 gap-5">
                       <div class="col-span-3 sm:col-span-1">
                         <app-image
                           [src]="item.productSize.product.imageUrl"
-                          [classes]="'rounded-lg cursor-pointer'"
-                          (click)="navigate(item.productSize.product.id)"
+                          [classes]="'rounded-lg'"
                         ></app-image>
                       </div>
                       <div

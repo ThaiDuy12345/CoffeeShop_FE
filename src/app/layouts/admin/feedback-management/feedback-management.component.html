@@ -76,10 +76,10 @@
         <tbody>
           @for(data of table.data; track $index){
           <tr>
-            <td>{{ data.product.name }}</td>
+            <td><span class="cursor-pointer coffee-link" [routerLink]="['/admin/product-management', data.product.id]">{{ data.product.name }}</span></td>
             <td>
               <div class="center-an-item">
-                <div>{{ data.account.name }}<br />{{ data.account.phone }}</div>
+                <div class="cursor-pointer coffee-link" [routerLink]="['/admin/account-management', data.account.phone]">{{ data.account.name }}<br />{{ data.account.phone }}</div>
               </div>
             </td>
             <td>

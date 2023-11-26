@@ -6,7 +6,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Product } from 'src/app/core/models/product.model';
 import { Feedback } from 'src/app/core/models/feedback.model';
-import { FeedbackData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 import { FilterStore } from 'src/app/core/stores/filter.store';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -20,6 +19,7 @@ import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { DetailOrderService } from 'src/app/core/services/detail-order.service';
 import { Account } from 'src/app/core/models/account.model';
+import { FeedbackService } from 'src/app/core/services/feedback.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -34,16 +34,28 @@ export class DetailProductComponent implements OnInit, OnDestroy {
   public relatedProducts: Product[] = [];
   public productSizeOption: string[] = []
   public feedbackProducts: Feedback[] = [];
+  public originalFeedbackProducts: Feedback[] = [];
   public feedbackProductsPg: Feedback[] = [];
   public account: Account = new Account();
   public choosingSize: number = 0
   public avarageStar: number = 0;
+  public avarageStarNumber: number = 0
   public feedbackPageIndex: number = 1;
   public isUserLoveThisProduct: boolean = false;
   public soldQuantity: number = 0
+  public isLoadingFeedbackSubmitButton: boolean = false
+  public feedback: {
+    rate: number,
+    comment: string
+  } = {
+    rate: 0,
+    comment: ""
+  }
+  public accountFeedback: Feedback = new Feedback()
   public starRating: number = 0;
+  public isAllowedToCreateFeedback: boolean = false
   public isLoadingAddToCartBuntton: boolean = false;
-  public isLoadingBuyNowButton: boolean = false;
+  public isLoadingFeedbackProduct: boolean = false;
   public isLoading: boolean = false
   public tempSubject: Subject<any> = new Subject<any>()
   public ordering: Ordering = new Ordering 
@@ -59,6 +71,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     private detailOrderService: DetailOrderService,
     private authenticationStore: AuthenticationStore,
     private dialogService: NbDialogService,
+    private feedbackService: FeedbackService,
     private productService: ProductService,
     private productSizeService: ProductSizeService,
     private mappingService: MappingService
@@ -83,7 +96,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       ).subscribe({
         next: res => {
           if(res.status){
-
             if(!res.data.productActive){
               this.messageService.error('Mã sản phẩm không tồn tại');
               this.router.navigate(['/main/product']);
@@ -95,7 +107,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
             this.loadProductSoldQuantity();
             this.loadRelatedProducts();
             this.fetchOrder()
-            // this.loadFeedbackProduct();
           }else{
             this.messageService.error(res.message);
             this.router.navigate(['/main/product']);
@@ -126,7 +137,10 @@ export class DetailProductComponent implements OnInit, OnDestroy {
           this.account = {...res.account}
           this.fetchCurrentOrderingCart()
           this.loadIsFavorite()
+          this.getIsAllowedToCreateFeedback()
+          this.getFeedbackByProductAndAccount()
         }
+        this.loadFeedbackProduct();
       },
       error: err => this.messageService.error(err.error.message)
     })
@@ -232,13 +246,61 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       });
   }
 
+  getIsAllowedToCreateFeedback(): void {
+    this.feedbackService.getIsAllowedToCreateFeedback({ accountPhone: this.account.phone, productId: this.product.id }).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.isAllowedToCreateFeedback = res.data
+      },
+      error: err => {
+        this.messageService.error(err.error.message);
+      }
+    })
+  }
+
+  getFeedbackByProductAndAccount(): void {
+    this.feedbackService.getByAccountPhoneAndProductId({ accountPhone: this.account.phone, productId: this.product.id }).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.accountFeedback = this.mappingService.feedback(res.data)
+      },
+      error: err => {
+        this.messageService.error(err.error.message);
+      }
+    })  
+  }
+
   loadFeedbackProduct(): void {
-    this.feedbackProducts = FeedbackData.filter((fb) => {
-      return fb.product.id === this.product.id;
-    });
-    this.feedbackProductsPg = this.changeFeedbackIndex();
-    const starRates = this.feedbackProducts.reduce((pv, fb) => pv + fb.rate, 0);
-    this.avarageStar = Math.round(starRates / this.feedbackProducts.length);
+    this.isLoadingFeedbackProduct = true
+    this.feedbackService.getByProductId({ productId: this.product.id }).pipe(
+      finalize(() => this.isLoadingFeedbackProduct = false)
+    ).subscribe({
+      next: res => {
+        if(!res.status) {
+          this.messageService.error(res.message)
+          return
+        }
+        this.feedbackProducts = res.data
+          .map((f: any) => this.mappingService.feedback(f))
+        this.originalFeedbackProducts = [...this.feedbackProducts]
+
+        const starRates = this.originalFeedbackProducts.reduce((pv, fb) => pv + fb.rate, 0);
+        this.avarageStarNumber = parseFloat((starRates / this.originalFeedbackProducts.length).toFixed(1))
+        this.avarageStar = Math.round(this.avarageStarNumber);
+
+        if(this.account.phone) this.feedbackProducts = this.feedbackProducts.filter(f => f.account.phone !== this.account.phone);
+        this.feedbackProducts = this.feedbackProducts.filter(f => f.active);
+        this.feedbackProductsPg = this.changeFeedbackIndex();
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+    
   }
 
   changeFeedbackIndex(): Feedback[] {
@@ -258,13 +320,13 @@ export class DetailProductComponent implements OnInit, OnDestroy {
 
   getStarRatePercent(starRates: number): number {
     let sum = 0
-    this.feedbackProducts.forEach(fb => {
+    this.originalFeedbackProducts.forEach(fb => {
       if (fb.rate === starRates){
         sum++
       }
     })
 
-    return sum * 100 / this.feedbackProducts.length
+    return parseFloat((sum * 100 / this.originalFeedbackProducts.length).toFixed(0))
   }
 
   navigateRelatedProduct(): void {
@@ -288,14 +350,85 @@ export class DetailProductComponent implements OnInit, OnDestroy {
       this.router.navigate(['/sign-in']);
       return;
     }
+    this.feedback = {
+      rate: 0,
+      comment: ""
+    }
+    this.dialogRef = this.dialogService.open(dialog);
+  }
+
+  openEdit(dialog: TemplateRef<any>): void {
+    if (!Cookies.get('id')) {
+      this.messageService.error('Bạn cần phải đăng nhập trước khi thao tác!!');
+      this.router.navigate(['/sign-in']);
+      return;
+    }
+    this.feedback = {
+      rate: this.accountFeedback.rate,
+      comment: this.accountFeedback.comment
+    }
     this.dialogRef = this.dialogService.open(dialog);
   }
 
   onClickSubmit(): void {
-    this.messageService.success(
-      'Thành công!! Cảm ơn vì đã dành thời gian đánh giá sản phẩm'
-    );
-    this.dialogRef.close();
+    this.isLoadingFeedbackSubmitButton = true
+    this.feedbackService.post({
+      feedbackId: {
+        accountPhone: this.account.phone,
+        productId: this.product.id
+      },
+      feedbackComment: this.feedback.comment,
+      feedbackRate: this.feedback.rate
+    }).pipe(
+      finalize(() => {
+        this.isLoadingFeedbackSubmitButton = false
+      })
+    ).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.loadFeedbackProduct()
+        this.getFeedbackByProductAndAccount()
+        this.messageService.success(
+          'Thành công!! Cảm ơn vì đã dành thời gian đánh giá sản phẩm'
+        );
+        this.dialogRef.close();
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
+  }
+
+  onClickEditSubmit(): void {
+    this.isLoadingFeedbackSubmitButton = true
+    this.feedbackService.put({
+      feedbackId: {
+        accountPhone: this.accountFeedback.account.phone,
+        productId: this.accountFeedback.product.id
+      },
+      feedbackActive: this.accountFeedback.active,
+      feedbackComment: this.feedback.comment,
+      feedbackRate: this.feedback.rate
+    }).pipe(
+      finalize(() => {
+        this.isLoadingFeedbackSubmitButton = false
+      })
+    ).subscribe({
+      next: res => {
+        if(!res.status){
+          this.messageService.error(res.message)
+          return
+        }
+        this.loadFeedbackProduct()
+        this.getFeedbackByProductAndAccount()
+        this.messageService.success(
+          'Thành công!! Cảm ơn vì đã dành thời gian đánh giá sản phẩm'
+        );
+        this.dialogRef.close();
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
   }
 
   onClickAddToCart(): void {
@@ -336,18 +469,7 @@ export class DetailProductComponent implements OnInit, OnDestroy {
     this.productSizeQuantity = this.productSizeQuantity <= 0 ? 1 : this.productSizeQuantity
   }
 
-  onClickBuyNow(): void {
-    if(!this.ordering.id){
-      this.router.navigateByUrl("/sign-in")
-      this.messageService.error("Bạn cần đăng nhập để tiếp tục")
-      return
-    }
-    this.isLoadingBuyNowButton = true;
-    setTimeout(() => {
-      this.messageService.warning(
-        'Xin lỗi!! Chúng tôi vẫn chưa hỗ trợ tính năng này'
-      );
-      this.isLoadingBuyNowButton = false;
-    }, 2000);
+  getWidth(): number {
+    return window.innerWidth
   }
 }

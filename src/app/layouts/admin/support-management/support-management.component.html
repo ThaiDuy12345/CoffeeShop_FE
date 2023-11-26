@@ -77,7 +77,7 @@
               </span>
             </td>
             <td>{{ data.creationDate | dateFormat }}</td>
-            <td>{{ data.account.name }}</td>
+            <td><span class="cursor-pointer coffee-link" [routerLink]="['/admin/account-management', data.account.phone]">{{ data.account.name }}</span></td>
             <td>
               <fa-icon
                 [icon]="icons['faCircleInfo']"

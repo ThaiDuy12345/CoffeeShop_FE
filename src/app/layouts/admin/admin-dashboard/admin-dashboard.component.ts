@@ -1,7 +1,7 @@
 import { StatisticService } from './../../../core/services/statistic.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject, finalize } from 'rxjs';
+import { Subject, finalize, forkJoin, map } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -30,6 +30,18 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
     productStatistic: 0,
     supportStatistic: 0
   }
+  public productSoldQuantityStatistic: {
+    productId: number,
+    productName: string,
+    productActive: boolean,
+    productSoldQuantity: number
+  }[] = []
+  public productFeedbackQuantityStatistic: {
+    productId: number,
+    productName: string,
+    productActive: boolean,
+    productFeedbackQuantity: number
+  }[] = []
   private tempSubject: Subject<any> = new Subject()
   constructor(
     private messageService: NzMessageService,
@@ -62,14 +74,34 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
 
   initData(): void {
     this.isLoading = true
-    this.statisticService.get().pipe(finalize(() => this.isLoading = false)).subscribe({
+    const observable1 = this.statisticService.get()
+    const observable2 = this.statisticService.getByProductFeedbackQuantity()
+    const observable3 = this.statisticService.getByProductSoldQuantity()
+
+    forkJoin({
+      ob1: observable1,
+      ob2: observable2,
+      ob3: observable3
+    }).pipe(
+      finalize(
+        () => this.isLoading = false
+      )
+    ).subscribe({
       next: res => {
-        if(res.status) this.statistic = res.data
-        else this.messageService.error(res.message)
+        if(res.ob1.status) this.statistic = res.ob1.data
+        else this.messageService.error(res.ob1.message)
+
+        if(res.ob2.status) this.productFeedbackQuantityStatistic = res.ob2.data
+        else this.messageService.error(res.ob2.message)
+
+        if(res.ob3.status) this.productSoldQuantityStatistic = res.ob3.data
+        else this.messageService.error(res.ob3.message)
       },
       error: err => this.messageService.error(err.error.message)
     })
   }
+
+
   
   timeChange(value: number): void {
     this.time = this.timeOptions[value]

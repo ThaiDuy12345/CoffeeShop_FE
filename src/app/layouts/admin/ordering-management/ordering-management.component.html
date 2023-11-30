@@ -97,7 +97,7 @@
                   nz-tooltip
                   nzTooltipTitle="Khách hàng vẫn chưa đặt hàng"
                   *ngIf="data.status === 0"
-                  class="center-an-item bg-[#F5F5F5] mr-0 py-1 rounded text-[#293147] w-[70px]"
+                  class="center-an-item bg-[#F5F5F5] mr-0 py-1 rounded text-[#293147] w-[70px] cursor-default"
                 >
                   Chưa đặt
                 </nz-tag>
@@ -105,7 +105,7 @@
                   nz-tooltip
                   nzTooltipTitle="Khách hàng đã đặt hàng, đợi xét duyệt từ nhân viên hoặc admin"
                   *ngIf="data.status === 1"
-                  class="center-an-item bg-[#557cef] mr-0 py-1 rounded text-white w-[70px]"
+                  class="center-an-item bg-[#557cef] mr-0 py-1 rounded text-white w-[70px] cursor-default"
                 >
                   Đợi duyệt
                 </nz-tag>
@@ -143,7 +143,7 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã được giao thành công"
                   *ngIf="data.status === 4"
-                  class="center-an-item bg-green-400 mr-0 py-1 rounded text-white w-[70px]"
+                  class="center-an-item bg-green-400 mr-0 py-1 rounded text-white w-[70px] cursor-default"
                 >
                   Đã giao
                 </nz-tag>
@@ -151,7 +151,7 @@
                   nz-tooltip
                   nzTooltipTitle="Đơn hàng đã bị huỷ (Người đặt từ chối nhận hàng, bùng đơn, giao thất bại,...)"
                   *ngIf="data.status === -1"
-                  class="center-an-item bg-red-400 mr-0 py-1 rounded text-white w-[70px]"
+                  class="center-an-item bg-red-400 mr-0 py-1 rounded text-white w-[70px] cursor-default"
                 >
                   Đã huỷ
                 </nz-tag>

@@ -18,4 +18,16 @@ export class StatisticService{
       this.httpClient.get(this.apiService.statisticService().toString())
     )
   }
+
+  getByProductSoldQuantity(): Observable<any> {
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.statisticService().toString() + "/productBySoldQuantity")
+    )
+  }
+
+  getByProductFeedbackQuantity(): Observable<any> {
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.statisticService().toString() + "/productByFeedbackQuantity")
+    )
+  }
 }

@@ -3,13 +3,11 @@
   <div class="grid md:grid-cols-2 grid-cols-1 gap-3 mb-3">
     <nb-card
       class="m-0 border-2 hover:border-blue-200 transition-all cursor-pointer"
-      [routerLink]="'/admin/ordering-management'"    
+      [routerLink]="'/admin/ordering-management'"
     >
       <nb-card-body class="grid grid-cols-3">
         <div class="col-span-2">
-          <div class="w-full truncate">
-            Hoá đơn chưa duyệt
-          </div>
+          <div class="w-full truncate">Hoá đơn chưa duyệt</div>
           <div class="w-full truncate font-bold">
             {{ statistic.orderingStatistic }} Hoá đơn
           </div>
@@ -29,17 +27,15 @@
     >
       <nb-card-body class="grid grid-cols-3">
         <div class="col-span-2">
-          <div class="w-full truncate">
-            Sản phẩm hoạt động
-          </div>
+          <div class="w-full truncate">Sản phẩm hoạt động</div>
           @if (isStaff) {
-            <div class="w-full truncate">
-              {{ statistic.productStatistic }} Sản phẩm
-            </div>
+          <div class="w-full truncate">
+            {{ statistic.productStatistic }} Sản phẩm
+          </div>
           } @else {
-            <div class="w-full truncate font-bold">
-              {{ statistic.productStatistic }} Sản phẩm
-            </div>
+          <div class="w-full truncate font-bold">
+            {{ statistic.productStatistic }} Sản phẩm
+          </div>
           }
         </div>
         <div class="flex justify-end items-center">
@@ -57,17 +53,15 @@
     >
       <nb-card-body class="grid grid-cols-3">
         <div class="col-span-2">
-          <div class="w-full truncate">
-            Tài khoản hoạt động
-          </div>
+          <div class="w-full truncate">Tài khoản hoạt động</div>
           @if (isStaff){
-            <div class="w-full truncate">
-              {{ statistic.accountStatistic }} Tài khoản
-            </div>
+          <div class="w-full truncate">
+            {{ statistic.accountStatistic }} Tài khoản
+          </div>
           } @else {
-            <div class="w-full truncate font-bold">
-              {{ statistic.accountStatistic }} Tài khoản
-            </div>
+          <div class="w-full truncate font-bold">
+            {{ statistic.accountStatistic }} Tài khoản
+          </div>
           }
         </div>
         <div class="flex justify-end items-center">
@@ -85,19 +79,16 @@
     >
       <nb-card-body class="grid grid-cols-3">
         <div class="col-span-2">
-          <div class="w-full truncate">
-            Thư hỗ trợ chưa xử lý
-          </div>
+          <div class="w-full truncate">Thư hỗ trợ chưa xử lý</div>
           @if (isStaff) {
-            <div class="w-full truncate">
-              {{ statistic.supportStatistic }} Thư
-            </div>
+          <div class="w-full truncate">
+            {{ statistic.supportStatistic }} Thư
+          </div>
           } @else {
-            <div class="w-full truncate font-bold">
-              {{ statistic.supportStatistic }} Thư
-            </div>
+          <div class="w-full truncate font-bold">
+            {{ statistic.supportStatistic }} Thư
+          </div>
           }
-          
         </div>
         <div class="flex justify-end items-center">
           <fa-icon size="xl" [icon]="icons['faEnvelope']"></fa-icon>
@@ -137,10 +128,42 @@
         Top sản phẩm được mua nhiều nhất
       </nb-card-header>
       <nb-card-body class="border-none grid grid-cols-1">
-        <div class="grid grid-cols-4">
-          <div>#</div>
-          <div>Tên sản phẩm</div>
-          <div>Lượt mua</div>
+        <div class="grid grid-cols-4 gap-y-6">
+          <div class="font-semibold">#</div>
+          <div class="font-semibold">Tên sản phẩm</div>
+          <div class="font-semibold">Trạng thái</div>
+          <div class="font-semibold">Lượt mua</div>
+          @for(item of productSoldQuantityStatistic; track $index){
+          <div>{{ item.productId }}</div>
+          <div
+            class="coffee-link cursor-pointer"
+            [routerLink]="['/main/product/', item.productId]"
+          >
+            {{ item.productName }}
+          </div>
+          <div class="cursor-default">
+            <nz-tag
+              nz-tooltip
+              nzTooltipTitle="Sản phẩm này đang trong trạng thái kích hoạt và được hiện thị trên hệ thống COFFEE"
+              *ngIf="item.productActive"
+              class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[70px]"
+            >
+              Kích hoạt
+            </nz-tag>
+            <nz-tag
+              nz-tooltip
+              nzTooltipTitle="Sản phẩm này đang trong trạng thái ẩn, khách hàng không thể nhìn thấy sản phẩm này"
+              *ngIf="!item.productActive"
+              class="center-an-item mr-0 py-1 rounded main-text-color w-[70px]"
+            >
+              <fa-icon
+                class="center-an-item"
+                [icon]="icons['faEyeSlash']"
+              ></fa-icon>
+            </nz-tag>
+          </div>
+          <div>{{ item.productSoldQuantity }}</div>
+          }
         </div>
       </nb-card-body>
     </nb-card>
@@ -149,10 +172,42 @@
         Top sản phẩm được đánh giá nhiều nhất
       </nb-card-header>
       <nb-card-body class="border-none grid grid-cols-1">
-        <div class="grid grid-cols-3">
-          <div>#</div>
-          <div>Tên sản phẩm</div>
-          <div>Lượt đánh giá</div>
+        <div class="grid grid-cols-4 gap-y-6">
+          <div class="font-semibold">#</div>
+          <div class="font-semibold">Tên sản phẩm</div>
+          <div class="font-semibold">Trạng thái</div>
+          <div class="font-semibold">Lượt đánh giá</div>
+          @for(item of productFeedbackQuantityStatistic; track $index){
+          <div>{{ item.productId }}</div>
+          <div
+            class="coffee-link cursor-pointer"
+            [routerLink]="['/main/product/', item.productId]"
+          >
+            {{ item.productName }}
+          </div>
+          <div class="cursor-default">
+            <nz-tag
+              nz-tooltip
+              nzTooltipTitle="Sản phẩm này đang trong trạng thái kích hoạt và được hiện thị trên hệ thống COFFEE"
+              *ngIf="item.productActive"
+              class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[70px]"
+            >
+              Kích hoạt
+            </nz-tag>
+            <nz-tag
+              nz-tooltip
+              nzTooltipTitle="Sản phẩm này đang trong trạng thái ẩn, khách hàng không thể nhìn thấy sản phẩm này"
+              *ngIf="!item.productActive"
+              class="center-an-item mr-0 py-1 rounded main-text-color w-[70px]"
+            >
+              <fa-icon
+                class="center-an-item"
+                [icon]="icons['faEyeSlash']"
+              ></fa-icon>
+            </nz-tag>
+          </div>
+          <div>{{ item.productFeedbackQuantity }}</div>
+          }
         </div>
       </nb-card-body>
     </nb-card>

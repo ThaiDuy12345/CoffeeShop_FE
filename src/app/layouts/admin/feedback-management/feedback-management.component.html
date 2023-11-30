@@ -28,7 +28,7 @@
         #table
         [nzLoading]="isLoading"
         [nzData]="feedbacks"
-        nzShowPagination="false"
+        [nzPageSize]="4"
       >
         <thead>
           <tr>
@@ -96,7 +96,7 @@
               </div>
             </td>
             <td>
-              <span class="center-an-item">
+              <span class="center-an-item cursor-default">
                 @if (data.active){
                 <nz-tag
                   class="center-an-item main-bg-text-color mr-0 py-1 rounded text-white w-[70px]"

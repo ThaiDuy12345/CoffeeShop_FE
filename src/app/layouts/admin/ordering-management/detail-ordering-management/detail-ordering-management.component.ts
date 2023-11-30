@@ -278,6 +278,14 @@ export class DetailOrderingManagementComponent implements OnInit, OnDestroy{
     return window.innerWidth
   }
 
+  getTotalQuantity(): number {
+    let quantity = 0
+    this.detailOrders.forEach((item) => {
+      quantity = quantity + item.quantity
+    })
+    return quantity
+  }
+
   getProductLength(): number {
     let sum = 0
     this.detailOrders.forEach((item) => sum += item.quantity)

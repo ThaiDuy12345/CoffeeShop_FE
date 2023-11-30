@@ -305,6 +305,7 @@
                   <th>Ngày đặt</th>
                   <th>Tổng giá</th>
                   <th>Trạng thái</th>
+                  <th>Trạng thái thanh toán</th>
                   <th>Nội dung xác nhận đơn</th>
                   <th>Nội dung hủy đơn</th>
                 </tr>
@@ -312,7 +313,7 @@
               <tbody>
                 <tr *ngFor="let data of table4.data">
                   <td>
-                    {{ data.id }}
+                    <span [routerLink]="['/admin/ordering-management', data.id]" class="cursor-pointer coffee-link">{{ data.id }}</span>
                   </td>
                   <td>{{ data.date | dateFormat }}</td>
                   <td>{{ data.totalPrice | priceFormat }}</td>
@@ -367,6 +368,22 @@
                     </nz-tag>
                   </td>
                   <td>
+                    @switch(data.paymentStatus){
+                      @case (null){
+                        <span>Chưa thanh toán</span>
+                      }
+                      @case (0){
+                        <span>Thanh toán COD</span>
+                      }
+                      @case (1){
+                        <span>Thanh toán VNPay</span>
+                      }
+                      @case (-1){
+                        <span>Hoàn tiền VNPay</span>
+                      }
+                    }
+                  </td>
+                  <td>
                     <span *ngIf="data.approveDescription" nz-tooltip [nzTooltipTitle]="data.approveDescription" class="truncate">
                       {{ data.approveDescription }}
                     </span>                    
@@ -391,7 +408,6 @@
     </div>
   </ng-container>
 </nz-drawer>
-
 
 <nz-drawer
   [nzWidth]="'600px'"

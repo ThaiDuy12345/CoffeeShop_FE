@@ -68,7 +68,8 @@ import {
   faChampagneGlasses,
   faBookOpenReader,
   faPaperPlane,
-  faArrowsToCircle
+  faArrowsToCircle,
+  faBoxesPacking
 } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from 'src/app/core/models/icon.model';
 
@@ -144,4 +145,5 @@ export const icons: Icon = {
   faBookOpenReader: faBookOpenReader,
   faPaperPlane: faPaperPlane,
   faArrowsToCircle: faArrowsToCircle,
+  faBoxesPacking: faBoxesPacking
 };

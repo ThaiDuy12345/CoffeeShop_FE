@@ -1,0 +1,96 @@
+<div class="grid md:grid-cols-2 grid-cols-1 gap-3 mb-3">
+  <nb-card
+    class="m-0 border-2 hover:border-blue-200 transition-all cursor-pointer"
+    [routerLink]="'/admin/ordering-management'"
+  >
+    <nb-card-body class="grid grid-cols-3">
+      <div class="col-span-2">
+        <div class="w-full truncate">Hoá đơn chưa duyệt</div>
+        <div class="w-full truncate font-bold">
+          {{ quickViewStatistic.orderingStatistic }} Hoá đơn
+        </div>
+      </div>
+      <div class="flex justify-end items-center">
+        <fa-icon size="xl" [icon]="icons['faTruckFast']"></fa-icon>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <nb-card
+    class="m-0 border-2"
+    [routerLink]="!isStaff ? '/admin/product-management' : null"
+    [ngClass]="{
+      'text-gray-300 cursor-not-allowed': isStaff,
+      'hover:border-blue-200 transition-all cursor-pointer': !isStaff
+    }"
+  >
+    <nb-card-body class="grid grid-cols-3">
+      <div class="col-span-2">
+        <div class="w-full truncate">Sản phẩm hoạt động</div>
+        @if (isStaff) {
+        <div class="w-full truncate">
+          {{ quickViewStatistic.productStatistic }} Sản phẩm
+        </div>
+        } @else {
+        <div class="w-full truncate font-bold">
+          {{ quickViewStatistic.productStatistic }} Sản phẩm
+        </div>
+        }
+      </div>
+      <div class="flex justify-end items-center">
+        <fa-icon size="xl" [icon]="icons['faMugHot']"></fa-icon>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <nb-card
+    class="m-0 border-2"
+    [routerLink]="!isStaff ? '/admin/account-management' : null"
+    [ngClass]="{
+      'text-gray-300 cursor-not-allowed': isStaff,
+      'hover:border-blue-200 transition-all cursor-pointer': !isStaff
+    }"
+  >
+    <nb-card-body class="grid grid-cols-3">
+      <div class="col-span-2">
+        <div class="w-full truncate">Tài khoản hoạt động</div>
+        @if (isStaff){
+        <div class="w-full truncate">
+          {{ quickViewStatistic.accountStatistic }} Tài khoản
+        </div>
+        } @else {
+        <div class="w-full truncate font-bold">
+          {{ quickViewStatistic.accountStatistic }} Tài khoản
+        </div>
+        }
+      </div>
+      <div class="flex justify-end items-center">
+        <fa-icon size="xl" [icon]="icons['faUser']"></fa-icon>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <nb-card
+    class="m-0 border-2"
+    [routerLink]="!isStaff ? '/admin/support-management' : null"
+    [ngClass]="{
+      'text-gray-300 cursor-not-allowed': isStaff,
+      'hover:border-blue-200 transition-all cursor-pointer': !isStaff
+    }"
+  >
+    <nb-card-body class="grid grid-cols-3">
+      <div class="col-span-2">
+        <div class="w-full truncate">Thư hỗ trợ chưa xử lý</div>
+        @if (isStaff) {
+        <div class="w-full truncate">
+          {{ quickViewStatistic.supportStatistic }} Thư
+        </div>
+        } @else {
+        <div class="w-full truncate font-bold">
+          {{ quickViewStatistic.supportStatistic }} Thư
+        </div>
+        }
+      </div>
+      <div class="flex justify-end items-center">
+        <fa-icon size="xl" [icon]="icons['faEnvelope']"></fa-icon>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>

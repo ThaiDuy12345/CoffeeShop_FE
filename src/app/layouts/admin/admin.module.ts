@@ -139,7 +139,6 @@ const routes: Route[] = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  declarations: [],
+  imports: [RouterModule.forChild(routes)]
 })
 export class AdminModule { }

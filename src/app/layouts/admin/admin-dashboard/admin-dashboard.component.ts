@@ -19,7 +19,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
   public typeOptions: string[] = ['Tài khoản được tạo', 'Sản phẩm bán ra', 'Hoá đơn', 'Phản hồi', 'Thư hỗ trợ'];
   public isStaff: boolean = false
   public isLoading: boolean = false
-  public statistic: {
+  public quickViewStatistic: {
     accountStatistic: number,
     orderingStatistic: number,
     productStatistic: number,
@@ -88,7 +88,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
       )
     ).subscribe({
       next: res => {
-        if(res.ob1.status) this.statistic = res.ob1.data
+        if(res.ob1.status) this.quickViewStatistic = res.ob1.data
         else this.messageService.error(res.ob1.message)
 
         if(res.ob2.status) this.productFeedbackQuantityStatistic = res.ob2.data

@@ -112,6 +112,9 @@ import { DateFormatPipe } from '../shared/pipes/date-format/date-format.pipe';
 import { TimeAgoSinceFormatPipe } from '../shared/pipes/time-ago-since-format/time-ago-since-format.pipe';
 import { TimeFromNowFormatPipe } from '../shared/pipes/time-from-now-format/time-from-now-format.pipe';
 import { ForgotPasswordComponent } from './sign-in/forgot-password/forgot-password.component';
+import { QuickStatisticViewComponent } from './admin/admin-dashboard/quick-statistic-view/quick-statistic-view.component';
+import { ProductBySoldQuantityStatisticComponent } from './admin/admin-dashboard/product-by-sold-quantity-statistic/product-by-sold-quantity-statistic.component';
+import { ProductByFeedbackQuantityStatisticComponent } from './admin/admin-dashboard/product-by-feedback-quantity-statistic/product-by-feedback-quantity-statistic.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -149,6 +152,9 @@ import { ForgotPasswordComponent } from './sign-in/forgot-password/forgot-passwo
     SupportManagementComponent,
     AccountManagementComponent,
     ProductManagementComponent,
+    QuickStatisticViewComponent,
+    ProductBySoldQuantityStatisticComponent,
+    ProductByFeedbackQuantityStatisticComponent,
     CategoryManagementComponent,
     FeedbackManagementComponent,
     OrderingManagementComponent,

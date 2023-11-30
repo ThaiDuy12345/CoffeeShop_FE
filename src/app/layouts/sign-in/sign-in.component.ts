@@ -25,12 +25,6 @@ export class SignInComponent implements OnInit {
   public showPassword: boolean = false
   public isSubmitted: boolean = false
   public isLoading: boolean = false
-  public forgotPasswordEmailInput: string = ''
-  public isLoadingForgotPassword: boolean = false 
-  public forgotPasswordStep: 1 | 2 | 3 = 1
-  public forgotPasswordCode: string = ''
-  public newPassword: string = ''
-  public newConfirmPassword: string = ''
   public tempSubject: Subject<any> = new Subject()
   public user: SocialUser = new SocialUser();
   public loggedIn: boolean = true;
@@ -38,11 +32,11 @@ export class SignInComponent implements OnInit {
   constructor(
     private router: Router,
     private message: NzMessageService,
-    @Optional() private dialogRef: NbDialogRef<any>,
-    private dialogService: NbDialogService,
     private authService: SocialAuthService,
     private authenService: AuthService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    @Optional() public dialogRef: NbDialogRef<any>,
+    private dialogService: NbDialogService,
   ){}
 
   ngOnDestroy(): void {
@@ -77,7 +71,14 @@ export class SignInComponent implements OnInit {
     }
     this.isLoading = true
     this.signIn()
-    
+  }
+
+  openForgotPassword(dialog: TemplateRef<any>): void {
+    this.dialogRef = this.dialogService.open(dialog);
+  }
+
+  handleCloseForgotPasswordModal(): void {
+    this.dialogRef.close()
   }
 
   signIn(): void {
@@ -139,61 +140,5 @@ export class SignInComponent implements OnInit {
         console.log(err)
       }
     })
-  }
-
-  openForgotPassword(dialog: TemplateRef<any>): void {
-    this.dialogRef = this.dialogService.open(dialog);
-  }
-
-  closeForgotPassword(): void {
-    this.isLoadingForgotPassword = false
-    this.dialogRef.close()
-  }
-
-  onClickSubmitForgotPassword(): void {
-    this.isLoadingForgotPassword = true
-    
-    setTimeout(() => {
-      const result = AccountData.find(item => {
-        return (
-          item.email === this.forgotPasswordEmailInput
-        )
-      })
-      if(result){
-        this.forgotPasswordStep = 2
-      }else {
-        this.message.error('Địa chỉ Email không tồn tại.')
-      }
-      this.isLoadingForgotPassword = false
-      
-    }, 2000)
-  }
-
-  onClickSubmitForgotPasswordValidate(): void {
-    this.isLoadingForgotPassword = true
-
-    setTimeout(() => {
-      this.isLoadingForgotPassword = false
-      this.forgotPasswordStep = 3
-    }, 2000)
-  }
-
-  isPasswordValidate(password: string): boolean {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)
-  }
-
-  onClickSubmitNewForgotPassword(): void {
-    this.isLoadingForgotPassword = true
-
-    setTimeout(() => {
-      this.isLoadingForgotPassword = false
-      this.forgotPasswordStep = 1
-      this.forgotPasswordEmailInput = ''
-      this.forgotPasswordCode = ''
-      this.newPassword = ''
-      this.newConfirmPassword = ''
-      this.dialogRef.close()
-      this.message.success('Cập nhật mật khẩu mới thành công, xin vui lòng đăng nhập lại.')
-    }, 2000)
   }
 }

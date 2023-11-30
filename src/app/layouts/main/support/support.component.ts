@@ -21,6 +21,7 @@ export class SupportComponent implements OnInit, OnDestroy {
   public content: string = ""
   public isSent: boolean = false
   public tempSubject: Subject<any> = new Subject()
+  public currentDate: number = new Date().getTime()
   public account: Account = new Account()
   public reasons: { value: number, text: string }[] = [
     {
@@ -96,9 +97,5 @@ export class SupportComponent implements OnInit, OnDestroy {
     this.title = "ĐƠN GÓP Ý TỚI COFFEE"
     this.content = ""
     this.isSent = false
-  }
-
-  currentDate(): number {
-    return new Date().getTime()
   }
 }

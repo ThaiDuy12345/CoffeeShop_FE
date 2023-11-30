@@ -111,6 +111,7 @@ import { PriceFormatPipe } from '../shared/pipes/price-format/price-format.pipe'
 import { DateFormatPipe } from '../shared/pipes/date-format/date-format.pipe';
 import { TimeAgoSinceFormatPipe } from '../shared/pipes/time-ago-since-format/time-ago-since-format.pipe';
 import { TimeFromNowFormatPipe } from '../shared/pipes/time-from-now-format/time-from-now-format.pipe';
+import { ForgotPasswordComponent } from './sign-in/forgot-password/forgot-password.component';
 @NgModule({
   declarations: [
     SupportComponent,
@@ -120,6 +121,7 @@ import { TimeFromNowFormatPipe } from '../shared/pipes/time-from-now-format/time
     FavoriteProductComponent,
     P404Component,
     MainComponent,
+    ForgotPasswordComponent,
     EditUserComponent,
     ChangePasswordComponent,
     DashboardComponent,

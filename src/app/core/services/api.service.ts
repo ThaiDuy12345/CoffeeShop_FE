@@ -26,6 +26,7 @@ export class ApiService{
     FEEDBACK: '/feedbacks',
     FAVORITE_PRODUCT: '/favoriteProducts',
     STATISTIC: '/statistics',
+    FORGOT_PASSWORD: '/forgotPasswords',
   }
 
   private service_vietnam = this.vietnam_url
@@ -84,6 +85,10 @@ export class ApiService{
 
   favoriteProductService(): String {
     return this.base_spring_boot_url + this.service_spring_boot.FAVORITE_PRODUCT
+  }
+
+  forgotPasswordService(): String {
+    return this.base_spring_boot_url + this.service_spring_boot.FORGOT_PASSWORD
   }
 
   vietnamService(): String {

@@ -24,12 +24,15 @@
   <nb-card class="m-0">
     <nb-card-body>
       @if (!isLoadingStatistic){
-        <app-admin-chart
-          [statistic]="statistic"
-          [typeValue]="typeValue"
-          [typeOption]="typeOptions[type]"
-          [chartType]="chartType"
-        ></app-admin-chart>
+        <div class="w-full h-full center-an-item">
+          <app-admin-chart
+            class="w-[98%] block"
+            [statistic]="statistic"
+            [typeValue]="typeValue"
+            [typeOption]="typeOptions[type]"
+            [chartType]="chartType"
+          ></app-admin-chart>
+        </div>
       } @else {
         <div class="h-[300px] center-an-item">
           <nz-spin nzSimple></nz-spin>

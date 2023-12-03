@@ -30,4 +30,13 @@ export class StatisticService{
       this.httpClient.get(this.apiService.statisticService().toString() + "/productByFeedbackQuantity")
     )
   }
+
+  getStatisticChart(params: { 
+    type: "product" | "ordering" | "support" | "feedback"
+    dateType: "week" | "month" | "halfYear" | "year" 
+  }): Observable<any> {
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.statisticService().toString() + `/statisticChart?type=${params.type}&dateType=${params.dateType}`)
+    )
+  }
 }

@@ -10,21 +10,50 @@
   <div class="mb-3">
     <nz-segmented
       [nzOptions]="timeOptions"
+      [(ngModel)]="time"
       (nzValueChange)="timeChange($event)"
     ></nz-segmented>
   </div>
   <div class="mb-3">
     <nz-segmented
       [nzOptions]="typeOptions"
+      [(ngModel)]="type"
       (nzValueChange)="typeChange($event)"
     ></nz-segmented>
   </div>
   <nb-card class="m-0">
     <nb-card-body>
-      <app-admin-chart></app-admin-chart>
+      @if (!isLoadingStatistic){
+        <app-admin-chart
+          [statistic]="statistic"
+          [typeValue]="typeValue"
+          [typeOption]="typeOptions[type]"
+          [chartType]="chartType"
+        ></app-admin-chart>
+      } @else {
+        <div class="h-[300px] center-an-item">
+          <nz-spin nzSimple></nz-spin>
+        </div>
+      }
     </nb-card-body>
-    <nb-card-footer class="center-an-item">
-      {{ type }} trong {{ time.toLowerCase() }}
+    <nb-card-footer class="grid grid-cols-2">
+      <div class="flex justify-start items-center">
+        {{ typeOptions[type] }} trong
+        {{ timeOptions[time].toLowerCase() }}
+      </div>
+      <div class="flex justify-end">
+        <nb-select
+          [selected]="chartType"
+          (selectedChange)="choosingTypeChange($event)"
+          class="w-[140px]"
+        >
+          @for (item of chartOptions; track $index) {
+            <nb-option [value]="item.value">{{
+              item.text
+            }}</nb-option>
+          }
+        </nb-select>
+      </div>
     </nb-card-footer>
   </nb-card>
   <div>

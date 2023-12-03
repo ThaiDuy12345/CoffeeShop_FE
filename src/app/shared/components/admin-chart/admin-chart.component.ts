@@ -1,15 +1,14 @@
-import { Component } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   ApexAxisChartSeries,
-  ApexTitleSubtitle,
   ApexDataLabels,
-  ApexFill,
   ApexMarkers,
   ApexYAxis,
   ApexXAxis,
   ApexTooltip,
   ApexStroke
 } from "ng-apexcharts";
+import { Statistic } from "src/app/core/models/statistic.model";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -30,90 +29,101 @@ export type ChartOptions = {
   templateUrl: './admin-chart.component.html',
   styleUrl: './admin-chart.component.scss'
 })
-export class AdminChartComponent {
+export class AdminChartComponent implements OnChanges{
+  @Input() statistic: [number, number][] = []
+  @Input() typeValue: 'product' | 'ordering' | 'feedback' | 'support' = 'product'
+  @Input() typeOption: string = ''
+  @Input() chartType: 'stepline' | 'straight' | 'smooth' = 'smooth'
   public chartOptions: ChartOptions = {
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      curve: "straight"
-    },
-    toolbar: {
-      tools: {
-        selection: false
-      }
-    },
-    markers: {
-      size: 6,
-      hover: {
-        size: 10
-      }
-    },
-    tooltip: {
-      followCursor: false,
-      theme: "dark",
-      x: {
-        show: false
+    series: [],
+    chart: {},
+    dataLabels: {},
+    markers: {},
+    yaxis: {},
+    xaxis: {},
+    tooltip: {},
+    stroke: {},
+    grid: {},
+    colors: [],
+    toolbar: {}
+  }
+  
+  constructor() {
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['chartType']) this.chartOptions = this.initChart()
+  }
+
+  ngOnInit(): void {
+    this.chartOptions = this.initChart()
+  }
+
+  initChart(): ChartOptions {
+    return {
+      dataLabels: {
+        enabled: false
       },
-      marker: {
-        show: false
+      stroke: {
+        curve: this.chartType
       },
-      y: {
-        title: {
-          formatter: function() {
-            return "";
+      toolbar: {
+        tools: {
+          selection: false
+        }
+      },
+      markers: {
+        size: 5,
+        hover: {
+          size: 8
+        }
+      },
+      tooltip: {
+        followCursor: true,
+        theme: "dark",
+        x: {
+          show: true,
+          format: "dd/MM/yyyy"
+        },
+        marker: {
+          show: false
+        },
+        y: {
+          title: {
+            formatter: (name) => {
+              return this.typeOption + ":"
+            }
           }
         }
-      }
-    },
-    grid: {
-      clipMarkers: false
-    },
-    xaxis: {
-      type: "datetime"
-    },
-    series: [
-      {
-        name: "chart1",
-        data: this.generateDayWiseTimeSeries(
-          new Date("11 Feb 2017").getTime(),
-          20,
-          {
-            min: 10,
-            max: 60
-          }
-        )
-      }
-    ],
-    chart: {
-      id: "fb",
-      group: "social",
-      type: "line",
-      height: 300
-    },
-    colors: ["#33425a"],
-    yaxis: {
-      tickAmount: 2,
-      labels: {
-        minWidth: 40
+      },
+      grid: {
+        clipMarkers: true
+      },
+      xaxis: {
+        type: "datetime",
+        labels: {
+          format: 'dd/MM'
+        }
+      },
+      series: [
+        {
+          name: 'Chart',
+          data: this.statistic
+        }
+      ],
+      chart: {
+        id: "fb",
+        group: "social",
+        type: "line",
+        height: 300
+      },
+      colors: ["#33425a"],
+      yaxis: {
+        tickAmount: 10,
+        labels: {
+          minWidth: 40
+        }
       }
     }
-  }
-  public generateDayWiseTimeSeries(baseval: number, count: number, yrange: { min: number, max: number }): any[] {
-    let i = 0;
-    let series = [];
-    while (i < count) {
-      var x = baseval;
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-      series.push([x, y]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
-  }
-
-  constructor() {
   }
 }

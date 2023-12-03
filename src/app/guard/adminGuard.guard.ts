@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, finalize, forkJoin, takeWhile } from 'rxjs';
 import { AuthenticationStore } from '../core/stores/authentication.store';
-import { NzMessageService } from 'ng-zorro-antd/message';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +12,6 @@ export class AdminGuard {
     private authService: AuthService,
     private router: Router,
     private authenticationStore: AuthenticationStore,
-    private messageService: NzMessageService
   ){}
 
   canActivate(

@@ -172,7 +172,7 @@ export class MappingService {
         break;
     }
     const distanceInDays = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    for (let i = 0 ; i < distanceInDays ; i ++){
+    for (let i = 1 ; i <= distanceInDays ; i ++){
       const sDate = new Date(startDate.getTime())
       const date = new Date(sDate.setDate(sDate.getDate() + i))
       const statistic = payload.filter(s => {
@@ -189,6 +189,7 @@ export class MappingService {
         data.push([date.getTime(), quantity])
       }
     }
+    console.log(data)
     return data
   }
 

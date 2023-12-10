@@ -1,4 +1,3 @@
-import { ProductSizeData } from "src/app/data/data"
 import { Category } from "./category.model"
 
 export class Product{

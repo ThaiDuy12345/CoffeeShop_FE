@@ -8,7 +8,6 @@ import { Product } from 'src/app/core/models/product.model';
 import { ImageService } from 'src/app/core/services/image.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { ProductService } from 'src/app/core/services/product.service';
-import { ProductSizeData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -136,7 +135,6 @@ export class DetailProductManagementComponent implements OnInit{
             next: res2 => {
               if(res2.status){
                 this.messageService.success("Tải ảnh mới lên thành công")
-                this.product.imageUrl && this.imageService.delete({ imageId: this.product.imageUrl }).subscribe()
                 this.reloadProductData(res2.data)
               }else{
                 this.messageService.error(res2.message)

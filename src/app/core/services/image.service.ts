@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
-import { Observable, throwError } from "rxjs";
-import { catchError } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +24,4 @@ export class ImageService{
       this.apiService.imageService().toString() + `/${image.imageId}`,
     ))
   }
-
-  delete(image: { imageId: string }): Observable<any> {
-    return this.apiService.errorHandle(this.http.delete(
-      this.apiService.imageService().toString() + `/${image.imageId}`,
-    ))
-  }
-
 }

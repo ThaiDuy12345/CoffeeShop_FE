@@ -7,22 +7,23 @@
         <h1 class="text-3xl text-center w-full font-bold mb-10">
           <span class="text-center">Sản phẩm của COFFEE</span>
         </h1>
-        <div class="grid grid-cols-2 gap-5">
-          <!-- <label class="col-span-1">
-            Sắp xếp theo
-          </label>
-          <div class="col-span-1"></div> -->
-          <!-- <div class="col-span-2 md:col-span-1">
-            <nz-segmented [nzOptions]="options" (nzValueChange)="handleIndexChange($event)" [(ngModel)]="optionIndex"></nz-segmented>
-          </div> -->
-          <div class="col-span-2 italic text-gray-500">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="col-span-2 italic mb-7 text-gray-500">
             Sự sảng khoái bắt đầu từ mỗi ngụm đắng đậm của cafe, tinh tế của
             trà, và sự ngọt ngào của những chiếc bánh trái thơm béo. Tại cửa
             hàng của chúng tôi, chúng tôi mang đến cho bạn trải nghiệm thú vị,
             nơi bạn có thể thả mình vào thế giới hương vị đầy phấn khích, và
             quên đi những lo âu hàng ngày.
           </div>
-          <div class="col-span-2">
+          <label class="col-span-1">
+            Sắp xếp theo
+          </label>
+          <div class="col-span-1"></div>
+          <div class="col-span-1">
+            <nz-segmented [nzOptions]="options" (nzValueChange)="handleIndexChange($event)" [(ngModel)]="optionIndex"></nz-segmented>
+          </div>
+          
+          <div class="col-span-1">
             <h1 class="text-lg text-right w-full font-bold space-x-3">
               <fa-icon
                 [icon]="icons['faTableCellsLarge']"
@@ -72,7 +73,7 @@
             }}</nb-option>
           </nb-select>
         </div>
-        <!-- <div class="w-full">
+        <div class="w-full">
           <label>Lọc theo mức giá</label>
           <nz-slider
             [nzMin]="minPrice"
@@ -83,7 +84,7 @@
             nzRange
             class="mt-5"
           ></nz-slider>
-        </div> -->
+        </div>
       </div>
       <div
         class="col-span-5 md:col-span-4 center-an-item"

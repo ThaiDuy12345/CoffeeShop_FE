@@ -23,6 +23,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   public optionIndex: number = 0
   public options = ['Mới nhất', 'Giá cao nhất', 'Giá thấp nhất'];
   public minPrice: number = 0;
+  public isInitPriceSlider: boolean = false;
   public maxPrice: number = 0;
   public search: string = '';
   public categories: Category[] = []
@@ -71,8 +72,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         if(res.status){
           const result = res.data.map((p: any) => this.mappingService.product(p));
           const filterResults = this.productService.filterActiveProducts(result)
+          this.setInitPriceSlider(filterResults);
           this.setInitFilter(filterResults)
-          // this.setInitPriceSlider(filterResults);
         }else this.messageService.error(res.message)
       },
       error: err => {
@@ -107,43 +108,49 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.search = '';
         }
 
-        // if (state.ordering === 1) {
-        //   this.allProduct = this.allProduct.sort(
-        //     (itemA, itemB) => itemB.price - itemA.price
-        //   );
-        //   this.optionIndex = 1
-        // } else if (state.ordering === 2) {
-        //   this.allProduct = this.allProduct.sort(
-        //     (itemA, itemB) => itemA.price - itemB.price
-        //   );
-        //   this.optionIndex = 2
-        // } else {
+        if (state.ordering === 1) {
+          this.allProduct = this.allProduct.sort(
+            (itemA, itemB) => { return itemA.minPrice && itemB.minPrice ? itemB.minPrice - itemA.minPrice : 0 }
+          );
+          this.optionIndex = 1
+        } else if (state.ordering === 2) {
+          this.allProduct = this.allProduct.sort(
+            (itemA, itemB) => { return itemA.minPrice && itemB.minPrice ? itemA.minPrice - itemB.minPrice : 0 }
+          );
+          this.optionIndex = 2
+        } else {
           this.allProduct = this.allProduct.sort((itemA, itemB) => {
             return itemA.creationDate > itemB.creationDate ? 1 : -1
           });
           this.optionIndex = 0
-        // }
+        }
 
         if (state.view)  this.viewMode = state.view;
 
-        // this.allProduct = this.allProduct.filter(
-        //   (item) =>
-        //     item.price >= this.priceFilter[0] &&
-        //     item.price <= this.priceFilter[1]
-        // );
+        this.allProduct = this.allProduct.filter(
+          (item) => {
+            const price = item.minPrice || 0
+            return (
+              price >= this.priceFilter[0] &&
+              price <= this.priceFilter[1]
+            )
+          }
+        );
       },
     });
     this.filterStore._select((state) => state).subscribe(this.initFilterState);
   }
 
-  // setInitPriceSlider(allProduct: Product[]): void {
-    // this.maxPrice = Math.max(...allProduct.map((item) => item.price));
-    // this.priceFilter = [this.minPrice, this.maxPrice];
-    // this.marks = {
-    //   [this.minPrice]: this.minPrice.toString(),
-    //   [this.maxPrice]: this.maxPrice.toString(),
-    // };
-  // }
+  setInitPriceSlider(allProduct: Product[]): void {
+    if(this.isInitPriceSlider) return 
+    this.maxPrice = Math.max(...allProduct.map((item) => item.minPrice ? item.minPrice : 0));
+    this.priceFilter = [this.minPrice, this.maxPrice] 
+    this.marks = {
+      [this.minPrice]: this.minPrice.toString(),
+      [this.maxPrice]: this.maxPrice.toString(),
+    };
+    this.isInitPriceSlider = true
+  }
 
   onClickResetFilterSearch(): void {
     this.filterStore.update((state) => {

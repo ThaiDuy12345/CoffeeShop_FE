@@ -86,7 +86,6 @@ export class SizeFormComponent implements OnInit{
     observable.pipe(
       finalize(() => {
         this.isLoadingSubmitSizeButton = false
-        if(this.isNew) this.isNew = false
       })
     ).subscribe({
       next: res => {
@@ -99,10 +98,9 @@ export class SizeFormComponent implements OnInit{
             price: res.data.productSizePrice,
             product: new Product()
           }
-          
+          if(this.isNew) this.isNew = false
           this.productSizes = [...newArr]
           this.onClickCancel()
-
         }else{
           this.messageService.error(res.message)
         }

@@ -254,7 +254,6 @@ export class DetailProductComponent implements OnInit, OnDestroy {
           return
         }
         this.isAllowedToCreateFeedback = res.data
-        console.log(this.isAllowedToCreateFeedback)
       },
       error: err => {
         this.messageService.error(err.error.message);

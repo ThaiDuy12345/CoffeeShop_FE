@@ -85,17 +85,19 @@ export class ProductComponent implements OnInit, OnDestroy {
   setInitFilter(productData: Product[]): void {
     this.initFilterState.subscribe({
       next: (state) => {
+        console.log(productData)
+        console.log(this.allProduct)
         if (!state) {
-          this.allProduct = productData;
+          this.allProduct = [...productData];
           return;
         }
         if (state.category.length > 0) {
-          this.allProduct = productData.filter((item) =>
+          this.allProduct = [...productData.filter((item) =>
             item.category.id ? state.category.includes(item.category.id) : false 
-          );
+          )];
           this.filterSelect = state.category;
         } else {
-          this.allProduct = productData;
+          this.allProduct = [...productData];
           this.filterSelect = [];
         }
 
@@ -107,7 +109,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         } else {
           this.search = '';
         }
-
+        console.log(productData)
+        console.log(this.allProduct)
         if (state.ordering === 1) {
           this.allProduct = this.allProduct.sort(
             (itemA, itemB) => { return itemA.minPrice && itemB.minPrice ? itemB.minPrice - itemA.minPrice : 0 }

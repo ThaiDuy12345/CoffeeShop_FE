@@ -123,7 +123,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.optionIndex = 2
         } else {
           this.allProduct = this.allProduct.sort((itemA, itemB) => {
-            return itemA.creationDate > itemB.creationDate ? 1 : -1
+            return itemA.creationDate > itemB.creationDate ? -1 : 1
           });
           this.optionIndex = 0
         }

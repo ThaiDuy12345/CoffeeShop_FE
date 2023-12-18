@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Cookies from 'js-cookie';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { finalize } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
@@ -64,20 +65,23 @@ export class SignUpComponent implements OnInit {
       accountAddress: "",
       accountRole: 2,
       accountActive: true
-    }).subscribe({
+    }).pipe(
+        finalize(() => {
+          this.isLoading = false
+        })
+    ).subscribe({
       next: (res) => {
         this.isLoading = false
         if(res.status){
           this.messageService.success("Đăng ký thành công, Xin vui lòng đăng nhập vào tài khoản vừa tạo")
           this.router.navigateByUrl('/sign-in')
         }else{
-          this.messageService.error("Đăng ký thất bại, Xin vui lòng kiểm tra lại thông tin")
+          this.messageService.error(res.message)
         }
       },
       error: (err) => {
-        console.log(err)
         this.isLoading = false
-        this.messageService.error("Đăng ký thất bại, Xin vui lòng kiểm tra lại thông tin")
+        this.messageService.error(err.error.message)
       }
     })
   }

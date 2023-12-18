@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.initData()
   }
-  
+
   initData(): void {
     setTimeout(() => {
       this.isDelay = true

@@ -30,7 +30,6 @@ export class CategoryManagementComponent {
   public choosingCategoryProduct: Product[] = []
   constructor(
     private messageService: NzMessageService,
-    private formatService: FormatService,
     private categoryService: CategoryService,
     private productService: ProductService,
     private mappingService: MappingService
@@ -44,7 +43,7 @@ export class CategoryManagementComponent {
     this.isLoading = true
     this.categoryService.getAll().pipe(
       finalize(() => {
-        this.isLoading = false      
+        this.isLoading = false
       })
     ).subscribe({
       next: (res) => {
@@ -140,7 +139,7 @@ export class CategoryManagementComponent {
       return
     }
     this.isLoadingButton = true
-    const observable: Observable<any> = this.currentEditItem.id ? 
+    const observable: Observable<any> = this.currentEditItem.id ?
       this.categoryService.put(this.currentEditItem.id, {
         categoryName: this.currentEditItem.name
       })

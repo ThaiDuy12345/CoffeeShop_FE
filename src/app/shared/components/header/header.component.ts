@@ -8,7 +8,7 @@ import { FilterStore } from 'src/app/core/stores/filter.store';
 import { Location } from '@angular/common';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Notification } from 'src/app/core/models/notification.model';
-import { Subject, from } from 'rxjs';
+import { Subject, finalize, from } from 'rxjs';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { CategoryService } from 'src/app/core/services/category.service';
@@ -113,15 +113,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onClickSignOut(): void {
-    from(this.authService.signOut()).subscribe({
-      next: () => {
-        Cookies.remove('id');
+    from(this.authService.signOut()).pipe(
+      finalize(() => {
+        Cookies.remove('id')
+        this.router.navigate(['/sign-in']);
         this.message.success(
           `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
         );
-        this.router.navigate(['/sign-in']);
-      },
-      error: err => this.message.error('Đăng xuất thất bại')
+      })
+    ).subscribe({
+      error: err => console.log(err)
     })
   }
 

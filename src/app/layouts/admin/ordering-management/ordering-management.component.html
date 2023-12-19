@@ -28,7 +28,7 @@
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
             >Tổng giá</th>
-            <th 
+            <th
               [nzAlign]="'center'"
               [nzFilterMultiple]="true"
               [nzFilters]="[
@@ -44,7 +44,7 @@
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
             >Trạng thái đơn hàng</th>
-            <th 
+            <th
               [nzAlign]="'center'"
               [nzFilterMultiple]="false"
               [nzFilters]="[
@@ -67,7 +67,7 @@
               [nzSortOrder]="null"
               [nzSortDirections]="['descend', 'ascend', null]"
             >Ngày tạo</th>
-            <th 
+            <th
               [nzAlign]="'center'"
               [nzSortFn]="activeSort"
               [nzSortOrder]="null"
@@ -163,7 +163,7 @@
               </span>
             </td>
             <td>
-              <span class="center-an-item">{{data.account.name}}</span>
+              <span [routerLink]="['/admin/account-management', data.account.phone]" class="coffee-link cursor-pointer center-an-item">{{data.account.name}}</span>
             </td>
             <td>
               <span class="center-an-item">{{data.updatedByAccount.name}}</span>

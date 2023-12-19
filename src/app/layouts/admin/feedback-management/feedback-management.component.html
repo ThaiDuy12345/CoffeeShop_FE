@@ -29,6 +29,7 @@
         [nzLoading]="isLoading"
         [nzData]="feedbacks"
         [nzPageSize]="4"
+        [nzPaginationType]="'small'"
       >
         <thead>
           <tr>
@@ -246,7 +247,7 @@
     <div class="font-bold flex justify-end items-center">Thông tin đánh giá</div>
   </div>
 </ng-template>
-<!-- 
+<!--
 <nz-drawer
   [nzWidth]="'600px'"
   [nzClosable]="false"
@@ -264,7 +265,7 @@
         <div class="inline-block mr-3">
           <span class="font-bold">Tên: {{ choosingAccount.name }}</span><br/>
           <span class="second-main-text-color">Email: {{ choosingAccount.email }}</span>
-        </div> 
+        </div>
       </div>
       <div>
         <nz-divider class="my-2"></nz-divider>
@@ -288,7 +289,7 @@
         <div>
           <fa-icon [icon]="icons['faUserTie']" class="mr-3"></fa-icon>
           <span>
-            <nz-tag 
+            <nz-tag
               class="main-bg-text-color mr-0 py-1 rounded text-white"
               >
                 <span>{{ choosingAccount.role === "1" ? 'Khách hàng' : 'Quản trị viên'}}</span>
@@ -300,12 +301,12 @@
         <div>
           <fa-icon [icon]="icons['faEye']" class="mr-3"></fa-icon>
           <span>
-            <nz-tag 
+            <nz-tag
                 *ngIf="choosingAccount.status" class="main-bg-text-color mr-0 py-1 rounded text-white"
               >
                 <span>Hoạt động</span>
             </nz-tag>
-            <nz-tag 
+            <nz-tag
               *ngIf="!choosingAccount.status" class="mr-0 py-1 rounded main-text-color"
             >
               <span>Ẩn</span>

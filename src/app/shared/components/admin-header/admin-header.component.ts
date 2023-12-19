@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AccountService } from 'src/app/core/services/account.service';
-import { Subject } from 'rxjs';
+import { Subject, finalize, from } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
@@ -59,12 +59,17 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   onClickSignOut(): void {
-    Cookies.remove('id');
-    this.authService.signOut()
-    this.message.success(
-      `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
-    );
-    this.router.navigate(['/sign-in']);
+    from(this.authService.signOut()).pipe(
+      finalize(() => {
+        Cookies.remove('id')
+        this.router.navigate(['/sign-in']);
+        this.message.success(
+          `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
+        );
+      })
+    ).subscribe({
+      error: err => console.log(err)
+    })
   }
 
   isMobileScreen(): Boolean {

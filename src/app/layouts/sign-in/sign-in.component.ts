@@ -9,7 +9,7 @@ import { icons } from 'src/app/shared/utils/icon.utils';
 import { Icon } from 'src/app/core/models/icon.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AccountService } from 'src/app/core/services/account.service';
-import { Subject } from 'rxjs';
+import { Subject, finalize } from 'rxjs';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -79,11 +79,12 @@ export class SignInComponent implements OnInit {
     this.authenService.signIn({
       accountEmail: this.account.email,
       accountPassword: this.account.password
-    }).subscribe({
+    }).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe({
       next: (res) => {
         if(res.status === false || res.data.accountActive === false){
           this.message.error('Email hoặc mật khẩu không chính xác.')
-          this.isLoading = false
           return
         }
 
@@ -97,10 +98,7 @@ export class SignInComponent implements OnInit {
         this.message.success(`Đăng nhập thành công, Chào bạn ${res.data.accountName}`)
         this.router.navigate(["/main/dashboard"])
       },
-      error: (err: any) => {
-        this.message.error(err.error.message)
-        this.isLoading = false
-      }
+      error: (err: any) => this.message.error(err.error.message)
     })
   }
 
@@ -109,11 +107,12 @@ export class SignInComponent implements OnInit {
 
     this.accountService.getByEmail({
       accountEmail: email,
-    }).subscribe({
+    }).pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe({
       next: (res) => {
         if(res.status === false || res.data.accountActive === false){
           this.message.error(res.message)
-          this.isLoading = false
           return
         }
 
@@ -127,10 +126,7 @@ export class SignInComponent implements OnInit {
         this.message.success(`Đăng nhập thành công, Chào bạn ${res.data.accountName}`)
         this.router.navigate(["/main/dashboard"])
       },
-      error: (err: any) => {
-        this.message.error(err.error.message)
-        this.isLoading = false
-      }
+      error: (err: any) => this.message.error(err.error.message)
     })
   }
 }

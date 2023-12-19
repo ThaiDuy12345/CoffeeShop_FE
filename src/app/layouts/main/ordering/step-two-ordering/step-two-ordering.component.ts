@@ -40,7 +40,7 @@ export class StepTwoOrderingComponent implements OnInit{
 
   ngOnInit(): void {
     this.ordering.paymentStatus = 0
-    this.ordering.shippingFee = this.ordering.shippingFee + (2000 * this.getTotalQuantity()) 
+    this.ordering.shippingFee = this.ordering.shippingFee + (2000 * this.getTotalQuantity() - 2000)
     this.ordering.totalPrice = this.ordering.price + this.ordering.shippingFee
     this.ordering.discount = new Discount()
   }
@@ -50,7 +50,7 @@ export class StepTwoOrderingComponent implements OnInit{
     this.discountService.getAll().pipe(finalize(() => this.isLoadingDiscountModal = false)).subscribe({
       next: res => {
         if(res.status){
-          this.discounts = 
+          this.discounts =
             res.data.filter((d: any) => new Date(d.discountExpiredDate) > new Date())
               .sort((a: any) => a.discountMinimumOrderPrice - this.ordering.price)
               .map((d: any) => this.mappingService.discount(d))

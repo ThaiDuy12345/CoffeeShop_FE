@@ -8,7 +8,7 @@ import { FilterStore } from 'src/app/core/stores/filter.store';
 import { Location } from '@angular/common';
 import { Icon } from 'src/app/core/models/icon.model';
 import { Notification } from 'src/app/core/models/notification.model';
-import { Subject } from 'rxjs';
+import { Subject, from } from 'rxjs';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { CategoryService } from 'src/app/core/services/category.service';
@@ -86,9 +86,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: (res) => {
         if(res.account.phone){
           this.user.name = res.account.name;
-          
-          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') && 
-            (res.account.role === 0 || res.account.role === 1) && 
+          !this.user.subItems.find(s => s.title === 'TRANG ADMIN') &&
+            (res.account.role === 0 || res.account.role === 1) &&
             this.user.subItems.push({
               title: 'TRANG ADMIN',
               icon: icons['faUserTie'],
@@ -114,12 +113,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onClickSignOut(): void {
-    Cookies.remove('id');
-    this.authService.signOut()
-    this.message.success(
-      `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
-    );
-    this.router.navigate(['/sign-in']);
+    from(this.authService.signOut()).subscribe({
+      next: () => {
+        Cookies.remove('id');
+        this.message.success(
+          `Đăng xuất thành công, Tạm biệt bạn ${this.user.name}`
+        );
+        this.router.navigate(['/sign-in']);
+      },
+      error: err => this.message.error('Đăng xuất thất bại')
+    })
   }
 
   onClickNavigate(categoryName: string): void {

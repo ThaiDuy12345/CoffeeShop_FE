@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, Optional, TemplateRef } from '@angular/core';
-import { AccountData } from 'src/app/data/data';
 import Cookies from 'js-cookie'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -49,9 +48,7 @@ export class SignInComponent implements OnInit {
         this.user = user;
         this.user && this.signInByEmail(user.email)
       },
-      error: (err) => {
-        console.log(err)
-      }
+      error: (err) => this.message.error(err.message)
     })
 
     this.authService.authState.subscribe(this.tempSubject);
@@ -65,9 +62,7 @@ export class SignInComponent implements OnInit {
 
   onClickSignIn(): void {
     this.isSubmitted = true
-    if(!this.account.email || !this.account.password){
-      return
-    }
+    if(!this.account.email || !this.account.password) return
     this.isLoading = true
     this.signIn()
   }
@@ -105,7 +100,6 @@ export class SignInComponent implements OnInit {
       error: (err: any) => {
         this.message.error(err.error.message)
         this.isLoading = false
-        console.log(err)
       }
     })
   }
@@ -136,7 +130,6 @@ export class SignInComponent implements OnInit {
       error: (err: any) => {
         this.message.error(err.error.message)
         this.isLoading = false
-        console.log(err)
       }
     })
   }

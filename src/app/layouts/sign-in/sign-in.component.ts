@@ -48,20 +48,19 @@ export class SignInComponent implements OnInit {
       next: (user) => {
         this.user = user;
         this.user && this.signInByEmail(user.email)
-      }, 
+      },
       error: (err) => {
         console.log(err)
       }
     })
-    
+
     this.authService.authState.subscribe(this.tempSubject);
 
     Cookies.get('id') && this.router.navigate(['/main/dashboard'])
   }
-  
+
   signinWithFacebook(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID) 
-    this.authService.signOut()
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
   }
 
   onClickSignIn(): void {
@@ -92,14 +91,14 @@ export class SignInComponent implements OnInit {
           this.isLoading = false
           return
         }
-        
+
         this.authenService.saveAccountToStore(res.data)
 
         //Hết hạn trong vòng 30 phút
-        Cookies.set('id', res.data.accountPhone, { 
-          expires: new Date(new Date().getTime() + 30 * 60 * 1000 ) 
+        Cookies.set('id', res.data.accountPhone, {
+          expires: new Date(new Date().getTime() + 30 * 60 * 1000 )
         })
-        
+
         this.message.success(`Đăng nhập thành công, Chào bạn ${res.data.accountName}`)
         this.router.navigate(["/main/dashboard"])
       },
@@ -123,14 +122,14 @@ export class SignInComponent implements OnInit {
           this.isLoading = false
           return
         }
-        
+
         this.authenService.saveAccountToStore(res.data)
 
         //Hết hạn trong vòng 30 phút
-        Cookies.set('id', res.data.accountPhone, { 
-          expires: new Date(new Date().getTime() + 30 * 60 * 1000 ) 
+        Cookies.set('id', res.data.accountPhone, {
+          expires: new Date(new Date().getTime() + 30 * 60 * 1000 )
         })
-        
+
         this.message.success(`Đăng nhập thành công, Chào bạn ${res.data.accountName}`)
         this.router.navigate(["/main/dashboard"])
       },

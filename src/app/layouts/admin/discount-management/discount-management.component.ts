@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs';
 import { Discount } from 'src/app/core/models/discount.model';
@@ -42,7 +42,7 @@ export class DiscountManagementComponent implements OnInit{
     this.isLoading = true
     this.discountService.getAll().pipe(
       finalize(() => {
-        this.isLoading = false      
+        this.isLoading = false
       })
     ).subscribe({
       next: (res) => {
@@ -51,7 +51,7 @@ export class DiscountManagementComponent implements OnInit{
 
           if(this.searchInput) this.discounts = this.discounts.filter(d => {
             return (
-              d.id.toString().includes(this.searchInput.toLowerCase()) 
+              d.id.toString().includes(this.searchInput.toLowerCase())
               ||
               d.code.toLowerCase().includes(this.searchInput.toLowerCase())
               ||
@@ -60,13 +60,9 @@ export class DiscountManagementComponent implements OnInit{
               this.formatService.formatTimeStamp(d.expiredDate).includes(this.searchInput.toLowerCase())
             )
           })
-        }else{
-          this.messageService.error(res.message)
-        }
+        }else this.messageService.error(res.message)
       },
-      error: (err) => {
-        this.messageService.error(err.error.message)
-      }
+      error: (err) => this.messageService.error(err.error.message)
     })
   }
 
@@ -96,18 +92,13 @@ export class DiscountManagementComponent implements OnInit{
           if(res.status){
             this.messageService.success("Thao tác thành công, mã giảm giá đã không còn hiệu lực")
             this.discounts[index].expiredDate = res.data.discountExpiredDate
-          }else{
-            this.messageService.error(res.message)
-          }
+          }else this.messageService.error(res.message)
         },
         error: (err) => {
           this.messageService.error(err.error.message)
-          
         }
       })
-    }else{
-      this.messageService.error("Thao thác thất bại")
-    }
+    }else this.messageService.error("Thao thác thất bại")
   }
 
   compareDate(to: number): boolean{
@@ -126,14 +117,12 @@ export class DiscountManagementComponent implements OnInit{
     ).subscribe({
       next: res => {
         if(res.status){
-          this.detailOrderings = res.data.filter((p: any) => p.discountEntity !== null && p.discountEntity.discountId === this.choosingDiscount.id).map((p: any) => 
-            this.mappingService.ordering(p)  
+          this.detailOrderings = res.data.filter((p: any) => p.discountEntity !== null && p.discountEntity.discountId === this.choosingDiscount.id).map((p: any) =>
+            this.mappingService.ordering(p)
           )
         }else this.messageService.error(res.message)
       },
-      error: err => {
-        this.messageService.error(err.error.message)
-      }
+      error: err => this.messageService.error(err.error.message)
     })
   }
 

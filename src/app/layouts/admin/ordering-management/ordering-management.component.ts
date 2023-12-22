@@ -47,26 +47,6 @@ export class OrderingManagementComponent implements OnInit, OnDestroy{
     this.authenticationStore._select(state => state).subscribe(this.tempSubject)
   }
 
-  // initCategoryData(): void {
-  //   this.categoryService.getAll().subscribe({
-  //     next: res => {
-  //       if(res.status){
-  //         this.categoryFilterList = res.data.map((c: any) => {
-  //           return {
-  //             text: c.categoryName,
-  //             value: c.categoryId
-  //           }
-  //         })
-  //       }else{
-  //         this.messageService.error(res.message)
-  //       }
-  //     },  
-  //     error: err => {
-  //       this.messageService.error(err.error.message)
-  //     }
-  //   })
-  // }
-
   initData(): void {
     this.isLoading = true
     this.orderingService.getAll().pipe(
@@ -83,20 +63,15 @@ export class OrderingManagementComponent implements OnInit, OnDestroy{
                 p.id.toString().includes(this.searchInput.toLowerCase()) ||
                 p.account.name.toLowerCase().includes(this.searchInput.toLowerCase()) ||
                 this.formatService.formatPrice(p.totalPrice).includes(this.searchInput.toLowerCase())  ||
-                this.formatService.formatTimeStamp(p.date).toLowerCase().includes(this.searchInput.toLowerCase()) 
+                this.formatService.formatTimeStamp(p.date).toLowerCase().includes(this.searchInput.toLowerCase())
               )
             })
           }
-        }else{
-          this.messageService.error(res.message)
-        }
+        }else this.messageService.error(res.message)
       },
-      error: err => {
-        this.messageService.error(err.error.messsage)
-      }
+      error: err => this.messageService.error(err.error.messsage)
     })
   }
-
 
   onSearchInput(): void {
     this.initData()

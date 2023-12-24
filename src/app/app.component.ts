@@ -23,20 +23,13 @@ export class AppComponent implements OnInit {
   }
 
   initData(): void {
-    setTimeout(() => {
-      this.isDelay = true
-    }, 4000)
+    setTimeout(() => this.isDelay = true, 4000)
     this.apiService.isAlive().subscribe({
       next: (res) => {
-        if(res === true){
-          this.isReady = true
-        }else{
-          this.failToLoad = true
-        }
+        if(res === true) this.isReady = true
+        else this.failToLoad = true
       },
-      error: (err) => {
-        this.messageService.error(err.message)
-      }
+      error: (err) => this.messageService.error(err.message)
     })
   }
 }

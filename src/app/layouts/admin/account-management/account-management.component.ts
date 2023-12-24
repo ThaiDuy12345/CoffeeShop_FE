@@ -10,7 +10,6 @@ import { FeedbackService } from 'src/app/core/services/feedback.service';
 import { FormatService } from 'src/app/core/services/format.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { OrderingService } from 'src/app/core/services/ordering.service';
-import { FeedbackData } from 'src/app/data/data';
 import { icons } from 'src/app/shared/utils/icon.utils';
 @Component({
   selector: 'app-account-management',
@@ -54,7 +53,7 @@ export class AccountManagementComponent implements OnInit {
 
           if(this.searchInput){
             this.accounts = this.accounts.filter((a) => {
-              if(   
+              if(
                   a.email.includes(this.searchInput)
                  || a.name.includes(this.searchInput)
                  || a.phone.includes(this.searchInput)
@@ -102,7 +101,7 @@ export class AccountManagementComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.error(err.error.message)
-          
+
         }
       })
     }else{
@@ -152,7 +151,7 @@ export class AccountManagementComponent implements OnInit {
         else this.messageService.error(res.message)
       },
       error: err => this.messageService.error(err.error.message)
-    })    
+    })
   }
 
   filterByDetailAdminVisibleInputSearch(): void {

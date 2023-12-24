@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrl: './privary-policy.component.scss'
 })
 export class PrivaryPolicyComponent {
-
 }

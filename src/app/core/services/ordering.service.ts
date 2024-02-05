@@ -8,7 +8,7 @@ import { Observable } from "rxjs";
 })
 export class OrderingService {
   constructor(
-    private apiService: ApiService, 
+    private apiService: ApiService,
     private httpClient: HttpClient
   ){}
 
@@ -51,6 +51,12 @@ export class OrderingService {
   getAllByUpdatedByAccount(params: { accountPhone: string }): Observable<any>{
     return this.apiService.errorHandle(
       this.httpClient.get(this.apiService.orderingService().toString() + `/getAllByUpdatedByAdminAccount/${params.accountPhone}`)
+    )
+  }
+
+  getOrderingShippingFee(params: { address: string, productQuantity: number }): Observable<any>{
+    return this.apiService.errorHandle(
+      this.httpClient.get(this.apiService.orderingService().toString() + `/getOrderingShippingFee/${params.productQuantity}/${params.address}`)
     )
   }
 }

@@ -1,9 +1,8 @@
 import { StatisticService } from './../../../core/services/statistic.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject, finalize, forkJoin, map } from 'rxjs';
+import { Subject, finalize, forkJoin } from 'rxjs';
 import { Icon } from 'src/app/core/models/icon.model';
-import { Statistic } from 'src/app/core/models/statistic.model';
 import { MappingService } from 'src/app/core/services/mapping.service';
 import { AuthenticationStore } from 'src/app/core/stores/authentication.store';
 import { icons } from 'src/app/shared/utils/icon.utils';
@@ -65,7 +64,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.tempSubject.complete()
   }
-  
+
   ngOnInit(): void {
     this.initAccount()
     this.initData()
@@ -75,7 +74,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
   initAccount(): void {
     this.tempSubject.subscribe({
       next: res => {
-        this.isStaff = res.account && res.account.role === 1  
+        this.isStaff = res.account && res.account.role === 1
       },
       error: err => {
         this.messageService.error("Đã có lỗi xảy ra trong quá trình lấy dữ liệu")
@@ -131,7 +130,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
   choosingTypeChange(chartValue: 'stepline' | 'straight' | 'smooth'): void {
     this.chartType = chartValue
   }
-  
+
   timeChange(value: number): void {
     //create a switch case for value variable. If value = 0 then this.timeValue = 'week', 1 then 'month', if then keep going for 'halfYear' and 'year'
     switch(value) {
@@ -175,5 +174,5 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
       }
     }
     this.initStatistic()
-  }  
+  }
 }

@@ -19,7 +19,7 @@ export class SizeFormComponent implements OnInit{
   public editItem: ProductSize = new ProductSize()
   public icons: Icon = icons
   public productSizes: ProductSize[] = [];
-  public isLoading: boolean = false 
+  public isLoading: boolean = false
   public isNew: boolean = false
   public isLoadingSubmitSizeButton: boolean = false
   public isLoadingDeleteSizeButton: boolean = false
@@ -72,7 +72,7 @@ export class SizeFormComponent implements OnInit{
     }
     this.isLoadingSubmitSizeButton = true
 
-    const observable: Observable<any> = this.isNew ? 
+    const observable: Observable<any> = this.isNew ?
       this.productSizeService.post(this.product.id, {
         productSize: this.editItem.size,
         productSizePrice: this.editItem.price,
@@ -156,7 +156,7 @@ export class SizeFormComponent implements OnInit{
 
   onClickEditProductSize(size: ProductSize, index: number): void {
     this.currentEditItem = index;
-    this.editItem = {...size}; 
+    this.editItem = {...size};
     this.loadSizeOptionData()
   }
 

@@ -1,7 +1,7 @@
 <div
   class="mx-auto container grid grid-cols-1 gap-x-10 gap-y-10 py-10 lg:px-20 px-3"
 >
-  <nb-card>    
+  <nb-card>
     <nb-card-body [nbSpinner]="isLoading">
       <div class="font-bold mb-5">
         Thông tin giảm giá
@@ -25,7 +25,7 @@
                 <input
                   type="text"
                   nbInput
-                  [disabled]="!isEditable" 
+                  [disabled]="!isEditable"
                   (input)="onInputDiscountCode()"
                   name="codeInput"
                   #codeInput="ngModel"
@@ -37,7 +37,7 @@
                   nz-tooltip
                   nzTooltipTitle="Thêm ngày tháng năm để giảm sự trùng lập"
                   nbSuffix
-                  [disabled]="!isEditable" 
+                  [disabled]="!isEditable"
                   nbButton
                   ghost
                   (click)="generateDatePattern()"
@@ -57,7 +57,7 @@
               <label for="guest" class="mb-3 block font-medium">
                 Ngày hết hiệu lực: <b>{{ choosingDiscount.expiredDate | dateFormat }}</b>
               </label>
-              <nz-date-picker [nzDisabledDate]="disabledDate" name="expiredDateInput" #expiredDateInput="ngModel" class="w-full h-[40px]" [(ngModel)]="expiredDate" (ngModelChange)="onChangeExpiredDate($event)"></nz-date-picker>
+              <nz-date-picker [nzDisabledDate]="disabledDate" name="expiredDateInput" #expiredDateInput="ngModel" class="w-full h-[40px]" [(ngModel)]="expiredDate" (ngModelChange)="onChangeExpiredDate()"></nz-date-picker>
             </div>
             <div class="mb-5">
               <label for="guest" class="mb-3 block font-medium">
@@ -65,7 +65,7 @@
               </label>
               <input
                 type="number"
-                [disabled]="!isEditable" 
+                [disabled]="!isEditable"
                 name="minimumOrderPriceInput"
                 #minimumOrderPriceInput="ngModel"
                 [(ngModel)]="editDiscount.minimumOrderPrice"
@@ -82,7 +82,7 @@
                 Mức giá sẽ giảm: <b>{{ choosingDiscount.amount | priceFormat }}</b>
               </label>
               <input
-                [disabled]="!isEditable" 
+                [disabled]="!isEditable"
                 type="number"
                 autocomplete="off"
                 name="amountInput"
@@ -101,7 +101,7 @@
                 nbButton
                 status="danger"
                 class="mr-3 mb-3"
-                
+
                 (click)="onClickCancelEdit()"
               >
                 Huỷ
@@ -113,7 +113,7 @@
           </form>
         </div>
       </div>
-      
+
       <ng-template #dialog let-data let-ref="dialogRef">
         <nb-card class="nosd">
           <nb-card-body>{{ data }}</nb-card-body>

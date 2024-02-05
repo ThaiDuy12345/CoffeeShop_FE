@@ -44,7 +44,7 @@ import { NZ_I18N, vi_VN } from 'ng-zorro-antd/i18n';
     NbSidebarModule.forRoot(),
     NbThemeModule.forRoot({ name: 'default' }),
   ],
-  
+
   providers: [
     { provide: NZ_I18N, useValue: vi_VN },
     {

@@ -10,6 +10,7 @@ import { Icon } from 'src/app/core/models/icon.model';
 import { Ordering } from 'src/app/core/models/ordering.model';
 import { DiscountService } from 'src/app/core/services/discount.service';
 import { MappingService } from 'src/app/core/services/mapping.service';
+import { OrderingService } from 'src/app/core/services/ordering.service';
 import { icons } from 'src/app/shared/utils/icon.utils';
 
 @Component({
@@ -35,14 +36,26 @@ export class StepTwoOrderingComponent implements OnInit{
     private discountService: DiscountService,
     private messageService: NzMessageService,
     private dialogService: NbDialogService,
+    private orderingService: OrderingService,
     @Optional() private dialogRef: NbDialogRef<any>,
   ){}
 
   ngOnInit(): void {
     this.ordering.paymentStatus = 0
-    this.ordering.shippingFee = this.ordering.shippingFee + (2000 * this.getTotalQuantity() - 2000)
-    this.ordering.totalPrice = this.ordering.price + this.ordering.shippingFee
     this.ordering.discount = new Discount()
+    this.shippingFeeProcess()
+  }
+
+  shippingFeeProcess(): void {
+    this.orderingService.getOrderingShippingFee({ address: this.account.address, productQuantity: this.getTotalQuantity() }).subscribe({
+      next: res => {
+        if(res.status){
+          this.ordering.shippingFee = res.data
+          this.ordering.totalPrice = this.ordering.price + this.ordering.shippingFee
+        } else this.messageService.error(res.message)
+      },
+      error: err => this.messageService.error(err.error.message)
+    })
   }
 
   loadDiscountList(): void {
